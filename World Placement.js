@@ -4,14 +4,19 @@
 // Requires LSQuickScripts! Get it at https://github.com/max-van-leeuwen/SnapLensStudio-LSQuickScripts, and place the script somewhere in your project.
 //
 //
-// To use with all default settings, make a new class and run 'start()', like so:
 //
+// To use, make a new class instance like so
 // 	var worldPlacementAnim = new WorldPlacement();
+//
+// You can customize this instance, for example by changing the duration to 10 seconds (really slow)
+//	worldPlacementAnim.duration = 10;
+//
+// Now, each time you run the following line of code, the scene will be centered towards the user
 //	worldPlacementAnim.start();
 
 
 
-// Defaults
+// defaults
 // @input SceneObject cameraObject
 // @input SceneObject moveObject
 
