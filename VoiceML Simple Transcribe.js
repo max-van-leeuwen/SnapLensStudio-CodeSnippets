@@ -1,7 +1,9 @@
 // Max van Leeuwen
 //
-// Simple audio transcribing module, call global.VoiceMLTranscribe.start().
-// Results are sent to the 'overheard' function, which prints it to the logger panel.
+// Simple audio transcribing module, call
+// 	global.VoiceMLTranscribe.start().
+//
+// Results are sent to the 'overheard' function (which prints it to the logger panel).
 
 
 

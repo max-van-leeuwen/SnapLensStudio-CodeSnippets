@@ -1,7 +1,6 @@
 // Max van Leeuwen
 //
-// Lightweight SDF collision manager for VFX assets that need to interact with meshes.
-//
+// Lightweight SDF collision manager for VFX assets.
 // Make sure the SDF Collision Sub-Graph in the VFX asset has the following Parameter inputs:
 // - interactionMat (Matrix4)
 // - bboxMin (vec3)

@@ -8,10 +8,10 @@
 // To use, make a new class instance like so
 // 	var worldPlacementAnim = new WorldPlacement();
 //
-// You can customize this instance, for example by changing the duration to 10 seconds (really slow)
-//	worldPlacementAnim.duration = 10;
+// You can customize this instance, for example by changing the animation duration to 5 seconds
+//	worldPlacementAnim.duration = 5;
 //
-// Now, each time you run the following line of code, the scene will be centered towards the user
+// Now, each time you run the following line of code, the scene will be animated towards the user
 //	worldPlacementAnim.start();
 
 

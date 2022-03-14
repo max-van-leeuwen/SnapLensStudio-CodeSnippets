@@ -2,9 +2,14 @@
 //
 // Sample color from texture
 //
-// Make new class instance using new TextureSample()
-// Initialize a texture using .setTexture(<Asset.Texture>)
-// Sample using .sample(<vec2>)
+// Make a new class instance using
+//	var sampler = new TextureSample()
+//
+// Initialize a texture using
+//	sampler.setTexture(<Asset.Texture>)
+//
+// Then, sample a coordinate on the texture (between 0-1) using
+//	sampler.sample(<vec2>)
 
 
 
