@@ -1,18 +1,31 @@
 // Max van Leeuwen
 //
-// Places and orients a sceneobject in front of the user, handy when using World Tracking.
+// Animates a sceneobject to be oriented and placed right in front of the user. Handy when using World Tracking.
 // Requires LSQuickScripts! Get it at https://github.com/max-van-leeuwen/SnapLensStudio-LSQuickScripts, and place the script somewhere in your project.
 //
 //
-//
-// To use, make a new class instance like so
+// Use it like a class - make a new instance, customize it (if wanted), and call 'start()' to start the animation once!
+// Example:
 // 	var worldPlacementAnim = new WorldPlacement();
-//
-// You can customize this instance, for example by changing the animation duration to 5 seconds
-//	worldPlacementAnim.duration = 5;
-//
-// Now, each time you run the following line of code, the scene will be animated towards the user
+//	worldPlacementAnim.easeFunction = "Elastic";
 //	worldPlacementAnim.start();
+//
+//
+// One-liner with no customizations:
+//	new WorldPlacement().start();
+//
+//
+// All possible customizations:
+//	.cameraObject		 	override user's world camera (SceneObject)
+//	.moveObject		 		override sceneobject to animate (SceneObject)
+//	.distanceFromCamera		distance, world units (cm, Number)
+//	.height		 			height offset, world units (cm, Number)
+//	.duration		 		animation length (s, Number)
+//	.spherical		 		use look-at position instead of eye-height (Bool)
+//	.callback		 		function to call on animation end (Function)
+//	.easeFunction		 	animation interpolation, any Tween function works! "Cubic", "Elastic", etc (String)
+//	.easeType		 		animation interpolation type: "In", "Out", or "InOut" (String)
+//	.start()	 			begin animation
 
 
 
