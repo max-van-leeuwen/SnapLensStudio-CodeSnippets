@@ -1,0 +1,545 @@
+{
+    "lens_id": "",
+    "document_id": "ZYgoXanC_FmLbHKhx0Dy",
+    "original_document_id": "ZYgoXanC_FmLbHKhx0Dy",
+    "version": "29",
+    "lastChanged": "1648328804489",
+    "preview": "icon.png",
+    "videoPreview": "preview.mp4",
+    "videoPreviewUpdateTime": "",
+    "isReadOnly": "false",
+    "isAutoSaved": "false",
+    "api_level": "public",
+    "public_api_user_data_access": "unrestricted",
+    "studioVersion": {
+        "createdWith": {
+            "type": "Public",
+            "major": "4",
+            "minor": "16",
+            "patch": "0",
+            "build": "0"
+        },
+        "lastSavedWith": {
+            "type": "Public",
+            "major": "4",
+            "minor": "16",
+            "patch": "0",
+            "build": "0"
+        }
+    },
+    "view": {
+        "ResourceUiComponent": {
+            "collapsedList": [
+                [
+                    [
+                        "Other"
+                    ],
+                    [
+                        "VoiceML Module"
+                    ],
+                    [
+                        "VoiceML Simple Transcribe"
+                    ]
+                ]
+            ]
+        },
+        "SceneTreeUiComponent": {
+            "collapsedList": [
+                ""
+            ],
+            "selectionSetList": ""
+        },
+        "MetaInfoUIComponent": {
+            "hints": "",
+            "lens": "Untitled",
+            "applicability": "3",
+            "lens_descriptors": "",
+            "Spectacles2021UseAllowed": "false"
+        },
+        "PreviewUiComponent": {
+            "preview_descriptor": {
+                "is_capture": "0",
+                "camera_type": "2"
+            },
+            "show_snap_ui": "true",
+            "show_sponsored_ui": "false",
+            "preview_images_project_config": {
+                "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",
+                "back_preview_is_favorite": "false",
+                "front_preview_id": "bundle:Preview\/Images\/Person 1.jpg",
+                "front_preview_is_favorite": "false",
+                "spectacles_preview_id": "bundle:Preview\/Images\/Pavement\/Pavement.jpg",
+                "spectacles_preview_is_favorite": "false"
+            },
+            "preview_videos_project_config": {
+                "back_preview_id": "bundle:Preview\/Videos\/Beach.webm",
+                "back_preview_is_favorite": "false",
+                "front_preview_id": "bundle:Preview\/Videos\/Idle Person 1.webm",
+                "front_preview_is_favorite": "false",
+                "spectacles_preview_id": "",
+                "spectacles_preview_is_favorite": "false"
+            },
+            "preview_ie_project_config": {
+                "back_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
+                "back_preview_is_favorite": "false",
+                "front_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
+                "front_preview_is_favorite": "false",
+                "spectacles_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
+                "spectacles_preview_is_favorite": "false"
+            }
+        },
+        "InspectorUiComponent": {
+            "collapsedList": [
+                ""
+            ]
+        },
+        "ObjectTracking3DUIComponent": {
+            "foldedOwnerSceneObjects": ""
+        },
+        "Material::UiComponent": {
+            "active_graph_asset": "-1:-1"
+        },
+        "Script::UiComponent": {
+            "active_graph_asset": "-1:-1"
+        },
+        "VFX::UiComponent": {
+            "active_graph_asset": "-1:-1"
+        }
+    },
+    "model": {
+        "IResourceManager": {
+            "list": [
+                {
+                    "resId": "1",
+                    "uid": "1:1",
+                    "name": "Camera Output",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "2",
+                    "uid": "2:2",
+                    "name": "Camera Input",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "12",
+                    "uid": "8675309:9035768",
+                    "name": "Physics Root World Settings Asset",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "43",
+                    "uid": "1648328215222851:29941",
+                    "name": "Files\/File55.js",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "44",
+                    "uid": "1648328220919898:30874",
+                    "name": "",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                }
+            ],
+            "MaterialUpdateManager": {
+                "unrecognizedMaterials": ""
+            }
+        },
+        "InspectorComponent": {
+            "Component": {
+                "EyeColorVisual": {
+                    "uidData": "",
+                    "generalData": ""
+                },
+                "FaceStretchVisual": {
+                    "uidsToFeatureNamesWithIntensity": ""
+                },
+                "ScreenTransform": {
+                    "uidData": "",
+                    "generalData": ""
+                }
+            }
+        },
+        "RenderOrderComponent": {
+            "autoRenderOrder": {
+                "0": "1648328207748755:28892"
+            }
+        },
+        "LayerComponent": {
+            "nextLayerId": "2",
+            "showOrthographicLayer": "true",
+            "layersInfo": [
+                {
+                    "layerId": "0",
+                    "layerName": "Default Layer",
+                    "layerMask": "1",
+                    "colorCode": "20"
+                },
+                {
+                    "layerId": "1",
+                    "layerName": "Orthographic Layer",
+                    "layerMask": "1048576",
+                    "colorCode": "21"
+                }
+            ]
+        },
+        "IFileManager": {
+            "pathes": [
+                {
+                    "k": "55",
+                    "v": "Files\/File55.js"
+                }
+            ]
+        },
+        "RemoteApi::ModelManager": {
+            "api_specs": ""
+        },
+        "WorldComponent": {
+            "sceneFile": "scene.scn",
+            "sceneType": "binaryScene"
+        }
+    },
+    "controller": {
+        "IResourceController": {
+            "public": {
+                "pathes": [
+                    {
+                        "k": "1006",
+                        "v": "VoiceML Simple Transcribe.js"
+                    },
+                    {
+                        "k": "1007",
+                        "v": "Other"
+                    }
+                ],
+                "hashes": [
+                    {
+                        "k": "1",
+                        "v": "671afbc1d6810060ccbaac866a91cfa1"
+                    },
+                    {
+                        "k": "2",
+                        "v": "8e599835d0d45c5879eafb1f474469cd"
+                    },
+                    {
+                        "k": "967",
+                        "v": "0cf0e87a54f33218fcf92a12d7f0ede2"
+                    },
+                    {
+                        "k": "973",
+                        "v": "2165ab1cae92b212de6dee87976c7dbe"
+                    },
+                    {
+                        "k": "974",
+                        "v": "d15cd32a236fcec57aee783f94ddecfc"
+                    },
+                    {
+                        "k": "975",
+                        "v": "fb3803db2f78088f64947d4f71df13c6"
+                    },
+                    {
+                        "k": "976",
+                        "v": "a4e338258030a6a8c83a0bba0effdeb6"
+                    },
+                    {
+                        "k": "977",
+                        "v": "543e59345630c0a60c745ea3d223bc44"
+                    },
+                    {
+                        "k": "978",
+                        "v": "f1e43cd32920ba2736c4c154be111c73"
+                    },
+                    {
+                        "k": "979",
+                        "v": "d8f22f7daf3f771b8b8bd95e12f27c1a"
+                    },
+                    {
+                        "k": "980",
+                        "v": "a14096feae27c3763e4d266f87ebbafa"
+                    },
+                    {
+                        "k": "981",
+                        "v": "66b73c45a4412b89a86f1216a6d1f07e"
+                    },
+                    {
+                        "k": "982",
+                        "v": "91e7e88a0c57ff4e443848832ca86a2b"
+                    },
+                    {
+                        "k": "983",
+                        "v": "20332b7ede7267b5cd3297eab19bfd5f"
+                    },
+                    {
+                        "k": "984",
+                        "v": "51de9db7ed2c9174643a72471d52185a"
+                    },
+                    {
+                        "k": "986",
+                        "v": "1073cbb3010b3a91a6b98f21a251c001"
+                    },
+                    {
+                        "k": "989",
+                        "v": "32d0c1e93ef9a82c82193001b13a5a1e"
+                    },
+                    {
+                        "k": "991",
+                        "v": "728483aa7371345a3399f78b1f19844c"
+                    },
+                    {
+                        "k": "993",
+                        "v": "57d38874a075ffe27c23e79267c79582"
+                    },
+                    {
+                        "k": "995",
+                        "v": "50719fa84685c347fc19520c9e2e43bb"
+                    },
+                    {
+                        "k": "996",
+                        "v": "7c2aac7ab29a69799dcfcf3d6cc9e680"
+                    },
+                    {
+                        "k": "997",
+                        "v": "f3f8f179b87ba4b5a44077fb80d53214"
+                    },
+                    {
+                        "k": "999",
+                        "v": "3dfc798d95ccf0fba1912d8ef2217261"
+                    },
+                    {
+                        "k": "1000",
+                        "v": "c941ae7210335851c942ab71730616e4"
+                    },
+                    {
+                        "k": "1001",
+                        "v": "729bf79ee51e4bfdbb5948779b679eca"
+                    },
+                    {
+                        "k": "1002",
+                        "v": "61b76f39d52d05c02e7a44bf9c009211"
+                    },
+                    {
+                        "k": "1003",
+                        "v": "a2fbafe01add5812b0b9e4af4163b347"
+                    },
+                    {
+                        "k": "1004",
+                        "v": "df88a244dfa6fe24d99b92478ab08528"
+                    },
+                    {
+                        "k": "1005",
+                        "v": "6880ca7f4de1b9c866c0be67fae72771"
+                    },
+                    {
+                        "k": "1006",
+                        "v": "590b120d5f1406b629423fd9ad0bc00e"
+                    }
+                ],
+                "publicState": {
+                    "tree": {
+                        "isFolder": "true",
+                        "lastModified": "2022-03-26T21:57:04",
+                        "name": "Public",
+                        "hash": "c4213333405a2b971bf5df0b0f9afab2",
+                        "children": [
+                            {
+                                "isFolder": "true",
+                                "lastModified": "2022-03-26T21:57:02",
+                                "name": "Other",
+                                "hash": "59adb24ef3cdbe0297f05b395827453f",
+                                "children": [
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-03-26T21:57:02",
+                                        "name": "folder.lock",
+                                        "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                        "children": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2022-03-26T22:06:09",
+                                "name": "VoiceML Simple Transcribe.js",
+                                "hash": "590b120d5f1406b629423fd9ad0bc00e",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2022-03-15T05:04:10",
+                                "name": "folder.lock",
+                                "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                "children": ""
+                            }
+                        ]
+                    }
+                },
+                "complexResources": ""
+            },
+            "tree": {
+                "name": "",
+                "type": "0",
+                "subtype": "-1",
+                "resourceId": "-1",
+                "dependency": "0",
+                "hidden": "false",
+                "uid": "-1:-1",
+                "fileId": "18446744073709551615",
+                "originalId": "18446744073709551615",
+                "publicId": "18446744073709551615",
+                "source": "",
+                "additional": "",
+                "resources": [
+                    {
+                        "name": "VoiceML Simple Transcribe",
+                        "type": "4",
+                        "subtype": "0",
+                        "resourceId": "43",
+                        "dependency": "0",
+                        "hidden": "false",
+                        "uid": "1648328215222851:29941",
+                        "fileId": "55",
+                        "originalId": "18446744073709551615",
+                        "publicId": "1006",
+                        "source": "\/Users\/gsmac31\/Git\/SnapLensStudio-CodeSnippets\/VoiceML Simple Transcribe\/VoiceML Simple Transcribe.js",
+                        "additional": ""
+                    },
+                    {
+                        "name": "VoiceML Module",
+                        "type": "33",
+                        "subtype": "0",
+                        "resourceId": "44",
+                        "dependency": "0",
+                        "hidden": "false",
+                        "uid": "1648328220919898:30874",
+                        "fileId": "18446744073709551615",
+                        "originalId": "18446744073709551615",
+                        "publicId": "18446744073709551615",
+                        "source": "",
+                        "additional": ""
+                    },
+                    {
+                        "name": "Other",
+                        "type": "0",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "0",
+                        "hidden": "false",
+                        "uid": "-1:-1",
+                        "fileId": "18446744073709551615",
+                        "originalId": "18446744073709551615",
+                        "publicId": "1007",
+                        "source": "",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "Render Target",
+                                "type": "1",
+                                "subtype": "1",
+                                "resourceId": "1",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1:1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Device Camera Texture",
+                                "type": "1",
+                                "subtype": "3",
+                                "resourceId": "2",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "2:2",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Physics Root World Settings",
+                                "type": "36",
+                                "subtype": "1",
+                                "resourceId": "12",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "8675309:9035768",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "InspectorController": {
+            "selection": ""
+        },
+        "EffectsController": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "10": "",
+            "11": "",
+            "12": "",
+            "13": "",
+            "14": "",
+            "15": "",
+            "16": "",
+            "17": "",
+            "18": "",
+            "19": "",
+            "20": "",
+            "22": "",
+            "23": "",
+            "24": "",
+            "25": "",
+            "26": "",
+            "27": "",
+            "28": "",
+            "29": "",
+            "30": "",
+            "31": "",
+            "32": ""
+        },
+        "ObjectPrefabController": {
+            "state": {
+                "objectToInfo": ""
+            },
+            "importInfo": ""
+        },
+        "Compression::IController": {
+            "new_compression_info": ""
+        },
+        "AssetLibController": {
+            "itemUidToID": [
+                {
+                    "k": "1648328164169940:11007",
+                    "v": "42pxn1WgYTi2M1gRBtlfuq"
+                }
+            ]
+        }
+    },
+    "templateName": "Empty Project",
+    "templateUrl": "Lens Studio version 4.16.0"
+}
