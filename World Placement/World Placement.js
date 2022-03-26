@@ -16,16 +16,16 @@
 //
 //
 // All possible customizations:
-//	.cameraObject		 	override user's world camera (SceneObject)
-//	.moveObject		 		override sceneobject to animate (SceneObject)
-//	.distanceFromCamera		distance, world units (cm, Number)
-//	.height		 			height offset, world units (cm, Number)
-//	.duration		 		animation length (s, Number)
-//	.spherical		 		use look-at position instead of eye-height (Bool)
-//	.callback		 		function to call on animation end (Function)
-//	.easeFunction		 	animation interpolation, any Tween function works! "Cubic", "Elastic", etc (String)
-//	.easeType		 		animation interpolation type: "In", "Out", or "InOut" (String)
-//	.start()	 			begin animation
+//	.cameraObject		 	The SceneObject of the camera to move the object to.
+//	.moveObject		 		The SceneObject to move to the user's visible space.
+//	.distanceFromCamera		Distance from camera (world units, cm). Default is 100.
+//	.height		 			Height offset (world units, cm). Default is 0.
+//	.duration		 		Length of animation (s). Default is 0.5.
+//	.spherical		 		Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'.
+//	.callback		 		Function to call on animation end.
+//	.easeFunction		 	Animation curve. Default is "Cubic". All Tween functions work ("Linear", "Elastic", etc)!
+//	.easeType		 		Determines where curve is applied. Default is "Out". All possible input types: "In", "Out", "InOut".
+//	.start()	 			Starts the animation.
 
 
 
