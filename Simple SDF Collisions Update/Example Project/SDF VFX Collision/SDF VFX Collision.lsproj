@@ -1,0 +1,953 @@
+{
+    "lens_id": "",
+    "document_id": "Rq80z_EXlBiFiD60yXMa",
+    "original_document_id": "1X3GVco2D5pSpWIBzC1j",
+    "version": "29",
+    "lastChanged": "1649366154092",
+    "preview": "icon.png",
+    "videoPreview": "preview.mp4",
+    "videoPreviewUpdateTime": "",
+    "isReadOnly": "false",
+    "isAutoSaved": "false",
+    "api_level": "public",
+    "public_api_user_data_access": "unrestricted",
+    "studioVersion": {
+        "createdWith": {
+            "type": "Public",
+            "major": "4",
+            "minor": "13",
+            "patch": "0",
+            "build": "0"
+        },
+        "lastSavedWith": {
+            "type": "Public",
+            "major": "4",
+            "minor": "16",
+            "patch": "1",
+            "build": "0"
+        }
+    },
+    "view": {
+        "ResourceUiComponent": {
+            "collapsedList": [
+                [
+                    [
+                        "Other"
+                    ],
+                    [
+                        "Other",
+                        "Device Camera Texture"
+                    ],
+                    [
+                        "Other",
+                        "Physics Root World Settings"
+                    ],
+                    [
+                        "Other",
+                        "Render Target"
+                    ],
+                    [
+                        "Particles"
+                    ],
+                    [
+                        "Particles",
+                        "Box"
+                    ],
+                    [
+                        "Particles",
+                        "Box SDF"
+                    ],
+                    [
+                        "Particles",
+                        "Invisible Mesh"
+                    ],
+                    [
+                        "Particles",
+                        "Particles In Light Beam"
+                    ],
+                    [
+                        "Particles",
+                        "SDF Update Simple"
+                    ]
+                ]
+            ]
+        },
+        "SceneTreeUiComponent": {
+            "collapsedList": [
+                ""
+            ],
+            "selectionSetList": ""
+        },
+        "MetaInfoUIComponent": {
+            "icon_hash": "56814dbefc6c60009fe6066406087653",
+            "icon_path": "icon.png",
+            "hints": [
+                ""
+            ],
+            "lens": "SDF VFX Collision",
+            "applicability": "3",
+            "lens_descriptors": "",
+            "Spectacles2021UseAllowed": "false"
+        },
+        "PreviewUiComponent": {
+            "preview_descriptor": {
+                "is_capture": "0",
+                "camera_type": "2"
+            },
+            "show_snap_ui": "true",
+            "show_sponsored_ui": "false",
+            "preview_images_project_config": {
+                "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",
+                "back_preview_is_favorite": "false",
+                "front_preview_id": "bundle:Preview\/Images\/Person 1.jpg",
+                "front_preview_is_favorite": "false",
+                "spectacles_preview_id": "bundle:Preview\/Images\/Pavement\/Pavement.jpg",
+                "spectacles_preview_is_favorite": "false"
+            },
+            "preview_videos_project_config": {
+                "back_preview_id": "bundle:Preview\/Videos\/Beach.webm",
+                "back_preview_is_favorite": "false",
+                "front_preview_id": "bundle:Preview\/Videos\/Idle Person 1.webm",
+                "front_preview_is_favorite": "false",
+                "spectacles_preview_id": "",
+                "spectacles_preview_is_favorite": "false"
+            },
+            "preview_ie_project_config": {
+                "back_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
+                "back_preview_is_favorite": "false",
+                "front_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
+                "front_preview_is_favorite": "false",
+                "spectacles_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
+                "spectacles_preview_is_favorite": "false"
+            }
+        },
+        "InspectorUiComponent": {
+            "collapsedList": [
+                ""
+            ]
+        },
+        "ObjectTracking3DUIComponent": {
+            "foldedOwnerSceneObjects": ""
+        },
+        "Material::UiComponent": {
+            "active_graph_asset": "1643896759105365:100552"
+        },
+        "Script::UiComponent": {
+            "active_graph_asset": "-1:-1"
+        },
+        "VFX::UiComponent": {
+            "active_graph_asset": "1643883512690238:12633"
+        }
+    },
+    "model": {
+        "IResourceManager": {
+            "list": [
+                {
+                    "resId": "1",
+                    "uid": "1:1",
+                    "name": "Camera Output",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "2",
+                    "uid": "2:2",
+                    "name": "Camera Input",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "12",
+                    "uid": "8675309:9035768",
+                    "name": "Physics Root World Settings Asset",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "0"
+                },
+                {
+                    "resId": "13",
+                    "uid": "1643883512690238:12633",
+                    "name": "Files\/File8",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "14",
+                    "uid": "1643883512745270:12692",
+                    "name": "Files\/File10",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "15",
+                    "uid": "1643883512772296:12705",
+                    "name": "Files\/File12",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "16",
+                    "uid": "1643883512793778:12722",
+                    "name": "Files\/File14",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "17",
+                    "uid": "1643883512820477:12739",
+                    "name": "Files\/File16.js",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "18",
+                    "uid": "1643883688566201:33531",
+                    "name": "Files\/File17.js",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "22",
+                    "uid": "1643896759105365:100552",
+                    "name": "Files\/File30",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "23",
+                    "uid": "1649365835888779:210926",
+                    "name": "Files\/File34.mesh",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                },
+                {
+                    "resId": "24",
+                    "uid": "1649365857288660:213672",
+                    "name": "Files\/File36.png",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
+                }
+            ],
+            "MaterialUpdateManager": {
+                "unrecognizedMaterials": ""
+            }
+        },
+        "InspectorComponent": {
+            "Component": {
+                "EyeColorVisual": {
+                    "uidData": "",
+                    "generalData": ""
+                },
+                "FaceStretchVisual": {
+                    "uidsToFeatureNamesWithIntensity": ""
+                },
+                "ScreenTransform": {
+                    "uidData": "",
+                    "generalData": ""
+                }
+            }
+        },
+        "RenderOrderComponent": {
+            "autoRenderOrder": {
+                "0": "1643883633777660:26953",
+                "1": "1643896359489991:44361",
+                "2": "1649365912982587:220267"
+            }
+        },
+        "LayerComponent": {
+            "nextLayerId": "2",
+            "showOrthographicLayer": "false",
+            "layersInfo": [
+                {
+                    "layerId": "0",
+                    "layerName": "Default Layer",
+                    "layerMask": "1",
+                    "colorCode": "20"
+                },
+                {
+                    "layerId": "1",
+                    "layerName": "Orthographic Layer",
+                    "layerMask": "1048576",
+                    "colorCode": "21"
+                }
+            ]
+        },
+        "IFileManager": {
+            "pathes": [
+                {
+                    "k": "8",
+                    "v": "Files\/File8"
+                },
+                {
+                    "k": "9",
+                    "v": "Files\/File9.lsvfx"
+                },
+                {
+                    "k": "10",
+                    "v": "Files\/File10"
+                },
+                {
+                    "k": "11",
+                    "v": "Files\/File11.lsmat"
+                },
+                {
+                    "k": "12",
+                    "v": "Files\/File12"
+                },
+                {
+                    "k": "13",
+                    "v": "Files\/File13.lsmat"
+                },
+                {
+                    "k": "14",
+                    "v": "Files\/File14"
+                },
+                {
+                    "k": "15",
+                    "v": "Files\/File15.lsmat"
+                },
+                {
+                    "k": "16",
+                    "v": "Files\/File16.js"
+                },
+                {
+                    "k": "17",
+                    "v": "Files\/File17.js"
+                },
+                {
+                    "k": "30",
+                    "v": "Files\/File30"
+                },
+                {
+                    "k": "31",
+                    "v": "Files\/File31.lsmat"
+                },
+                {
+                    "k": "34",
+                    "v": "Files\/File34.mesh"
+                },
+                {
+                    "k": "35",
+                    "v": "Files\/File35.mesh"
+                },
+                {
+                    "k": "36",
+                    "v": "Files\/File36.png"
+                },
+                {
+                    "k": "37",
+                    "v": "Files\/File37.png"
+                },
+                {
+                    "k": "38",
+                    "v": "Files\/File38.png"
+                }
+            ]
+        },
+        "RemoteApi::ModelManager": {
+            "api_specs": ""
+        },
+        "WorldComponent": {
+            "sceneFile": "scene.scn",
+            "sceneType": "binaryScene"
+        }
+    },
+    "controller": {
+        "IResourceController": {
+            "public": {
+                "pathes": [
+                    {
+                        "k": "969",
+                        "v": "Particles\/Particles In Light Beam.lsvfx"
+                    },
+                    {
+                        "k": "970",
+                        "v": "Particles\/SDF Update Simple.js"
+                    },
+                    {
+                        "k": "972",
+                        "v": "Particles"
+                    },
+                    {
+                        "k": "973",
+                        "v": "Other"
+                    },
+                    {
+                        "k": "975",
+                        "v": "Particles\/Invisible Mesh.lsmat"
+                    },
+                    {
+                        "k": "27795",
+                        "v": "Particles\/Box.mesh"
+                    },
+                    {
+                        "k": "27796",
+                        "v": "Particles\/Box SDF.png"
+                    }
+                ],
+                "hashes": [
+                    {
+                        "k": "1",
+                        "v": "671afbc1d6810060ccbaac866a91cfa1"
+                    },
+                    {
+                        "k": "2",
+                        "v": "8e599835d0d45c5879eafb1f474469cd"
+                    },
+                    {
+                        "k": "967",
+                        "v": "0cf0e87a54f33218fcf92a12d7f0ede2"
+                    },
+                    {
+                        "k": "968",
+                        "v": "8ff44ec074f0d7502c6f4c3c7e0cab81"
+                    },
+                    {
+                        "k": "969",
+                        "v": "9d218ce1a1a9fb74dda6e18b296e79f9"
+                    },
+                    {
+                        "k": "970",
+                        "v": "29c4caec977b02d2e23fd188c3e6021b"
+                    },
+                    {
+                        "k": "971",
+                        "v": "10aa6d4b8e02ea5a68780d4cfbf05cec"
+                    },
+                    {
+                        "k": "974",
+                        "v": "60cfd11103091e39832a423eb4737936"
+                    },
+                    {
+                        "k": "975",
+                        "v": "2bd3a7618ed76417522fc11d1c05762a"
+                    },
+                    {
+                        "k": "27795",
+                        "v": "621da74e06cc402b895f39376927a9d1"
+                    },
+                    {
+                        "k": "27796",
+                        "v": "9227a410643f856a581cdfa9dae386af"
+                    }
+                ],
+                "publicState": {
+                    "tree": {
+                        "isFolder": "true",
+                        "lastModified": "2022-04-07T23:14:40",
+                        "name": "Public",
+                        "hash": "6e21471ec6737f7765a40918aee248c8",
+                        "children": [
+                            {
+                                "isFolder": "true",
+                                "lastModified": "2022-04-07T23:14:40",
+                                "name": "Other",
+                                "hash": "59adb24ef3cdbe0297f05b395827453f",
+                                "children": [
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-02-03T11:23:01",
+                                        "name": "folder.lock",
+                                        "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                        "children": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "isFolder": "true",
+                                "lastModified": "2022-04-07T23:15:50",
+                                "name": "Particles",
+                                "hash": "940cdbc6d3c45964bc21d0dc76d4c256",
+                                "children": [
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-04-07T23:15:50",
+                                        "name": "Particles In Light Beam.lsvfx",
+                                        "hash": "6b84f922c9aa3e868ceda83308aca995",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-04-07T23:15:25",
+                                        "name": "SDF Update Simple.js",
+                                        "hash": "29c4caec977b02d2e23fd188c3e6021b",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-03-25T04:09:57",
+                                        "name": "Box.mesh",
+                                        "hash": "621da74e06cc402b895f39376927a9d1",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-04-07T23:15:50",
+                                        "name": "Invisible Mesh.lsmat",
+                                        "hash": "420277646999ab34a6e5ac330bff2b25",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-04-07T23:10:57",
+                                        "name": "Box SDF.png",
+                                        "hash": "9227a410643f856a581cdfa9dae386af",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-02-03T11:22:47",
+                                        "name": "folder.lock",
+                                        "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                        "children": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2022-01-24T18:34:45",
+                                "name": "folder.lock",
+                                "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                "children": ""
+                            }
+                        ]
+                    }
+                },
+                "complexResources": ""
+            },
+            "tree": {
+                "name": "",
+                "type": "0",
+                "subtype": "-1",
+                "resourceId": "-1",
+                "dependency": "0",
+                "hidden": "false",
+                "uid": "-1:-1",
+                "fileId": "18446744073709551615",
+                "originalId": "18446744073709551615",
+                "publicId": "18446744073709551615",
+                "source": "",
+                "additional": "",
+                "resources": [
+                    {
+                        "name": "Particles",
+                        "type": "0",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "0",
+                        "hidden": "false",
+                        "uid": "-1:-1",
+                        "fileId": "18446744073709551615",
+                        "originalId": "18446744073709551615",
+                        "publicId": "972",
+                        "source": "",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "Particles In Light Beam",
+                                "type": "23",
+                                "subtype": "0",
+                                "resourceId": "13",
+                                "dependency": "2",
+                                "hidden": "false",
+                                "uid": "1643883512690238:12633",
+                                "fileId": "8",
+                                "originalId": "9",
+                                "publicId": "969",
+                                "source": "",
+                                "additional": {
+                                    "isUnpackedInPublic": "false"
+                                },
+                                "resources": [
+                                    {
+                                        "name": "System 39",
+                                        "type": "0",
+                                        "subtype": "-1",
+                                        "resourceId": "-1",
+                                        "dependency": "1",
+                                        "hidden": "true",
+                                        "uid": "-1:-1",
+                                        "fileId": "18446744073709551615",
+                                        "originalId": "18446744073709551615",
+                                        "publicId": "18446744073709551615",
+                                        "source": "",
+                                        "additional": {
+                                            "system_id": "39"
+                                        },
+                                        "resources": [
+                                            {
+                                                "name": "Rendering",
+                                                "type": "2",
+                                                "subtype": "0",
+                                                "resourceId": "14",
+                                                "dependency": "1",
+                                                "hidden": "true",
+                                                "uid": "1643883512745270:12692",
+                                                "fileId": "10",
+                                                "originalId": "11",
+                                                "publicId": "18446744073709551615",
+                                                "source": "",
+                                                "additional": ""
+                                            },
+                                            {
+                                                "name": "Feedback",
+                                                "type": "2",
+                                                "subtype": "0",
+                                                "resourceId": "15",
+                                                "dependency": "1",
+                                                "hidden": "true",
+                                                "uid": "1643883512772296:12705",
+                                                "fileId": "12",
+                                                "originalId": "13",
+                                                "publicId": "18446744073709551615",
+                                                "source": "",
+                                                "additional": ""
+                                            },
+                                            {
+                                                "name": "Simulation",
+                                                "type": "2",
+                                                "subtype": "0",
+                                                "resourceId": "16",
+                                                "dependency": "1",
+                                                "hidden": "true",
+                                                "uid": "1643883512793778:12722",
+                                                "fileId": "14",
+                                                "originalId": "15",
+                                                "publicId": "18446744073709551615",
+                                                "source": "",
+                                                "additional": ""
+                                            },
+                                            {
+                                                "name": "Managing",
+                                                "type": "4",
+                                                "subtype": "0",
+                                                "resourceId": "17",
+                                                "dependency": "1",
+                                                "hidden": "true",
+                                                "uid": "1643883512820477:12739",
+                                                "fileId": "16",
+                                                "originalId": "18446744073709551615",
+                                                "publicId": "18446744073709551615",
+                                                "source": "\/Users\/gsmac31\/Library\/Caches\/Snap\/Lens Studio\/temp\/StudioBBAIvyhwtirW\/\/system\/\/emergencyFiles\/emergencyJs.js",
+                                                "additional": ""
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "SDF Update Simple",
+                                "type": "4",
+                                "subtype": "0",
+                                "resourceId": "18",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1643883688566201:33531",
+                                "fileId": "17",
+                                "originalId": "18446744073709551615",
+                                "publicId": "970",
+                                "source": "\/Users\/gsmac31\/Git\/dev-snippets-tricks-and-information\/Lens Studio\/Script\/Modules\/SDF Collisions Update Simple.js",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Invisible Mesh",
+                                "type": "2",
+                                "subtype": "1",
+                                "resourceId": "22",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1643896759105365:100552",
+                                "fileId": "30",
+                                "originalId": "31",
+                                "publicId": "975",
+                                "source": "",
+                                "additional": {
+                                    "isUnpackedInPublic": "false"
+                                }
+                            },
+                            {
+                                "name": "Box",
+                                "type": "3",
+                                "subtype": "0",
+                                "resourceId": "23",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1649365835888779:210926",
+                                "fileId": "34",
+                                "originalId": "18446744073709551615",
+                                "publicId": "27795",
+                                "source": "\/Applications\/Lens Studio public release.app\/Contents\/MacOS\/\/..\/Resources\/Studio3DResources.bundle\/\/meshes\/Box.mesh",
+                                "additional": {
+                                    "info": {
+                                        "vertexAttribs": [
+                                            {
+                                                "semantic": "position",
+                                                "format": "9",
+                                                "canBeDisabled": "false"
+                                            },
+                                            {
+                                                "semantic": "normal",
+                                                "format": "9",
+                                                "canBeDisabled": "true"
+                                            },
+                                            {
+                                                "semantic": "tangent",
+                                                "format": "9",
+                                                "canBeDisabled": "true"
+                                            },
+                                            {
+                                                "semantic": "color",
+                                                "format": "3",
+                                                "canBeDisabled": "true"
+                                            },
+                                            {
+                                                "semantic": "texture0",
+                                                "format": "9",
+                                                "canBeDisabled": "true"
+                                            }
+                                        ],
+                                        "hasBlendShapes": "false"
+                                    }
+                                }
+                            },
+                            {
+                                "name": "Box SDF",
+                                "type": "1",
+                                "subtype": "21",
+                                "resourceId": "24",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1649365857288660:213672",
+                                "fileId": "36",
+                                "originalId": "37",
+                                "publicId": "27796",
+                                "source": "\/Users\/gsmac31\/Library\/Caches\/Snap\/Lens Studio\/temp\/StudioVTBMuLUEYvqN\/\/Box SDF.png",
+                                "additional": {
+                                    "originHash": "9227a410643f856a581cdfa9dae386af"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Other",
+                        "type": "0",
+                        "subtype": "-1",
+                        "resourceId": "-1",
+                        "dependency": "0",
+                        "hidden": "false",
+                        "uid": "-1:-1",
+                        "fileId": "18446744073709551615",
+                        "originalId": "18446744073709551615",
+                        "publicId": "973",
+                        "source": "",
+                        "additional": "",
+                        "resources": [
+                            {
+                                "name": "Render Target",
+                                "type": "1",
+                                "subtype": "1",
+                                "resourceId": "1",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1:1",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Device Camera Texture",
+                                "type": "1",
+                                "subtype": "3",
+                                "resourceId": "2",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "2:2",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Physics Root World Settings",
+                                "type": "36",
+                                "subtype": "1",
+                                "resourceId": "12",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "8675309:9035768",
+                                "fileId": "18446744073709551615",
+                                "originalId": "18446744073709551615",
+                                "publicId": "18446744073709551615",
+                                "source": "",
+                                "additional": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "InspectorController": {
+            "selection": ""
+        },
+        "EffectsController": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "10": "",
+            "11": "",
+            "12": "",
+            "13": "",
+            "14": "",
+            "15": "",
+            "16": "",
+            "17": "",
+            "18": "",
+            "19": "",
+            "20": "",
+            "22": "",
+            "23": "",
+            "24": "",
+            "25": "",
+            "26": "",
+            "27": "",
+            "28": "",
+            "29": "",
+            "30": "",
+            "31": "",
+            "32": ""
+        },
+        "ObjectPrefabController": {
+            "state": {
+                "objectToInfo": ""
+            },
+            "importInfo": [
+                {
+                    "k": "1643883748811101:40804",
+                    "v": [
+                        {
+                            "k": "",
+                            "v": "1643883748809588:40788"
+                        },
+                        {
+                            "k": [
+                                "Cube"
+                            ],
+                            "v": "1643883748809976:40790"
+                        },
+                        {
+                            "k": [
+                                "Cube",
+                                "Component.RenderMeshVisual"
+                            ],
+                            "v": "1643883748810200:40792"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Compression::IController": {
+            "new_compression_info": [
+                {
+                    "k": "1649365835888779:210926",
+                    "v": {
+                        "infos": {
+                            "originalSize": "794",
+                            "compressedSize": "794",
+                            "originalRAM": "1320",
+                            "compressedRAM": "1320",
+                            "extension": "mesh",
+                            "settings": {
+                                "isCompressed": "false",
+                                "info": {
+                                    "vertexAttribs": [
+                                        {
+                                            "semantic": "position",
+                                            "format": "9",
+                                            "canBeDisabled": "false"
+                                        },
+                                        {
+                                            "semantic": "normal",
+                                            "format": "9",
+                                            "canBeDisabled": "true"
+                                        },
+                                        {
+                                            "semantic": "tangent",
+                                            "format": "9",
+                                            "canBeDisabled": "true"
+                                        },
+                                        {
+                                            "semantic": "color",
+                                            "format": "3",
+                                            "canBeDisabled": "true"
+                                        },
+                                        {
+                                            "semantic": "texture0",
+                                            "format": "9",
+                                            "canBeDisabled": "true"
+                                        }
+                                    ],
+                                    "hasBlendShapes": "false"
+                                },
+                                "type": "0",
+                                "attributeFormat": "",
+                                "draco": {
+                                    "posBits": "11",
+                                    "texBits": "10",
+                                    "normalBits": "8",
+                                    "colorBits": "8",
+                                    "compressLvl": "7"
+                                }
+                            }
+                        },
+                        "uncompressed_file": "35",
+                        "compressed_files": ""
+                    }
+                },
+                {
+                    "k": "1649365857288660:213672",
+                    "v": {
+                        "infos": {
+                            "originalSize": "8469",
+                            "compressedSize": "8469",
+                            "originalRAM": "25760",
+                            "compressedRAM": "25760",
+                            "extension": "png",
+                            "settings": {
+                                "isCompressed": "false",
+                                "level": "0",
+                                "type": "0",
+                                "subtype": "21"
+                            }
+                        },
+                        "uncompressed_file": "38",
+                        "compressed_files": ""
+                    }
+                }
+            ]
+        },
+        "AssetLibController": {
+            "itemUidToID": ""
+        }
+    },
+    "templateName": "Empty Project",
+    "templateUrl": "Lens Studio version 4.13.0"
+}
