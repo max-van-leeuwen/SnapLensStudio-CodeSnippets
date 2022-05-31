@@ -20,3 +20,5 @@ Contents:
   - Lightweight setup to get the VoiceML transcription of the user's microphone.
 - World Placement
   - Make an object follow the user's gaze, with nice animations. Useful for 3D UI elements in the Spectacles.
+- LSQuickScripts
+  - My 'cheatsheet' collection of snippets and automations of everyday tasks. I always have this in every project I do, all features explained at the top of this script in the comments.
