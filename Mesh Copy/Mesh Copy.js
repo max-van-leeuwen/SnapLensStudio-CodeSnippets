@@ -4,7 +4,7 @@
 // Returns the MeshBuilder object.
 //
 // How to use:
-//	global.makeMeshCopy( <Mesh Asset [Asset.RenderMesh]>, <Normals [bool] (optional, default False)>, <UVs [bool] (optional, default True)> )
+//	global.makeMeshCopy( <Mesh Asset [Asset.RenderMesh]>, <Normals [bool] (optional, default True)>, <UVs [bool] (optional, default True)> )
 //
 // Example:
 //	var newMeshBuilder = global.makeMeshCopy(script.renderMesh, true, true); // copies normals and UVs too
