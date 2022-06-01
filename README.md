@@ -18,6 +18,8 @@ Contents:
   - Simple function that samples the color of a (live) texture.
 - VoiceML Simple Transcribe
   - Lightweight setup to get the VoiceML transcription of the user's microphone.
+- Portal
+  - Super simple way of making a portal out of a mesh (it calls your callback function when the user walks through it)
 - World Placement
   - Make an object follow the user's gaze, with nice animations. Useful for 3D UI elements in the Spectacles.
 - LSQuickScripts
