@@ -1,32 +1,43 @@
 // Max van Leeuwen
 //
-// Check if user has walked through a portal
+// Check if user has walked through a portal.
 
 
 
-script.api.start = startPortal; // arg: callback(isInPortal [bool]) function that is called when the user crossed the portal
-script.api.stop = stopPortal; // stops active portal check (if any)
+// Super easy to use. In the Inspector, simply assign the User (camera) and the Portal (Render Mesh Visual).
+// To change which way the opening is, use 'flip'.
+// To visualize the size of the portal, use 'visualize'.
+//
+// To make something happen when the user walks through the portal, use this code from any other script in your project:
+//	function walkedThroughPortal( isInPortal ){
+//		print("User is in portal: " + isInPortal.toString());
+//	}
+//	global.portal.start = walkedThroughPortal;
+//
+// Now, 'walkedThroughPortal' is called with argument 'isInPortal' (bool) indicating if the user is currently in the portal.
+//
+// To stop the portal, use:
+//	global.portal.stop();
 
 
 
-//@ui {"widget":"label", "label":""}
+
+
+
 //@input bool flip
 
 //@ui {"widget":"label", "label":""}
 //@input SceneObject user
 //@input Component.RenderMeshVisual portal
 
-//@ui {"widget":"label", "label":""}
-//@input bool visualize
-//@input SceneObject unitSphere {"showIf":"visualize"}
 
 
-
+global.portal = {};
 var portalEvent;
 
 
 
-function startPortal(callback){
+global.portal.start = function(callback){
 	var portalTrf = script.portal.getTransform();
 	var userTrf = script.user.getTransform();
 
@@ -40,14 +51,8 @@ function startPortal(callback){
 		var portalTrm = portalTrf.getWorldTransform();
 		var portalMin = portalTrm.multiplyPoint(portalLocalMin); // oriented corners on mesh
 		var portalMax = portalTrm.multiplyPoint(portalLocalMax); // ...
-		var portalCenter = script.portal.worldAabbMax().sub(script.portal.worldAabbMin()).uniformScale(1/2).add(script.portal.worldAabbMin()); // center based on mesh bounding box
-		var sphereScale = portalMin.distance(portalMax)/2; // scale based on mesh bounding box
-
-		// visualizing sphere for debugging
-		if(script.visualize){
-			script.unitSphere.getTransform().setWorldPosition(portalCenter);
-			script.unitSphere.getTransform().setWorldScale(vec3.one().uniformScale(sphereScale));
-		}
+		var portalCenter = script.portal.worldAabbMax().sub(script.portal.worldAabbMin()).uniformScale(.5).add(script.portal.worldAabbMin()); // center based on mesh bounding box
+		var sphereScale = portalMin.distance(portalMax)/2; // active radius around portal based on mesh bounding box
 
 		// check if user is in sphere region, if not stop here
 		var userPos = userTrf.getWorldPosition();
@@ -79,7 +84,7 @@ function startPortal(callback){
 
 
 
-function stopPortal(){
+global.portal.stop = function(){
 	if(portalEvent){
 		script.removeEvent(portalEvent);
 		portalEvent = null;
