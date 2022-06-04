@@ -51,9 +51,9 @@
 // -
 //
 //
-// global.interp(t [Number], startValue [Number], endValue [Number], easing (optional) [string], type (optional) [string], unclamped (optional) [bool]) : Number
+// global.interp(startValue [Number], endValue [Number], t [Number], easing (optional) [string], type (optional) [string], unclamped (optional) [bool]) : Number
 // 	Returns the value of t interpolated using Tween functions between the start and end values. Set the easing function and type (optional) by string, use the below list as reference.
-//	Only using t, startValue and endValue is identical to a linear (unclamped) lerp.
+//	Using only startValue, endValue, and t, is identical to a linear (unclamped) lerp.
 // 
 // 		Easing:
 // 			Linear (default)
@@ -74,8 +74,8 @@
 // 			Out
 //
 // 		Examples:
-// 			global.interp(0.1, 0, 1, "Elastic", "In");
-// 			global.interp(x, -5, 5, "Cubic");
+// 			global.interp(0, 1, 0.1, "Elastic", "In");
+// 			global.interp(-5, 5, x, "Cubic");
 //
 //
 //
@@ -568,7 +568,7 @@ var easingFunctions = {
 
 
 
-global.interp = function(t, startValue, endValue, easing, type, unclamped){
+global.interp = function(startValue, endValue, t, easing, type, unclamped){
 	// set defaults
 	if(typeof easing === 'undefined'){ // if no easing, return linear remap (lerp)
 		return global.clamp(t, 0, 1) * (endValue-startValue) + startValue;
@@ -705,8 +705,8 @@ global.AnimateProperty = function(){
 	 * @type {Function} 
 	 * @description Stop the animation at its current time. With an optional argument to skip calling the endFunction (it is called by default). */
 	this.stop = function(doNotCallEndFunction){
-		if(isPlaying && !doNotCallEndFunction) self.endFunction(); // only call endFunction if an animation was stopped
 		stopAnimEvent();
+		if(isPlaying && !doNotCallEndFunction) self.endFunction(); // only call endFunction if an animation was stopped
 	}
 
 
@@ -737,7 +737,7 @@ global.AnimateProperty = function(){
 	}
 
 	function getInterpolated(){
-		return global.interp(self.timeRatio, 0, 1, self.easeFunction, getEaseType());
+		return global.interp(0, 1, self.timeRatio, self.easeFunction, getEaseType());
 	}
 	
 	function startAnimEvent(){
