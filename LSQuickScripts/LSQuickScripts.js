@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v1.6"}
+//@ui {"widget":"label", "label":"LSQuickScripts v1.7"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')."}
@@ -91,6 +91,8 @@
 //			anim.updateFunction = function(v){ print(v); };		// Function to call on each animation frame, with animation value (0-1) as its first argument.
 //			anim.endFunction = function(){};					// Function to call on animation end.
 //			anim.duration = 1;									// Duration in seconds. Default is 1.
+//			anim.reverseDuration = 1;							// Duration in seconds when reversed. If no value assigned, default is equal to duration.
+//			anim.delay = 0;										// Delay after starting animation. Only when animation is not set to reversed. Default is 0.
 //			anim.easeFunction = "Cubic";						// Determines curve. Default is "Cubic", all Tween functions can be used!
 //			anim.easeType = "InOut";							// Determines how animation curve is applied. Default is "InOut". All possible inputs: "In", "Out", "InOut".
 //			anim.pulse(newTimeRatio);							// Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
@@ -99,7 +101,7 @@
 //			anim.getReversed();									// Returns true if the animation is currently reversed.
 //			anim.isPlaying;										// Returns true if the animation is currently playing.
 //			anim.start(newTimeRatio); 							// Starts the animation. Does not call endFunction if an animation is still playing. Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
-//			anim.stop(doNotCallEndFunction);					// Stop the animation at its current time. With an optional argument to skip calling the endFunction (it is called by default).
+//			anim.stop(callEndFunction);							// Stop the animation at its current time. With an optional argument to call the endFunction (bool).
 //
 //
 //
@@ -328,8 +330,17 @@
 // -
 //
 //
-// globa.median(arr [Array]) : Number
+// global.median(arr [Array]) : Number
 //	Takes an array of Numbers, and returns the median value.
+//
+//
+//
+// -
+//
+//
+// global.lookAtUp(posA [vec3], posB [vec3], offset) : quat
+//	Takes two positions, returns the look-at rotation for A to look at B with Y axis locked. Useful when objects have to face the user, but they are not allowed to rotate facing up or down.
+//	Use the optional 'offset' for a 0 - 2PI rotation offset.
 //
 //
 //
@@ -621,6 +632,16 @@ global.AnimateProperty = function(){
 	 * @description Duration in seconds. Default is 1. */
 	this.duration = 1;
 
+	/**
+	 * @type {Number}
+	 * @description Reverse duration in seconds. Default is equal to duration. */
+	this.reverseDuration;
+
+	/**
+	 * @type {Number}
+	 * @description Delay after starting animation. Only when animation is not set to reversed. Default is 0. */
+	 this.delay = 0;
+
     /**
 	 * @type {String}
 	 * @description Determines curve. Default is "Cubic".
@@ -693,20 +714,35 @@ global.AnimateProperty = function(){
 	/**
 	 * @type {Function} 
 	 * @argument {Number} atTime
-	 * @description Starts the animation. Does not call endFunction if an animation is still playing. Optional 'atTime' argument starts at normalized linear 0-1 time ratio. */
+	 * @description Starts the animation. Optional 'atTime' argument starts at normalized linear 0-1 time ratio. */
 	this.start = function(newTimeRatio){
-		if(newTimeRatio || newTimeRatio === 0) self.pulse(newTimeRatio);
-		animation();
-		startAnimEvent();
-		if(self.startFunction) self.startFunction();
+		stopDelayedStart();
+
+		function begin(){
+			if(newTimeRatio || newTimeRatio === 0) self.pulse(newTimeRatio);
+			updateDuration();
+			animation();
+			startAnimEvent();
+			if(self.startFunction) self.startFunction();
+		}
+
+		isPlaying = true;
+
+		if(self.delay > 0 && !reversed){ // start after delay (if any)
+			delayedStart = new global.DoDelay(begin)
+			delayedStart.byTime(self.delay);
+		}else{
+			begin();
+		}
 	}
 	
 	/**
 	 * @type {Function} 
-	 * @description Stop the animation at its current time. With an optional argument to skip calling the endFunction (it is called by default). */
-	this.stop = function(doNotCallEndFunction){
+	 * @description Stop the animation at its current time. With an optional argument to call the endFunction (bool). */
+	this.stop = function(callEndFunction){
 		stopAnimEvent();
-		if(isPlaying && !doNotCallEndFunction) self.endFunction(); // only call endFunction if an animation was stopped
+		var atAnimationEnd = (self.timeRatio === 0 && reversed) || (self.timeRatio === 1 && !reversed);
+		if(callEndFunction || atAnimationEnd) self.endFunction(); // only call endFunction if an animation was stopped at end
 	}
 
 
@@ -715,21 +751,27 @@ global.AnimateProperty = function(){
 	var animEvent;
 	var reversed = false;
 	var isPlaying = false;
+	var delayedStart;
+	var duration;
 
 	function setValue(v){
 		self.updateFunction(v);
 	}
+
+	function updateDuration(){
+		duration = reversed ? (typeof self.reverseDuration === 'number' ? self.reverseDuration : self.duration) : self.duration; // set duration, checks if reversed is unique otherwise uses forward duration
+	}
 	
 	function animation(){
-		if(self.duration === 0){ // if instant
+		if(duration === 0){ // if instant
 			self.timeRatio = reversed ? 0 : 1; // exceed allowed range of 0-1 to make the animation stop right away
 		}else{
 			var dir = reversed ? -1 : 1;
-			self.timeRatio += (getDeltaTime() / self.duration) * dir;
+			self.timeRatio += (getDeltaTime() / duration) * dir;
 		}
 		if(reversed ? (self.timeRatio <= 0) : (self.timeRatio >= 1)){ // on last step
 			setValue(reversed ? 0 : 1);
-			self.stop();
+			self.stop(true);
 		}else{ // on animation step
 			var v = getInterpolated();
 			setValue(v);
@@ -742,7 +784,6 @@ global.AnimateProperty = function(){
 	
 	function startAnimEvent(){
 		stopAnimEvent(); // stop currently playing (if any)
-		isPlaying = true;
 		animEvent = script.createEvent("UpdateEvent");
 		animEvent.bind(animation);	
 	}
@@ -753,6 +794,15 @@ global.AnimateProperty = function(){
 			animEvent = null;
 		}
 		isPlaying = false;
+
+		stopDelayedStart();
+	}
+
+	function stopDelayedStart(){
+		if(delayedStart){
+			delayedStart.stop();
+			delayedStart = null;
+		}
 	}
 
 	function getEaseType(){
@@ -1345,6 +1395,15 @@ global.median = function(arr){
     clone.sort();
     var c = Math.floor(clone.length/2);
     return clone.length % 2 === 0 ? clone[c] : (clone[c - 1] + clone[c]) / 2;
+}
+
+
+
+
+global.lookAtUp = function(posA, posB, offset){
+	if(!offset) offset = 0;
+	var angle = Math.atan2(posA.x - posB.x, posA.z - posB.z);
+	return quat.angleAxis(angle + offset, vec3.up());
 }
 
 
