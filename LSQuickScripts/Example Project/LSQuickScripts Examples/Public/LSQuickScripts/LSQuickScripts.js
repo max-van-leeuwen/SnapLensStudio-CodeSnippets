@@ -265,7 +265,7 @@
 // 	Starting and stopping the stopwatch more than once will make it keep track of a moving average! Which is more reliable than measuring just once, as frames in Lens Studio are also dependent on other factors.
 //
 //		Example, showing all properties:
-//			var stopwatch = new global.stopwatch();		// create new stopwatch object
+//			var stopwatch = new global.Stopwatch();		// create new stopwatch object
 //			stopwatch.start();							// starts the stopwatch
 //			// < do something else on this line >
 //			stopwatch.stop();							// stops the stopwatch, prints the results to the console
