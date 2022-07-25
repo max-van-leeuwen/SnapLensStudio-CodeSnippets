@@ -3,7 +3,7 @@
     "document_id": "ZYgoXanC_FmLbHKhx0Dy",
     "original_document_id": "ZYgoXanC_FmLbHKhx0Dy",
     "version": "29",
-    "lastChanged": "1648328804489",
+    "lastChanged": "1658743632818",
     "preview": "icon.png",
     "videoPreview": "preview.mp4",
     "videoPreviewUpdateTime": "",
@@ -22,8 +22,8 @@
         "lastSavedWith": {
             "type": "Public",
             "major": "4",
-            "minor": "16",
-            "patch": "0",
+            "minor": "25",
+            "patch": "1",
             "build": "0"
         }
     },
@@ -33,6 +33,9 @@
                 [
                     [
                         "Other"
+                    ],
+                    [
+                        "Start Transcribing"
                     ],
                     [
                         "VoiceML Module"
@@ -67,25 +70,19 @@
                 "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/Images\/Person 1.jpg",
-                "front_preview_is_favorite": "false",
-                "spectacles_preview_id": "bundle:Preview\/Images\/Pavement\/Pavement.jpg",
-                "spectacles_preview_is_favorite": "false"
+                "front_preview_is_favorite": "false"
             },
             "preview_videos_project_config": {
                 "back_preview_id": "bundle:Preview\/Videos\/Beach.webm",
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/Videos\/Idle Person 1.webm",
-                "front_preview_is_favorite": "false",
-                "spectacles_preview_id": "",
-                "spectacles_preview_is_favorite": "false"
+                "front_preview_is_favorite": "false"
             },
             "preview_ie_project_config": {
                 "back_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
-                "front_preview_is_favorite": "false",
-                "spectacles_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
-                "spectacles_preview_is_favorite": "false"
+                "front_preview_is_favorite": "false"
             }
         },
         "InspectorUiComponent": {
@@ -95,6 +92,9 @@
         },
         "ObjectTracking3DUIComponent": {
             "foldedOwnerSceneObjects": ""
+        },
+        "MapUiComponent": {
+            "mapPinPoints": ""
         },
         "Material::UiComponent": {
             "active_graph_asset": "-1:-1"
@@ -148,6 +148,14 @@
                     "sourceFilePath": "",
                     "additionalProperties": "",
                     "flags": "0"
+                },
+                {
+                    "resId": "45",
+                    "uid": "1658743548330113:1278867",
+                    "name": "Files\/File56.js",
+                    "sourceFilePath": "",
+                    "additionalProperties": "",
+                    "flags": "1"
                 }
             ],
             "MaterialUpdateManager": {
@@ -171,7 +179,8 @@
         },
         "RenderOrderComponent": {
             "autoRenderOrder": {
-                "0": "1648328207748755:28892"
+                "0": "1648328207748755:28892",
+                "1": "1658743532857122:1277887"
             }
         },
         "LayerComponent": {
@@ -197,6 +206,10 @@
                 {
                     "k": "55",
                     "v": "Files\/File55.js"
+                },
+                {
+                    "k": "56",
+                    "v": "Files\/File56.js"
                 }
             ]
         },
@@ -205,7 +218,10 @@
         },
         "WorldComponent": {
             "sceneFile": "scene.scn",
-            "sceneType": "binaryScene"
+            "sceneType": "binaryScene",
+            "hitTestDisabledObjectsList": {
+                "type_name": "array"
+            }
         }
     },
     "controller": {
@@ -219,6 +235,10 @@
                     {
                         "k": "1007",
                         "v": "Other"
+                    },
+                    {
+                        "k": "1655",
+                        "v": "Start Transcribing.js"
                     }
                 ],
                 "hashes": [
@@ -340,25 +360,29 @@
                     },
                     {
                         "k": "1006",
-                        "v": "590b120d5f1406b629423fd9ad0bc00e"
+                        "v": "207d1a75cfc7e0aa1ca06145103620d7"
+                    },
+                    {
+                        "k": "1655",
+                        "v": "057805b1df8adaa7eda180b3dad98e70"
                     }
                 ],
                 "publicState": {
                     "tree": {
                         "isFolder": "true",
-                        "lastModified": "2022-03-26T21:57:04",
+                        "lastModified": "2022-07-25T12:05:53",
                         "name": "Public",
-                        "hash": "c4213333405a2b971bf5df0b0f9afab2",
+                        "hash": "276b0a890d109a7bbb607af9f45b0eea",
                         "children": [
                             {
                                 "isFolder": "true",
-                                "lastModified": "2022-03-26T21:57:02",
+                                "lastModified": "2022-07-18T19:20:53",
                                 "name": "Other",
                                 "hash": "59adb24ef3cdbe0297f05b395827453f",
                                 "children": [
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2022-03-26T21:57:02",
+                                        "lastModified": "2022-07-18T19:20:53",
                                         "name": "folder.lock",
                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                         "children": ""
@@ -367,14 +391,21 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2022-03-26T22:06:09",
-                                "name": "VoiceML Simple Transcribe.js",
-                                "hash": "590b120d5f1406b629423fd9ad0bc00e",
+                                "lastModified": "2022-07-25T12:06:22",
+                                "name": "Start Transcribing.js",
+                                "hash": "057805b1df8adaa7eda180b3dad98e70",
                                 "children": ""
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2022-03-15T05:04:10",
+                                "lastModified": "2022-07-25T12:05:30",
+                                "name": "VoiceML Simple Transcribe.js",
+                                "hash": "207d1a75cfc7e0aa1ca06145103620d7",
+                                "children": ""
+                            },
+                            {
+                                "isFolder": "false",
+                                "lastModified": "2022-07-18T19:20:53",
                                 "name": "folder.lock",
                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                 "children": ""
@@ -483,6 +514,20 @@
                                 "additional": ""
                             }
                         ]
+                    },
+                    {
+                        "name": "Start Transcribing",
+                        "type": "4",
+                        "subtype": "0",
+                        "resourceId": "45",
+                        "dependency": "0",
+                        "hidden": "false",
+                        "uid": "1658743548330113:1278867",
+                        "fileId": "56",
+                        "originalId": "18446744073709551615",
+                        "publicId": "1655",
+                        "source": "\/Users\/max\/Library\/Caches\/Snap\/Lens Studio\/temp\/StudiomWjaBAsZWUwf\/\/system\/\/emergencyFiles\/emergencyJs.js",
+                        "additional": ""
                     }
                 ]
             }
