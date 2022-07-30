@@ -176,7 +176,7 @@
 // -
 //
 //
-// global.clamp(value [Number], low [Number], high [Number]) : Number
+// global.clamp(value [Number], low [Number] (optional, default 0), high [Number] (optional, default 1)) : Number
 // 	Returns the clamped value between the low and high values.
 //
 //
@@ -582,14 +582,14 @@ var easingFunctions = {
 global.interp = function(startValue, endValue, t, easing, type, unclamped){
 	// set defaults
 	if(typeof easing === 'undefined'){ // if no easing, return linear remap (lerp)
-		return global.clamp(t, 0, 1) * (endValue-startValue) + startValue;
+		return global.clamp(t) * (endValue-startValue) + startValue;
 	}
 	if(typeof type === 'undefined'){
 		type = "InOut";
 	}
 
 	// don't overshoot
-	if(!unclamped) t = global.clamp(t, 0, 1);
+	if(!unclamped) t = global.clamp(t);
 
 	// get easing function + type
 	var easingFunction = easingFunctions[easing];
@@ -909,9 +909,9 @@ global.isInBox = function(obj, box){
 
 // @ts-ignore
 global.HSVtoRGB = function(h, s, v){
-	h = global.clamp(h, 0, 1);
-	s = global.clamp(s, 0, 1);
-	v = global.clamp(v, 0, 1);
+	h = global.clamp(h);
+	s = global.clamp(s);
+	v = global.clamp(v);
 	var r;
 	var g;
 	var b;
@@ -950,9 +950,9 @@ global.HSVtoRGB = function(h, s, v){
 
 
 global.RGBtoHSV = function(rgb){
-	var r = global.clamp(rgb.x, 0, 1);
-	var g = global.clamp(rgb.y, 0, 1);
-	var b = global.clamp(rgb.z, 0, 1);
+	var r = global.clamp(rgb.x);
+	var g = global.clamp(rgb.y);
+	var b = global.clamp(rgb.z);
 
 	var v = Math.max(r, g, b)
 	var n = v - Math.min(r,g,b);
@@ -1089,6 +1089,8 @@ global.instSound = function(audioAsset, fadeIn, fadeOut, offset, mixToSnap){
 
 
 global.clamp = function(value, low, high){
+	if(!low && low !== 0) low = 0;
+	if(!high && high !== 0) high = 1;
 	return Math.max(Math.min(value, Math.max(low, high)), Math.min(low, high));
 }
 
