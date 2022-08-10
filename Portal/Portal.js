@@ -6,25 +6,21 @@
 
 // Super easy to use. In the Inspector, simply assign the User (camera) and the Portal (Render Mesh Visual).
 // To change which way the opening is, use 'flip'.
-// To visualize the size of the portal, use 'visualize'.
+// To always allow the user leaving the portal when walking out of it (without even touching the portal), use 'alwaysAllowedToLeave'
+// To start the portal check, use: global.portal.start( < callback function, first argument is true or false depending on if the user is inside the portal scene > );
+// To stop the portal, use: global.portal.stop();
+// To get current user-in-portal state, use: global.portal.isInPortal();
 //
-// To make something happen when the user walks through the portal, use this code from any other script in your project:
+// For example: To print when the user walks through the portal, use this code from any other script in your project:
 //	function walkedThroughPortal( isInPortal ){
 //		print("User is in portal: " + isInPortal.toString());
 //	}
-//	global.portal.start = walkedThroughPortal;
-//
-// Now, 'walkedThroughPortal' is called with argument 'isInPortal' (bool) indicating if the user is currently in the portal.
-//
-// To stop the portal, use:
-//	global.portal.stop();
-
-
-
+//	global.portal.start(walkedThroughPortal);
 
 
 
 //@input bool flip
+//@input bool alwaysAllowedToLeave
 
 //@ui {"widget":"label", "label":""}
 //@input SceneObject user
@@ -34,6 +30,7 @@
 
 global.portal = {};
 var portalEvent;
+var isInPortal = false;
 
 
 
@@ -42,8 +39,8 @@ global.portal.start = function(callback){
 	var userTrf = script.user.getTransform();
 
 	var beenInFrontOfPortal = false; // if the user has been near and in front of portal in this 'session'
-	var isInPortal = false; // if the user is currently in the portal
-
+	isInPortal = false; // if the user is currently in the portal
+	
 	function portal(){
 		// make portal region (sphere) around mesh bounds
 		var portalLocalMin = script.portal.localAabbMin();
@@ -53,10 +50,10 @@ global.portal.start = function(callback){
 		var portalMax = portalTrm.multiplyPoint(portalLocalMax); // ...
 		var portalCenter = script.portal.worldAabbMax().sub(script.portal.worldAabbMin()).uniformScale(.5).add(script.portal.worldAabbMin()); // center based on mesh bounding box
 		var sphereScale = portalMin.distance(portalMax)/2; // active radius around portal based on mesh bounding box
-
-		// check if user is in sphere region, if not stop here
+		
+		// check if user is in sphere region, if not stop here (except when inside portal, leaving is always allowed)
 		var userPos = userTrf.getWorldPosition();
-		if(userPos.distance(portalCenter) > sphereScale){
+		if(userPos.distance(portalCenter) > sphereScale && (script.alwaysAllowedToLeave ? !isInPortal : true)){
 			beenInFrontOfPortal = false; // user stepped away, reset
 			return;
 		}
@@ -80,6 +77,12 @@ global.portal.start = function(callback){
 
 	portalEvent = script.createEvent("UpdateEvent");
 	portalEvent.bind(portal);
+}
+
+
+
+global.portal.isInPortal = function(){
+	return isInPortal;
 }
 
 
