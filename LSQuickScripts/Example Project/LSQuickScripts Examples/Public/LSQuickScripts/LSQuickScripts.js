@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v1.7"}
+//@ui {"widget":"label", "label":"LSQuickScripts v1.8"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')."}
@@ -92,7 +92,7 @@
 //			anim.endFunction = function(){};					// Function to call on animation end.
 //			anim.duration = 1;									// Duration in seconds. Default is 1.
 //			anim.reverseDuration = 1;							// Duration in seconds when reversed. If no value assigned, default is equal to duration.
-//			anim.delay = 0;										// Delay after starting animation. Only when animation is not set to reversed. Default is 0.
+//			anim.delay = 0;										// Delay after starting animation. Default is 0.
 //			anim.easeFunction = "Cubic";						// Determines curve. Default is "Cubic", all Tween functions can be used!
 //			anim.easeType = "InOut";							// Determines how animation curve is applied. Default is "InOut". All possible inputs: "In", "Out", "InOut".
 //			anim.pulse(newTimeRatio);							// Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
@@ -639,8 +639,8 @@ global.AnimateProperty = function(){
 
 	/**
 	 * @type {Number}
-	 * @description Delay after starting animation. Only when animation is not set to reversed. Default is 0. */
-	 this.delay = 0;
+	 * @description Delay after starting animation. Default is 0. */
+	this.delay = 0;
 
     /**
 	 * @type {String}
@@ -728,7 +728,7 @@ global.AnimateProperty = function(){
 
 		isPlaying = true;
 
-		if(self.delay > 0 && !reversed){ // start after delay (if any)
+		if(self.delay > 0){ // start after delay (if any)
 			delayedStart = new global.DoDelay(begin)
 			delayedStart.byTime(self.delay);
 		}else{
@@ -1433,7 +1433,6 @@ global.VisualizePositions = function(scale){
 	 * @type {Function}
 	 * @description Call to create objects. */
 	this.update = function(positions){
-		print(self.continuousRotation);
 		// remove existing
 		self.remove();
 
