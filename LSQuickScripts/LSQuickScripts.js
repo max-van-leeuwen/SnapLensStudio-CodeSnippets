@@ -88,7 +88,7 @@
 //		Example, showing all properties and their defaults:
 //			var anim = new global.animateProperty();
 //			anim.startFunction = function(){};					// Function to call on animation start.
-//			anim.updateFunction = function(v){ print(v); };		// Function to call on each animation frame, with animation value (0-1) as its first argument.
+//			anim.updateFunction = function(v){ print(v); };		// Function to call on each animation frame, with animation value (0-1) as its first argument. The 0-1 range is inclusive for the last step (e.g. when playing in reverse, the range is <1, 0]).
 //			anim.endFunction = function(){};					// Function to call on animation end.
 //			anim.duration = 1;									// Duration in seconds. Default is 1.
 //			anim.reverseDuration = 1;							// Duration in seconds when reversed. If no value assigned, default is equal to duration.
