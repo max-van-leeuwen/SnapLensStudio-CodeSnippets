@@ -907,9 +907,8 @@ global.isInBox = function(obj, box){
 
 
 
-// @ts-ignore
 global.HSVtoRGB = function(h, s, v){
-	h = global.clamp(h);
+	h = h % 1;
 	s = global.clamp(s);
 	v = global.clamp(v);
 	var r;
@@ -1099,9 +1098,7 @@ global.clamp = function(value, low, high){
 
 global.randSeed = function(a){
 	var t = a += 0x6D2B79F5;
-	// @ts-ignore
 	t = Math.imul(t ^ t >>> 15, t | 1);
-	// @ts-ignore
 	t ^= t + Math.imul(t ^ t >>> 7, t | 61);
 	return ((t ^ t >>> 14) >>> 0) / 4294967296;
 }
@@ -1274,7 +1271,6 @@ global.Stopwatch = function(){
 	 * @type {Function} 
 	 * @description Starts this stopwatch. */
 	this.start = function(){
-		// @ts-ignore
 		stopwatchStart = performance.now();
 	}
 
@@ -1282,7 +1278,6 @@ global.Stopwatch = function(){
 	 * @type {Function} 
 	 * @description Stops this stopwatch, prints the result to the console. */
 	this.stop = function(){
-		// @ts-ignore
 		var diff = (performance.now() - stopwatchStart)/1000; // differents in seconds
 		var thisAvg = avg.add(diff);
 		print('duration: ' + diff.toString() + '\n' + 'avg: ' + thisAvg.toString());

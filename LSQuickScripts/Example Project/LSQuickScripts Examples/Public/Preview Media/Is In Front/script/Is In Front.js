@@ -9,10 +9,7 @@
 //@input SceneObject compareTo
 //@input vec3 frontColour {"widget":"color"}
 //@input vec3 behindColour {"widget":"color"}
-
-
-
-var mat = script.getSceneObject().getComponent("Component.RenderMeshVisual").getMaterial(0); // get material to change the color of
+//@input Asset.Material mat
 
 
 
@@ -21,9 +18,9 @@ function onUpdate(){
 	var objectIsInFront = global.isInFront(script.getSceneObject(), script.compareTo);
 	
 	if(objectIsInFront){
-		mat.mainPass.colour = script.frontColour; // if in front
+		script.mat.mainPass.colour = script.frontColour; // if in front
 	}else{
-		mat.mainPass.colour = script.behindColour; // if behind
+		script.mat.mainPass.colour = script.behindColour; // if behind
 	}
 }
 var onUpdateEvent = script.createEvent("UpdateEvent"); // do on every frame

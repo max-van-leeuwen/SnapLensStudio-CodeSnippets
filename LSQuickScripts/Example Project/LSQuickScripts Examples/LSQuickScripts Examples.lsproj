@@ -3,7 +3,7 @@
     "document_id": "b2Hfkx3xn9FLCF1VdGA8",
     "original_document_id": "7xNpgCY1WYmF82YRGY5O",
     "version": "29",
-    "lastChanged": "1648305435539",
+    "lastChanged": "1662984853935",
     "preview": "icon.png",
     "videoPreview": "preview.mp4",
     "videoPreviewUpdateTime": "",
@@ -22,8 +22,8 @@
         "lastSavedWith": {
             "type": "Public",
             "major": "4",
-            "minor": "13",
-            "patch": "0",
+            "minor": "28",
+            "patch": "1",
             "build": "0"
         }
     },
@@ -35,11 +35,11 @@
                         "LSQuickScripts"
                     ],
                     [
-                        "LSQuickScripts",
-                        "LSQuickScripts"
+                        "Other"
                     ],
                     [
-                        "Other"
+                        "Other",
+                        "Box"
                     ],
                     [
                         "Other",
@@ -51,111 +51,102 @@
                     ],
                     [
                         "Other",
+                        "Plane"
+                    ],
+                    [
+                        "Other",
                         "Render Target"
                     ],
                     [
-                        "Previews Media"
+                        "Preview Media"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Animate Box"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Animate Box",
                         "script"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Animate Box",
                         "script",
                         "Animate Box"
                     ],
                     [
-                        "Previews Media",
-                        "Box"
-                    ],
-                    [
-                        "Previews Media",
+                        "Preview Media",
                         "HSV to RGB"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "HSV to RGB",
                         "material"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "HSV to RGB",
                         "material",
                         "colour"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "HSV to RGB",
                         "script"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "HSV to RGB",
                         "script",
                         "HSV to RGB"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Instance Sound"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Instance Sound",
                         "audio"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Instance Sound",
                         "audio",
                         "cat"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Instance Sound",
                         "script"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Instance Sound",
                         "script",
                         "Instance Sound"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Is In Front"
                     ],
                     [
-                        "Previews Media",
-                        "Is In Front",
-                        "material"
-                    ],
-                    [
-                        "Previews Media",
+                        "Preview Media",
                         "Is In Front",
                         "material",
                         "colour"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Is In Front",
                         "script"
                     ],
                     [
-                        "Previews Media",
+                        "Preview Media",
                         "Is In Front",
                         "script",
                         "Is In Front"
-                    ],
-                    [
-                        "Previews Media",
-                        "Plane"
                     ]
                 ]
             ]
@@ -170,10 +161,10 @@
                     "1585596583774075:6555",
                     "1585596598839780:7342",
                     "1585598682125984:14179",
+                    "1585598693654720:14293",
                     "1585600826951485:24665",
                     "1585622015311558:48684",
                     "1585622504115406:49750",
-                    "1585697111888668:3448",
                     "1585697123422080:3822",
                     "1585699510007362:4118",
                     "1585699510008025:4120",
@@ -205,25 +196,19 @@
                 "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/Images\/Person 1.jpg",
-                "front_preview_is_favorite": "false",
-                "spectacles_preview_id": "bundle:Preview\/Images\/Pavement\/Pavement.jpg",
-                "spectacles_preview_is_favorite": "false"
+                "front_preview_is_favorite": "false"
             },
             "preview_videos_project_config": {
                 "back_preview_id": "bundle:Preview\/Videos\/Beach.webm",
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/Videos\/Idle Person 2.webm",
-                "front_preview_is_favorite": "false",
-                "spectacles_preview_id": "",
-                "spectacles_preview_is_favorite": "false"
+                "front_preview_is_favorite": "false"
             },
             "preview_ie_project_config": {
                 "back_preview_id": "bundle:Preview\/InteractiveEnvironments\/Home",
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/InteractiveEnvironments\/Home",
-                "front_preview_is_favorite": "false",
-                "spectacles_preview_id": "bundle:Preview\/InteractiveEnvironments\/Home",
-                "spectacles_preview_is_favorite": "false"
+                "front_preview_is_favorite": "false"
             }
         },
         "InspectorUiComponent": {
@@ -235,6 +220,9 @@
         },
         "ObjectTracking3DUIComponent": {
             "foldedOwnerSceneObjects": ""
+        },
+        "MapUiComponent": {
+            "mapPinPoints": ""
         },
         "Material::UiComponent": {
             "active_graph_asset": "1585597763543602:8517"
@@ -472,6 +460,42 @@
                 {
                     "k": "48",
                     "v": "Files\/File48.mesh"
+                },
+                {
+                    "k": "49",
+                    "v": "Files\/File49.mesh"
+                },
+                {
+                    "k": "50",
+                    "v": "Files\/File50.mesh"
+                },
+                {
+                    "k": "51",
+                    "v": "Files\/File51.mesh"
+                },
+                {
+                    "k": "52",
+                    "v": "Files\/File52.mesh"
+                },
+                {
+                    "k": "53",
+                    "v": "Files\/File53.mesh"
+                },
+                {
+                    "k": "54",
+                    "v": "Files\/File54.mesh"
+                },
+                {
+                    "k": "55",
+                    "v": "Files\/File55.mesh"
+                },
+                {
+                    "k": "56",
+                    "v": "Files\/File56.mesh"
+                },
+                {
+                    "k": "57",
+                    "v": "Files\/File57.mesh"
                 }
             ]
         },
@@ -480,7 +504,10 @@
         },
         "WorldComponent": {
             "sceneFile": "scene.scn",
-            "sceneType": "binaryScene"
+            "sceneType": "binaryScene",
+            "hitTestDisabledObjectsList": {
+                "type_name": "array"
+            }
         }
     },
     "controller": {
@@ -493,83 +520,83 @@
                     },
                     {
                         "k": "4",
-                        "v": "Previews Media\/Box.mesh"
+                        "v": "Other\/Box.mesh"
                     },
                     {
                         "k": "5",
-                        "v": "Previews Media\/Plane.mesh"
+                        "v": "Other\/Plane.mesh"
                     },
                     {
                         "k": "6",
-                        "v": "Previews Media"
+                        "v": "Preview Media"
                     },
                     {
                         "k": "7",
-                        "v": "Previews Media\/Is In Front"
+                        "v": "Preview Media\/Is In Front"
                     },
                     {
                         "k": "9",
-                        "v": "Previews Media\/Is In Front\/material"
+                        "v": "Preview Media\/Is In Front\/material"
                     },
                     {
                         "k": "11",
-                        "v": "Previews Media\/Is In Front\/material\/colour.lsmat"
+                        "v": "Preview Media\/Is In Front\/material\/colour.lsmat"
                     },
                     {
                         "k": "12",
-                        "v": "Previews Media\/Is In Front\/script\/Is In Front.js"
+                        "v": "Preview Media\/Is In Front\/script\/Is In Front.js"
                     },
                     {
                         "k": "14",
-                        "v": "Previews Media\/Is In Front\/script"
+                        "v": "Preview Media\/Is In Front\/script"
                     },
                     {
                         "k": "22",
-                        "v": "Previews Media\/Animate Box"
+                        "v": "Preview Media\/Animate Box"
                     },
                     {
                         "k": "23",
-                        "v": "Previews Media\/Animate Box\/script\/Animate Box.js"
+                        "v": "Preview Media\/Animate Box\/script\/Animate Box.js"
                     },
                     {
                         "k": "24",
-                        "v": "Previews Media\/Animate Box\/script"
+                        "v": "Preview Media\/Animate Box\/script"
                     },
                     {
                         "k": "26",
-                        "v": "Previews Media\/HSV to RGB"
+                        "v": "Preview Media\/HSV to RGB"
                     },
                     {
                         "k": "27",
-                        "v": "Previews Media\/HSV to RGB\/material"
+                        "v": "Preview Media\/HSV to RGB\/material"
                     },
                     {
                         "k": "28",
-                        "v": "Previews Media\/HSV to RGB\/material\/colour.lsmat"
+                        "v": "Preview Media\/HSV to RGB\/material\/colour.lsmat"
                     },
                     {
                         "k": "29",
-                        "v": "Previews Media\/HSV to RGB\/script"
+                        "v": "Preview Media\/HSV to RGB\/script"
                     },
                     {
                         "k": "30",
-                        "v": "Previews Media\/HSV to RGB\/script\/HSV to RGB.js"
+                        "v": "Preview Media\/HSV to RGB\/script\/HSV to RGB.js"
                     },
                     {
                         "k": "34",
-                        "v": "Previews Media\/Instance Sound"
+                        "v": "Preview Media\/Instance Sound"
                     },
                     {
                         "k": "35",
-                        "v": "Previews Media\/Instance Sound\/script"
+                        "v": "Preview Media\/Instance Sound\/script"
                     },
                     {
                         "k": "36",
-                        "v": "Previews Media\/Instance Sound\/script\/Instance Sound.js"
+                        "v": "Preview Media\/Instance Sound\/script\/Instance Sound.js"
                     },
                     {
                         "k": "37",
-                        "v": "Previews Media\/Instance Sound\/audio"
+                        "v": "Preview Media\/Instance Sound\/audio"
                     },
                     {
                         "k": "626",
@@ -581,7 +608,7 @@
                     },
                     {
                         "k": "647",
-                        "v": "Previews Media\/Instance Sound\/audio\/cat.mp3"
+                        "v": "Preview Media\/Instance Sound\/audio\/cat.mp3"
                     }
                 ],
                 "hashes": [
@@ -595,23 +622,23 @@
                     },
                     {
                         "k": "3",
-                        "v": "a5882f8f760a752379454d6a7404039d"
+                        "v": "0457a4af216ab04ec5d6d4613791db94"
                     },
                     {
                         "k": "4",
-                        "v": "0f22bac28f4bb7f9303722acb5d035e0"
+                        "v": "8b725c5cd5bd054bd37f3342b4a1b4ac"
                     },
                     {
                         "k": "5",
-                        "v": "3924da4ece660b56cdcb4f2b7b3fe66c"
+                        "v": "afed78580f6d26e6d860716e2fe274e9"
                     },
                     {
                         "k": "11",
-                        "v": "a8f62b342ee2beaabd3dbe8e507d467a"
+                        "v": "08f311c8935ef01d9197347b7d8260ed"
                     },
                     {
                         "k": "12",
-                        "v": "5e93d99ff0e7b8be0541e3c2bf13e743"
+                        "v": "a1399b2669f155b80b5f02494967c344"
                     },
                     {
                         "k": "13",
@@ -635,7 +662,7 @@
                     },
                     {
                         "k": "23",
-                        "v": "010facc408b9c0707549730d0ec70e0c"
+                        "v": "8981d995a7498bd7db52ffc15aecabdf"
                     },
                     {
                         "k": "24",
@@ -655,7 +682,7 @@
                     },
                     {
                         "k": "28",
-                        "v": "572a29d61f5de8a1a047592cda295564"
+                        "v": "3d8511b9cfd8d4d30b2bdd403fea1725"
                     },
                     {
                         "k": "29",
@@ -663,7 +690,7 @@
                     },
                     {
                         "k": "30",
-                        "v": "0ae431f0f4ac5223927d728ca93705b0"
+                        "v": "a2177f1b5d9eb74cba6ef44aa9ecee15"
                     },
                     {
                         "k": "33",
@@ -985,53 +1012,38 @@
                 "publicState": {
                     "tree": {
                         "isFolder": "true",
-                        "lastModified": "2022-03-26T14:20:31",
+                        "lastModified": "2022-09-12T14:13:40",
                         "name": "Public",
-                        "hash": "a3a94ad182f1a3aae80a5902b60ff226",
+                        "hash": "abc728420080b8d59c30bd8834d677ae",
                         "children": [
                             {
                                 "isFolder": "true",
-                                "lastModified": "2021-12-28T16:12:10",
-                                "name": "Other",
-                                "hash": "59adb24ef3cdbe0297f05b395827453f",
-                                "children": [
-                                    {
-                                        "isFolder": "false",
-                                        "lastModified": "2021-12-28T16:12:10",
-                                        "name": "folder.lock",
-                                        "hash": "d41d8cd98f00b204e9800998ecf8427e",
-                                        "children": ""
-                                    }
-                                ]
-                            },
-                            {
-                                "isFolder": "true",
-                                "lastModified": "2022-03-26T14:20:28",
-                                "name": "Previews Media",
-                                "hash": "2a6669daf27255538ab89f156d289886",
+                                "lastModified": "2022-09-12T14:08:52",
+                                "name": "Preview Media",
+                                "hash": "76b1623d910e5003fca6fa66a76312ea",
                                 "children": [
                                     {
                                         "isFolder": "true",
-                                        "lastModified": "2021-12-28T16:12:10",
+                                        "lastModified": "2022-07-18T19:18:16",
                                         "name": "Instance Sound",
                                         "hash": "08f8bdfe5a3d14efe8f41c0e2021d965",
                                         "children": [
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2022-03-24T13:05:59",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "script",
                                                 "hash": "839b558e397e1a54de3bd81ae3e6a147",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2022-03-24T13:05:53",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "Instance Sound.js",
                                                         "hash": "7caacd6abc5574d1e160f2e030636977",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1040,20 +1052,20 @@
                                             },
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2021-12-28T16:12:10",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "audio",
                                                 "hash": "da32edfb237e662d22fd02c450584b9b",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "cat.mp3",
                                                         "hash": "8943e51ce4a7e498bbbe40016e57424a",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1062,7 +1074,7 @@
                                             },
                                             {
                                                 "isFolder": "false",
-                                                "lastModified": "2021-12-28T16:12:10",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "folder.lock",
                                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                 "children": ""
@@ -1071,26 +1083,26 @@
                                     },
                                     {
                                         "isFolder": "true",
-                                        "lastModified": "2021-12-28T16:12:10",
+                                        "lastModified": "2022-07-18T19:18:16",
                                         "name": "Animate Box",
-                                        "hash": "0e1c02903e9b180903d24e6e43e78ade",
+                                        "hash": "c0753dbe6c41f57af88f37c72ded31d8",
                                         "children": [
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2022-03-24T13:09:14",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "script",
-                                                "hash": "d3b922c6896570d47698063c9f8f1b78",
+                                                "hash": "9efdd106b651710bf6fa121b64aece8a",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2022-03-26T15:31:21",
+                                                        "lastModified": "2022-09-12T14:07:18",
                                                         "name": "Animate Box.js",
-                                                        "hash": "010facc408b9c0707549730d0ec70e0c",
+                                                        "hash": "8981d995a7498bd7db52ffc15aecabdf",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1099,7 +1111,7 @@
                                             },
                                             {
                                                 "isFolder": "false",
-                                                "lastModified": "2021-12-28T16:12:10",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "folder.lock",
                                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                 "children": ""
@@ -1108,26 +1120,26 @@
                                     },
                                     {
                                         "isFolder": "true",
-                                        "lastModified": "2021-12-28T16:12:10",
+                                        "lastModified": "2022-07-18T19:18:16",
                                         "name": "HSV to RGB",
-                                        "hash": "a94c611819caec52776d36593583da42",
+                                        "hash": "af7886c87765e80d14a5735a28a32cce",
                                         "children": [
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2022-03-24T13:09:22",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "script",
-                                                "hash": "cc683189e9da1c3122e72dd408cf1dc9",
+                                                "hash": "b42250f9dbb7ab79ed72ae55fc7b664a",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2022-03-26T15:34:46",
+                                                        "lastModified": "2022-09-12T14:13:18",
                                                         "name": "HSV to RGB.js",
-                                                        "hash": "0ae431f0f4ac5223927d728ca93705b0",
+                                                        "hash": "a2177f1b5d9eb74cba6ef44aa9ecee15",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1136,20 +1148,20 @@
                                             },
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2022-03-26T15:21:43",
+                                                "lastModified": "2022-09-12T13:56:10",
                                                 "name": "material",
-                                                "hash": "a4738a04b047dba535a9279d38e2225a",
+                                                "hash": "edb2cf3dc33925b3d77117ff6ff92c7f",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2022-03-26T15:21:43",
+                                                        "lastModified": "2022-09-12T13:56:06",
                                                         "name": "colour.lsmat",
-                                                        "hash": "3b7f4dc61db7a419cb086583191cca0a",
+                                                        "hash": "3d8511b9cfd8d4d30b2bdd403fea1725",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1158,42 +1170,35 @@
                                             },
                                             {
                                                 "isFolder": "false",
-                                                "lastModified": "2021-12-28T16:12:10",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "folder.lock",
                                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                 "children": ""
                                             }
                                         ]
-                                    },
-                                    {
-                                        "isFolder": "false",
-                                        "lastModified": "2021-12-28T16:12:10",
-                                        "name": "Plane.mesh",
-                                        "hash": "3924da4ece660b56cdcb4f2b7b3fe66c",
-                                        "children": ""
                                     },
                                     {
                                         "isFolder": "true",
-                                        "lastModified": "2021-12-28T16:12:10",
+                                        "lastModified": "2022-07-18T19:18:16",
                                         "name": "Is In Front",
-                                        "hash": "12d4e500b04dea67b9af04ac78c2e66d",
+                                        "hash": "48d1f34d8862050d4487b66b4fad47bc",
                                         "children": [
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2022-03-24T13:09:12",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "script",
-                                                "hash": "f7814eca183e392a6a948a605b8dbf46",
+                                                "hash": "fbb4065016e77ec63ec4b12cdfe6c91a",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2022-03-26T15:31:52",
+                                                        "lastModified": "2022-09-12T14:09:49",
                                                         "name": "Is In Front.js",
-                                                        "hash": "5e93d99ff0e7b8be0541e3c2bf13e743",
+                                                        "hash": "a1399b2669f155b80b5f02494967c344",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1202,20 +1207,20 @@
                                             },
                                             {
                                                 "isFolder": "true",
-                                                "lastModified": "2022-03-26T15:21:43",
+                                                "lastModified": "2022-09-12T13:56:10",
                                                 "name": "material",
-                                                "hash": "7f6dbf5389b69590163fc3afc6db2964",
+                                                "hash": "812aa6e7ae5284be896b3c9cb822b282",
                                                 "children": [
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2022-03-26T15:21:43",
+                                                        "lastModified": "2022-09-12T13:56:06",
                                                         "name": "colour.lsmat",
-                                                        "hash": "7017541a0bebf47d02a286b5c77607ed",
+                                                        "hash": "08f311c8935ef01d9197347b7d8260ed",
                                                         "children": ""
                                                     },
                                                     {
                                                         "isFolder": "false",
-                                                        "lastModified": "2021-12-28T16:12:10",
+                                                        "lastModified": "2022-07-18T19:18:16",
                                                         "name": "folder.lock",
                                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                         "children": ""
@@ -1224,7 +1229,7 @@
                                             },
                                             {
                                                 "isFolder": "false",
-                                                "lastModified": "2021-12-28T16:12:10",
+                                                "lastModified": "2022-07-18T19:18:16",
                                                 "name": "folder.lock",
                                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                                 "children": ""
@@ -1233,14 +1238,7 @@
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2021-12-28T16:12:10",
-                                        "name": "Box.mesh",
-                                        "hash": "0f22bac28f4bb7f9303722acb5d035e0",
-                                        "children": ""
-                                    },
-                                    {
-                                        "isFolder": "false",
-                                        "lastModified": "2021-12-28T16:12:10",
+                                        "lastModified": "2022-07-18T19:18:16",
                                         "name": "folder.lock",
                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                         "children": ""
@@ -1249,20 +1247,49 @@
                             },
                             {
                                 "isFolder": "true",
-                                "lastModified": "2022-03-26T15:36:48",
-                                "name": "LSQuickScripts",
-                                "hash": "e2ccfb00356cb0168871bc140e5e40b2",
+                                "lastModified": "2022-09-12T14:09:09",
+                                "name": "Other",
+                                "hash": "3c48ff3d7316e3423912f0e94ed833b7",
                                 "children": [
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2022-03-26T15:36:48",
-                                        "name": "LSQuickScripts.js",
-                                        "hash": "a5882f8f760a752379454d6a7404039d",
+                                        "lastModified": "2022-09-12T14:09:09",
+                                        "name": "Plane.mesh",
+                                        "hash": "afed78580f6d26e6d860716e2fe274e9",
                                         "children": ""
                                     },
                                     {
                                         "isFolder": "false",
-                                        "lastModified": "2021-12-28T16:12:10",
+                                        "lastModified": "2022-09-12T14:09:04",
+                                        "name": "Box.mesh",
+                                        "hash": "8b725c5cd5bd054bd37f3342b4a1b4ac",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-07-18T19:18:16",
+                                        "name": "folder.lock",
+                                        "hash": "d41d8cd98f00b204e9800998ecf8427e",
+                                        "children": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "isFolder": "true",
+                                "lastModified": "2022-09-11T18:52:27",
+                                "name": "LSQuickScripts",
+                                "hash": "293d438033bc9e6106e1acc37bf6b8b7",
+                                "children": [
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-09-12T14:12:36",
+                                        "name": "LSQuickScripts.js",
+                                        "hash": "0457a4af216ab04ec5d6d4613791db94",
+                                        "children": ""
+                                    },
+                                    {
+                                        "isFolder": "false",
+                                        "lastModified": "2022-07-18T19:18:16",
                                         "name": "folder.lock",
                                         "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                         "children": ""
@@ -1271,7 +1298,7 @@
                             },
                             {
                                 "isFolder": "false",
-                                "lastModified": "2021-12-28T16:12:10",
+                                "lastModified": "2022-07-18T19:18:16",
                                 "name": "folder.lock",
                                 "hash": "d41d8cd98f00b204e9800998ecf8427e",
                                 "children": ""
@@ -1296,7 +1323,7 @@
                 "additional": "",
                 "resources": [
                     {
-                        "name": "Previews Media",
+                        "name": "Preview Media",
                         "type": "0",
                         "subtype": "-1",
                         "resourceId": "-1",
@@ -1586,34 +1613,6 @@
                                         ]
                                     }
                                 ]
-                            },
-                            {
-                                "name": "Box",
-                                "type": "3",
-                                "subtype": "0",
-                                "resourceId": "11",
-                                "dependency": "0",
-                                "hidden": "false",
-                                "uid": "1585596252784856:3122",
-                                "fileId": "4",
-                                "originalId": "18446744073709551615",
-                                "publicId": "4",
-                                "source": "C:\/Users\/Max\/AppData\/Local\/Temp\/Lens Studio-EcbwCu\/\/system\/\/emergencyFiles\/emergencyMesh.mesh",
-                                "additional": ""
-                            },
-                            {
-                                "name": "Plane",
-                                "type": "3",
-                                "subtype": "0",
-                                "resourceId": "12",
-                                "dependency": "0",
-                                "hidden": "false",
-                                "uid": "1585596263409064:3498",
-                                "fileId": "5",
-                                "originalId": "18446744073709551615",
-                                "publicId": "5",
-                                "source": "C:\/Users\/Max\/AppData\/Local\/Temp\/Lens Studio-EcbwCu\/\/system\/\/emergencyFiles\/emergencyMesh.mesh",
-                                "additional": ""
                             }
                         ]
                     },
@@ -1706,6 +1705,34 @@
                                 "publicId": "18446744073709551615",
                                 "source": "",
                                 "additional": ""
+                            },
+                            {
+                                "name": "Box",
+                                "type": "3",
+                                "subtype": "0",
+                                "resourceId": "11",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1585596252784856:3122",
+                                "fileId": "4",
+                                "originalId": "18446744073709551615",
+                                "publicId": "4",
+                                "source": "C:\/Users\/Max\/AppData\/Local\/Temp\/Lens Studio-EcbwCu\/\/system\/\/emergencyFiles\/emergencyMesh.mesh",
+                                "additional": ""
+                            },
+                            {
+                                "name": "Plane",
+                                "type": "3",
+                                "subtype": "0",
+                                "resourceId": "12",
+                                "dependency": "0",
+                                "hidden": "false",
+                                "uid": "1585596263409064:3498",
+                                "fileId": "5",
+                                "originalId": "18446744073709551615",
+                                "publicId": "5",
+                                "source": "C:\/Users\/Max\/AppData\/Local\/Temp\/Lens Studio-EcbwCu\/\/system\/\/emergencyFiles\/emergencyMesh.mesh",
+                                "additional": ""
                             }
                         ]
                     }
@@ -1713,19 +1740,7 @@
             }
         },
         "InspectorController": {
-            "selection": {
-                "resources": [
-                    {
-                        "uid": "1585697158181178:4540",
-                        "path_list": [
-                            "Previews Media",
-                            "Animate Box",
-                            "script",
-                            "Animate Box"
-                        ]
-                    }
-                ]
-            }
+            "selection": ""
         },
         "EffectsController": {
             "1": "",
@@ -1757,13 +1772,17 @@
             "29": "",
             "30": "",
             "31": "",
-            "32": ""
+            "32": "",
+            "34": ""
         },
         "ObjectPrefabController": {
             "state": {
                 "objectToInfo": ""
             },
             "importInfo": ""
+        },
+        "ObjectTracking3DController": {
+            "hand_tracking_mode": "0"
         },
         "Compression::IController": {
             "new_compression_info": [
@@ -1772,12 +1791,12 @@
                     "v": {
                         "infos": {
                             "originalSize": "688",
-                            "compressedSize": "688",
+                            "compressedSize": "650",
                             "originalRAM": "1416",
-                            "compressedRAM": "1416",
+                            "compressedRAM": "456",
                             "extension": "mesh",
                             "settings": {
-                                "isCompressed": "false",
+                                "isCompressed": "true",
                                 "info": {
                                     "vertexAttribs": [
                                         {
@@ -1806,23 +1825,78 @@
                                             "canBeDisabled": "true"
                                         }
                                     ],
-                                    "hasBlendShapes": "false",
-                                    "hasSkinBones": "false"
+                                    "hasBlendShapes": "false"
                                 },
                                 "type": "0",
-                                "attributeFormat": "",
+                                "attributeFormat": [
+                                    {
+                                        "k": "bitangent",
+                                        "v": "10"
+                                    },
+                                    {
+                                        "k": "normal",
+                                        "v": "8"
+                                    },
+                                    {
+                                        "k": "position",
+                                        "v": "8"
+                                    },
+                                    {
+                                        "k": "tangent",
+                                        "v": "10"
+                                    },
+                                    {
+                                        "k": "texture0",
+                                        "v": "10"
+                                    }
+                                ],
                                 "draco": {
                                     "posBits": "11",
                                     "texBits": "10",
                                     "normalBits": "8",
                                     "colorBits": "8",
-                                    "genericBits": "8",
                                     "compressLvl": "7"
                                 }
                             }
                         },
                         "uncompressed_file": "47",
-                        "compressed_files": ""
+                        "compressed_files": [
+                            {
+                                "k": {
+                                    "uncompressed_hash": "0f22bac28f4bb7f9303722acb5d035e0",
+                                    "settings_hash": "527475332260479789"
+                                },
+                                "v": "52"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "0f22bac28f4bb7f9303722acb5d035e0",
+                                    "settings_hash": "1212245106792855575"
+                                },
+                                "v": "49"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "0f22bac28f4bb7f9303722acb5d035e0",
+                                    "settings_hash": "3357738519290193884"
+                                },
+                                "v": "51"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "0f22bac28f4bb7f9303722acb5d035e0",
+                                    "settings_hash": "14500757873999675750"
+                                },
+                                "v": "50"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "0f22bac28f4bb7f9303722acb5d035e0",
+                                    "settings_hash": "16770592912392940675"
+                                },
+                                "v": "53"
+                            }
+                        ]
                     }
                 },
                 {
@@ -1830,12 +1904,12 @@
                     "v": {
                         "infos": {
                             "originalSize": "554",
-                            "compressedSize": "554",
+                            "compressedSize": "540",
                             "originalRAM": "204",
-                            "compressedRAM": "204",
+                            "compressedRAM": "76",
                             "extension": "mesh",
                             "settings": {
-                                "isCompressed": "false",
+                                "isCompressed": "true",
                                 "info": {
                                     "vertexAttribs": [
                                         {
@@ -1859,114 +1933,73 @@
                                             "canBeDisabled": "true"
                                         }
                                     ],
-                                    "hasBlendShapes": "false",
-                                    "hasSkinBones": "false"
+                                    "hasBlendShapes": "false"
                                 },
                                 "type": "0",
-                                "attributeFormat": "",
+                                "attributeFormat": [
+                                    {
+                                        "k": "normal",
+                                        "v": "8"
+                                    },
+                                    {
+                                        "k": "position",
+                                        "v": "8"
+                                    },
+                                    {
+                                        "k": "tangent",
+                                        "v": "10"
+                                    },
+                                    {
+                                        "k": "texture0",
+                                        "v": "10"
+                                    }
+                                ],
                                 "draco": {
                                     "posBits": "11",
                                     "texBits": "10",
                                     "normalBits": "8",
                                     "colorBits": "8",
-                                    "genericBits": "8",
                                     "compressLvl": "7"
                                 }
                             }
                         },
                         "uncompressed_file": "48",
-                        "compressed_files": ""
+                        "compressed_files": [
+                            {
+                                "k": {
+                                    "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c",
+                                    "settings_hash": "2805548999938770413"
+                                },
+                                "v": "54"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c",
+                                    "settings_hash": "2893318779670227544"
+                                },
+                                "v": "56"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c",
+                                    "settings_hash": "5133330921582238454"
+                                },
+                                "v": "57"
+                            },
+                            {
+                                "k": {
+                                    "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c",
+                                    "settings_hash": "12258712744712242611"
+                                },
+                                "v": "55"
+                            }
+                        ]
                     }
                 }
             ]
         },
-        "AssetLibController": {
-            "itemUidToID": [
-                {
-                    "k": "1623443853490835:95317",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853606027:95455",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853619563:95467",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853630945:95479",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853643473:95495",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853654985:95507",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853666165:95519",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853679226:95535",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853690763:95547",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853704784:95563",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853716169:95575",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853727867:95587",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853741583:95603",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443853992618:95623",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623443854180301:95639",
-                    "v": "3MSaPsSwQTJohO9JC2xBVC"
-                },
-                {
-                    "k": "1623447550931424:6815",
-                    "v": "63ZQjTKP81WzQulHG6vfxc"
-                },
-                {
-                    "k": "1623447551005936:6867",
-                    "v": "63ZQjTKP81WzQulHG6vfxc"
-                },
-                {
-                    "k": "1623447551017437:6879",
-                    "v": "63ZQjTKP81WzQulHG6vfxc"
-                },
-                {
-                    "k": "1623447551029184:6891",
-                    "v": "63ZQjTKP81WzQulHG6vfxc"
-                },
-                {
-                    "k": "1623447551039091:6903",
-                    "v": "63ZQjTKP81WzQulHG6vfxc"
-                },
-                {
-                    "k": "1648250087377692:718357",
-                    "v": "3rtSumRzT86olL7d25ijQB"
-                }
-            ]
+        "AssetImportController": {
+            "itemUidToID": ""
         }
     },
     "templateName": "",

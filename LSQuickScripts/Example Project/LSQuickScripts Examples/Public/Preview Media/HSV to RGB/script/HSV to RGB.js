@@ -2,20 +2,16 @@
 // ig @max.van.leeuwen
 // twitter @maksvanleeuwen
 //
-// Sets the colour of the Material on this object according to HSV values.
+// Set the colour of a material using hue, saturation, value (instead of RGB).
 
 
 
+//@input Asset.Material mat
 //@input bool animate
 //@input float Speed {"showIf":"animate"}
 //@input float Hue {"showIf":"animate", "showIfValue":"false"}
 //@input float Saturation
 //@input float Value
-
-
-
-// get material
-var mat = script.getSceneObject().getComponent("Component.RenderMeshVisual").getMaterial(0);
 
 
 
@@ -25,16 +21,15 @@ function onUpdate(){
 	var s = script.Saturation;
 	var v = script.Value;
 
+	// if animating, overwrite hue over time
 	if(script.animate){
-		// increase animation value over time
+		// hue value
 		var anim = getTime() * script.Speed;
-
-		// override hue with animated value (stay within 0-1)
 		h = anim % 1;
 	}
 
 	// set material colour
-	mat.mainPass.colour = global.HSVtoRGB(h, s, v);
+	script.mat.mainPass.colour = global.HSVtoRGB(h, s, v);
 }
 var onUpdateEvent = script.createEvent("UpdateEvent");
 onUpdateEvent.bind(onUpdate);
