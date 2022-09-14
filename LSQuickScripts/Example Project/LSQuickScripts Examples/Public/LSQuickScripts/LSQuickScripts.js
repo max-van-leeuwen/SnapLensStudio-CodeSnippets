@@ -83,25 +83,25 @@
 //
 //
 // global.AnimateProperty() : animateProperty object
-// 	Creates an easy-to-use animation 'class'. Can be used to easily animate any property without setting up the events around it.
+// 	Creates an easy-to-use animation 'class' instance. Can be used to easily animate any property in just a couple lines of code!
 //
-//		Example, showing all properties and their defaults:
-//			var anim = new global.animateProperty();
-//			anim.startFunction = function(){};					// Function to call on animation start.
-//			anim.updateFunction = function(v){ print(v); };		// Function to call on each animation frame, with animation value (0-1) as its first argument. The 0-1 range is inclusive for the last step (e.g. when playing in reverse, the range is <1, 0]).
-//			anim.endFunction = function(){};					// Function to call on animation end.
-//			anim.duration = 1;									// Duration in seconds. Default is 1.
-//			anim.reverseDuration = 1;							// Duration in seconds when reversed. If no value assigned, default is equal to duration.
-//			anim.delay = 0;										// Delay after starting animation. Default is 0.
-//			anim.easeFunction = "Cubic";						// Determines curve. Default is "Cubic", all Tween functions can be used!
-//			anim.easeType = "InOut";							// Determines how animation curve is applied. Default is "InOut". All possible inputs: "In", "Out", "InOut".
-//			anim.pulse(newTimeRatio);							// Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
-//			anim.timeRatio = 0;									// The current animation time, linear, 0-1. Updated while animation is running.
-//			anim.setReversed(reverse);							// If reversed, the animation plays backwards. The easeType will be swapped if it isn't 'InOut'. 'reverse' arg is of type Bool.
-//			anim.getReversed();									// Returns true if the animation is currently reversed.
-//			anim.isPlaying;										// Returns true if the animation is currently playing.
-//			anim.start(newTimeRatio); 							// Starts the animation. Does not call endFunction if an animation is still playing. Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
-//			anim.stop(callEndFunction);							// Stop the animation at its current time. With an optional argument to call the endFunction (bool).
+//		All properties:
+//			var anim = new global.animateProperty();						// create a new animation instance called 'anim'.
+//			anim.startFunction = function(){};								// Function to call on animation start.
+//			anim.updateFunction = function(v){ /* your callback here */ };	// Function to call on each animation frame, with animation value (0-1) as its first argument. This range is exclusive for the first step and inclusive for the last step of the animation (for example: when playing in reverse, the range is <1, 0]).
+//			anim.endFunction = function(){ /* your callback here */ };		// Function to call on animation end.
+//			anim.duration = 1;												// Duration in seconds. Default is 1.
+//			anim.reverseDuration = 1;										// Duration in seconds when reversed. If no value assigned, default is equal to duration.
+//			anim.delay = 0;													// Delay after starting animation. Default is 0.
+//			anim.easeFunction = "Cubic";									// Determines curve. Default is "Cubic", all Tween functions can be used!
+//			anim.easeType = "InOut";										// Determines how animation curve is applied. Default is "InOut". All possible inputs: "In", "Out", "InOut".
+//			anim.pulse(newTimeRatio);										// Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
+//			anim.getTimeRatio();											// The current linear normalized animation time, 0-1.
+//			anim.setReversed(reverse);										// If reversed, the animation plays backwards. The easeType will be swapped if it isn't 'InOut'. 'reverse' should be of type bool.
+//			anim.getReversed();												// Returns true if the animation is currently reversed.
+//			anim.isPlaying();												// Returns true if the animation is currently playing.
+//			anim.start(newTimeRatio); 										// Starts the animation. Does not call endFunction if an animation is still playing. Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
+//			anim.stop(callEndFunction);										// Stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
 //
 //
 //
@@ -166,10 +166,9 @@
 // -
 //
 //
-// global.instSound(audioAsset [Asset.AudioTrackAsset], fadeIn (optional) [Number], fadeOut (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
+// global.instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
 // 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
-//	Instances are removed when done.
-// 	Returns the AudioComponent.
+// 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 //
 //
 //
@@ -676,15 +675,17 @@ global.AnimateProperty = function(){
 	this.pulse = function(newTimeRatio){
 		if(reversed) newTimeRatio = 1-newTimeRatio;
 		stopAnimEvent();
-		self.timeRatio = newTimeRatio; // reset animation time
+		timeRatio = newTimeRatio; // reset animation time
 		setValue( getInterpolated() );
 	}
 
 	/**
 	 * @type {Number} 
-	 * @description The current animation time, linear, 0-1.
-	 * Updated while animation is running. */
-	this.timeRatio = 0;
+	 * @description The current linear normalized animation time, 0-1. */
+	this.getTimeRatio = function(){
+		var reversedTimeRatio = reversed ? 1-timeRatio : timeRatio;
+		return reversedTimeRatio;
+	}
 
 	/**
 	 * @type {Function} 
@@ -719,7 +720,11 @@ global.AnimateProperty = function(){
 		stopDelayedStart();
 
 		function begin(){
-			if(newTimeRatio || newTimeRatio === 0) self.pulse(newTimeRatio);
+			if(newTimeRatio){ // custom time ratio given
+				self.pulse(newTimeRatio);
+			}else{
+				self.pulse(0);
+			}
 			updateDuration();
 			animation();
 			startAnimEvent();
@@ -741,7 +746,7 @@ global.AnimateProperty = function(){
 	 * @description Stop the animation at its current time. With an optional argument to call the endFunction (bool). */
 	this.stop = function(callEndFunction){
 		stopAnimEvent();
-		var atAnimationEnd = (self.timeRatio === 0 && reversed) || (self.timeRatio === 1 && !reversed);
+		var atAnimationEnd = (timeRatio === 0 && reversed) || (timeRatio === 1 && !reversed);
 		if(callEndFunction || atAnimationEnd) self.endFunction(); // only call endFunction if an animation was stopped at end
 	}
 
@@ -753,6 +758,7 @@ global.AnimateProperty = function(){
 	var isPlaying = false;
 	var delayedStart;
 	var duration;
+	var timeRatio = 0;
 
 	function setValue(v){
 		self.updateFunction(v);
@@ -764,12 +770,12 @@ global.AnimateProperty = function(){
 	
 	function animation(){
 		if(duration === 0){ // if instant
-			self.timeRatio = reversed ? 0 : 1; // exceed allowed range of 0-1 to make the animation stop right away
+			timeRatio = reversed ? 0 : 1; // set to limit of allowed range to make the animation stop right away (1 tick of update function will be sent)
 		}else{
 			var dir = reversed ? -1 : 1;
-			self.timeRatio += (getDeltaTime() / duration) * dir;
+			timeRatio += (getDeltaTime() / duration) * dir;
 		}
-		if(reversed ? (self.timeRatio <= 0) : (self.timeRatio >= 1)){ // on last step
+		if(reversed ? (timeRatio <= 0) : (timeRatio >= 1)){ // on last step
 			setValue(reversed ? 0 : 1);
 			self.stop(true);
 		}else{ // on animation step
@@ -779,7 +785,7 @@ global.AnimateProperty = function(){
 	}
 
 	function getInterpolated(){
-		return global.interp(0, 1, self.timeRatio, self.easeFunction, getEaseType());
+		return global.interp(0, 1, timeRatio, self.easeFunction, getEaseType());
 	}
 	
 	function startAnimEvent(){
@@ -1058,12 +1064,13 @@ global.DoDelay = function(func, args){
 
 
 
-global.instSound = function(audioAsset, fadeIn, fadeOut, offset, mixToSnap){
+global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset, mixToSnap){
 	var audioComp = script.getSceneObject().createComponent("Component.AudioComponent");
 	audioComp.audioTrack = audioAsset;
 
-	if(fadeIn) 	audioComp.fadeInTime = fadeIn;
-	if(fadeOut) audioComp.fadeOutTime = fadeOut;
+	if(volume === 0 || volume) audioComp.volume = volume;
+	if(fadeInTime) 	audioComp.fadeInTime = fadeInTime;
+	if(fadeOutTime) audioComp.fadeOutTime = fadeOutTime;
 
 	if(offset){
 		audioComp.position = offset;
