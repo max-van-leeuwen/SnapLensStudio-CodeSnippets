@@ -722,9 +722,8 @@ global.AnimateProperty = function(){
 		function begin(){
 			if(newTimeRatio){ // custom time ratio given
 				self.pulse(newTimeRatio);
-			}else{
-				self.pulse(0);
 			}
+			
 			updateDuration();
 			animation();
 			startAnimEvent();
