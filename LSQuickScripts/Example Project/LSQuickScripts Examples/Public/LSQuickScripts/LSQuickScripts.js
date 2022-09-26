@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v1.8"}
+//@ui {"widget":"label", "label":"LSQuickScripts v1.9"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')."}
@@ -346,6 +346,14 @@
 // -
 //
 //
+// global.isInSpectaclesDisplay(pos [vec3], cam [Component.Camera]) : bool
+//	Returns true if the world position is visible in the square Spectacles (2021) display. Handy for optimization sometimes.
+//
+//
+//
+// -
+//
+//
 // global.VisualizePositions(scale (optional) [Number]) : VisualizePositions object
 //	A class that places cubes on each position in the 'positions' array, for quick visualizations.
 //
@@ -684,7 +692,7 @@ global.AnimateProperty = function(){
 	 * @description The current linear normalized animation time, 0-1. */
 	this.getTimeRatio = function(){
 		var reversedTimeRatio = reversed ? 1-timeRatio : timeRatio;
-		return reversedTimeRatio;
+		return global.clamp(reversedTimeRatio);
 	}
 
 	/**
@@ -708,7 +716,7 @@ global.AnimateProperty = function(){
 	/**
 	 * @type {Boolean} 
 	 * @description Returns true if the animation is currently playing. */
-	 this.isPlaying = function(){
+	this.isPlaying = function(){
 		return isPlaying;
 	}
 
@@ -722,15 +730,14 @@ global.AnimateProperty = function(){
 		function begin(){
 			if(newTimeRatio){ // custom time ratio given
 				self.pulse(newTimeRatio);
+			}else{
+				self.pulse(0);
 			}
-			
 			updateDuration();
 			animation();
 			startAnimEvent();
 			if(self.startFunction) self.startFunction();
 		}
-
-		isPlaying = true;
 
 		if(self.delay > 0){ // start after delay (if any)
 			delayedStart = new global.DoDelay(begin)
@@ -790,7 +797,8 @@ global.AnimateProperty = function(){
 	function startAnimEvent(){
 		stopAnimEvent(); // stop currently playing (if any)
 		animEvent = script.createEvent("UpdateEvent");
-		animEvent.bind(animation);	
+		animEvent.bind(animation);
+		isPlaying = true;
 	}
 	
 	function stopAnimEvent(){
@@ -1407,6 +1415,14 @@ global.lookAtUp = function(posA, posB, offset){
 	if(!offset) offset = 0;
 	var angle = Math.atan2(posA.x - posB.x, posA.z - posB.z);
 	return quat.angleAxis(angle + offset, vec3.up());
+}
+
+
+
+
+global.isInSpectaclesDisplay = function(pos, cam){
+	var screenPos = cam.worldSpaceToScreenSpace(pos);
+	return !(screenPos.x < 0 || screenPos.x > 1 || screenPos.y < 0 || screenPos.y > 1);
 }
 
 

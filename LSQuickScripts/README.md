@@ -322,6 +322,14 @@ global.lookAtUp(posA [vec3], posB [vec3], offset) : quat
 -
 
 
+global.isInSpectaclesDisplay(pos [vec3], cam [Component.Camera]) : bool
+	Returns true if the world position is visible in the square Spectacles (2021) display. Handy for optimization sometimes.
+
+
+
+-
+
+
 global.VisualizePositions(scale (optional) [Number]) : VisualizePositions object
 	A class that places cubes on each position in the 'positions' array, for quick visualizations.
 
