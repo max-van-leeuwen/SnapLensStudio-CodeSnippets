@@ -100,7 +100,7 @@
 //			anim.setReversed(reverse);										// If reversed, the animation plays backwards. The easeType will be swapped if it isn't 'InOut'. 'reverse' should be of type bool.
 //			anim.getReversed();												// Returns true if the animation is currently reversed.
 //			anim.isPlaying();												// Returns true if the animation is currently playing.
-//			anim.start(newTimeRatio); 										// Starts the animation (resumes where last play left off). Optional 'atTime' argument starts at normalized linear 0-1 time ratio. To start from the beginning after having played already, use an 'atTime' value of 0.
+//			anim.start(newTimeRatio); 										// Starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
 //			anim.stop(callEndFunction);										// Stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
 //
 //
@@ -731,7 +731,7 @@ global.AnimateProperty = function(){
 			if(newTimeRatio){ // custom time ratio given
 				self.pulse(newTimeRatio);
 			}else{
-				self.pulse(0);
+				if(self.getTimeRatio() === 1) self.pulse(0);
 			}
 			updateDuration();
 			animation();
@@ -1415,14 +1415,6 @@ global.lookAtUp = function(posA, posB, offset){
 	if(!offset) offset = 0;
 	var angle = Math.atan2(posA.x - posB.x, posA.z - posB.z);
 	return quat.angleAxis(angle + offset, vec3.up());
-}
-
-
-
-
-global.isInSpectaclesDisplay = function(pos, cam){
-	var screenPos = cam.worldSpaceToScreenSpace(pos);
-	return !(screenPos.x < 0 || screenPos.x > 1 || screenPos.y < 0 || screenPos.y > 1);
 }
 
 
