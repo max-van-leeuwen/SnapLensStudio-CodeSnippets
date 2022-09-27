@@ -100,7 +100,7 @@
 //			anim.setReversed(reverse);										// If reversed, the animation plays backwards. The easeType will be swapped if it isn't 'InOut'. 'reverse' should be of type bool.
 //			anim.getReversed();												// Returns true if the animation is currently reversed.
 //			anim.isPlaying();												// Returns true if the animation is currently playing.
-//			anim.start(newTimeRatio); 										// Starts the animation. Does not call endFunction if an animation is still playing. Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
+//			anim.start(newTimeRatio); 										// Starts the animation (resumes where last play left off). Optional 'atTime' argument starts at normalized linear 0-1 time ratio. To start from the beginning after having played already, use an 'atTime' value of 0.
 //			anim.stop(callEndFunction);										// Stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
 //
 //
