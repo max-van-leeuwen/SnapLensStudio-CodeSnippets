@@ -1,41 +1,20 @@
 // Max van Leeuwen
 //
-// Animates a sceneobject to be oriented and placed right in front of the user. Handy when using World Tracking.
-// Requires LSQuickScripts! Get it at https://github.com/max-van-leeuwen/SnapLensStudio-LSQuickScripts, and place the script somewhere in your project.
+// Places and orients a scene in front of the user, handy when using World Tracking.
 //
-//
-// Use it like a class - make a new instance, customize it (if wanted), and call 'start()' to start the animation once!
-// Example:
-// 	var worldPlacementAnim = new WorldPlacement();
-//	worldPlacementAnim.easeFunction = "Elastic";
+// To use, make a new class like so (and add optional arguments)
+// 	var worldPlacementAnim = new global.WorldPlacement();
 //	worldPlacementAnim.start();
 //
-//
-// One-liner with no customizations:
-//	new WorldPlacement().start();
-//
-//
-// All possible customizations:
-//	.cameraObject		 	The SceneObject of the camera to move the object to.
-//	.moveObject		 		The SceneObject to move to the user's visible space.
-//	.distanceFromCamera		Distance from camera (world units, cm). Default is 100.
-//	.height		 			Height offset (world units, cm). Default is 0.
-//	.duration		 		Length of animation (s). Default is 0.5.
-//	.spherical		 		Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'.
-//	.callback		 		Function to call on animation end.
-//	.easeFunction		 	Animation curve. Default is "Cubic". All Tween functions work ("Linear", "Elastic", etc)!
-//	.easeType		 		Determines where curve is applied. Default is "Out". All possible input types: "In", "Out", "InOut".
-//	.start()	 			Starts the animation.
+// To read the final transform information (an object containing the keys 'pos' (vec3), 'rot' (quat)), use
+//	worldPlacementAnim.getFinalTransformData();
+//		This function can be used after start() was called. No moveObject is necessary in this case!
 
 
 
-// defaults
-// @input SceneObject cameraObject
-// @input SceneObject moveObject
-
-
-
-if(!global.AnimateProperty) throw('World Placement needs LSQuickScripts! Get it from\nhttps://github.com/max-van-leeuwen/SnapLensStudio-LSQuickScripts');
+// defaults, used if not overwritten in the new instance of this class
+//@input SceneObject cameraObject
+//@input SceneObject moveObject
 
 
 
@@ -103,6 +82,14 @@ global.WorldPlacement = function(){
 	 * "InOut" */
 	this.easeType = "Out";
 
+    /**
+	 * @type {Function}
+	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'. */
+	this.getFinalTransformData = function(){
+		return finalTransformData;
+	}
+	var finalTransformData;
+
 
 
 	/**
@@ -111,7 +98,7 @@ global.WorldPlacement = function(){
 	this.start = function(){
 		// get transformation info
 		var camTrf = self.cameraObject.getTransform();
-		var sceneTrf = self.moveObject.getTransform();
+		if(self.moveObject) var sceneTrf = self.moveObject.getTransform();
 	
 		var camPos = camTrf.getWorldPosition();
 		var camFwd = camTrf.forward;
@@ -132,15 +119,21 @@ global.WorldPlacement = function(){
 		newPos = newPos.add(heightOffset).add(camHeight);
 	
 		// animate properties
-		var curPos = sceneTrf.getWorldPosition();
-		var curRot = sceneTrf.getWorldRotation();
+		if(sceneTrf){
+			var curPos = sceneTrf.getWorldPosition();
+			var curRot = sceneTrf.getWorldRotation();
+		}
+
+		finalTransformData = {pos:newPos, rot:newRot};
 		
 		function animationStep(v){
-			// apply
-			var pos = vec3.lerp(curPos, newPos, v);
-			var rot = quat.slerp(curRot, newRot, v);
-			sceneTrf.setWorldPosition(pos);
-			sceneTrf.setWorldRotation(rot);
+			// apply (if moveObject was given)
+			if(sceneTrf){
+				var pos = vec3.lerp(curPos, newPos, v);
+				var rot = quat.slerp(curRot, newRot, v);
+				sceneTrf.setWorldPosition(pos);
+				sceneTrf.setWorldRotation(rot);
+			}
 		}
 
 		if(self.duration === 0){ // instant
