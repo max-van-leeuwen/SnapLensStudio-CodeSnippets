@@ -728,7 +728,7 @@ global.AnimateProperty = function(){
 		stopDelayedStart();
 
 		function begin(){
-			if(newTimeRatio){ // custom time ratio given
+			if(newTimeRatio != null){ // custom time ratio given
 				self.pulse(newTimeRatio);
 			}else{
 				if(self.getTimeRatio() === 1) self.pulse(0);
@@ -745,6 +745,9 @@ global.AnimateProperty = function(){
 		}else{
 			begin();
 		}
+
+		// force isPlaying to true, as it otherwise takes until the delay is over (delayed animation also counts as playing)
+		isPlaying = true;
 	}
 	
 	/**
