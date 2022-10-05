@@ -274,6 +274,14 @@ global.circularDistance(a [Number], b [Number], mod [Number]) : Number
 -
 
 
+global.mod(a [Number], b [Number]) : Number
+	Modulo (%), but keeps negative numbers into account. For example, mode(-1, 3) returns 2. Whereas -1%3 returns -1.
+
+
+
+-
+
+
 global.measureWorldPos(screenPos [vec2], region [Component.ScreenTransform], cam [Component.Camera], dist [Number]) : vec3
 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
