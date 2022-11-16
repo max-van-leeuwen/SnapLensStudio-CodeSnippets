@@ -242,6 +242,11 @@
 //
 //
 //
+// global.concatArrays(array [any], array [any]) : array
+// 	Concatinates two arrays (of same type) and returns the new one.
+//
+//
+//
 // -
 //
 //
@@ -299,7 +304,7 @@
 //
 //
 // global.mod(a [Number], b [Number]) : Number
-// 	Modulo (%), but keeps negative numbers into account. For example, mode(-1, 3) returns 2. Whereas -1%3 returns -1.
+// 	Modulo (%), but keeps negative numbers into account. For example, mod(-1, 3) returns 2. Whereas -1%3 returns -1.
 //
 //
 //
@@ -1251,6 +1256,16 @@ global.shuffleArray = function(array) {
 
 
 
+global.concatArrays = function(a, b) {
+	var c = new (a.constructor)(a.length + b.length);
+	c.set(a, 0);
+	c.set(b, a.length);
+	return c;
+}
+
+
+
+
 global.MovingAverage = function(){
 	var self = this;
 
@@ -1448,7 +1463,7 @@ global.VisualizePositions = function(scale){
 	/**
 	 * @type {Number}
 	 * @description Size of objects. Default is 1. */
-	 this.scale = scale ? scale : 1;
+	this.scale = scale ? scale : 1;
 
 	/**
 	 * @type {Boolean}
