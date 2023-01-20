@@ -365,6 +365,14 @@ global.isInSpectaclesDisplay(pos [vec3], cam [Component.Camera]) : bool
 -
 
 
+global.mat4FromDescription(matDescription [string]) : mat4
+	Returns a mat4, based on a mat4's string 'description'. Useful when trying to store it in a JSON, for example.
+
+
+
+-
+
+
 global.VisualizePositions(scale (optional) [Number]) : VisualizePositions object
 	A class that places cubes on each position in the 'positions' array, for quick visualizations.
 

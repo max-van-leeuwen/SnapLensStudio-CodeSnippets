@@ -389,6 +389,14 @@
 // -
 //
 //
+// global.mat4FromDescription(matDescription [string]) : mat4
+//	Returns a mat4, based on a mat4's string 'description'. Useful when trying to store it in a JSON, for example.
+//
+//
+//
+// -
+//
+//
 // global.VisualizePositions(scale (optional) [Number]) : VisualizePositions object
 //	A class that places cubes on each position in the 'positions' array, for quick visualizations.
 //
@@ -1541,6 +1549,27 @@ global.lookAtUp = function(posA, posB, offset){
 	if(!offset) offset = 0;
 	var angle = Math.atan2(posA.x - posB.x, posA.z - posB.z);
 	return quat.angleAxis(angle + offset, vec3.up());
+}
+
+
+
+
+global.mat4FromDescription = function(matDescription){
+	var lines = matDescription.split('\n');
+	var lines1 = lines[1].split(' ');
+	var lines2 = lines[2].split(' ');
+	var lines3 = lines[3].split(' ');
+	var lines4 = lines[4].split(' ');
+	var c0 = new vec4(Number(lines1[0]), Number(lines2[0]), Number(lines3[0]), Number(lines4[0]));
+	var c1 = new vec4(Number(lines1[1]), Number(lines2[1]), Number(lines3[1]), Number(lines4[1]));
+	var c2 = new vec4(Number(lines1[2]), Number(lines2[2]), Number(lines3[2]), Number(lines4[2]));
+	var c3 = new vec4(Number(lines1[3]), Number(lines2[3]), Number(lines3[3]), Number(lines4[3]));
+	var m = new mat4();
+	m.column0 = c0;
+	m.column1 = c1;
+	m.column2 = c2;
+	m.column3 = c3;
+	return m;
 }
 
 
