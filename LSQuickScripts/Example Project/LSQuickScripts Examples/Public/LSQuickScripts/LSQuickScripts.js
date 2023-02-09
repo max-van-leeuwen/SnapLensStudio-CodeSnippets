@@ -397,6 +397,14 @@
 // -
 //
 //
+// global.wrapFunction(originalFunction [Function], newFunction [Function]) : Function
+//	Wrap two functions into one.
+//
+//
+//
+// -
+//
+//
 // global.VisualizePositions(scale (optional) [Number]) : VisualizePositions object
 //	A class that places cubes on each position in the 'positions' array, for quick visualizations.
 //
@@ -404,8 +412,8 @@
 //			var vis = new VisualizePositions();
 //			vis.scale;								// (Optional) Set the scale of the cubes (world size, default is 1)
 //			vis.continuousRotation;					// (Optional) Make the cubes do a rotate animation (boolean, default is true)
-//			vis.material;							// (Optional) set material property of the cubes (<Asset.Material>)
-//			vis.update(<Vec3 Array>);				// places cubes on new array of positions, returns the array of cube SceneObjects if needed!
+//			vis.material;							// (Optional) set material property of the cubes ([Asset.Material])
+//			vis.update([Vec3 Array]);				// places cubes on new array of positions, returns the array of cube SceneObjects if needed!
 //			vis.remove();							// clears all created visualization
 //
 //		One-liner for convenience:
@@ -1575,6 +1583,19 @@ global.mat4FromDescription = function(matDescription){
 
 
 
+global.wrapFunction = function(originalFunction, newFunction){
+	if (!originalFunction) {
+        return newFunction;
+    }
+    return function() {
+        originalFunction();
+        newFunction();
+    };
+}
+
+
+
+
 global.VisualizePositions = function(scale){
 	var self = this;
 
@@ -1666,10 +1687,8 @@ global.VisualizePositions = function(scale){
 
 	// generated mesh to be used on created objects
 	function makeCube(){
-
-		//
+		
 		// Cube from MeshBuilder documentation
-		//
 
 		var builder = new MeshBuilder([
 			{ name: "position", components: 3 },
