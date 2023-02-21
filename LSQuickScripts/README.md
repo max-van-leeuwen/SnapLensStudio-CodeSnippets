@@ -81,6 +81,11 @@ global.AnimateProperty() : animateProperty object
 
 
 
+global.StopAllAnimateProperties() : array
+	Instantly stops all animate property-instances created using 'global.AnimateProperty'. This is useful if you want to create a quick reset function for your lens without managing all the created animations throughout your project.
+
+
+
 -
 
 
@@ -144,12 +149,22 @@ global.DoDelay( function (Function, optional), arguments (Array, optional) ) : d
 
 
 
+global.StopAllDelays() : array of delays
+	Instantly stops all delays created using 'global.DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
+
+
+
 -
 
 
 global.instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
+
+
+
+global.StopAllSoundInstances() : array of sound instances
+	Instantly stops all sound instances created using 'global.instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
 
 
 

@@ -105,6 +105,11 @@
 //
 //
 //
+// global.StopAllAnimateProperties() : array
+//	Instantly stops all animate property-instances created using 'global.AnimateProperty'. This is useful if you want to create a quick reset function for your lens without managing all the created animations throughout your project.
+//
+//
+//
 // -
 //
 //
@@ -168,12 +173,22 @@
 //
 //
 //
+// global.StopAllDelays() : array of delays
+//	Instantly stops all delays created using 'global.DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
+//
+//
+//
 // -
 //
 //
 // global.instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
 // 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
+//
+//
+//
+// global.StopAllSoundInstances() : array of sound instances
+// 	Instantly stops all sound instances created using 'global.instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
 //
 //
 //
@@ -667,6 +682,7 @@ global.interp = function(startValue, endValue, t, easing, type, unclamped){
 
 
 
+var animatedProperties = [];
 global.AnimateProperty = function(){
 	var self = this;
 
@@ -888,6 +904,19 @@ global.AnimateProperty = function(){
 				return "InOut"
 		}
 	}
+
+	animatedProperties.push(this);
+}
+
+
+
+
+global.StopAllAnimateProperties = function(){
+	for(var i = 0; i < animatedProperties.length; i++){
+		var anim = animatedProperties[i];
+		if(anim && anim.stop) anim.stop();
+	}
+	return animatedProperties;
 }
 
 
@@ -1046,6 +1075,7 @@ global.RGBtoHSV = function(rgb){
 
 
 
+var allDelays = [];
 global.DoDelay = function(func, args){
 	var self = this;
 
@@ -1134,11 +1164,25 @@ global.DoDelay = function(func, args){
 	this.stop = function(){
 		stopWaitEvent();
 	}
+
+	allDelays.push(this);
 }
 
 
 
 
+global.StopAllDelays = function(){
+	for(var i = 0; i < allDelays.length; i++){
+		var delay = allDelays[i];
+		if(delay && delay.stop) delay.stop();
+	}
+	return allDelays;
+}
+
+
+
+
+var allSoundInstances = [];
 global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset, mixToSnap){
 	var audioComp = script.getSceneObject().createComponent("Component.AudioComponent");
 	audioComp.audioTrack = audioAsset;
@@ -1163,8 +1207,24 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 	}
 	new global.DoDelay( destroyAudioComponent, [audioComp]).byTime(audioComp.duration + .1); // stop playing after audio asset duration
 
+	allSoundInstances.push(audioComp);
 	return audioComp;
 }
+
+
+
+
+global.StopAllSoundInstances = function(){
+	for(var i = 0; i < allSoundInstances.length; i++){
+		var soundInstance = allSoundInstances[i];
+		if(soundInstance && !isNull(soundInstance)){
+			soundInstance.stop(false);
+			soundInstance.destroy();
+		}
+	}
+	return allSoundInstances;
+}
+
 
 
 
