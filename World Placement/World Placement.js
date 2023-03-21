@@ -15,6 +15,8 @@
 // defaults, used if not overwritten in the new instance of this class
 //@input SceneObject cameraObject
 //@input SceneObject moveObject
+//@input float distanceFromCamera = 100
+//@input float height = 0
 
 
 
@@ -34,12 +36,12 @@ global.WorldPlacement = function(){
 	/**
 	 * @type {Number}
 	 * @description Distance from camera (world units, cm). Default is 100. */
-	this.distanceFromCamera = 100;
+	this.distanceFromCamera = script.distanceFromCamera;
 
 	/**
 	 * @type {Number}
 	 * @description Height offset (world units, cm). Default is 0. */
-	this.height = 0;
+	this.height = script.height;
 
 	/**
 	 * @type {Number}
@@ -84,7 +86,7 @@ global.WorldPlacement = function(){
 
     /**
 	 * @type {Function}
-	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'. */
+	 * @description Gets the final transform information - an object containing the keys 'pos' (vec3) and 'rot' (quat). Can only be called once 'start' was called. */
 	this.getFinalTransformData = function(){
 		return finalTransformData;
 	}
