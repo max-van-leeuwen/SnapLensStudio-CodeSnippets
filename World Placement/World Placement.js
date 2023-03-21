@@ -96,8 +96,8 @@ global.WorldPlacement = function(){
 
 	/**
 	 * @type {Function} 
-	 * @description Starts the animation. */
-	this.start = function(){
+	 * @description Starts the animation. If first argument is true, the animation will be skipped and placement will be instant. */
+	this.start = function(doInstant){
 		// get transformation info
 		var camTrf = self.cameraObject.getTransform();
 		if(self.moveObject) var sceneTrf = self.moveObject.getTransform();
@@ -138,7 +138,7 @@ global.WorldPlacement = function(){
 			}
 		}
 
-		if(self.duration === 0){ // instant
+		if(self.duration === 0 || doInstant){ // instant
 			animationStep(1);
 
 		}else{ // start animation
