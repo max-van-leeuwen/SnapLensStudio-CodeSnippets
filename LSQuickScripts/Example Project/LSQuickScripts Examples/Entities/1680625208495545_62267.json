@@ -1,0 +1,181 @@
+{
+    "1680625208494733:62266": {
+        "IFileManager": {
+            "path": "Files/File_1680625208494733_62266.mesh"
+        }
+    },
+    "1680625208495545:62267": {
+        "IResourceController": {
+            "name": "Sphere",
+            "type": 3,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1680625208523900:62274",
+            "fileId": "1680625208494733:62266",
+            "publicId": "1680625208529143:62288",
+            "expected_hash": "d0533d60d071323a00e2a2d7be0ccff1",
+            "additional": {
+                "info": {
+                    "hasBlendShapes": "false",
+                    "vertexAttribs": [
+                        {
+                            "canBeDisabled": "false",
+                            "format": "9",
+                            "semantic": "position"
+                        },
+                        {
+                            "canBeDisabled": "true",
+                            "format": "9",
+                            "semantic": "normal"
+                        },
+                        {
+                            "canBeDisabled": "true",
+                            "format": "9",
+                            "semantic": "tangent"
+                        },
+                        {
+                            "canBeDisabled": "true",
+                            "format": "9",
+                            "semantic": "texture0"
+                        }
+                    ]
+                }
+            }
+        },
+        "IResourceManager": {
+            "uid": "1680625208523900:62274",
+            "name": "Files/File_1680625208494733_62266.mesh",
+            "flags": 1
+        }
+    },
+    "1680625208523900:62274": {
+        "Compression::IController": {
+            "compressed_files": [
+                {
+                    "k": {
+                        "settings_hash": "2805548999938770413",
+                        "uncompressed_hash": "b9e3f7898115085ebbb39400f580dbea"
+                    },
+                    "v": "1680625219310421:66566"
+                },
+                {
+                    "k": {
+                        "settings_hash": "2893318779670227544",
+                        "uncompressed_hash": "b9e3f7898115085ebbb39400f580dbea"
+                    },
+                    "v": "1680625220868521:67724"
+                },
+                {
+                    "k": {
+                        "settings_hash": "5133330921582238454",
+                        "uncompressed_hash": "b9e3f7898115085ebbb39400f580dbea"
+                    },
+                    "v": "1680625222518930:68507"
+                },
+                {
+                    "k": {
+                        "settings_hash": "12258712744712242611",
+                        "uncompressed_hash": "b9e3f7898115085ebbb39400f580dbea"
+                    },
+                    "v": "1680625220101933:67149"
+                }
+            ],
+            "infos": {
+                "compressedRAM": "14704",
+                "compressedSize": "7490",
+                "extension": "mesh",
+                "originalRAM": "32592",
+                "originalSize": "16041",
+                "settings": {
+                    "attributeFormat": [
+                        {
+                            "k": "normal",
+                            "v": "8"
+                        },
+                        {
+                            "k": "position",
+                            "v": "8"
+                        },
+                        {
+                            "k": "tangent",
+                            "v": "10"
+                        },
+                        {
+                            "k": "texture0",
+                            "v": "10"
+                        }
+                    ],
+                    "draco": {
+                        "colorBits": "8",
+                        "compressLvl": "7",
+                        "normalBits": "8",
+                        "posBits": "11",
+                        "texBits": "10"
+                    },
+                    "info": {
+                        "hasBlendShapes": "false",
+                        "vertexAttribs": [
+                            {
+                                "canBeDisabled": "false",
+                                "format": "9",
+                                "semantic": "position"
+                            },
+                            {
+                                "canBeDisabled": "true",
+                                "format": "9",
+                                "semantic": "normal"
+                            },
+                            {
+                                "canBeDisabled": "true",
+                                "format": "9",
+                                "semantic": "tangent"
+                            },
+                            {
+                                "canBeDisabled": "true",
+                                "format": "9",
+                                "semantic": "texture0"
+                            }
+                        ]
+                    },
+                    "isCompressed": "true",
+                    "type": "0"
+                }
+            },
+            "uncompressed_file": "1680625208526749:62287"
+        }
+    },
+    "1680625208526749:62287": {
+        "IFileManager": {
+            "path": "Files/File_1680625208526749_62287.mesh"
+        }
+    },
+    "1680625208529143:62288": {
+        "IResourceController": {
+            "public": {
+                "path": "Other/Sphere.mesh",
+                "hash": "d0533d60d071323a00e2a2d7be0ccff1"
+            }
+        }
+    },
+    "1680625219310421:66566": {
+        "IFileManager": {
+            "path": "Files/File_1680625219310421_66566.mesh"
+        }
+    },
+    "1680625220101933:67149": {
+        "IFileManager": {
+            "path": "Files/File_1680625220101933_67149.mesh"
+        }
+    },
+    "1680625220868521:67724": {
+        "IFileManager": {
+            "path": "Files/File_1680625220868521_67724.mesh"
+        }
+    },
+    "1680625222518930:68507": {
+        "IFileManager": {
+            "path": "Files/File_1680625222518930_68507.mesh"
+        }
+    }
+}

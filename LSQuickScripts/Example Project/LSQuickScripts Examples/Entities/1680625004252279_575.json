@@ -1,0 +1,23 @@
+{
+    "1680625004252210:469": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Is In Front"
+            }
+        }
+    },
+    "1680625004252279:575": {
+        "IResourceController": {
+            "name": "Is In Front",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252210:469",
+            "resources": [
+                "1680625004252277:573",
+                "1680625004252279:574"
+            ]
+        }
+    }
+}

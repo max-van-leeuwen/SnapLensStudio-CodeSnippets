@@ -1,0 +1,33 @@
+{
+    "1680625004252116:431": {
+        "IResourceController": {
+            "name": "LSQuickScripts",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1585588591968896:1854",
+            "fileId": "1680625004252119:442",
+            "publicId": "1680625004252170:465",
+            "expected_hash": "8433b5c909301611f59d95096136385b"
+        },
+        "IResourceManager": {
+            "uid": "1585588591968896:1854",
+            "name": "Files/File_1680625004252119_442.js",
+            "flags": 1
+        }
+    },
+    "1680625004252119:442": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252119_442.js"
+        }
+    },
+    "1680625004252170:465": {
+        "IResourceController": {
+            "public": {
+                "path": "LSQuickScripts/LSQuickScripts.js",
+                "hash": "8433b5c909301611f59d95096136385b"
+            }
+        }
+    }
+}

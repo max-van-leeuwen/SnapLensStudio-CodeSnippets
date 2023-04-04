@@ -107,8 +107,8 @@ global.isInFront(objFront [SceneObject], objBehind [SceneObject] ) : bool
 
 
 
-global.isInBox(object [SceneObject], box [SceneObject]) : bool
-	Checks if object is within the boundaries of a default Lens Studio box.
+global.isInBox(point [vec3], boxTrf [Transform]) : bool
+	Checks if object is within the boundaries of a unit box (world space, can be rotated and scaled non-uniformly).
 
 
 

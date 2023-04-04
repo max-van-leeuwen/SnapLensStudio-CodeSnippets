@@ -1,0 +1,16 @@
+{
+    "1680625004252290:587": {
+        "IResourceController": {
+            "name": "Project Resources Root",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "resources": [
+                "1680625004252286:584",
+                "1680625004252287:585",
+                "1680625004252290:586"
+            ]
+        }
+    }
+}

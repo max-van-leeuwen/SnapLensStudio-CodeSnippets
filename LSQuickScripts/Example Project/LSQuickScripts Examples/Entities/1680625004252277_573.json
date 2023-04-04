@@ -1,0 +1,22 @@
+{
+    "1680625004252211:470": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Is In Front/material"
+            }
+        }
+    },
+    "1680625004252277:573": {
+        "IResourceController": {
+            "name": "material",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252211:470",
+            "resources": [
+                "1680625004252118:434"
+            ]
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "1680625004252118:434": {
+        "IResourceController": {
+            "name": "colour",
+            "type": 2,
+            "subtype": 1,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1585597763543602:8517",
+            "fileId": "1680625004252129:445",
+            "originalId": "1680625004252131:446",
+            "publicId": "1680625004252211:471",
+            "expected_hash": "04516b155ecde0ac5a4a45cbacbc0cf9",
+            "additional": {
+                "isUnpackedInPublic": "false"
+            }
+        },
+        "IResourceManager": {
+            "uid": "1585597763543602:8517",
+            "name": "Files/File_1680625004252129_445",
+            "flags": 1
+        }
+    },
+    "1680625004252129:445": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252129_445"
+        }
+    },
+    "1680625004252131:446": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252131_446.lsmat"
+        }
+    },
+    "1680625004252211:471": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Is In Front/material/colour.lsmat",
+                "hash": "7b81badcc5e7e306ab22741336e3c7b5"
+            }
+        }
+    }
+}

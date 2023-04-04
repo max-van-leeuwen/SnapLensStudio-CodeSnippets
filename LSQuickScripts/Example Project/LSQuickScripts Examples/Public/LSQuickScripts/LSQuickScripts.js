@@ -131,8 +131,8 @@
 //
 //
 //
-// global.isInBox(object [SceneObject], box [SceneObject]) : bool
-// 	Checks if object is within the boundaries of a default Lens Studio box.
+// global.isInBox(point [vec3], boxTrf [Transform]) : bool
+// 	Checks if object is within the boundaries of a unit box (world space, can be rotated and scaled non-uniformly).
 //
 //
 //
@@ -967,37 +967,20 @@ global.isInFront = function(objFront, objBehind){
 
 
 
-global.isInBox = function(obj, box){
-	// lens studio box size
-	var meshNormalize = global.LS_BOX_SCALE;
+global.isInBox = function(point, boxTrf){
+	var center = boxTrf.getWorldPosition();
+	var worldScale = boxTrf.getWorldScale();
+	var rotation = boxTrf.getWorldRotation();
 
-	// get world bounds of collision box
-	var collisionTransf = box.getTransform();
-	var collisionScale = collisionTransf.getWorldScale();
-	var collisionPos = collisionTransf.getWorldPosition();
-	collisionPos.x /= meshNormalize;
-	collisionPos.y /= meshNormalize;
-	collisionPos.z /= meshNormalize;
-
-	var xMin = collisionPos.x - collisionScale.x/2;
-	var xMax = collisionPos.x + collisionScale.x/2;
-	var yMin = collisionPos.y - collisionScale.y/2;
-	var yMax = collisionPos.y + collisionScale.y/2;
-	var zMin = collisionPos.z - collisionScale.z/2;
-	var zMax = collisionPos.z + collisionScale.z/2;
-
-	// get comparison pos
-	var currPos = obj.getTransform().getWorldPosition();
-
-	// normalize for box mesh scale
-	currPos.x /= meshNormalize;
-	currPos.y /= meshNormalize;
-	currPos.z /= meshNormalize;
-
-	// check if in bounds
-	return ((currPos.x < xMax && currPos.x > xMin) &&
-			(currPos.y < yMax && currPos.y > yMin) &&
-			(currPos.z < zMax && currPos.z > zMin) );
+	var localPoint = point.sub(center);
+	var inverseRotation = mat4.fromRotation(rotation.invert());
+	var rotatedPoint = inverseRotation.multiplyPoint(localPoint);
+	
+	return(
+		Math.abs(rotatedPoint.x) <= worldScale.x/2 &&
+		Math.abs(rotatedPoint.y) <= worldScale.y/2 &&
+		Math.abs(rotatedPoint.z) <= worldScale.z/2
+  	);
 }
 
 

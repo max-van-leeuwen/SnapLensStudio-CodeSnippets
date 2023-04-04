@@ -1,0 +1,22 @@
+{
+    "1680625004252216:483": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Instance Sound/script"
+            }
+        }
+    },
+    "1680625004252285:581": {
+        "IResourceController": {
+            "name": "script",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252216:483",
+            "resources": [
+                "1680625004252119:439"
+            ]
+        }
+    }
+}

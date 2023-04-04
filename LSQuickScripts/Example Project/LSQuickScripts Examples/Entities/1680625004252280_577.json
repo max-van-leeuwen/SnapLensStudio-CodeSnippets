@@ -1,0 +1,22 @@
+{
+    "1680625004252213:474": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Animate Box"
+            }
+        }
+    },
+    "1680625004252280:577": {
+        "IResourceController": {
+            "name": "Animate Box",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252213:474",
+            "resources": [
+                "1680625004252280:576"
+            ]
+        }
+    }
+}

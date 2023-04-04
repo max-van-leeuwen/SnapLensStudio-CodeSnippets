@@ -1,0 +1,33 @@
+{
+    "1680625004252119:439": {
+        "IResourceController": {
+            "name": "Instance Sound",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1586920321895714:5928",
+            "fileId": "1680625004252138:452",
+            "publicId": "1680625004252216:484",
+            "expected_hash": "7caacd6abc5574d1e160f2e030636977"
+        },
+        "IResourceManager": {
+            "uid": "1586920321895714:5928",
+            "name": "Files/File_1680625004252138_452.js",
+            "flags": 1
+        }
+    },
+    "1680625004252138:452": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252138_452.js"
+        }
+    },
+    "1680625004252216:484": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Instance Sound/script/Instance Sound.js",
+                "hash": "7caacd6abc5574d1e160f2e030636977"
+            }
+        }
+    }
+}

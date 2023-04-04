@@ -1,0 +1,23 @@
+{
+    "1680625004252213:476": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Animate Box/script",
+                "hash": "9eeef9aaa68919d36b2272604fca300c"
+            }
+        }
+    },
+    "1680625004252280:576": {
+        "IResourceController": {
+            "name": "script",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252213:476",
+            "resources": [
+                "1680625004252118:436"
+            ]
+        }
+    }
+}

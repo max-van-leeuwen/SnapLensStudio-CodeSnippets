@@ -1,0 +1,33 @@
+{
+    "1680625004252118:438": {
+        "IResourceController": {
+            "name": "HSV to RGB",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1585699437933854:1680",
+            "fileId": "1680625004252137:451",
+            "publicId": "1680625004252215:481",
+            "expected_hash": "a2177f1b5d9eb74cba6ef44aa9ecee15"
+        },
+        "IResourceManager": {
+            "uid": "1585699437933854:1680",
+            "name": "Files/File_1680625004252137_451.js",
+            "flags": 1
+        }
+    },
+    "1680625004252137:451": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252137_451.js"
+        }
+    },
+    "1680625004252215:481": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/HSV to RGB/script/HSV to RGB.js",
+                "hash": "a2177f1b5d9eb74cba6ef44aa9ecee15"
+            }
+        }
+    }
+}

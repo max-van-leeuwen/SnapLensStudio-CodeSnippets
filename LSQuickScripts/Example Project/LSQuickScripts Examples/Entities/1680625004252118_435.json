@@ -1,0 +1,33 @@
+{
+    "1680625004252118:435": {
+        "IResourceController": {
+            "name": "Is In Front",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1585597783250842:9210",
+            "fileId": "1680625004252132:447",
+            "publicId": "1680625004252212:472",
+            "expected_hash": "a1399b2669f155b80b5f02494967c344"
+        },
+        "IResourceManager": {
+            "uid": "1585597783250842:9210",
+            "name": "Files/File_1680625004252132_447.js",
+            "flags": 1
+        }
+    },
+    "1680625004252132:447": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252132_447.js"
+        }
+    },
+    "1680625004252212:472": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Is In Front/script/Is In Front.js",
+                "hash": "a1399b2669f155b80b5f02494967c344"
+            }
+        }
+    }
+}

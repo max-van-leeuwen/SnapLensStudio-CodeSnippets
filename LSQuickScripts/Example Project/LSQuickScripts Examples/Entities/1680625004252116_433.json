@@ -1,0 +1,154 @@
+{
+    "1585596263409064:3498": {
+        "Compression::IController": {
+            "compressed_files": [
+                {
+                    "k": {
+                        "settings_hash": "2805548999938770413",
+                        "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c"
+                    },
+                    "v": "1680625004252149:461"
+                },
+                {
+                    "k": {
+                        "settings_hash": "2893318779670227544",
+                        "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c"
+                    },
+                    "v": "1680625004252152:463"
+                },
+                {
+                    "k": {
+                        "settings_hash": "5133330921582238454",
+                        "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c"
+                    },
+                    "v": "1680625004252153:464"
+                },
+                {
+                    "k": {
+                        "settings_hash": "12258712744712242611",
+                        "uncompressed_hash": "3924da4ece660b56cdcb4f2b7b3fe66c"
+                    },
+                    "v": "1680625004252151:462"
+                }
+            ],
+            "infos": {
+                "compressedRAM": "76",
+                "compressedSize": "540",
+                "extension": "mesh",
+                "originalRAM": "204",
+                "originalSize": "554",
+                "settings": {
+                    "attributeFormat": [
+                        {
+                            "k": "normal",
+                            "v": "8"
+                        },
+                        {
+                            "k": "position",
+                            "v": "8"
+                        },
+                        {
+                            "k": "tangent",
+                            "v": "10"
+                        },
+                        {
+                            "k": "texture0",
+                            "v": "10"
+                        }
+                    ],
+                    "draco": {
+                        "colorBits": "8",
+                        "compressLvl": "7",
+                        "normalBits": "8",
+                        "posBits": "11",
+                        "texBits": "10"
+                    },
+                    "info": {
+                        "hasBlendShapes": "false",
+                        "vertexAttribs": [
+                            {
+                                "canBeDisabled": "false",
+                                "format": "9",
+                                "semantic": "position"
+                            },
+                            {
+                                "canBeDisabled": "true",
+                                "format": "9",
+                                "semantic": "normal"
+                            },
+                            {
+                                "canBeDisabled": "true",
+                                "format": "9",
+                                "semantic": "tangent"
+                            },
+                            {
+                                "canBeDisabled": "true",
+                                "format": "9",
+                                "semantic": "texture0"
+                            }
+                        ]
+                    },
+                    "isCompressed": "true",
+                    "type": "0"
+                }
+            },
+            "uncompressed_file": "1680625004252142:455"
+        }
+    },
+    "1680625004252116:433": {
+        "IResourceController": {
+            "name": "Plane",
+            "type": 3,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1585596263409064:3498",
+            "fileId": "1680625004252128:444",
+            "publicId": "1680625004252171:467",
+            "expected_hash": "afed78580f6d26e6d860716e2fe274e9"
+        },
+        "IResourceManager": {
+            "uid": "1585596263409064:3498",
+            "name": "Files/File_1680625004252128_444.mesh",
+            "flags": 1
+        }
+    },
+    "1680625004252128:444": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252128_444.mesh"
+        }
+    },
+    "1680625004252142:455": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252142_455.mesh"
+        }
+    },
+    "1680625004252149:461": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252149_461.mesh"
+        }
+    },
+    "1680625004252151:462": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252151_462.mesh"
+        }
+    },
+    "1680625004252152:463": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252152_463.mesh"
+        }
+    },
+    "1680625004252153:464": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252153_464.mesh"
+        }
+    },
+    "1680625004252171:467": {
+        "IResourceController": {
+            "public": {
+                "path": "Other/Plane.mesh",
+                "hash": "afed78580f6d26e6d860716e2fe274e9"
+            }
+        }
+    }
+}

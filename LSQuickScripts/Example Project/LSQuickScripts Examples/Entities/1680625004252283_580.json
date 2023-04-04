@@ -1,0 +1,24 @@
+{
+    "1680625004252214:477": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/HSV to RGB",
+                "hash": "181807afba72fec88942c46aca567faa"
+            }
+        }
+    },
+    "1680625004252283:580": {
+        "IResourceController": {
+            "name": "HSV to RGB",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252214:477",
+            "resources": [
+                "1680625004252282:578",
+                "1680625004252283:579"
+            ]
+        }
+    }
+}

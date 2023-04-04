@@ -1,0 +1,26 @@
+{
+    "1680625004252209:468": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media"
+            }
+        }
+    },
+    "1680625004252286:584": {
+        "IResourceController": {
+            "name": "Preview Media",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252209:468",
+            "resources": [
+                "1680625004252279:575",
+                "1680625004252280:577",
+                "1680625004252283:580",
+                "1680625004252286:583",
+                "1680625172516954:52496"
+            ]
+        }
+    }
+}

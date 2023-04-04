@@ -1,0 +1,23 @@
+{
+    "1680625004252215:482": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Instance Sound"
+            }
+        }
+    },
+    "1680625004252286:583": {
+        "IResourceController": {
+            "name": "Instance Sound",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1680625004252215:482",
+            "resources": [
+                "1680625004252285:581",
+                "1680625004252286:582"
+            ]
+        }
+    }
+}

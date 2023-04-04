@@ -1,0 +1,33 @@
+{
+    "1680625004252119:440": {
+        "IResourceController": {
+            "name": "cat",
+            "type": 5,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1623447551005936:6867",
+            "fileId": "1680625004252139:453",
+            "publicId": "1680625004252217:488",
+            "expected_hash": "8943e51ce4a7e498bbbe40016e57424a"
+        },
+        "IResourceManager": {
+            "uid": "1623447551005936:6867",
+            "name": "Files/File_1680625004252139_453.mp3",
+            "flags": 1
+        }
+    },
+    "1680625004252139:453": {
+        "IFileManager": {
+            "path": "Files/File_1680625004252139_453.mp3"
+        }
+    },
+    "1680625004252217:488": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Instance Sound/audio/cat.mp3",
+                "hash": "8943e51ce4a7e498bbbe40016e57424a"
+            }
+        }
+    }
+}

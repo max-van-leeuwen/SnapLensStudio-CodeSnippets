@@ -1,0 +1,33 @@
+{
+    "1680629703521205:1160297": {
+        "IFileManager": {
+            "path": "Files/File_1680629703521205_1160297.js"
+        }
+    },
+    "1680629703523359:1160298": {
+        "IResourceController": {
+            "name": "Is In Box",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1680629703523367:1160299",
+            "fileId": "1680629703521205:1160297",
+            "publicId": "1680629703526188:1160312",
+            "expected_hash": "a8f6d4581a892af4a57ce7523a319a95"
+        },
+        "IResourceManager": {
+            "uid": "1680629703523367:1160299",
+            "name": "Files/File_1680629703521205_1160297.js",
+            "flags": 1
+        }
+    },
+    "1680629703526188:1160312": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Is In Box/Is In Box.js",
+                "hash": "a8f6d4581a892af4a57ce7523a319a95"
+            }
+        }
+    }
+}
