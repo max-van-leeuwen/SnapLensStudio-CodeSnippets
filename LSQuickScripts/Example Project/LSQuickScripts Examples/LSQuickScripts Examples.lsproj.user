@@ -8,7 +8,7 @@
     },
     "MapUiComponent": {},
     "Material::UiComponent": {
-        "active_graph_asset": "1585597763543602:8517"
+        "active_graph_asset": "1680630027393193:1242900"
     },
     "MetaInfoUIComponent": {},
     "ObjectTracking3DUIComponent": {
@@ -19,8 +19,14 @@
         "collapsedList": [
             [
                 [
+                    "LSQuickScripts"
+                ],
+                [
                     "LSQuickScripts",
                     "LSQuickScripts"
+                ],
+                [
+                    "Other"
                 ],
                 [
                     "Other",
@@ -51,14 +57,17 @@
                     "Unit Box"
                 ],
                 [
+                    "Preview Media"
+                ],
+                [
                     "Preview Media",
-                    "Animate Box",
-                    "script",
                     "Animate Box"
                 ],
                 [
                     "Preview Media",
-                    "HSV to RGB"
+                    "Animate Box",
+                    "script",
+                    "Animate Box"
                 ],
                 [
                     "Preview Media",
@@ -74,17 +83,8 @@
                 [
                     "Preview Media",
                     "HSV to RGB",
-                    "script"
-                ],
-                [
-                    "Preview Media",
-                    "HSV to RGB",
                     "script",
                     "HSV to RGB"
-                ],
-                [
-                    "Preview Media",
-                    "Instance Sound"
                 ],
                 [
                     "Preview Media",
@@ -96,11 +96,6 @@
                     "Instance Sound",
                     "audio",
                     "cat"
-                ],
-                [
-                    "Preview Media",
-                    "Instance Sound",
-                    "script"
                 ],
                 [
                     "Preview Media",
@@ -117,6 +112,10 @@
                     "Preview Media",
                     "Is In Box",
                     "colour"
+                ],
+                [
+                    "Preview Media",
+                    "Is In Front"
                 ],
                 [
                     "Preview Media",
@@ -151,7 +150,8 @@
                 "1585699510007362:4118",
                 "1585699510008025:4120",
                 "1586920247269541:4613",
-                "1586920258631846:4620"
+                "1586920258631846:4620",
+                "1680625165262992:50724"
             ]
         ],
         "selectionSetList": {}
@@ -180,7 +180,7 @@
     "InspectorController": {
         "selection": {
             "objects": [
-                "1680625193102811:58002"
+                "1585598693654720:14293"
             ]
         }
     },

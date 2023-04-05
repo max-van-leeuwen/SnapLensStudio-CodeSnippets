@@ -2,7 +2,7 @@
 // ig @max.van.leeuwen
 // twitter @maksvanleeuwen
 //
-// Checks if point is in box
+// Checks if point is in box (use the 'Unit Box' from the asset store for this! Not Lens Studio's default box.)
 
 
 

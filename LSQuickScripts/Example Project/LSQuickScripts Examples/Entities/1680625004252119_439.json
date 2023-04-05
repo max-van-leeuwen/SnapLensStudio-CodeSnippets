@@ -9,7 +9,7 @@
             "uid": "1586920321895714:5928",
             "fileId": "1680625004252138:452",
             "publicId": "1680625004252216:484",
-            "expected_hash": "7caacd6abc5574d1e160f2e030636977"
+            "expected_hash": "0d3668ed7d51506fa8232df5e2bdffc0"
         },
         "IResourceManager": {
             "uid": "1586920321895714:5928",
@@ -26,7 +26,7 @@
         "IResourceController": {
             "public": {
                 "path": "Preview Media/Instance Sound/script/Instance Sound.js",
-                "hash": "7caacd6abc5574d1e160f2e030636977"
+                "hash": "0d3668ed7d51506fa8232df5e2bdffc0"
             }
         }
     }
