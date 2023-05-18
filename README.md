@@ -17,7 +17,7 @@ Contents:
 - Simple SDF Collisions Update
   - Lightweight setup to get a mesh's SDF information in the VFX editor.
 - Texture Sample
-  - Simple function that samples the color of a (live) texture.
+  - Simple function that samples the color of a (live) texture at a coordinate.
 - VoiceML Simple Transcribe
   - Lightweight setup to get the VoiceML transcription of the user's microphone.
 - Portal
