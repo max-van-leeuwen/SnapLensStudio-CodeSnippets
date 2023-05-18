@@ -1,13 +1,15 @@
 # SnapLensStudio-CodeSnippets
-Useful stand-alone code snippets, will update every once in a while.
+Handy stand-alone code, will update every once in a while.
 
 To use, simply add the script to your scene.<br/>
 Call the function as described at the top of the script in the comments.<br/>
 This can be done from any script in the scene.
 
-All scripts have a simple example project showing how they work!      
+All scripts have a simple example project showing how they work!<br/><br/><br/>
 
 Contents:
+- LSQuickScripts
+  - My 'cheatsheet' collection of code snippets. I always have this in every project I do :)
 - Mesh Copy
   - Read all the vertex information of a mesh, and rebuild the mesh using MeshBuilder.
 - MeshBuilder Plane Generator
@@ -19,8 +21,6 @@ Contents:
 - VoiceML Simple Transcribe
   - Lightweight setup to get the VoiceML transcription of the user's microphone.
 - Portal
-  - Super simple way of making a portal out of a mesh (it calls your callback function when the user walks through it)
+  - Super simple way of making a portal out of a mesh. It calls your callback function when the user walks through it, and keeps track of whether you're inside or outside the portal world.
 - World Placement
-  - Make an object follow the user's gaze, with nice animations. Useful for 3D UI elements in the Spectacles.
-- LSQuickScripts
-  - My 'cheatsheet' collection of snippets and automations of everyday tasks. I always have this in every project I do, all features explained at the top of this script in the comments.
+  - Make an object follow the user's gaze, with nice animations. Useful for placing the scene in front of you in the Spectacles.
