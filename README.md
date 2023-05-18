@@ -1,5 +1,5 @@
 # SnapLensStudio-CodeSnippets
-Handy stand-alone code, will update every once in a while.
+Handy code, will update every once in a while.
 
 To use, simply add the script to your scene.<br/>
 Call the function as described at the top of the script in the comments.<br/>
