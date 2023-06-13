@@ -7,11 +7,11 @@
 <br><br>
 
 <pre><code>
-ALL FUNCTIONS:
+HOW TO USE
 -------------------
 
 
-global.lsqs : Script Component
+lsqs : Script Component
  Returns the Script component this script is on.
 
 
@@ -19,20 +19,13 @@ global.lsqs : Script Component
 -
 
 
-global.LS_BOX_SCALE : Number
- Default box mesh scale in Lens Studio.
+EaseFunctions : Object, containing Functions
+	Contains all Tween Easing Functions, with their In/Out/InOut types.
+	Use it on any number to get its lookup-value back.
+	These functions can be used with Interp and AnimateProperty.
 
-
-
--
-
-
-global.interp(startValue [Number], endValue [Number], t [Number], easing (optional) [string], type (optional) [string], unclamped (optional) [bool]) : Number
-	Returns the value of t interpolated using Tween functions between the start and end values. Set the easing function and type (optional) by string, use the below list as reference.
-	Using only startValue, endValue, and t, is identical to a linear (unclamped) lerp.
-
-		Easing:
-			Linear (default)
+		All types, don't forget to add In/Out/InOut:
+			Linear
 			Quadratic
 			Cubic
 			Quartic
@@ -44,57 +37,68 @@ global.interp(startValue [Number], endValue [Number], t [Number], easing (option
 			Back
 			Bounce
 
-		Type:
-			InOut (default)
-			In
-			Out
-
-		Examples:
-			global.interp(0, 1, 0.1, "Elastic", "In");
-			global.interp(-5, 5, x, "Cubic");
+		Usage example:
+			var n = 0.3;
+			var n_eased = global.Easing.Cubic.In(n);
+				n_eased == 0.027
 
 
 
 -
 
 
-global.AnimateProperty() : animateProperty object
+interp(startValue [Number], endValue [Number], t [Number], easing (optional) [Function], unclamped (optional) [bool]) : Number
+	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
+	Is identical to a linear lerp() when no Easing Function is given.
+	Use one of the Easing Functions in global.EaseFunctions, or use your own!
+
+		Examples, [-5, 5] at position x:
+			Cubic in/out	interp(-5, 5, x, EaseFunctions.Cubic.InOut);
+			Linear (lerp)	interp(-5, 5, x);
+			Custom			interp(-5, 5, x, function(v){ return v });
+
+
+
+-
+
+
+AnimateProperty() : AnimateProperty object
 	Creates an easy-to-use animation 'class' instance. Can be used to easily animate any property in just a couple lines of code!
 
-		All properties:
-			var anim = new global.animateProperty();						// create a new animation instance called 'anim'.
-			anim.startFunction = function(){};								// Function to call on animation start.
-			anim.updateFunction = function(v){ /* your callback here */ };	// Function to call on each animation frame, with animation value (0-1) as its first argument. This range is exclusive for the first step and inclusive for the last step of the animation (for example: when playing in reverse, the range is <1, 0]).
-			anim.endFunction = function(){ /* your callback here */ };		// Function to call on animation end.
-			anim.duration = 1;												// Duration in seconds. Default is 1.
-			anim.reverseDuration = 1;										// Duration in seconds when reversed. If no value assigned, default is equal to duration.
-			anim.delay = 0;													// Delay after starting animation. Default is 0.
-			anim.easeFunction = "Cubic";									// Determines curve. Default is "Cubic", all Tween functions can be used!
-			anim.easeType = "InOut";										// Determines how animation curve is applied. Default is "InOut". All possible inputs: "In", "Out", "InOut".
-			anim.pulse(newTimeRatio);										// Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
-			anim.getTimeRatio();											// The current linear normalized animation time, 0-1.
-			anim.setReversed(reverse);										// If reversed, the animation plays backwards. The easeType will be swapped if it isn't 'InOut'. 'reverse' should be of type bool.
-			anim.getReversed();												// Returns true if the animation is currently reversed.
-			anim.isPlaying();												// Returns true if the animation is currently playing.
-			anim.start(newTimeRatio); 										// Starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
-			anim.stop(callEndFunction);										// Stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
+		Example, showing all properties:
+			var anim = new animateProperty();								// create a new animation instance called 'anim'.
+			anim.startFunction = function(){};								// function to call on animation start.
+			anim.updateFunction = function(v, vLinear){};					// function to call on each animation frame, with animation value (0-1) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
+			anim.endFunction = function(){};								// function to call on animation end.
+			anim.duration = 1;												// duration in seconds. Default is 1.
+			anim.reverseDuration = 1;										// duration in seconds when reversed. If no value assigned, default is equal to duration.
+			anim.delay = 0;													// delay after starting animation. Default is 0.
+			anim.easeFunction = EaseFunctions.Cubic.In;						// determines curve. Default is Cubic.InOut. All EaseFunctions can be used, or use a custom function.
+			anim.reverseEaseFunction = EaseFunctions.Cubic.Out;				// determines curve on reverse playing. Uses anim.easeFunction if none is given.
+			anim.pulse(newTimeRatio);										// updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
+			anim.getTimeRatio();											// the current linear, normalized animation time (0-1).
+			anim.setReversed(reverse);										// if reversed, the animation plays backwards. 'Reverse' arg should be of type Bool.
+			anim.getReversed();												// returns true if the animation is currently reversed.
+			anim.isPlaying();												// returns true if the animation is currently playing.
+			anim.start(newTimeRatio); 										// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
+			anim.stop(callEndFunction);										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
 
 
 
-global.StopAllAnimateProperties() : array
-	Instantly stops all animate property-instances created using 'global.AnimateProperty'. This is useful if you want to create a quick reset function for your lens without managing all the created animations throughout your project.
+getAllAnimateProperty() : array
+	Get a list of all instances created using 'AnimateProperty'. Useful, for example, when you want to stop all instances running in your lens.
 
 
 
 -
 
 
-global.degToRad(degrees [Number/vec3]) : Number/vec3
+degToRad(degrees [Number/vec3]) : Number/vec3
 	Converts Number or vec3 of degrees to Number or vec3 of radians.
 
 
 
-global.radToDeg(radians [Number/vec3]) : Number/vec3
+radToDeg(radians [Number/vec3]) : Number/vec3
 	Converts Number or vec3 of radians to Number or vec3 of degrees.
 
 
@@ -102,84 +106,98 @@ global.radToDeg(radians [Number/vec3]) : Number/vec3
 -
 
 
-global.isInFront(objFront [SceneObject], objBehind [SceneObject] ) : bool
-	Checks if objFront is in front of objBehind.
+isInFront(pos1 [vec3], pos2 [vec3], fwd [vec3]) : bool
+	Checks if pos1 is in front of pos2, assuming pos2 has normalized forward vector fwd.
 
 
 
-global.isInBox(point [vec3], boxTrf [Transform]) : bool
-	Checks if object is within the boundaries of a unit box (world space, can be rotated and scaled non-uniformly).
+isInBox(point [vec3], unitBoxTrf [Transform]) : vec3
+	Checks if a world position is within the boundaries of a unit box, which can be rotated and scaled non-uniformly!
+	Returns a vec3 with normalized positions (-1, 1) inside this box if true, returns null otherwise.
 
 
 
-global.planeRay(rayP, rayD, planeP, planeN) : vec3
-	Checks if a line starting at rayP with normalized direction vector rayD, intersects a plane at position planeP with normalized normal planeN. Returns position if it does, returns null otherwise.
+planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
+	Checks if a line starting at point with normalized direction dir, intersects a plane (of infinite size) at position planePos, with normalized normal planeFwd. Returns world position if it does, returns null otherwise.
+
+
+
+projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec3]) : vec2
+	Projects a 3D point onto a plane with custom position, orientation, and non-uniform scale. Returns normalized 2D coordinates on plane at this position.
+
+
+
+distanceAlongVector(pos1 [vec3], pos2 [vec3], fwd [vec3]) : vec3
+	Returns the distance between two 3D points along a normalized vector.
 
 
 
 -
 
 
-global.HSVtoRGB(h [Number], s [Number], v [Number]) : vec3
-	Returns the RGB color for a Hue, Saturation, and Value. All inputs and outputs are in range 0-1.
+hsvToRgb(h [Number], s [Number], v [Number]) : vec3
+	Returns the RGB color for a Hue, Saturation, and Value. Inputs and outputs are in range 0-1.
 
 
 
-global.RGBtoHSV(rgb [vec3/vec4]) : vec3
-	Returns the Hue, Saturation, and Value values for the specified color. Inputs and outputs are in range 0-1.
+rgbToHsv(rgb [vec3/vec4]) : vec3
+	Returns the Hue, Saturation, and Value for the specified color (can be vec3 or vec4). Inputs and outputs are in range 0-1.
 
 
 
 -
 
 
-global.DoDelay( function (Function, optional), arguments (Array, optional) ) : doDelay object
+DoDelay(function (Function, optional), arguments (Array, optional) ) : DoDelay object
 	An object that makes it easy to schedule a function to run in the future (by frames or by seconds).
 
 		Example, showing all properties:
-			var delayed = new global.doDelay();
-			delayed.func = function(arg){print(arg)}; 		// test function, this will print its first argument
-			delayed.args = ['hello!'];						// arguments should be given as an array
-			delayed.byFrame(10);							// this will print 'hello!' in 10 frames (function is called on the next frame, if no argument given)
-			delayed.byTime(10);								// this will print 'hello!' in 10 seconds
-			delayed.stop();									// this will stop the scheduled function
+			var delayed = new doDelay();
+			delayed.func = function(){}; 					// the function to call after a delay
+			delayed.args = ['test!', 1, 2, 3];				// function arguments should be given as an array
+			delayed.byFrame(10);							// this will print 'hello!' in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
+			delayed.byTime(10);								// this will print 'hello!' in 10 seconds (function is called instantly if no argument given or if arg is '0')
+			delayed.now();									// call the function with the given arguments now
+			delayed.stop();									// this will cancel the scheduled function
 
-		One-liner for convenience:
-			new global.doDelay(func, args).byTime(5);		// calls function func with arguments args (array) after 5 seconds
+		In one-liner format:
+			new doDelay(func, args).byTime(5);				// calls function with arguments (as array) after 5 seconds
 
 
 
-global.StopAllDelays() : array of delays
-	Instantly stops all delays created using 'global.DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
+stopAllDelays() : array of DoDelay instances
+	Instantly stops all delays created using 'DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
 
 
 
 -
 
 
-global.instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
+instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 
 
 
-global.StopAllSoundInstances() : array of sound instances
-	Instantly stops all sound instances created using 'global.instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
+stopAllSoundInstances() : array of sound components
+	Instantly stops all sound instances created using 'instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
 
 
 
 -
 
 
-global.instSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime [Number] ) : Object
+InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime [Number] ) : InstSoundPooled Object
 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
-	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. Useful, for example, to make a bouncing sound for physics objects.
-	This function does essentially same as 'instSound', except in a much more performant when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
+	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
+	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 
-		Example, if you want to randomly pick laser sounds coming from a gun. Note how it has a maximum of 10 plays with 0.2 seconds inbetween, before looping back to the first sound component:
-			var soundPool = new global.instSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 );
-			function onLaserShoot(){
-				var laserIndex = Math.floor( Math.random() * 3 );
+		For example, if you want to randomly pick laser sounds coming from a gun.
+		The following parameters give it a maximum of 10 plays, with 0.2 seconds inbetween, before looping back to the first sound component:
+
+			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 );
+			function onFiringLaser(){
+				var laserIndex = Math.floor( Math.random() * 3 ); // pick random laser sound index (integer)
 				soundPool.instance(laserIndex);
 			}
 
@@ -188,7 +206,7 @@ global.instSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [N
 -
 
 
-global.clamp(value [Number], low [Number] (optional, default 0), high [Number] (optional, default 1)) : Number
+clamp(value [Number], low [Number] (optional, default 0), high [Number] (optional, default 1)) : Number
 	Returns the clamped value between the low and high values.
 
 
@@ -196,27 +214,35 @@ global.clamp(value [Number], low [Number] (optional, default 0), high [Number] (
 -
 
 
-global.randSeed(seed [int]) : Number
+randSeed(seed [int]) : Number
 	Returns a random value (0-1) based on an input seed. Uses mulberry32.
+
+
+randInt(min [int], max [int]) : Number
+	Returns a random rounded integer between min and max (inclusive).
+
+
+randFloat(min [Number], max [Number]) : Number
+	Returns a random number within a range min (inclusive) and max (exclusive).
 
 
 
 -
 
 
-global.remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamp [Bool]) : Number
+remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamp [Bool]) : Number
 	Returns value remapped from range low1-high1 to range low2-high2.
 
 
 -
 
 
-global.encodeFloat(data [Number], min [Number], max [Number]) : vec4
+encodeFloat(data [Number], min [Number], max [Number]) : vec4
 	Equivalent of the 'Pack' node in the material graph editor (32-bits).
 
 
 
-global.decodeToFloat(encoded data [vec4], min [Number], max [Number]) : Number
+decodeToFloat(encoded data [vec4], min [Number], max [Number]) : Number
 	Equivalent of the 'Unpack' node in the material graph editor (32-bits).
 
 
@@ -224,50 +250,39 @@ global.decodeToFloat(encoded data [vec4], min [Number], max [Number]) : Number
 -
 
 
-global.screenToScrTransform(screenPos [vec2]) : vec2
+screenToScreenTransform(screenPos [vec2]) : vec2
 	Returns ScreenTransform anchor center position (range -1 - 1) from screen coordinates (0-1, inversed y-axis).
-	Inverse of global.scrTransformToScreen().
+	Inverse of scrTransformToScreen().
 
 
 
-global.scrTransformToScreen(scrTransfCenter [vec2]) : vec2
+screenTransformToScreen(screenTransformCenter [vec2]) : vec2
 	Returns screen coordinates (range 0-1) of Screen Transform anchors center.
-	Inverse of global.screenToScrTransform().
+	Inverse of screenToScrTransform().
 
 
 
 -
 
 
-global.worldMeshClassify() : string
-	Returns the name of the world mesh classification index.
-
-		Examples:
-			global.worldMeshClassify(2) : "Floor"
-
-
-
--
-
-
-global.shuffleArray(array [array]) : array
+shuffleArray(array [array]) : array
 	Returns a randomly shuffled copy of the array.
 
 
 
-global.concatArrays(array [any], array [any]) : array
-	Concatinates two arrays (of same type) and returns the new one.
+concatArrays(array [any], array [any]) : array
+	Concatinates two arrays and returns the new one.
 
 
 
 -
 
 
-global.MovingAverage() : movingAverage Object
+MovingAverage() : MovingAverage Object
 	An object that makes it easy to keep track of a moving/rolling average.
 
-		Example, showing all properties:
-			var avg = new global.movingAverage();
+		For example, showing all properties:
+			var avg = new movingAverage();
 			avg.add(v);									// usually the only thing you need, returns the new average and updates the sampleCount.
 			avg.average;								// gets/sets the current average value (usually read-only, but in some cases you might want to set this to a starting value)
 			avg.sampleCount; 							// gets/sets the current sample count value (usually read-only, but in some cases you might want to set this to a starting value)
@@ -277,30 +292,29 @@ global.MovingAverage() : movingAverage Object
 -
 
 
-global.Stopwatch() : stopwatch Object
-	Does precise time measuring to see how well a function performs.
-	Starting and stopping the stopwatch more than once will make it keep track of a moving average! Which is more reliable than measuring just once, as frames in Lens Studio are also dependent on other factors.
+PerformanceStopwatch() : PerformanceStopwatch Object
+	Debugging tool. Prints precise time measures to see how well a function performs. Has built-in rolling average!
 
-		Example, showing all properties:
-			var stopwatch = new global.Stopwatch();		// create new stopwatch object
-			stopwatch.start();							// starts the stopwatch
-			// < do something else on this line >
-			stopwatch.stop();							// stops the stopwatch, prints the results to the console
-
-
--
-
-
-
-global.setAllChildrenToLayer(sceneObj [sceneObject], layer [LayerSet])
-	Sets the sceneObject and all of its child objects and sub-child objects to a specific render layer (by LayerSet).
-
+		For example, showing all properties:
+			var stopwatch = new PerformanceStopwatch();		// create new PerformanceStopwatch object
+			stopwatch.start();								// starts the stopwatch
+			// < do something to measure on this line >
+			stopwatch.stop();								// stops the stopwatch, prints the result (and a rolling average of previous results) to the console
 
 
 -
 
 
-global.rotateCoords(point [vec2], pivot [vec2], angle [Number]) : vec2
+
+setAllChildrenToLayer(sceneObj [sceneObject], layer [LayerSet])
+	Sets the sceneObject and all objects underneath it to a specific render layer (by LayerSet).
+
+
+
+-
+
+
+rotateCoords(point [vec2], pivot [vec2], angle [Number]) : vec2
 	Rotate a 2D point around a pivot with specified angle (radians). Returns new 2D position.
 
 
@@ -308,23 +322,24 @@ global.rotateCoords(point [vec2], pivot [vec2], angle [Number]) : vec2
 -
 
 
-global.circularDistance(a [Number], b [Number], mod [Number]) : Number
-	Returns the closest distance from a to b if the number line of length mod is a circle. For example: if the mod is 1, the distance between 0.9 and 0.1 is 0.2.
+circularDistance(a [Number], b [Number], mod [Number]) : Number
+	Returns the closest distance from a to b if the number line is a circle with radius 'mod'. For example: if mod is 1, the distance between 0.9 and 0.1 would be 0.2.
 
 
 
 -
 
 
-global.mod(a [Number], b [Number]) : Number
-	Modulo (%), but keeps negative numbers into account. For example, mod(-1, 3) returns 2. Whereas -1%3 returns -1.
+mod(a [Number], b [Number]) : Number
+	Modulo, like the % operator, but this respects negative numbers.
+	For example, mod(-1, 3) returns 2. Whereas -1%3 would return -1.
 
 
 
 -
 
 
-global.measureWorldPos(screenPos [vec2], region [Component.ScreenTransform], cam [Component.Camera], dist [Number]) : vec3
+measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [Number]) : vec3
 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
 
@@ -333,29 +348,38 @@ global.measureWorldPos(screenPos [vec2], region [Component.ScreenTransform], cam
 -
 
 
-global.getAllComponents(componentName [string], startObj (optional) [SceneObject]) : Array (Components)
+getAllComponents(componentName [string], startObj (optional) [SceneObject]) : Array (Components)
 	Returns an array containing all components of type componentNames, also those on child objects.
 	If no startObj is given, it searches the whole scene.
 
-		Example:
-			var component = global.getAllComponents("Component.VFXComponent")
-				components = [ARRAY OF ALL VFX COMPONENTS IN SCENE],
+		For example:
+			var components = getAllComponents("Component.VFXComponent")
+				components == [Array of all VFX Component in the scene]
 
 
 
 -
 
 
-global.parseNewLines(txt [string], customSplit (optional) [string]) : String
+parseNewLines(txt [string], customSplit (optional) [string]) : String
 	Takes a string passed in through an input string field containing '\n', and returns the same string but with real newlines (for use in a Text Component, for example).
 	If customSplit is given, it replaces the '\n'-lookup with other character(s).
 
 
 
+pad(num [Number], size [Number]) : String
+	Takes a number and a padding amount, and returns a padded string of the number.
+
+	For example:
+		var s = pad(30, 4)
+			s == "0030"
+
+
+
 -
 
 
-global.median(arr [Array]) : Number
+median(arr [Array]) : Number
 	Takes an array of Numbers, and returns the median value.
 
 
@@ -363,8 +387,9 @@ global.median(arr [Array]) : Number
 -
 
 
-global.lookAtUp(posA [vec3], posB [vec3], offset) : quat
-	Takes two positions, returns the look-at rotation for A to look at B with Y axis locked. Useful when objects have to face the user, but they are not allowed to rotate facing up or down.
+lookAtUp(posA [vec3], posB [vec3], offset) : quat
+	Takes two positions, returns the look-at rotation for A to look at B with the Y axis locked.
+	Useful when objects have to face the user, but they are not allowed to rotate facing up or down.
 	Use the optional 'offset' for a 0 - 2PI rotation offset.
 
 
@@ -372,23 +397,15 @@ global.lookAtUp(posA [vec3], posB [vec3], offset) : quat
 -
 
 
-global.isInSpectaclesDisplay(pos [vec3], cam [Component.Camera]) : bool
-	Returns true if the world position is visible in the square Spectacles (2021) display. Handy for optimization sometimes.
+mat4FromDescription(matDescription [string]) : mat4
+	Returns a mat4, based on a mat4's string description. Useful when trying to retrieve one stored as JSON format.
 
 
 
 -
 
 
-global.mat4FromDescription(matDescription [string]) : mat4
-	Returns a mat4, based on a mat4's string 'description'. Useful when trying to store it in a JSON, for example.
-
-
-
--
-
-
-global.wrapFunction(originalFunction [Function], newFunction [Function]) : Function
+wrapFunction(newFunction [Function], originalFunction [Function]) : Function
 	Wrap two functions into one.
 
 
@@ -396,20 +413,21 @@ global.wrapFunction(originalFunction [Function], newFunction [Function]) : Funct
 -
 
 
-global.VisualizePositions(scale (optional) [Number]) : VisualizePositions object
-	A class that places cubes on each position in the 'positions' array, for quick visualizations.
+VisualizePositions() : VisualizePositions object
+	A class that places cubes on each position in the 'positions' array, given through the update function. Useful for quick visualizations of 3D positions.
 
 		Example, showing all properties:
-			var vis = new VisualizePositions();
-			vis.scale;								// (Optional) Set the scale of the cubes (world size, default is 1)
-			vis.continuousRotation;					// (Optional) Make the cubes do a rotate animation (boolean, default is true)
-			vis.material;							// (Optional) set material property of the cubes ([Asset.Material])
-			vis.update([Vec3 Array]);				// places cubes on new array of positions, returns the array of cube SceneObjects if needed!
-			vis.remove();							// clears all created visualization
+			var v = new VisualizePositions();							// create VisualizePositions instance
+			v.scale;													// (optional) set the scale of the cubes (world size, default is 1)
+			v.rotation;													// (optional) set the rotation of the cubes (if continuousRotationis set to false)
+			v.continuousRotation;										// (optional) make the cubes rotate around local up, clockwise (boolean, default is true)
+			v.material;													// (optional) set the material of the cubes (Asset.Material)
+			v.update( [Vec3 Array] );									// add positions to show cubes on, returns the array of SceneObjects for further customization
+			v.remove();													// clear all created visualizations
 
-		One-liner for convenience:
-			var positions = [new vec3(0, 0, 0), new vec3(1, 0, 0)]; 	// make a list of positions
-			new VisualizePositions(10).update(positions); 				// instantly creates boxes of size 10 at those positions
+		Example, shorter format:
+			var positions = [new vec3(0, 0, 0), new vec3(1, 0, 0)]; 	// some world positions to visualize
+			new VisualizePositions().update(positions);
 
 
 

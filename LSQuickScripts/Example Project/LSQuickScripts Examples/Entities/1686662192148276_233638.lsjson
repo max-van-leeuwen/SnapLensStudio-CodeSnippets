@@ -1,0 +1,33 @@
+{
+    "1686662192147232:233637": {
+        "IFileManager": {
+            "path": "Files/File_1686662192147232_233637.js"
+        }
+    },
+    "1686662192148276:233638": {
+        "IResourceController": {
+            "name": "Plane Ray",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1686662192148282:233639",
+            "fileId": "1686662192147232:233637",
+            "publicId": "1686662192150763:233649",
+            "expected_hash": "d5be3de8d5ace77c2afeb82a93d8ed21"
+        },
+        "IResourceManager": {
+            "uid": "1686662192148282:233639",
+            "name": "Files/File_1686662192147232_233637.js",
+            "flags": 1
+        }
+    },
+    "1686662192150763:233649": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Plane Ray/Plane Ray.js",
+                "hash": "d5be3de8d5ace77c2afeb82a93d8ed21"
+            }
+        }
+    }
+}

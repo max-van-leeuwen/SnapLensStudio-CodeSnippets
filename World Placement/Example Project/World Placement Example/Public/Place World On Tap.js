@@ -6,7 +6,6 @@
 
 // make new animation instance with customizations
 var worldPlacementAnim = new WorldPlacement();
-worldPlacementAnim.distanceFromCamera = 150; // make scene end up 150cm away from user
 
 
 function animateTowardsUser(){

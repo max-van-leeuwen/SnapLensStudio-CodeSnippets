@@ -1,0 +1,33 @@
+{
+    "1686666527994749:169": {
+        "IResourceController": {
+            "name": "World Placement",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1648305774799255:13829",
+            "fileId": "1686666527994764:179",
+            "publicId": "1686666527994773:185",
+            "expected_hash": "50fb62df1a4da43d1720daabe99a4799"
+        },
+        "IResourceManager": {
+            "uid": "1648305774799255:13829",
+            "name": "Files/File_1686666527994764_179.js",
+            "flags": 1
+        }
+    },
+    "1686666527994764:179": {
+        "IFileManager": {
+            "path": "Files/File_1686666527994764_179.js"
+        }
+    },
+    "1686666527994773:185": {
+        "IResourceController": {
+            "public": {
+                "path": "World Placement.js",
+                "hash": "50fb62df1a4da43d1720daabe99a4799"
+            }
+        }
+    }
+}

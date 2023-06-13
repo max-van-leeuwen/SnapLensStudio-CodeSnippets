@@ -9,9 +9,9 @@
 //@input Asset.Material mat
 //@input bool animate
 //@input float Speed {"showIf":"animate"}
-//@input float Hue {"showIf":"animate", "showIfValue":"false"}
-//@input float Saturation
-//@input float Value
+//@input float Hue {"showIf":"animate", "showIfValue":"false", "widget":"slider", "min":0, "max":1, "step":0.01}
+//@input float Saturation {"widget":"slider", "min":0, "max":1, "step":0.01}
+//@input float Value {"widget":"slider", "min":0, "max":1, "step":0.01}
 
 
 
@@ -29,7 +29,7 @@ function onUpdate(){
 	}
 
 	// set material colour
-	script.mat.mainPass.colour = global.HSVtoRGB(h, s, v);
+	script.mat.mainPass.colour = global.hsvToRgb(h, s, v);
 }
 var onUpdateEvent = script.createEvent("UpdateEvent");
 onUpdateEvent.bind(onUpdate);

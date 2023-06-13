@@ -1,0 +1,39 @@
+{
+    "1686663384331326:473258": {
+        "IFileManager": {
+            "path": "Files/File_1686663384331326_473258"
+        }
+    },
+    "1686663384332101:473259": {
+        "IResourceController": {
+            "name": "Point",
+            "type": 2,
+            "subtype": 1,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1686663384332105:473260",
+            "fileId": "1686663384331326:473258",
+            "originalId": "1686663384352245:473269",
+            "publicId": "1686663384462821:473312",
+            "expected_hash": "056ed275717af2abd04946429fd8f096"
+        },
+        "IResourceManager": {
+            "uid": "1686663384332105:473260",
+            "name": "Files/File_1686663384331326_473258",
+            "flags": 1
+        }
+    },
+    "1686663384352245:473269": {
+        "IFileManager": {
+            "path": "Files/File_1686663384352245_473269.lsmat"
+        }
+    },
+    "1686663384462821:473312": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Is In Box/Point.lsmat",
+                "hash": "5102338f7ac6b95db565e4b54c7d4486"
+            }
+        }
+    }
+}

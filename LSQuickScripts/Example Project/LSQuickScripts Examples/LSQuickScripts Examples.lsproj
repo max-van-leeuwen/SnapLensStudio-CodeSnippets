@@ -21,7 +21,7 @@
         "lastSavedWith": {
             "type": "Public",
             "major": "4",
-            "minor": "43",
+            "minor": "46",
             "patch": "0",
             "build": "0"
         }
@@ -51,7 +51,7 @@
                 "is_capture": "0",
                 "camera_type": "2"
             },
-            "show_snap_ui": "true",
+            "show_snap_ui": "false",
             "show_sponsored_ui": "false",
             "preview_images_project_config": {
                 "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",

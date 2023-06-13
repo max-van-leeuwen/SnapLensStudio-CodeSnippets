@@ -1,0 +1,39 @@
+{
+    "1686662327457234:270438": {
+        "IFileManager": {
+            "path": "Files/File_1686662327457234_270438"
+        }
+    },
+    "1686662327457975:270439": {
+        "IResourceController": {
+            "name": "Hit Visualizer",
+            "type": 2,
+            "subtype": 1,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1686662327457978:270440",
+            "fileId": "1686662327457234:270438",
+            "originalId": "1686662327477983:270444",
+            "publicId": "1686662327592916:270492",
+            "expected_hash": "af32a053ef5b02e56e8d3dde61a4c030"
+        },
+        "IResourceManager": {
+            "uid": "1686662327457978:270440",
+            "name": "Files/File_1686662327457234_270438",
+            "flags": 1
+        }
+    },
+    "1686662327477983:270444": {
+        "IFileManager": {
+            "path": "Files/File_1686662327477983_270444.lsmat"
+        }
+    },
+    "1686662327592916:270492": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Plane Ray/Hit Visualizer.lsmat",
+                "hash": "e210ec20d251787f97b746d25ac9115e"
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "1686666527994749:170": {
+        "IResourceController": {
+            "name": "Place World On Tap",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1648305789831586:15716",
+            "fileId": "1686666527994766:180",
+            "publicId": "1686666527994773:186",
+            "expected_hash": "69613de822e9ac23f62a565a2a7ea258"
+        },
+        "IResourceManager": {
+            "uid": "1648305789831586:15716",
+            "name": "Files/File_1686666527994766_180.js",
+            "flags": 1
+        }
+    },
+    "1686666527994766:180": {
+        "IFileManager": {
+            "path": "Files/File_1686666527994766_180.js"
+        }
+    },
+    "1686666527994773:186": {
+        "IResourceController": {
+            "public": {
+                "path": "Place World On Tap.js",
+                "hash": "69613de822e9ac23f62a565a2a7ea258"
+            }
+        }
+    }
+}

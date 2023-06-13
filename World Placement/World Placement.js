@@ -50,8 +50,8 @@ global.WorldPlacement = function(){
 
     /**
 	 * @type {Boolean}
-	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'. */
-	this.spherical = true;
+	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is false. */
+	this.spherical = false;
 
     /**
 	 * @type {Function}
@@ -60,29 +60,8 @@ global.WorldPlacement = function(){
 
 	/**
 	 * @type {String}
-	 * @description Animation curve. Default is "Cubic".
-	 * All possible inputs:
-	 * "Linear"
-	 * "Quadratic"
-	 * "Cubic"
-	 * "Quartic"
-	 * "Quintic"
-	 * "Sinusoidal"
-	 * "Exponential"
-	 * "Circular"
-	 * "Elastic"
-	 * "Back"
-	 * "Bounce" */
-	this.easeFunction = "Cubic";
-
-    /**
-	 * @type {String}
-	 * @description Determines where curve is applied. Default is "Out".
-	 * All possible inputs:
-	 * "In"
-	 * "Out"
-	 * "InOut" */
-	this.easeType = "Out";
+	 * @description Animation curve. Use EaseFunctions, or a custom callback. */
+	this.easeFunction = EaseFunctions.Cubic.InOut;
 
     /**
 	 * @type {Function}
@@ -146,7 +125,6 @@ global.WorldPlacement = function(){
 			anim.duration = self.duration;
 			anim.updateFunction = animationStep;
 			anim.easeFunction = self.easeFunction;
-			anim.easeType = self.easeType;
 			anim.endFunction = self.callback;
 			anim.start();
 		}

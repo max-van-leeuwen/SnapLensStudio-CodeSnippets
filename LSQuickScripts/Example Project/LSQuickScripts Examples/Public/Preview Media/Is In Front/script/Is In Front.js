@@ -7,21 +7,26 @@
 
 
 //@input SceneObject compareTo
+//@input Asset.Material mat
 //@input vec3 frontColour {"widget":"color"}
 //@input vec3 behindColour {"widget":"color"}
-//@input Asset.Material mat
+
+var compareTrf = script.compareTo.getTransform();
+var thisTrf = script.getSceneObject().getTransform();
 
 
 
 // check if the object is in front or behind of comparison object
 function onUpdate(){
-	var objectIsInFront = global.isInFront(script.getSceneObject(), script.compareTo);
+	var objectIsInFront = global.isInFront(compareTrf.getWorldPosition(), thisTrf.getWorldPosition(), compareTrf.forward);
 	
-	if(objectIsInFront){
-		script.mat.mainPass.colour = script.frontColour; // if in front
-	}else{
-		script.mat.mainPass.colour = script.behindColour; // if behind
+	if(objectIsInFront){ // if 'compare' is in front of this sceneobject
+		script.mat.mainPass.colour = script.frontColour;
+	}else{ // if behind
+		script.mat.mainPass.colour = script.behindColour;
 	}
 }
-var onUpdateEvent = script.createEvent("UpdateEvent"); // do on every frame
+
+// do on every frame
+var onUpdateEvent = script.createEvent("UpdateEvent");
 onUpdateEvent.bind(onUpdate);

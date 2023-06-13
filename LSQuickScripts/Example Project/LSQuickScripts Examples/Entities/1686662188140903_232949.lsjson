@@ -1,0 +1,23 @@
+{
+    "1686662188140903:232949": {
+        "IResourceController": {
+            "name": "Plane Ray",
+            "type": 0,
+            "subtype": -1,
+            "dependency": 0,
+            "hidden": false,
+            "publicId": "1686662188141100:232950",
+            "resources": [
+                "1686662192148276:233638",
+                "1686662327457975:270439"
+            ]
+        }
+    },
+    "1686662188141100:232950": {
+        "IResourceController": {
+            "public": {
+                "path": "Preview Media/Plane Ray"
+            }
+        }
+    }
+}

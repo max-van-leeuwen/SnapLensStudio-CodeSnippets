@@ -15,6 +15,8 @@
 // defaults, used if not overwritten in the new instance of this class
 //@input SceneObject cameraObject
 //@input SceneObject moveObject
+//@input float distanceFromCamera = 100
+//@input float height = 0
 
 
 
@@ -34,12 +36,12 @@ global.WorldPlacement = function(){
 	/**
 	 * @type {Number}
 	 * @description Distance from camera (world units, cm). Default is 100. */
-	this.distanceFromCamera = 100;
+	this.distanceFromCamera = script.distanceFromCamera;
 
 	/**
 	 * @type {Number}
 	 * @description Height offset (world units, cm). Default is 0. */
-	this.height = 0;
+	this.height = script.height;
 
 	/**
 	 * @type {Number}
@@ -48,8 +50,8 @@ global.WorldPlacement = function(){
 
     /**
 	 * @type {Boolean}
-	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'. */
-	this.spherical = true;
+	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is false. */
+	this.spherical = false;
 
     /**
 	 * @type {Function}
@@ -58,33 +60,12 @@ global.WorldPlacement = function(){
 
 	/**
 	 * @type {String}
-	 * @description Animation curve. Default is "Cubic".
-	 * All possible inputs:
-	 * "Linear"
-	 * "Quadratic"
-	 * "Cubic"
-	 * "Quartic"
-	 * "Quintic"
-	 * "Sinusoidal"
-	 * "Exponential"
-	 * "Circular"
-	 * "Elastic"
-	 * "Back"
-	 * "Bounce" */
-	this.easeFunction = "Cubic";
-
-    /**
-	 * @type {String}
-	 * @description Determines where curve is applied. Default is "Out".
-	 * All possible inputs:
-	 * "In"
-	 * "Out"
-	 * "InOut" */
-	this.easeType = "Out";
+	 * @description Animation curve. Use EaseFunctions, or a custom callback. */
+	this.easeFunction = EaseFunctions.Cubic.InOut;
 
     /**
 	 * @type {Function}
-	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is 'true'. */
+	 * @description Gets the final transform information - an object containing the keys 'pos' (vec3) and 'rot' (quat). Can only be called once 'start' was called. */
 	this.getFinalTransformData = function(){
 		return finalTransformData;
 	}
@@ -94,8 +75,8 @@ global.WorldPlacement = function(){
 
 	/**
 	 * @type {Function} 
-	 * @description Starts the animation. */
-	this.start = function(){
+	 * @description Starts the animation. If first argument is true, the animation will be skipped and placement will be instant. */
+	this.start = function(doInstant){
 		// get transformation info
 		var camTrf = self.cameraObject.getTransform();
 		if(self.moveObject) var sceneTrf = self.moveObject.getTransform();
@@ -136,7 +117,7 @@ global.WorldPlacement = function(){
 			}
 		}
 
-		if(self.duration === 0){ // instant
+		if(self.duration === 0 || doInstant){ // instant
 			animationStep(1);
 
 		}else{ // start animation
@@ -144,7 +125,6 @@ global.WorldPlacement = function(){
 			anim.duration = self.duration;
 			anim.updateFunction = animationStep;
 			anim.easeFunction = self.easeFunction;
-			anim.easeType = self.easeType;
 			anim.endFunction = self.callback;
 			anim.start();
 		}
