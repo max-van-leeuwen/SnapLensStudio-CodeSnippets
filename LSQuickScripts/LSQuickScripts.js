@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.0"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.1"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -957,8 +957,9 @@ global.isInBox = function(point, unitBoxTrf){
 global.planeRay = function(point, dir, planePos, planeFwd){
 	var denom = planeFwd.dot(dir);
 	if(Math.abs(denom) < 1e-6) return; // ray is parallel to plane
+
 	var t = (planePos.sub(point)).dot(planeFwd) / denom;
-	if(t < 0) return point.add(dir.uniformScale(t)); // if hitting plane
+	if(t >= 0) return point.add(dir.uniformScale(t));
 }
 
 
