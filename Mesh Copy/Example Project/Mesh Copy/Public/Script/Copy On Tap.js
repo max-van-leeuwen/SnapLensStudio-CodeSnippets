@@ -1,10 +1,12 @@
+// Max van Leeuwen
+
 //@input Asset.RenderMesh renderMesh
 //@input Component.RenderMeshVisual renderMeshVisual
 
-var newMeshBuilder = global.makeMeshCopy(script.renderMesh, true, true); // copies normals and UVs too
+var newMeshBuilder = global.makeMeshCopy(script.renderMesh);
 script.renderMeshVisual.mesh = newMeshBuilder.getMesh();
 
-print("Mesh created! The object you see now is a copy of the mesh, not the mesh itself.");
+print("Mesh created! The object you see now is a copy of the mesh, not the mesh asset itself.");
 
 
 

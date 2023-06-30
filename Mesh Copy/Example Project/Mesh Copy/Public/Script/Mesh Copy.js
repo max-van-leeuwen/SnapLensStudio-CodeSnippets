@@ -23,6 +23,9 @@ global.makeMeshCopy = function(meshAsset, doNormals, doUVs, createEmptyUVs){
 	var positions;
 	var normals;
 	var uvs;
+	
+	if(doNormals == null) doNormals = true;
+	if(doUVs == null) doUVs = true;
 
 	// get mesh information
 	var indices = meshAsset.extractIndices();
