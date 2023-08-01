@@ -187,18 +187,20 @@ stopAllSoundInstances() : array of sound components
 -
 
 
-InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime [Number] ) : InstSoundPooled Object
+InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number] mixToSnap (optional) [bool] ) : InstSoundPooled Object
 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
-	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
 	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
+	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
+	The 'mixToSnap' determines if the audio is directly mixed to the recorded video.
+
+	The 'instance' function has two (optional) arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume (0-1 number).
 
 		For example, if you want to randomly pick laser sounds coming from a gun.
 		The following parameters give it a maximum of 10 plays, with 0.2 seconds inbetween, before looping back to the first sound component:
 
 			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 );
 			function onFiringLaser(){
-				var laserIndex = Math.floor( Math.random() * 3 ); // pick random laser sound index (integer)
-				soundPool.instance(laserIndex);
+				soundPool.instance(); 	// call 'onFiringLaser()' whenever you want to hear one of the laser sound samples!
 			}
 
 
@@ -218,19 +220,42 @@ randSeed(seed [int]) : Number
 	Returns a random value (0-1) based on an input seed. Uses mulberry32.
 
 
+
 randInt(min [int], max [int]) : Number
+OR
+randInt(array [size 2]) : Number
 	Returns a random rounded integer between min and max (inclusive).
+	The two arguments can be replaced by a single array argument, for example [0, 10] for a random int between 0-10.
+
 
 
 randFloat(min [Number], max [Number]) : Number
+OR
+randFloat(array [size 2]) : Number
 	Returns a random number within a range min (inclusive) and max (exclusive).
+	The two arguments can be replaced by a single array argument, for example [0, 1] for a random value between 0-1.
+
+
+
+pickRandomDistributed(objects [Object]) : Object
+	Picks one of the items in an object, and looks at the item's property called 'chance' to determine the odds of the one to pick.
+	Provide it with an object looking like the example below.
+	The 'chance' properties don't have to add up to 1! Their values are normalized before picking a random index.
+
+		var list = {
+			item1 : {name:'item1', chance:0.1}, // this item has a 10% chance of being chosen
+			item2 : {name:'item2', chance:0.6}, // 60% chance
+			item3 : {name:'item3', chance:0.3}, // 30% chance
+		}
+		var picked = pickRandomDistributed(list);
+		picked.name == 'item1', 'item2' or 'item3', based on chance
 
 
 
 -
 
 
-remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamp [Bool]) : Number
+remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamped [Bool]) : Number
 	Returns value remapped from range low1-high1 to range low2-high2.
 
 
@@ -279,7 +304,7 @@ concatArrays(array [any], array [any]) : array
 
 
 MovingAverage() : MovingAverage Object
-	An object that makes it easy to keep track of a moving/rolling average.
+	An object that makes it easy to keep track of a 'rolling' average.
 
 		For example, showing all properties:
 			var avg = new movingAverage();
@@ -405,8 +430,8 @@ mat4FromDescription(matDescription [string]) : mat4
 -
 
 
-wrapFunction(newFunction [Function], originalFunction [Function]) : Function
-	Wrap two functions into one.
+wrapFunction(originalFunction [Function], newFunction [Function]) : Function
+	Wrap two functions into one. Works with arguments.
 
 
 
@@ -418,11 +443,12 @@ VisualizePositions() : VisualizePositions object
 
 		Example, showing all properties:
 			var v = new VisualizePositions();							// create VisualizePositions instance
-			v.scale;													// (optional) set the scale of the cubes (world size, default is 1)
-			v.rotation;													// (optional) set the rotation of the cubes (if continuousRotationis set to false)
+			v.scale;													// (optional) the scale of the cubes (world size, default is 1)
+			v.rotation;													// (optional) the rotation of the cubes (if continuousRotationis set to false)
 			v.continuousRotation;										// (optional) make the cubes rotate around local up, clockwise (boolean, default is true)
-			v.material;													// (optional) set the material of the cubes (Asset.Material)
-			v.update( [Vec3 Array] );									// add positions to show cubes on, returns the array of SceneObjects for further customization
+			v.material;													// (optional) the material of the cubes (Asset.Material)
+			v.showPositions( [vec3 Array] );							// show cubes on the given positions (array), returns the array of created SceneObjects for further customization
+			v.getPositions();											// returns currently visualized positions
 			v.remove();													// clear all created visualizations
 
 		Example, shorter format:

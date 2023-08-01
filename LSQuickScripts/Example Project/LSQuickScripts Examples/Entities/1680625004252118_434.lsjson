@@ -10,7 +10,7 @@
             "fileId": "1680625004252129:445",
             "originalId": "1680625004252131:446",
             "publicId": "1680625004252211:471",
-            "expected_hash": "04516b155ecde0ac5a4a45cbacbc0cf9",
+            "expected_hash": "6a6c567455803c558039a4b73b1eb34f",
             "additional": {
                 "isUnpackedInPublic": "false"
             }
@@ -35,7 +35,7 @@
         "IResourceController": {
             "public": {
                 "path": "Preview Media/Is In Front/material/colour.lsmat",
-                "hash": "7b81badcc5e7e306ab22741336e3c7b5"
+                "hash": "c95eb12a89f23545a8959bf712744215"
             }
         }
     }

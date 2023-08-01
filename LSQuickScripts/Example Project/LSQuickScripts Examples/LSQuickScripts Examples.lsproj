@@ -2,7 +2,7 @@
     "lens_id": "",
     "document_id": "b2Hfkx3xn9FLCF1VdGA8",
     "original_document_id": "7xNpgCY1WYmF82YRGY5O",
-    "version": "31",
+    "version": "32",
     "preview": "icon.png",
     "videoPreview": "preview.mp4",
     "videoPreviewUpdateTime": "",
@@ -21,7 +21,7 @@
         "lastSavedWith": {
             "type": "Public",
             "major": "4",
-            "minor": "46",
+            "minor": "49",
             "patch": "0",
             "build": "0"
         }
@@ -38,11 +38,16 @@
             "hints": [
                 ""
             ],
-            "lens": "LSQS Examples",
+            "lens": "LSQuickScripts",
             "applicability": "3",
+            "compatibility_descriptors": [
+                "mobile",
+                "web"
+            ],
             "lens_descriptors": "",
             "sg": "false",
             "git_friendly": "true",
+            "activation_camera": "front",
             "Spectacles2021UseAllowed": "false"
         },
         "ObjectTracking3DUIComponent": "",

@@ -15,7 +15,7 @@
             "fileId": "1686662327457234:270438",
             "originalId": "1686662327477983:270444",
             "publicId": "1686662327592916:270492",
-            "expected_hash": "af32a053ef5b02e56e8d3dde61a4c030"
+            "expected_hash": "f5a234869f1b758a75b349fc57b320d7"
         },
         "IResourceManager": {
             "uid": "1686662327457978:270440",
@@ -32,7 +32,7 @@
         "IResourceController": {
             "public": {
                 "path": "Preview Media/Plane Ray/Hit Visualizer.lsmat",
-                "hash": "e210ec20d251787f97b746d25ac9115e"
+                "hash": "f7b5b2a38a77e190eb70faf1ce026b83"
             }
         }
     }

@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.1"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.2"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -217,18 +217,20 @@
 // -
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime [Number] ) : InstSoundPooled Object
+// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number] mixToSnap (optional) [bool] ) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
-//	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
+//	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
+//	The 'mixToSnap' determines if the audio is directly mixed to the recorded video.
+//
+//	The 'instance' function has two (optional) arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume (0-1 number).
 //
 //		For example, if you want to randomly pick laser sounds coming from a gun.
 //		The following parameters give it a maximum of 10 plays, with 0.2 seconds inbetween, before looping back to the first sound component:
 //
 //			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 );
 //			function onFiringLaser(){
-//				var laserIndex = Math.floor( Math.random() * 3 ); // pick random laser sound index (integer)
-//				soundPool.instance(laserIndex);
+//				soundPool.instance(); 	// call 'onFiringLaser()' whenever you want to hear one of the laser sound samples!
 //			}
 //
 //
@@ -248,19 +250,42 @@
 // 	Returns a random value (0-1) based on an input seed. Uses mulberry32.
 //
 //
+//
 // randInt(min [int], max [int]) : Number
+// OR
+// randInt(array [size 2]) : Number
 //	Returns a random rounded integer between min and max (inclusive).
+//	The two arguments can be replaced by a single array argument, for example [0, 10] for a random int between 0-10.
+//
 //
 //
 // randFloat(min [Number], max [Number]) : Number
+// OR
+// randFloat(array [size 2]) : Number
 //	Returns a random number within a range min (inclusive) and max (exclusive).
+//	The two arguments can be replaced by a single array argument, for example [0, 1] for a random value between 0-1.
+//
+//
+//
+// pickRandomDistributed(objects [Object]) : Object
+// 	Picks one of the items in an object, and looks at the item's property called 'chance' to determine the odds of the one to pick.
+//	Provide it with an object looking like the example below.
+//	The 'chance' properties don't have to add up to 1! Their values are normalized before picking a random index.
+//
+//		var list = {
+//			item1 : {name:'item1', chance:0.1}, // this item has a 10% chance of being chosen
+//			item2 : {name:'item2', chance:0.6}, // 60% chance
+//			item3 : {name:'item3', chance:0.3}, // 30% chance
+//		}
+//		var picked = pickRandomDistributed(list);
+//		picked.name == 'item1', 'item2' or 'item3', based on chance
 //
 //
 //
 // -
 //
 //
-// remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamp [Bool]) : Number
+// remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamped [Bool]) : Number
 // 	Returns value remapped from range low1-high1 to range low2-high2.
 //
 //
@@ -309,7 +334,7 @@
 //
 //
 // MovingAverage() : MovingAverage Object
-// 	An object that makes it easy to keep track of a moving/rolling average.
+// 	An object that makes it easy to keep track of a 'rolling' average.
 //
 //		For example, showing all properties:
 //			var avg = new movingAverage();
@@ -435,8 +460,8 @@
 // -
 //
 //
-// wrapFunction(newFunction [Function], originalFunction [Function]) : Function
-//	Wrap two functions into one.
+// wrapFunction(originalFunction [Function], newFunction [Function]) : Function
+//	Wrap two functions into one. Works with arguments.
 //
 //
 //
@@ -448,11 +473,12 @@
 //
 //		Example, showing all properties:
 //			var v = new VisualizePositions();							// create VisualizePositions instance
-//			v.scale;													// (optional) set the scale of the cubes (world size, default is 1)
-//			v.rotation;													// (optional) set the rotation of the cubes (if continuousRotationis set to false)
+//			v.scale;													// (optional) the scale of the cubes (world size, default is 1)
+//			v.rotation;													// (optional) the rotation of the cubes (if continuousRotationis set to false)
 //			v.continuousRotation;										// (optional) make the cubes rotate around local up, clockwise (boolean, default is true)
-//			v.material;													// (optional) set the material of the cubes (Asset.Material)
-//			v.update( [Vec3 Array] );									// add positions to show cubes on, returns the array of SceneObjects for further customization
+//			v.material;													// (optional) the material of the cubes (Asset.Material)
+//			v.showPositions( [vec3 Array] );							// show cubes on the given positions (array), returns the array of created SceneObjects for further customization
+//			v.getPositions();											// returns currently visualized positions
 //			v.remove();													// clear all created visualizations
 //
 //		Example, shorter format:
@@ -667,13 +693,13 @@ global.EaseFunctions = EaseFunctions;
 global.interp = function(startValue, endValue, t, easing, unclamped){
 	// set defaults
 	if(typeof easing === 'undefined'){ // if no easing, do simple linear remap (lerp)
-		return global.clamp(t) * (endValue-startValue) + startValue;
+		return clamp(t) * (endValue-startValue) + startValue;
 	}else if(typeof easing !== 'function'){
 		throw new Error('No valid Easing Function given for interp!');
 	}
 
 	// don't overshoot
-	if(!unclamped) t = global.clamp(t);
+	if(!unclamped) t = clamp(t);
 
 	// ease and remap
 	return easing(t) * (endValue-startValue) + startValue;
@@ -741,7 +767,7 @@ global.AnimateProperty = function(){
 	 * @description The current linear normalized animation time, 0-1. */
 	this.getTimeRatio = function(){
 		var reversedTimeRatio = reversed ? 1-timeRatio : timeRatio;
-		return global.clamp(reversedTimeRatio);
+		return clamp(reversedTimeRatio);
 	}
 
 	/**
@@ -997,8 +1023,8 @@ global.distanceAlongVector = function(pos1, pos2, fwd){
 
 global.hsvToRgb = function(h, s, v){
 	h = h % 1;
-	s = global.clamp(s);
-	v = global.clamp(v);
+	s = clamp(s);
+	v = clamp(v);
 	var r;
 	var g;
 	var b;
@@ -1037,9 +1063,9 @@ global.hsvToRgb = function(h, s, v){
 
 
 global.rgbToHsv = function(rgb){
-	var r = global.clamp(rgb.x);
-	var g = global.clamp(rgb.y);
-	var b = global.clamp(rgb.z);
+	var r = clamp(rgb.x);
+	var g = clamp(rgb.y);
+	var b = clamp(rgb.z);
 
 	var v = Math.max(r, g, b)
 	var n = v - Math.min(r,g,b);
@@ -1221,7 +1247,7 @@ global.stopAllSoundInstances = function(){
 
 
 
-global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
+global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, mixToSnap){
 	var self = this;
 
 	var pool = [];
@@ -1237,6 +1263,7 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
 			var components = [];
 			for(var j = 0; j < listOfAssets.length; j++){
 				var thisAudioComp = self.soundInstancesObject.createComponent("Component.AudioComponent");
+				if(mixToSnap) thisAudioComp.mixToSnap = true;
 				thisAudioComp.audioTrack = listOfAssets[j];
 				components.push(thisAudioComp);
 			}
@@ -1253,7 +1280,7 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
 	/**
 	 * @type {Function} 
 	 * @description Call with audio asset index to play pooled sound. */
-	this.instance = function(indexToPlay){
+	this.instance = function(indexToPlay, volume){
 		if(waitTime != null){
 			if(lastTime == null){
 				lastTime = getTime()-waitTime-1; // first shot is always allowed
@@ -1263,7 +1290,9 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
 			}
 		}
 
+		if(indexToPlay == null) indexToPlay = Math.floor(Math.random() * listOfAssets.length); // if no index is given, pick at random
 		var component = pool[poolIndex][indexToPlay];
+		component.volume = volume ? volume : 1;
 		component.play(1);
 
 		// increment
@@ -1295,24 +1324,50 @@ global.randSeed = function(seed){
 
 
 global.randInt = function(min, max){
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+	var _min = min;
+	var _max = max;
+	if(typeof min != 'number'){
+		_min = min[0];
+		_max = min[1];
+	}
+    _min = Math.ceil(_min);
+    _max = Math.floor(_max);
+    return Math.floor(Math.random() * (_max - _min + 1)) + _min;
 }
 
 
 
 
 global.randFloat = function(min, max){
-    return global.remap(Math.random(), 0, 1, min, max);
+	if(typeof min != 'number') return remap(Math.random(), 0, 1, min[0], min[1]); // assume array instead of numbers
+    return remap(Math.random(), 0, 1, min, max);
 }
 
 
 
 
-global.remap = function(value, low1, high1, low2, high2, clamp){
+global.pickRandomDistributed = function(obj){
+	var totalChance = 0;
+	var keys = Object.keys(obj);
+	for(var i = 0; i < keys.length; i++) {
+		totalChance += obj[keys[i]].chance;
+	}
+	var rand = Math.random() * totalChance;
+	
+	var sum = 0;
+	for(var key in obj) {
+		var item = obj[key];
+		sum += item.chance;
+		if(rand < sum) return item;
+	}
+}
+
+
+
+
+global.remap = function(value, low1, high1, low2, high2, clamped){
 	var remapped = low2 + (high2 - low2) * (value - low1) / (high1 - low1);
-	return clamp ? global.clamp(remapped, low2, high2) : remapped;
+	return clamped ? clamp(remapped, low2, high2) : remapped;
 }
 
 
@@ -1358,11 +1413,11 @@ function bitsToFloat(raw) {
 }
 
 global.encodeFloat = function(value, min, max) {
-	return floatToBits(global.remap(global.clamp(value, min, max), min, max, 0.0, ENCODE_MAX_VALUE));
+	return floatToBits(remap(clamp(value, min, max), min, max, 0.0, ENCODE_MAX_VALUE));
 }
 
 global.decodeToFloat = function(value, min, max) {
-	return global.remap(bitsToFloat(value), 0.0, ENCODE_MAX_VALUE, min, max);
+	return remap(bitsToFloat(value), 0.0, ENCODE_MAX_VALUE, min, max);
 }
 
 // ---
@@ -1633,11 +1688,10 @@ global.mat4FromDescription = function(matDescription){
 
 
 
-global.wrapFunction = function(newFunction, originalFunction){
-	if(!originalFunction) return newFunction;
-    return function(){
-        originalFunction();
-        newFunction();
+global.wrapFunction = function(originalFunction, newFunction){
+    return function(...args){
+        if(originalFunction) originalFunction(...args);
+        newFunction(...args);
     };
 }
 
@@ -1669,13 +1723,22 @@ global.VisualizePositions = function(){
 
 	/**
 	 * @type {Function}
+	 * @description Returns currently visualized positions. */
+	this.getPositions = function(){
+		return allPositions;
+	}
+
+	/**
+	 * @type {Function}
 	 * @description Call to create objects. */
-	this.update = function(positions){
+	this.showPositions = function(positions){
 		// remove existing
 		self.remove();
 
 		// add new
 		for(var i = 0; i < positions.length; i++){
+			if(!positions[i]) continue;
+			
 			// create
 			var obj = global.scene.createSceneObject("visualizer-cube-" + i.toString());
 			var rmv = obj.createComponent("Component.RenderMeshVisual");
@@ -1691,6 +1754,7 @@ global.VisualizePositions = function(){
 
 			// register
 			objs.push(obj);
+			allPositions.push(positions[i]);
 		}
 
 		// do continuous rotation
@@ -1726,11 +1790,13 @@ global.VisualizePositions = function(){
 			objs[i].destroy();
 		}
 		objs = [];
+		allPositions = [];
 	}
 
 
 	// private
 	var objs = []; // list of created sceneobjects
+	var allPositions = []; // list of created positions
 	var keepRotatingEvent; // rotation animation event
 	var cube = makeCube(); // get mesh
 	var rot = quat.angleAxis(0, vec3.up()); // starting rotation
@@ -1745,9 +1811,7 @@ global.VisualizePositions = function(){
 
 	// generated mesh to be used on created objects
 	function makeCube(){
-		
-		// Cube from MeshBuilder documentation
-
+		// cube from MeshBuilder documentation
 		var builder = new MeshBuilder([
 			{ name: "position", components: 3 },
 			{ name: "normal", components: 3, normalized: true },
