@@ -217,11 +217,10 @@
 // -
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number] mixToSnap (optional) [bool] ) : InstSoundPooled Object
+// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number]) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 //	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
-//	The 'mixToSnap' determines if the audio is directly mixed to the recorded video.
 //
 //	The 'instance' function has two (optional) arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume (0-1 number).
 //
@@ -1247,7 +1246,7 @@ global.stopAllSoundInstances = function(){
 
 
 
-global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, mixToSnap){
+global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
 	var self = this;
 
 	var pool = [];
@@ -1263,7 +1262,6 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, mixToSnap){
 			var components = [];
 			for(var j = 0; j < listOfAssets.length; j++){
 				var thisAudioComp = self.soundInstancesObject.createComponent("Component.AudioComponent");
-				if(mixToSnap) thisAudioComp.mixToSnap = true;
 				thisAudioComp.audioTrack = listOfAssets[j];
 				components.push(thisAudioComp);
 			}
