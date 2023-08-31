@@ -1650,9 +1650,9 @@ global.median = function(arr){
 	for(var i = 0; i < arr.length; i++){
 		clone[i] = arr[i];
 	}
-    clone.sort();
+    clone.sort(function(a, b){return a - b});
     var c = Math.floor(clone.length/2);
-    return clone.length % 2 === 0 ? clone[c] : (clone[c - 1] + clone[c]) / 2;
+    return clone.length % 2 != 0 ? clone[c] : (clone[c - 1] + clone[c]) / 2;
 }
 
 
