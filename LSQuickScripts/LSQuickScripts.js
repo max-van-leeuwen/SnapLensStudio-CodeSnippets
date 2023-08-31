@@ -482,7 +482,7 @@
 //
 //		Example, shorter format:
 //			var positions = [new vec3(0, 0, 0), new vec3(1, 0, 0)]; 	// some world positions to visualize
-//			new VisualizePositions().update(positions);
+//			new VisualizePositions().showPositions(positions);
 //
 //
 //
