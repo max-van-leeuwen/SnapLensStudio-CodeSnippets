@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.2"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.3"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -1644,6 +1644,8 @@ global.pad = function(num, size){
 
 
 global.median = function(arr){
+	if(arr.length == 0) return;
+	if(arr.length == 1) return arr[0];
 	var clone = [];
 	for(var i = 0; i < arr.length; i++){
 		clone[i] = arr[i];
