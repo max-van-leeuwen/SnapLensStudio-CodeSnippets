@@ -24,3 +24,5 @@ Contents:
   - Super simple way of making a portal out of a mesh. It calls your callback function when the user walks through it, and keeps track of whether you're inside or outside the portal world.
 - World Placement
   - Make an object follow the user's gaze, with nice animations. Useful for placing the scene in front of you in the Spectacles.
+- Smooth Follow
+  - Make any 3D Transform or Number smoothly interpolate with only a couple lines of code.
