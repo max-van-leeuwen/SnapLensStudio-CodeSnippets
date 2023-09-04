@@ -24,7 +24,7 @@ EaseFunctions : Object, containing Functions
 	Use it on any number to get its lookup-value back.
 	These functions can be used with Interp and AnimateProperty.
 
-		All types, don't forget to add In/Out/InOut:
+		All types, don't forget to add In/Out/InOut
 			Linear
 			Quadratic
 			Cubic
@@ -37,14 +37,11 @@ EaseFunctions : Object, containing Functions
 			Back
 			Bounce
 
-		Usage example:
-			var n = 0.3;
-			var n_eased = global.Easing.Cubic.In(n);
+		Usage example
+			var n = 0.3
+			var n_eased = global.Easing.Cubic.In(n)
 				n_eased == 0.027
 
-
-
--
 
 
 interp(startValue [Number], endValue [Number], t [Number], easing (optional) [Function], unclamped (optional) [bool]) : Number
@@ -52,36 +49,42 @@ interp(startValue [Number], endValue [Number], t [Number], easing (optional) [Fu
 	Is identical to a linear lerp() when no Easing Function is given.
 	Use one of the Easing Functions in global.EaseFunctions, or use your own!
 
-		Examples, [-5, 5] at position x:
-			Cubic in/out	interp(-5, 5, x, EaseFunctions.Cubic.InOut);
-			Linear (lerp)	interp(-5, 5, x);
-			Custom			interp(-5, 5, x, function(v){ return v });
+		Examples, [-5, 5] at position x
+			Cubic in/out	interp(-5, 5, x, EaseFunctions.Cubic.InOut)
+			Linear (lerp)	interp(-5, 5, x)
+			Custom			interp(-5, 5, x, function(v){ return v })
 
-
-
--
 
 
 AnimateProperty() : AnimateProperty object
-	Creates an easy-to-use animation 'class' instance. Can be used to easily animate any property in just a couple lines of code!
+	Creates an easy-to-use animation instance. Can be used to quickly animate any property, using just a couple lines of code!
 
-		Example, showing all properties:
-			var anim = new animateProperty();								// create a new animation instance called 'anim'.
-			anim.startFunction = function(){};								// function to call on animation start.
-			anim.updateFunction = function(v, vLinear){};					// function to call on each animation frame, with animation value (0-1) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
-			anim.endFunction = function(){};								// function to call on animation end.
-			anim.duration = 1;												// duration in seconds. Default is 1.
-			anim.reverseDuration = 1;										// duration in seconds when reversed. If no value assigned, default is equal to duration.
-			anim.delay = 0;													// delay after starting animation. Default is 0.
-			anim.easeFunction = EaseFunctions.Cubic.In;						// determines curve. Default is Cubic.InOut. All EaseFunctions can be used, or use a custom function.
-			anim.reverseEaseFunction = EaseFunctions.Cubic.Out;				// determines curve on reverse playing. Uses anim.easeFunction if none is given.
-			anim.pulse(newTimeRatio);										// updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
-			anim.getTimeRatio();											// the current linear, normalized animation time (0-1).
-			anim.setReversed(reverse);										// if reversed, the animation plays backwards. 'Reverse' arg should be of type Bool.
-			anim.getReversed();												// returns true if the animation is currently reversed.
-			anim.isPlaying();												// returns true if the animation is currently playing.
-			anim.start(newTimeRatio); 										// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
-			anim.stop(callEndFunction);										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
+		Example, showing all possible properties
+
+			var anim = new animateProperty()								// create a new animation instance called 'anim'.
+			anim.startFunction = function(){}								// function to call on animation start.
+			anim.updateFunction = function(v, vLinear){}					// function to call on each animation frame, with animation value (0-1) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
+			anim.endFunction = function(){}									// function to call on animation end.
+			anim.duration = 1												// duration in seconds. Default is 1.
+			anim.reverseDuration = 1										// duration in seconds when reversed. If no value assigned, default is equal to duration.
+			anim.delay = 0													// delay after starting animation. Default is 0.
+			anim.easeFunction = EaseFunctions.Cubic.In						// determines curve. Default is Cubic.InOut. All EaseFunctions can be used, or use a custom function.
+			anim.reverseEaseFunction = EaseFunctions.Cubic.Out				// determines curve on reverse playing. Uses anim.easeFunction if none is given.
+			anim.pulse(newTimeRatio)										// updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
+			anim.getTimeRatio()												// the current linear, normalized animation time (0-1).
+			anim.setReversed(reverse)										// if reversed, the animation plays backwards. 'Reverse' arg should be of type Bool.
+			anim.getReversed()												// returns true if the animation is currently reversed.
+			anim.isPlaying()												// returns true if the animation is currently playing.
+			anim.start(newTimeRatio) 										// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
+			anim.stop(callEndFunction)										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
+
+		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
+
+			var anim = new AnimateProperty()
+			anim.updateFunction = function(v){
+				trf.setLocalPosition(new vec3(v, 0, 0))
+			}
+			anim.start()
 
 
 
@@ -151,17 +154,19 @@ rgbToHsv(rgb [vec3/vec4]) : vec3
 DoDelay(function (Function, optional), arguments (Array, optional) ) : DoDelay object
 	An object that makes it easy to schedule a function to run in the future (by frames or by seconds).
 
-		Example, showing all properties:
-			var delayed = new doDelay();
-			delayed.func = function(){}; 					// the function to call after a delay
-			delayed.args = ['test!', 1, 2, 3];				// function arguments should be given as an array
-			delayed.byFrame(10);							// this will print 'hello!' in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
-			delayed.byTime(10);								// this will print 'hello!' in 10 seconds (function is called instantly if no argument given or if arg is '0')
-			delayed.now();									// call the function with the given arguments now
-			delayed.stop();									// this will cancel the scheduled function
+		Example, showing all properties
 
-		In one-liner format:
-			new doDelay(func, args).byTime(5);				// calls function with arguments (as array) after 5 seconds
+			var delayed = new doDelay()
+			delayed.func = function(){} 					// the function to call after a delay
+			delayed.args = ['test!', 1, 2, 3]				// function arguments should be given as an array
+			delayed.byFrame(10)								// this will print 'hello!' in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
+			delayed.byTime(10)								// this will print 'hello!' in 10 seconds (function is called instantly if no argument given or if arg is '0')
+			delayed.now()									// call the function with the given arguments now
+			delayed.stop()									// this will cancel the scheduled function
+
+		In one-liner format
+
+			new doDelay(func, args).byTime(5)				// calls function with arguments (as array) after 5 seconds
 
 
 
@@ -187,20 +192,19 @@ stopAllSoundInstances() : array of sound components
 -
 
 
-InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number] mixToSnap (optional) [bool] ) : InstSoundPooled Object
+InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number]) : InstSoundPooled Object
 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
-	The 'mixToSnap' determines if the audio is directly mixed to the recorded video.
 
 	The 'instance' function has two (optional) arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume (0-1 number).
 
 		For example, if you want to randomly pick laser sounds coming from a gun.
 		The following parameters give it a maximum of 10 plays, with 0.2 seconds inbetween, before looping back to the first sound component:
 
-			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 );
+			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 )
 			function onFiringLaser(){
-				soundPool.instance(); 	// call 'onFiringLaser()' whenever you want to hear one of the laser sound samples!
+				soundPool.instance() 	// call 'onFiringLaser()' whenever you want to hear one of the laser sound samples!
 			}
 
 
@@ -247,7 +251,7 @@ pickRandomDistributed(objects [Object]) : Object
 			item2 : {name:'item2', chance:0.6}, // 60% chance
 			item3 : {name:'item3', chance:0.3}, // 30% chance
 		}
-		var picked = pickRandomDistributed(list);
+		var picked = pickRandomDistributed(list)
 		picked.name == 'item1', 'item2' or 'item3', based on chance
 
 
@@ -306,11 +310,12 @@ concatArrays(array [any], array [any]) : array
 MovingAverage() : MovingAverage Object
 	An object that makes it easy to keep track of a 'rolling' average.
 
-		For example, showing all properties:
-			var avg = new movingAverage();
-			avg.add(v);									// usually the only thing you need, returns the new average and updates the sampleCount.
-			avg.average;								// gets/sets the current average value (usually read-only, but in some cases you might want to set this to a starting value)
-			avg.sampleCount; 							// gets/sets the current sample count value (usually read-only, but in some cases you might want to set this to a starting value)
+		Example, showing all properties
+
+			var avg = new movingAverage()
+			avg.add(v)									// usually the only thing you need, returns the new average and updates the sampleCount.
+			avg.average									// gets/sets the current average value (usually read-only, but in some cases you might want to set this to a starting value)
+			avg.sampleCount 							// gets/sets the current sample count value (usually read-only, but in some cases you might want to set this to a starting value)
 			
 
 
@@ -320,11 +325,11 @@ MovingAverage() : MovingAverage Object
 PerformanceStopwatch() : PerformanceStopwatch Object
 	Debugging tool. Prints precise time measures to see how well a function performs. Has built-in rolling average!
 
-		For example, showing all properties:
-			var stopwatch = new PerformanceStopwatch();		// create new PerformanceStopwatch object
-			stopwatch.start();								// starts the stopwatch
+		Example, showing all properties
+			var stopwatch = new PerformanceStopwatch()		// create new PerformanceStopwatch object
+			stopwatch.start()								// starts the stopwatch
 			// < do something to measure on this line >
-			stopwatch.stop();								// stops the stopwatch, prints the result (and a rolling average of previous results) to the console
+			stopwatch.stop()								// stops the stopwatch, prints the result (and a rolling average of previous results) to the console
 
 
 -
@@ -377,7 +382,7 @@ getAllComponents(componentName [string], startObj (optional) [SceneObject]) : Ar
 	Returns an array containing all components of type componentNames, also those on child objects.
 	If no startObj is given, it searches the whole scene.
 
-		For example:
+		Example
 			var components = getAllComponents("Component.VFXComponent")
 				components == [Array of all VFX Component in the scene]
 
@@ -395,9 +400,9 @@ parseNewLines(txt [string], customSplit (optional) [string]) : String
 pad(num [Number], size [Number]) : String
 	Takes a number and a padding amount, and returns a padded string of the number.
 
-	For example:
-		var s = pad(30, 4)
-			s == "0030"
+		Example
+			var s = pad(30, 4)
+				s == "0030"
 
 
 
@@ -441,19 +446,21 @@ wrapFunction(originalFunction [Function], newFunction [Function]) : Function
 VisualizePositions() : VisualizePositions object
 	A class that places cubes on each position in the 'positions' array, given through the update function. Useful for quick visualizations of 3D positions.
 
-		Example, showing all properties:
-			var v = new VisualizePositions();							// create VisualizePositions instance
-			v.scale;													// (optional) the scale of the cubes (world size, default is 1)
-			v.rotation;													// (optional) the rotation of the cubes (if continuousRotationis set to false)
-			v.continuousRotation;										// (optional) make the cubes rotate around local up, clockwise (boolean, default is true)
-			v.material;													// (optional) the material of the cubes (Asset.Material)
-			v.showPositions( [vec3 Array] );							// show cubes on the given positions (array), returns the array of created SceneObjects for further customization
-			v.getPositions();											// returns currently visualized positions
-			v.remove();													// clear all created visualizations
+		Example, showing all properties
 
-		Example, shorter format:
-			var positions = [new vec3(0, 0, 0), new vec3(1, 0, 0)]; 	// some world positions to visualize
-			new VisualizePositions().update(positions);
+			var v = new VisualizePositions()							// create VisualizePositions instance
+			v.scale														// (optional) the scale of the cubes (world size, default is 1)
+			v.rotation													// (optional) the rotation of the cubes (if continuousRotationis set to false)
+			v.continuousRotation										// (optional) make the cubes rotate around local up, clockwise (boolean, default is true)
+			v.material													// (optional) the material of the cubes (Asset.Material)
+			v.showPositions( [vec3 Array] )								// show cubes on the given positions (array), returns the array of created SceneObjects for further customization
+			v.getPositions()											// returns currently visualized positions
+			v.remove()													// clear all created visualizations
+
+		Example, shorter format
+
+			var positions = [new vec3(0, 0, 0), new vec3(1, 0, 0)] 		// some world positions to visualize
+			new VisualizePositions().showPositions(positions)
 
 
 

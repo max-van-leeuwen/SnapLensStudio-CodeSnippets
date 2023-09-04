@@ -1,4 +1,9 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
+
+
 
 //@input Asset.RenderMesh renderMesh
 //@input Component.RenderMeshVisual renderMeshVisual

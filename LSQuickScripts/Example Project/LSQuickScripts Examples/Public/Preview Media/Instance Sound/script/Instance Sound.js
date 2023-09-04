@@ -1,6 +1,7 @@
 // Max van Leeuwen
-// ig @max.van.leeuwen
-// twitter @maksvanleeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Plays the audio asset once, without cut-offs! Tap the screen to try.
 

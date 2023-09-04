@@ -1,7 +1,12 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Simple SDF collision setup for VFX.
-//
+
+
+
 // Make sure the SDF Collision Sub-Graph in the VFX asset has the following Parameter inputs:
 // - interactionMat (Matrix4)
 // - bboxMin (vec3)

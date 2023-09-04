@@ -1,0 +1,39 @@
+{
+    "1690361864581759:26802": {
+        "IFileManager": {
+            "path": "Files/File_1690361864581759_26802"
+        }
+    },
+    "1690361864582512:26803": {
+        "IResourceController": {
+            "name": "Blue",
+            "type": 2,
+            "subtype": 1,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1690361864582517:26804",
+            "fileId": "1690361864581759:26802",
+            "originalId": "1690361864601755:26816",
+            "publicId": "1690361864644069:26825",
+            "expected_hash": "fc6e3416ce80ac8938f5d889c599b9a6"
+        },
+        "IResourceManager": {
+            "uid": "1690361864582517:26804",
+            "name": "Files/File_1690361864581759_26802",
+            "flags": 1
+        }
+    },
+    "1690361864601755:26816": {
+        "IFileManager": {
+            "path": "Files/File_1690361864601755_26816.lsmat"
+        }
+    },
+    "1690361864644069:26825": {
+        "IResourceController": {
+            "public": {
+                "path": "Scene/Blue.lsmat",
+                "hash": "8ea78139cddad4e27ca34e98a2aa0e28"
+            }
+        }
+    }
+}

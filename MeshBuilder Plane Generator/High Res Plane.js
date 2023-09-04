@@ -1,4 +1,7 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Generates high-res 1x1 plane, simply call the start() function and set the parameters in the inspector.
 

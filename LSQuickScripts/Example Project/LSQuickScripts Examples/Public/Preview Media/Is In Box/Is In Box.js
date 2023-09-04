@@ -1,6 +1,7 @@
 // Max van Leeuwen
-// ig @max.van.leeuwen
-// twitter @maksvanleeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Checks if point is in box. Use the 'Unit Box' from the asset store for this! Not Lens Studio's default box.
 

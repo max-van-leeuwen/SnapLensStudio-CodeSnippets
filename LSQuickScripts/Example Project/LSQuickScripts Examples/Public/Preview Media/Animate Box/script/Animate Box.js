@@ -1,6 +1,7 @@
 // Max van Leeuwen
-// ig @max.van.leeuwen
-// twitter @maksvanleeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Starts animation on tap
 

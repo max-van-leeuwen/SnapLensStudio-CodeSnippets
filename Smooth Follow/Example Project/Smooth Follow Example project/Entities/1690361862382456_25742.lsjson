@@ -1,0 +1,39 @@
+{
+    "1690361862381828:25738": {
+        "IFileManager": {
+            "path": "Files/File_1690361862381828_25738"
+        }
+    },
+    "1690361862382456:25742": {
+        "IResourceController": {
+            "name": "Red",
+            "type": 2,
+            "subtype": 1,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1690361862382460:25743",
+            "fileId": "1690361862381828:25738",
+            "originalId": "1690361862400787:25755",
+            "publicId": "1690361862512831:25820",
+            "expected_hash": "0cd04e3f6f8c3e670a7ba0949c1edf06"
+        },
+        "IResourceManager": {
+            "uid": "1690361862382460:25743",
+            "name": "Files/File_1690361862381828_25738",
+            "flags": 1
+        }
+    },
+    "1690361862400787:25755": {
+        "IFileManager": {
+            "path": "Files/File_1690361862400787_25755.lsmat"
+        }
+    },
+    "1690361862512831:25820": {
+        "IResourceController": {
+            "public": {
+                "path": "Scene/Red.lsmat",
+                "hash": "5d32c8862d990e1eb48dca76f16d50ae"
+            }
+        }
+    }
+}

@@ -1,4 +1,7 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Check if user has walked through a portal.
 
@@ -7,15 +10,19 @@
 // Super easy to use. In the Inspector, simply assign the User (camera) and the Portal (Render Mesh Visual).
 // To change which way the opening is, use 'flip'.
 // To always allow the user leaving the portal when walking out of it (without even touching the portal), use 'alwaysAllowedToLeave'
-// To start the portal check, use: global.portal.start( < callback function, first argument is true or false depending on if the user is inside the portal scene > );
-// To stop the portal, use: global.portal.stop();
-// To get current user-in-portal state, use: global.portal.isInPortal();
+//
+// To start the portal check, use:
+//		global.portal.start( < callback function, first argument is true or false depending on if the user is inside the portal scene or not > );
+// To stop the portal, use:
+//		global.portal.stop();
+// To get current user-in-portal state, use:
+//		global.portal.isInPortal();
 //
 // For example: To print when the user walks through the portal, use this code from any other script in your project:
-//	function walkedThroughPortal( isInPortal ){
-//		print("User is in portal: " + isInPortal.toString());
-//	}
-//	global.portal.start(walkedThroughPortal);
+//		function walkedThroughPortal( isInPortal ){
+//			print("User is in portal: " + isInPortal.toString());
+//		}
+//		global.portal.start(walkedThroughPortal);
 
 
 

@@ -1,0 +1,17 @@
+{
+    "1671640852722106:117": {
+        "IResourceController": {
+            "name": "Render Target",
+            "type": 1,
+            "subtype": 1,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1:1"
+        },
+        "IResourceManager": {
+            "uid": "1:1",
+            "name": "Camera Output",
+            "flags": 0
+        }
+    }
+}

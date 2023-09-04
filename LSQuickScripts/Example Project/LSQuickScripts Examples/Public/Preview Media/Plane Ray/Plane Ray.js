@@ -1,6 +1,7 @@
 // Max van Leeuwen
-// ig @max.van.leeuwen
-// twitter @maksvanleeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Checks if a ray intersects with a plane, and prints the local position on the plane.
 

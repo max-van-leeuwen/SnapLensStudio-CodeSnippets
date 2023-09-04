@@ -1,14 +1,25 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Places and orients a scene in front of the user, handy when using World Tracking.
 //
-// To use, make a new class like so (and add optional arguments)
-// 	var worldPlacementAnim = new global.WorldPlacement();
-//	worldPlacementAnim.start();
+// Requires:
+//  LSQuickScripts 2.0+     https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/tree/main/LSQuickScripts
+
+
+
+//	To use, make a new instance like so
+// 		var worldPlacementAnim = new global.WorldPlacement();
 //
-// To read the final transform information (an object containing the keys 'pos' (vec3), 'rot' (quat)), use
-//	worldPlacementAnim.getFinalTransformData();
-//		This function can be used after start() was called. No moveObject is necessary in this case!
+//	Then start it with
+//		worldPlacementAnim.start();
+//
+//	To read the final transform information (an object containing the keys 'pos' (vec3), 'rot' (quat)), use
+//		worldPlacementAnim.getFinalTransformData();
+//
+//	This function can be used after start() was called. No moveObject is necessary in this case!
 
 
 

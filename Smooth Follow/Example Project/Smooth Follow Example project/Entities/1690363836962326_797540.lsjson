@@ -1,0 +1,38 @@
+{
+    "1690363836960208:797539": {
+        "IFileManager": {
+            "path": "Files/File_1690363836960208_797539.js"
+        }
+    },
+    "1690363836962326:797540": {
+        "IResourceController": {
+            "name": "Behavior - Follow SceneObject",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1690363836962332:797541",
+            "fileId": "1690363836960208:797539",
+            "publicId": "1690363836964655:797551",
+            "expected_hash": "d28bfb45a71adddb4913c796464f6e85"
+        },
+        "IResourceManager": {
+            "uid": "1690363836962332:797541",
+            "name": "Files/File_1690363836960208_797539.js",
+            "flags": 1
+        }
+    },
+    "1690363836962332:797541": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
+    "1690363836964655:797551": {
+        "IResourceController": {
+            "public": {
+                "path": "Examples/Behavior - Follow SceneObject.js",
+                "hash": "d28bfb45a71adddb4913c796464f6e85"
+            }
+        }
+    }
+}

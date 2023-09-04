@@ -1,6 +1,7 @@
 // Max van Leeuwen
-// ig @max.van.leeuwen
-// twitter @maksvanleeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Checks if object is in front of or behind other object. Changes the color accordingly.
 

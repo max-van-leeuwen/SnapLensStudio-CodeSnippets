@@ -1,9 +1,14 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Simple audio transcribing module, call
 // 	global.startVoiceMLTranscribe(<callback function>).
 //
 // Results are sent to the given callback function. If none was given, the following example will be used:
+
+
 
 function exampleCallback(eventArgs){
 	// intermediate transcription

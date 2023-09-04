@@ -1,4 +1,7 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Lightweight SDF collision manager for VFX assets.
 // Make sure the SDF Collision Sub-Graph in the VFX asset has the following Parameter inputs:

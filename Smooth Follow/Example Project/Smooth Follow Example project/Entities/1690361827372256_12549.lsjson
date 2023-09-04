@@ -1,0 +1,38 @@
+{
+    "1690361827371152:12548": {
+        "IFileManager": {
+            "path": "Files/File_1690361827371152_12548.js"
+        }
+    },
+    "1690361827372256:12549": {
+        "IResourceController": {
+            "name": "Smooth Follow",
+            "type": 4,
+            "subtype": 0,
+            "dependency": 0,
+            "hidden": false,
+            "uid": "1690361827372276:12550",
+            "fileId": "1690361827371152:12548",
+            "publicId": "1690361827373425:12555",
+            "expected_hash": "ac0b999f3081d6e9b75868de1e5c4b9f"
+        },
+        "IResourceManager": {
+            "uid": "1690361827372276:12550",
+            "name": "Files/File_1690361827371152_12548.js",
+            "flags": 1
+        }
+    },
+    "1690361827372276:12550": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
+    "1690361827373425:12555": {
+        "IResourceController": {
+            "public": {
+                "path": "Script/Smooth Follow.js",
+                "hash": "ac0b999f3081d6e9b75868de1e5c4b9f"
+            }
+        }
+    }
+}

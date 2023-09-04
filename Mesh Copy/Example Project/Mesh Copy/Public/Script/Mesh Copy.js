@@ -1,8 +1,13 @@
 // Max van Leeuwen
+// twitter      @maksvanleeuwen
+// instagram    @max.van.leeuwen
+// maxvanleeuwen.com
 //
 // Reads a mesh and then re-builds all the vertices using MeshBuilder.
 // Returns the MeshBuilder object.
-//
+
+
+
 // How to use:
 //	global.makeMeshCopy( <meshAsset [Asset.RenderMesh]>, <doNormals [bool] (optional, default True)>, <doUVs [bool] (optional, default True)>, <createEmptyUVs [bool] (optional, default False) )
 //		meshAsset			Which mesh asset to clone.
