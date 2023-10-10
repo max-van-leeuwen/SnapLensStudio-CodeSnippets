@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.4"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.5"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -188,15 +188,15 @@
 //
 //			var delayed = new doDelay()
 //			delayed.func = function(){} 					// the function to call after a delay
-//			delayed.args = ['test!', 1, 2, 3]				// function arguments should be given as an array
-//			delayed.byFrame(10)								// this will print 'hello!' in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
-//			delayed.byTime(10)								// this will print 'hello!' in 10 seconds (function is called instantly if no argument given or if arg is '0')
+//			delayed.args = []								// function arguments should be given as an array
+//			delayed.byFrame(10)								// this will call the function in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
+//			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0')
 //			delayed.now()									// call the function with the given arguments now
 //			delayed.stop()									// this will cancel the scheduled function
 //
 //		In one-liner format
 //
-//			new doDelay(func, args).byTime(5)				// calls function with arguments (as array) after 5 seconds
+//			new doDelay(func, args).byTime(5)				// calls function with arguments (array) after 5 seconds
 //
 //
 //
