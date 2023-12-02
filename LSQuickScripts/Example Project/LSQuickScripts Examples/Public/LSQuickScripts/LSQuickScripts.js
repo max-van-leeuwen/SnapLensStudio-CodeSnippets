@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.5"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.6"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -105,8 +105,9 @@
 //			anim.setReversed(reverse)										// if reversed, the animation plays backwards. 'Reverse' arg should be of type Bool.
 //			anim.getReversed()												// returns true if the animation is currently reversed.
 //			anim.isPlaying()												// returns true if the animation is currently playing.
+//			anim.setCallbackAtTime(v, function)								// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). Call without arguments to clear.
 //			anim.start(newTimeRatio) 										// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
-//			anim.stop(callEndFunction)										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool).
+//			anim.stop(callEndFunction)										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be a bool, default is false).
 //
 //		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
 //
@@ -268,6 +269,11 @@
 // randFloat(array [size 2]) : Number
 //	Returns a random number within a range min (inclusive) and max (exclusive).
 //	The two arguments can be replaced by a single array argument, for example [0, 1] for a random value between 0-1.
+//
+//
+//
+// randArray(array [Array]) : Object
+//	Returns one random object from the given array
 //
 //
 //
@@ -803,6 +809,17 @@ global.AnimateProperty = function(){
 	}
 
 	/**
+	 * @type {Boolean} 
+	 * @description Returns true if the animation is currently playing. */
+	this.setCallbackAtTime = function(v, f){
+		callbackAtTime = {
+			v : v,
+			f : f,
+			called : false,
+		}
+	}
+
+	/**
 	 * @type {Function} 
 	 * @argument {Number} atTime
 	 * @description Starts the animation. Resumes where last play ended, starts from beginning if last play was finished. Optional 'atTime' argument starts at linear 0-1 time ratio. */
@@ -850,6 +867,11 @@ global.AnimateProperty = function(){
 	var delayedStart;
 	var duration;
 	var timeRatio = 0;
+	var callbackAtTime = {
+		v : null,
+		f : null,
+		called : false,
+	}
 
 	function setValue(v, lastFrame){
 		self.updateFunction(v, lastFrame ? v : timeRatio); // on last frame, take animation end value
@@ -865,6 +887,7 @@ global.AnimateProperty = function(){
 		}else{
 			var dir = reversed ? -1 : 1;
 			timeRatio += (getDeltaTime() / duration) * dir;
+			timeRatio = clamp(timeRatio); // when a frame takes really long to load (because of some heavy operation), the animation could get weird if this is not clamped
 		}
 		if(reversed ? (timeRatio <= 0) : (timeRatio >= 1)){ // on last step
 			setValue(reversed ? 0 : 1, true);
@@ -872,6 +895,20 @@ global.AnimateProperty = function(){
 		}else{ // on animation step
 			var v = getInterpolated();
 			setValue(v);
+		}
+
+		if(!callbackAtTime.called && callbackAtTime.v && callbackAtTime.f){
+			if(reversed){
+				if(timeRatio <= callbackAtTime.v){
+					callbackAtTime.f();
+					callbackAtTime.called = true;
+				}
+			}else{
+				if(timeRatio >= callbackAtTime.v){
+					callbackAtTime.f();
+					callbackAtTime.called = true;
+				}
+			}
 		}
 	}
 
@@ -894,6 +931,9 @@ global.AnimateProperty = function(){
 			animEvent = null;
 		}
 		isPlaying = false;
+
+		// reset callback
+		callbackAtTime.called = false;
 
 		stopDelayedStart();
 	}
@@ -1347,6 +1387,13 @@ global.randInt = function(min, max){
 global.randFloat = function(min, max){
 	if(typeof min != 'number') return remap(Math.random(), 0, 1, min[0], min[1]); // assume array instead of numbers
     return remap(Math.random(), 0, 1, min, max);
+}
+
+
+
+
+global.randArray = function(array){
+	return array[Math.floor(Math.random()*array.length)];
 }
 
 
