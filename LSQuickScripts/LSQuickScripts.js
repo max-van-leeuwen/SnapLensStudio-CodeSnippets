@@ -845,7 +845,7 @@ global.AnimateProperty = function(){
 		}
 
 		let delay = self.delay;
-		if(reversed && self.reverseDelay) delay = self.reverseDelay; // if reverse, use custom delay (if any)
+		if(reversed && typeof(self.reverseDelay) != 'undefined') delay = self.reverseDelay; // if reverse, use custom delay (if any)
 		if(delay > 0){ // start after delay (if any)
 			delayedStart = new global.DoDelay(begin)
 			delayedStart.byTime(delay);
