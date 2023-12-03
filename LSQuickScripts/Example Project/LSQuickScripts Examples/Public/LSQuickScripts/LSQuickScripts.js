@@ -892,6 +892,7 @@ global.AnimateProperty = function(){
 		if(reversed ? (timeRatio <= 0) : (timeRatio >= 1)){ // on last step
 			setValue(reversed ? 0 : 1, true);
 			self.stop(true);
+			return;
 		}else{ // on animation step
 			var v = getInterpolated();
 			setValue(v);
@@ -900,13 +901,13 @@ global.AnimateProperty = function(){
 		if(!callbackAtTime.called && callbackAtTime.v && callbackAtTime.f){
 			if(reversed){
 				if(timeRatio <= callbackAtTime.v){
-					callbackAtTime.f();
 					callbackAtTime.called = true;
+					callbackAtTime.f();
 				}
 			}else{
 				if(timeRatio >= callbackAtTime.v){
-					callbackAtTime.f();
 					callbackAtTime.called = true;
+					callbackAtTime.f();
 				}
 			}
 		}
@@ -924,7 +925,7 @@ global.AnimateProperty = function(){
 		animEvent.bind(animation);
 		isPlaying = true;
 	}
-	
+
 	function stopAnimEvent(){
 		if(animEvent){
 			script.removeEvent(animEvent);
@@ -932,10 +933,10 @@ global.AnimateProperty = function(){
 		}
 		isPlaying = false;
 
+		stopDelayedStart();
+
 		// reset callback
 		callbackAtTime.called = false;
-
-		stopDelayedStart();
 	}
 
 	function stopDelayedStart(){
