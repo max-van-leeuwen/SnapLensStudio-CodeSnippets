@@ -98,6 +98,7 @@
 //			anim.duration = 1												// duration in seconds. Default is 1.
 //			anim.reverseDuration = 1										// duration in seconds when reversed. If no value assigned, default is equal to duration.
 //			anim.delay = 0													// delay after starting animation. Default is 0.
+//			anim.reverseDelay = 0											// delay after starting animation in reverse. Uses anim.delay if none is given.
 //			anim.easeFunction = EaseFunctions.Cubic.In						// determines curve. Default is Cubic.InOut. All EaseFunctions can be used, or use a custom function.
 //			anim.reverseEaseFunction = EaseFunctions.Cubic.Out				// determines curve on reverse playing. Uses anim.easeFunction if none is given.
 //			anim.pulse(newTimeRatio)										// updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
@@ -754,6 +755,11 @@ global.AnimateProperty = function(){
 	 * @description Delay after starting animation. Default is 0. */
 	this.delay = 0;
 
+	/**
+	 * @type {Number}
+	 * @description Delay after starting animation on reverse. Default is same as delay. */
+	this.reverseDelay;
+
     /**
 	 * @type {Function}
 	 * @description Determines curve. Default is EaseFunctions.Cubic.InOut. */
@@ -838,9 +844,11 @@ global.AnimateProperty = function(){
 			if(self.startFunction) self.startFunction();
 		}
 
-		if(self.delay > 0){ // start after delay (if any)
+		let delay = self.delay;
+		if(reversed && self.reverseDelay) delay = self.reverseDelay; // if reverse, use custom delay (if any)
+		if(delay > 0){ // start after delay (if any)
 			delayedStart = new global.DoDelay(begin)
-			delayedStart.byTime(self.delay);
+			delayedStart.byTime(delay);
 		}else{
 			begin();
 		}
