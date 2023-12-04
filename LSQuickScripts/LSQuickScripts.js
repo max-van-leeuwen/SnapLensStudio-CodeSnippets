@@ -91,7 +91,7 @@
 //
 //		Example, showing all possible properties
 //
-//			var anim = new animateProperty()								// create a new animation instance called 'anim'.
+//			var anim = new AnimateProperty( updateFunciton (optional) )		// create a new animation instance called 'anim'.
 //			anim.startFunction = function(){}								// function to call on animation start.
 //			anim.updateFunction = function(v, vLinear){}					// function to call on each animation frame, with animation value (0-1) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
 //			anim.endFunction = function(){}									// function to call on animation end.
@@ -722,7 +722,7 @@ global.interp = function(startValue, endValue, t, easing, unclamped){
 
 
 var animateProperties = []; // keep a list of all instances
-global.AnimateProperty = function(){
+global.AnimateProperty = function(updateFunction){
 	var self = this;
 
 	/**
@@ -733,7 +733,7 @@ global.AnimateProperty = function(){
 	/**
 	 * @type {Function}
 	 * @description Function to call on each animation frame, with animation value (0-1) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]). */
-	this.updateFunction = function(v, vLinear){};
+	this.updateFunction = updateFunction ? updateFunction : function(v, vLinear){};
 
 	/**
 	 * @type {Function} 
