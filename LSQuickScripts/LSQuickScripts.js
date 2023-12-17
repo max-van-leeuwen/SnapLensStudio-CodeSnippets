@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.6"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -107,7 +107,7 @@
 //			anim.getReversed()												// returns true if the animation is currently reversed.
 //			anim.isPlaying()												// returns true if the animation is currently playing.
 //			anim.setCallbackAtTime(v, function)								// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). Call without arguments to clear.
-//			anim.start(newTimeRatio) 										// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio.
+//			anim.start(newTimeRatio, skipDelay)								// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio. Optional skipDelay bool skips the delay on this animation.
 //			anim.stop(callEndFunction)										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be a bool, default is false).
 //
 //		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
@@ -828,8 +828,8 @@ global.AnimateProperty = function(updateFunction){
 	/**
 	 * @type {Function} 
 	 * @argument {Number} atTime
-	 * @description Starts the animation. Resumes where last play ended, starts from beginning if last play was finished. Optional 'atTime' argument starts at linear 0-1 time ratio. */
-	this.start = function(newTimeRatio){
+	 * @description Starts the animation. Resumes where last play ended, starts from beginning if last play was finished. Optional 'atTime' argument starts at linear 0-1 time ratio. Optional skipDelay bool skips the delay on this animation. */
+	this.start = function(newTimeRatio, skipDelay){
 		stopDelayedStart();
 
 		function begin(){
@@ -846,7 +846,7 @@ global.AnimateProperty = function(updateFunction){
 
 		let delay = self.delay;
 		if(reversed && typeof(self.reverseDelay) != 'undefined') delay = self.reverseDelay; // if reverse, use custom delay (if any)
-		if(delay > 0){ // start after delay (if any)
+		if(!skipDelay && delay > 0){ // start after delay (if any)
 			delayedStart = new global.DoDelay(begin)
 			delayedStart.byTime(delay);
 		}else{
@@ -1504,17 +1504,14 @@ global.screenTransformToScreen = function(screenTransformCenter){
 
 
 global.shuffleArray = function(array) {
-	var curIndex = array.length;
-	var tmpValue;
-	var rndIndex;
-	while (0 !== curIndex) {
-		rndIndex = Math.floor(Math.random() * curIndex);
-		curIndex -= 1;
-		tmpValue = array[curIndex];
-		array[curIndex] = array[rndIndex];
-		array[rndIndex] = tmpValue;
+	let shuffledArray = array.slice();
+
+	for (let i = shuffledArray.length - 1; i > 0; i--){
+		let j = Math.floor(Math.random() * (i + 1));
+		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
 	}
-	return array;
+
+	return shuffledArray;
 }
 
 
