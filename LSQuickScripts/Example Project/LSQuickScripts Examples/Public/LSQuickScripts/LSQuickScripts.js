@@ -592,16 +592,16 @@ var EaseFunctions = {
 	},
 	Exponential: {
 		In: function (k) {
-			return k === 0 ? 0 : Math.pow(1024, k - 1);
+			return k == 0 ? 0 : Math.pow(1024, k - 1);
 		},
 		Out: function (k) {
-			return k === 1 ? 1 : 1 - Math.pow(2, - 10 * k);
+			return k == 1 ? 1 : 1 - Math.pow(2, - 10 * k);
 		},
 		InOut: function (k) {
-			if (k === 0) {
+			if (k == 0) {
 				return 0;
 			}
-			if (k === 1) {
+			if (k == 1) {
 				return 1;
 			}
 			if ((k *= 2) < 1) {
@@ -626,28 +626,28 @@ var EaseFunctions = {
 	},
 	Elastic: {
 		In: function (k) {
-			if (k === 0) {
+			if (k == 0) {
 				return 0;
 			}
-			if (k === 1) {
+			if (k == 1) {
 				return 1;
 			}
 			return -Math.pow(2, 10 * (k - 1)) * Math.sin((k - 1.1) * 5 * Math.PI);
 		},
 		Out: function (k) {
-			if (k === 0) {
+			if (k == 0) {
 				return 0;
 			}
-			if (k === 1) {
+			if (k == 1) {
 				return 1;
 			}
 			return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
 		},
 		InOut: function (k) {
-			if (k === 0) {
+			if (k == 0) {
 				return 0;
 			}
-			if (k === 1) {
+			if (k == 1) {
 				return 1;
 			}
 			k *= 2;
@@ -706,7 +706,7 @@ global.EaseFunctions = EaseFunctions;
 
 global.interp = function(startValue, endValue, t, easing, unclamped){
 	// set defaults
-	if(typeof easing === 'undefined'){ // if no easing, do simple linear remap (lerp)
+	if(typeof easing == 'undefined'){ // if no easing, do simple linear remap (lerp)
 		return clamp(t) * (endValue-startValue) + startValue;
 	}else if(typeof easing !== 'function'){
 		throw new Error('No valid Easing Function given for interp!');
@@ -793,7 +793,7 @@ global.AnimateProperty = function(updateFunction){
 	 * @type {Function} 
 	 * @description If reversed, the animation plays backwards. 'Reverse' arg should be of type Bool. */
 	this.setReversed = function(reverse){
-		if(typeof reverse === 'undefined'){ // toggle reverse if no argument given
+		if(typeof reverse == 'undefined'){ // toggle reverse if no argument given
 			reversed = !reversed;
 		}else{
 			reversed = reverse;
@@ -836,7 +836,7 @@ global.AnimateProperty = function(updateFunction){
 			if(newTimeRatio != null){ // custom time ratio given
 				self.pulse(newTimeRatio);
 			}else{
-				if(self.getTimeRatio() === 1) self.pulse(0);
+				if(self.getTimeRatio() == 1) self.pulse(0);
 			}
 			updateDuration();
 			animation();
@@ -862,7 +862,7 @@ global.AnimateProperty = function(updateFunction){
 	 * @description Stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool). */
 	this.stop = function(callEndFunction){
 		stopAnimEvent();
-		var atAnimationEnd = (timeRatio === 0 && reversed) || (timeRatio === 1 && !reversed);
+		var atAnimationEnd = (timeRatio == 0 && reversed) || (timeRatio == 1 && !reversed);
 		if(callEndFunction || atAnimationEnd) self.endFunction(); // only call endFunction if an animation was stopped at end
 	}
 
@@ -886,11 +886,11 @@ global.AnimateProperty = function(updateFunction){
 	}
 
 	function updateDuration(){
-		duration = reversed ? (typeof self.reverseDuration === 'number' ? self.reverseDuration : self.duration) : self.duration; // set duration, checks if reversed is unique otherwise uses forward duration
+		duration = reversed ? (typeof self.reverseDuration == 'number' ? self.reverseDuration : self.duration) : self.duration; // set duration, checks if reversed is unique otherwise uses forward duration
 	}
 	
 	function animation(){
-		if(duration === 0){ // if instant
+		if(duration == 0){ // if instant
 			timeRatio = reversed ? 0 : 1; // set to limit of allowed range to make the animation stop right away (1 tick of update function will be sent)
 		}else{
 			var dir = reversed ? -1 : 1;
@@ -968,7 +968,7 @@ global.getAllAnimateProperty = function(){
 
 
 global.degToRad = function(degrees){
-	if(typeof degrees === 'number'){
+	if(typeof degrees == 'number'){
 		return degrees * Math.PI/180;
 	}else{ // assume vec3 if not number
 		var _x = degrees.x * Math.PI/180;
@@ -982,7 +982,7 @@ global.degToRad = function(degrees){
 
 
 global.radToDeg = function(radians){
-	if(typeof radians === 'number'){
+	if(typeof radians == 'number'){
 		return radians * 180/Math.PI;
 	}else{ // assume vec3 if not number
 		var _x = radians.x * 180/Math.PI;
@@ -1166,7 +1166,7 @@ global.DoDelay = function(func, args){
 			}
 		}
 
-		var wait = n === undefined ? 1 : Math.round(n); // if no arg n given, do on next frame, otherwise round n to whole frames for delay time
+		var wait = n == undefined ? 1 : Math.round(n); // if no arg n given, do on next frame, otherwise round n to whole frames for delay time
 		function onUpdate(){
 			if(wait <= 0){
 				script.removeEvent(waitEvent);
@@ -1177,7 +1177,7 @@ global.DoDelay = function(func, args){
 
 		stopWaitEvent();
 
-		if(wait === 0){ // instant if n is 0
+		if(wait == 0){ // instant if n is 0
 			keepAlive.exec();
 		}else{
 			waitEvent = script.createEvent("UpdateEvent");
@@ -1200,7 +1200,7 @@ global.DoDelay = function(func, args){
 		stopWaitEvent();
 
 		var wait = t;
-		if(wait === 0 || wait === undefined){
+		if(wait == 0 || wait == undefined){
 			keepAlive.exec();
 		}else{
 			waitEvent = script.createEvent("DelayedCallbackEvent");
@@ -1260,7 +1260,7 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 	var audioComp = script.getSceneObject().createComponent("Component.AudioComponent");
 	audioComp.audioTrack = audioAsset;
 
-	if(volume === 0 || volume) audioComp.volume = volume;
+	if(volume == 0 || volume) audioComp.volume = volume;
 	if(fadeInTime) 	audioComp.fadeInTime = fadeInTime;
 	if(fadeOutTime) audioComp.fadeOutTime = fadeOutTime;
 
@@ -1464,7 +1464,7 @@ function floatToBits(float) {
 function bitsToFloat(raw) {
 	var v = raw;
 	
-	if (raw.w === undefined) {
+	if (raw.w == undefined) {
 		var a = [raw.x,raw.y, raw.z].map(function(v) {
 			return Math.floor(v * 65025 + 0.5) /65025; 
 		});
@@ -1536,7 +1536,7 @@ global.MovingAverage = function(){
 	 * @description Add a sample to the moving average. */
 	this.add = function(value){
 		self.sampleCount++;
-		if(self.average === null){
+		if(self.average == null){
 			self.average = value;
 		}else{
 			self.average = getNewAverage(value);
@@ -1555,7 +1555,7 @@ global.MovingAverage = function(){
 	this.sampleCount = 0;
 
 	function getNewAverage(newValue){
-		if(this.sampleCount === 0) return null; // no values yet, so no valid average can be given
+		if(this.sampleCount == 0) return null; // no values yet, so no valid average can be given
 		var newAvg = ((self.average*(self.sampleCount-1)) + newValue)/self.sampleCount;
 		return newAvg
 	}
