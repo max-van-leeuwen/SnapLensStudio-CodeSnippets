@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7.1"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -102,12 +102,12 @@
 //			anim.easeFunction = EaseFunctions.Cubic.In						// determines curve. Default is Cubic.InOut. All EaseFunctions can be used, or use a custom function.
 //			anim.reverseEaseFunction = EaseFunctions.Cubic.Out				// determines curve on reverse playing. Uses anim.easeFunction if none is given.
 //			anim.pulse(newTimeRatio)										// updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1).
-//			anim.getTimeRatio()												// the current linear, normalized animation time (0-1).
+//			anim.getTimeRatio()												// the current linear, normalized animation time (0 on animation start, 1 on animation end, regardless of whether animation is reversed).
 //			anim.setReversed(reverse)										// if reversed, the animation plays backwards. 'Reverse' arg should be of type Bool.
 //			anim.getReversed()												// returns true if the animation is currently reversed.
 //			anim.isPlaying()												// returns true if the animation is currently playing.
 //			anim.setCallbackAtTime(v, function)								// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). Call without arguments to clear.
-//			anim.start(newTimeRatio, skipDelay)								// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio. Optional skipDelay bool skips the delay on this animation.
+//			anim.start(newTimeRatio, skipDelay)								// starts the animation (resumes where last play ended, starts from beginning if last play was finished). Optional 'atTime' argument starts at normalized linear 0-1 time ratio. Optional skipDelay bool skips the delay on this animation once.
 //			anim.stop(callEndFunction)										// stop the animation at its current time. With an optional argument to call the endFunction (argument should be a bool, default is false).
 //
 //		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
