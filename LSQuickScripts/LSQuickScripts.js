@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7.1"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7.2"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -93,7 +93,7 @@
 //
 //			var anim = new AnimateProperty( updateFunciton (optional) )		// create a new animation instance called 'anim'.
 //			anim.startFunction = function(){}								// function to call on animation start.
-//			anim.updateFunction = function(v, vLinear){}					// function to call on each animation frame, with animation value (0-1) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
+//			anim.updateFunction = function(v, vLinear){}					// function to call on each animation frame, with animation value (0-1, inclusive) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
 //			anim.endFunction = function(){}									// function to call on animation end.
 //			anim.duration = 1												// duration in seconds. Default is 1.
 //			anim.reverseDuration = 1										// duration in seconds when reversed. If no value assigned, default is equal to duration.
@@ -775,10 +775,9 @@ global.AnimateProperty = function(updateFunction){
 	 * @argument {Number} newTimeRatio
 	 * @description Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1). */
 	this.pulse = function(newTimeRatio){
-		if(reversed) newTimeRatio = 1-newTimeRatio;
 		stopAnimEvent();
-		timeRatio = newTimeRatio; // reset animation time
-		setValue( getInterpolated() );
+		timeRatio = reversed ? 1-newTimeRatio : newTimeRatio; // reset animation time
+		setValue(getInterpolated());
 	}
 
 	/**
@@ -836,10 +835,14 @@ global.AnimateProperty = function(updateFunction){
 			if(newTimeRatio != null){ // custom time ratio given
 				self.pulse(newTimeRatio);
 			}else{
-				if(self.getTimeRatio() == 1) self.pulse(0);
+				// pulse first frame of animation already, next frame the animation event will take over
+				if(self.getTimeRatio() == 1){
+					self.pulse(0);
+				}else{
+					self.pulse(self.getTimeRatio());
+				}
 			}
 			updateDuration();
-			animation();
 			startAnimEvent();
 			if(self.startFunction) self.startFunction();
 		}
@@ -853,17 +856,16 @@ global.AnimateProperty = function(updateFunction){
 			begin();
 		}
 
-		// force isPlaying to true, as it otherwise takes until the delay is over (delayed animation also counts as playing)
+		// force isPlaying to true (delayed animation also counts as playing)
 		isPlaying = true;
 	}
 	
 	/**
 	 * @type {Function} 
-	 * @description Stop the animation at its current time. With an optional argument to call the endFunction (argument should be of type bool). */
+	 * @description stop the animation at its current time. With an optional argument to call the endFunction (argument should be a bool, default is false). */
 	this.stop = function(callEndFunction){
 		stopAnimEvent();
-		var atAnimationEnd = (timeRatio == 0 && reversed) || (timeRatio == 1 && !reversed);
-		if(callEndFunction || atAnimationEnd) self.endFunction(); // only call endFunction if an animation was stopped at end
+		if(callEndFunction) self.endFunction();
 	}
 
 
@@ -895,7 +897,7 @@ global.AnimateProperty = function(updateFunction){
 		}else{
 			var dir = reversed ? -1 : 1;
 			timeRatio += (getDeltaTime() / duration) * dir;
-			timeRatio = clamp(timeRatio); // when a frame takes really long to load (because of some heavy operation), the animation could get weird if this is not clamped
+			timeRatio = clamp(timeRatio); // when a frame takes really long to load, the animation could get weird if this is not clamped
 		}
 		if(reversed ? (timeRatio <= 0) : (timeRatio >= 1)){ // on last step
 			setValue(reversed ? 0 : 1, true);
