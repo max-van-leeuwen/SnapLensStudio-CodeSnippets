@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7.2"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7.3"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -892,6 +892,8 @@ global.AnimateProperty = function(updateFunction){
 	}
 	
 	function animation(){
+		if(!animEvent) return; // if update event was already stopped, prevent this function from being run again
+
 		if(duration == 0){ // if instant
 			timeRatio = reversed ? 0 : 1; // set to limit of allowed range to make the animation stop right away (1 tick of update function will be sent)
 		}else{
