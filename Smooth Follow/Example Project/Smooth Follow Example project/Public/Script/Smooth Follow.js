@@ -3,11 +3,11 @@
 // instagram    @max.van.leeuwen
 // maxvanleeuwen.com
 //
-// Smooth following SceneObjects or Numbers.
+// Smooth following SceneObjects or custom values (Number, vec2, vec3).
 
 
 
-// Example showing all properties
+// How to use:
 //
 //		var follower = new SmoothFollow()				Create instance
 //		follower.smoothing								Property, determines how smoothly it follows! The lower, the more instant (0 is instant), default is 1
@@ -28,10 +28,26 @@
 //			follower.translationZ = true				Follow position Z, default is true
 //
 //
-// 	-> Numbers
-//		follower.addValue								Function, 1st argument is the new value to interpolate to (Number), and 2nd arguement is an optional bool 'instant', to discard smoothing for this specific value
+// 	-> Custom value
+//		follower.addValue								Function, 1st argument is the new value to interpolate to (Number, vec2, or vec3), and 2nd arguement is an optional bool 'instant', to discard smoothing for this specific value
 //		follower.getValue								Function, returns the current value
 //		follower.onValueChange							Bind to this function to get a callback every time the value has changed during interpolation (the 1st argument is the current value), the update event stops when very close to the target number
+// 		follower.firstValueInstant						Make the first added value instant. Default is false.
+// 		follower.EPS									The distance to the target value at which it is considered 'close enough', and the animation ends (and snaps to this target value). Default is 0.001.
+
+
+
+// Example:
+//
+//	var follower = new SmoothFollow()
+//	follower.onValueChange = function(v){ screenTransform.anchors.setCenter(v) }
+//
+//	function updateEvent(){
+//		follower.addValue( newScreenTransformPosition );
+//	}
+
+
+
 
 
 
@@ -54,7 +70,6 @@ global.SmoothFollow = function(){
 	 * @description Property, determines how smoothly it follows! The lower, the more instant (0 is instant), default is 1
 	*/
 	this.smoothing = 1;
-
 
 
 
@@ -186,11 +201,11 @@ global.SmoothFollow = function(){
 
 
 
-	// -- Number following
+	// -- Custom following
 
 	/**
-	 * @type {Number}
-	 * @description Function, 1st argument is the new value to interpolate to (Number), and 2nd arguement is an optional bool 'instant', to discard smoothing for this specific value
+	 * @type {Function}
+	 * @description Function, 1st argument is the new value to interpolate to (Number, vec2 or vec3), and 2nd arguement is an optional bool 'instant', to discard smoothing for this specific value
 	*/
 	this.addValue = addValue;
 
@@ -202,27 +217,54 @@ global.SmoothFollow = function(){
 
 	/**
 	 * @type {Function}
-	 * @description Bind to this function to get a callback every time the value has changed during interpolation (the 1st argument is the current value), the update event stops when very close to the target number
+	 * @description Bind to this function to get a callback every time the value has changed during interpolation (the 1st argument is the current value), the update event stops when very close to the target value
 	*/
 	this.onValueChange = function(value){};
 
-	// number following
-	var numberValue;
+	/**
+	 * @type {bool}
+	 * @description Make the first added value instant. Default is false.
+	*/
+	this.firstValueInstant = false;
+
+	/**
+	 * @type {Number}
+	 * @description The distance to the target value at which it is considered 'close enough', and the animation ends (and snaps to this target value). Default is 0.001.
+	*/
+	this.EPS = 0.001;
+
+
+	// placeholders
+	var customValue;
 	var nextValue;
+	var dataType;
+	var firstValue = true;
 
 	function addValue(v, instant){
+		// prepare if first value instant
+		if(firstValue){
+			firstValue = false;
+			if(self.firstValueInstant) instant = true;
+		}
+
+		// get the kind of data (Number, vec2 or vec3)
+		if(!dataType) dataType = getDataType(v);
+
+		// apply new value
 		stopFollowing();
 		nextValue = v;
+
+		// instant
 		if(instant){
-			numberValue = v;
+			customValue = v;
 		}else{
 			followingEvent = script.createEvent("UpdateEvent");
-			followingEvent.bind(numberFollowing);
+			followingEvent.bind(customFollowing);
 		}
 	}
 
 	function getValue(){
-		return numberValue;
+		return customValue;
 	}
 
 	function stopFollowing(){
@@ -232,19 +274,42 @@ global.SmoothFollow = function(){
 		}
 	}
 
-	var EPS = 0.001; // small threshold to stop update event at
-	function numberFollowing(){
+	function customFollowing(){
 		var d = clamp(getDeltaTime() / self.smoothing);
-		if(numberValue == null){
-			numberValue = nextValue;
+		if(customValue == null){
+			customValue = nextValue;
 		}else{
-			numberValue = lerp(numberValue, nextValue, d);
+			switch(dataType){
+				case 'Number':
+					customValue = lerp(customValue, nextValue, d);
+					break;
+				case 'vec2':
+					customValue = vec2.lerp(customValue, nextValue, d);
+					break;
+				case 'vec3':
+					customValue = vec3.lerp(customValue, nextValue, d);
+					break;
+			}
 		}
-		if(Math.abs(nextValue - numberValue) < EPS){
-			numberValue = nextValue;
-			stopFollowing();
+
+		// stop when close
+		switch(dataType){
+			case 'Number':
+				if(Math.abs(nextValue - customValue) < self.EPS){
+					customValue = nextValue;
+					stopFollowing();
+				}
+				break;
+			default: // vec2 and vec3
+				if(nextValue.distance(customValue) < self.EPS){
+					customValue = nextValue;
+					stopFollowing();
+				}
+				break;
 		}
-		self.onValueChange(numberValue);
+
+		// custom callback
+		self.onValueChange(customValue);
 	}
 }
 
@@ -260,4 +325,19 @@ function clamp(value){
 // linear lerp
 function lerp(a, b, d){
 	return a + (b-a)*d;
+}
+
+
+
+// returns whether this is a number, vec2, or vec3
+function getDataType(x){
+	if(typeof x == 'number'){
+		return 'Number';
+	}else{ // assume vec2 or vec3
+		if(x.z == undefined){
+			return 'vec2';
+		}else{
+			return 'vec3';
+		}
+	}
 }
