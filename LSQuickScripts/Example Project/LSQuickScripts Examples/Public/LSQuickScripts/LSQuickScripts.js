@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7.3"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7.4"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -415,9 +415,11 @@
 // -
 //
 //
-// getAllComponents(componentName [string], startObj (optional) [SceneObject]) : Array (Components)
+// getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool]) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
+//	If no componentName is given, it returns SceneObjects.
 //	If no startObj is given, it searches the whole scene.
+//	If dontIncludeStartObj is true, the startObj will not be included in the final list.
 //
 // 		Example
 //			var components = getAllComponents("Component.VFXComponent")
@@ -1648,12 +1650,21 @@ global.measureWorldPos = function(screenPos, screenTrf, cam, dist){
 
 
 
-global.getAllComponents = function(componentName, startObj){
+global.getAllComponents = function(componentName, startObj, dontIncludeStartObj){
     var found = [];
 
     function scanSceneObject(obj){
+		if(dontIncludeStartObj && obj.isSame(startObj)) return;
+
+		// sceneobject instead of component
+		if(!componentName){
+			found.push(obj);
+			return;
+		}
+
+		// get all components on this sceneobject
 		var comps = obj.getComponents(componentName);
-		for(var j = 0; j < comps.length; j++){ // add all to list
+		for(var j = 0; j < comps.length; j++){
 			found.push(comps[j]);
 		}
     }
@@ -1667,7 +1678,7 @@ global.getAllComponents = function(componentName, startObj){
     }
 
 	if(startObj){ // start at specific object if it exists
-		if(isNull(startObj)) throw new Error("Object to get all components of does not exist anymore! It might have been deleted."); // warn user if chosen object doesn't exist
+		if(isNull(startObj)) throw new Error("Starting Object does not exist! It might have been deleted.");
 		scanSceneObject(startObj);
 		iterateObj(startObj);
 	}else{ // go through whole scene
