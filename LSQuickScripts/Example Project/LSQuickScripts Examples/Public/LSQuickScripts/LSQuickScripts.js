@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7.4"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7.5"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -148,7 +148,7 @@
 //
 // isInBox(point [vec3], unitBoxTrf [Transform]) : vec3
 // 	Checks if a world position is within the boundaries of a unit box, which can be rotated and scaled non-uniformly!
-//	Returns a vec3 with normalized positions (-1, 1) inside this box if true, returns null otherwise.
+//	Returns a vec3 with normalized positions (-1, 1, unclamped), if values exceed 1 or -1 it means the position is outside of the box.
 //
 //
 //
@@ -1022,21 +1022,11 @@ global.isInBox = function(point, unitBoxTrf){
 	var inverseRotation = mat4.fromRotation(rotation.invert());
 	var rotatedPoint = inverseRotation.multiplyPoint(localPoint);
 
-	var isInside = (
-		Math.abs(rotatedPoint.x) <= worldScale.x/2 &&
-		Math.abs(rotatedPoint.y) <= worldScale.y/2 &&
-		Math.abs(rotatedPoint.z) <= worldScale.z/2
-  	);
-
-	if(isInside){
-		return new vec3(
-			(rotatedPoint.x / worldScale.x) * 2,
-			(rotatedPoint.y / worldScale.y) * 2,
-			(rotatedPoint.z / worldScale.z) * 2
-		)
-	}else{
-		return null;
-	}
+	return new vec3(
+		(rotatedPoint.x / worldScale.x) * 2,
+		(rotatedPoint.y / worldScale.y) * 2,
+		(rotatedPoint.z / worldScale.z) * 2
+	)
 }
 
 
