@@ -2,7 +2,7 @@
     "lens_id": "",
     "document_id": "b2Hfkx3xn9FLCF1VdGA8",
     "original_document_id": "7xNpgCY1WYmF82YRGY5O",
-    "version": "32",
+    "version": "33",
     "preview": "icon.png",
     "videoPreview": "preview.mp4",
     "videoPreviewUpdateTime": "",
@@ -21,7 +21,7 @@
         "lastSavedWith": {
             "type": "Public",
             "major": "4",
-            "minor": "49",
+            "minor": "55",
             "patch": "0",
             "build": "0"
         }
@@ -29,7 +29,8 @@
     "view": {
         "InspectorUiComponent": "",
         "MapUiComponent": {
-            "mapPinPoints": ""
+            "mapPinPoints": "",
+            "mapCurrentCity": "0"
         },
         "Material::UiComponent": "",
         "MetaInfoUIComponent": {
@@ -58,6 +59,7 @@
             },
             "show_snap_ui": "false",
             "show_sponsored_ui": "false",
+            "input_stream_type": "InteractiveEnvironment",
             "preview_images_project_config": {
                 "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",
                 "back_preview_is_favorite": "false",
@@ -152,7 +154,8 @@
         },
         "ObjectTracking3DController": {
             "hand_tracking_mode": "0"
-        }
+        },
+        "ScriptModulesController": ""
     },
     "templateName": "",
     "templateUrl": ""

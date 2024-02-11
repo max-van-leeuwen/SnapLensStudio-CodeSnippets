@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "core_version": 214,
+    "core_version": 225,
     "lifecycleMode": {
         "value": 0,
         "description": "legacy"

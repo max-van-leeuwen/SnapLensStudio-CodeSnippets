@@ -8,7 +8,7 @@
     },
     "MapUiComponent": {},
     "Material::UiComponent": {
-        "active_graph_asset": "1686662327457978:270440"
+        "active_graph_asset": "1680630027393193:1242900"
     },
     "MetaInfoUIComponent": {},
     "ObjectTracking3DUIComponent": {
@@ -66,12 +66,6 @@
                 [
                     "Preview Media",
                     "Animate Box",
-                    "script"
-                ],
-                [
-                    "Preview Media",
-                    "Animate Box",
-                    "script",
                     "Animate Box"
                 ],
                 [
@@ -81,95 +75,40 @@
                 [
                     "Preview Media",
                     "HSV to RGB",
-                    "material"
-                ],
-                [
-                    "Preview Media",
-                    "HSV to RGB",
-                    "material",
-                    "colour"
-                ],
-                [
-                    "Preview Media",
-                    "HSV to RGB",
-                    "script"
-                ],
-                [
-                    "Preview Media",
-                    "HSV to RGB",
-                    "script",
                     "HSV to RGB"
                 ],
                 [
                     "Preview Media",
-                    "Instance Sound"
-                ],
-                [
-                    "Preview Media",
-                    "Instance Sound",
-                    "audio"
-                ],
-                [
-                    "Preview Media",
-                    "Instance Sound",
-                    "audio",
-                    "cat"
-                ],
-                [
-                    "Preview Media",
-                    "Instance Sound",
-                    "script"
-                ],
-                [
-                    "Preview Media",
-                    "Instance Sound",
-                    "script",
-                    "Instance Sound"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Box"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Box",
-                    "Box"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Box",
-                    "Is In Box"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Box",
-                    "Point"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Front"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Front",
-                    "material"
-                ],
-                [
-                    "Preview Media",
-                    "Is In Front",
-                    "material",
+                    "HSV to RGB",
                     "colour"
                 ],
                 [
                     "Preview Media",
-                    "Is In Front",
-                    "script"
+                    "Instance Sound"
+                ],
+                [
+                    "Preview Media",
+                    "Instance Sound",
+                    "Instance Sound"
+                ],
+                [
+                    "Preview Media",
+                    "Instance Sound",
+                    "cat"
+                ],
+                [
+                    "Preview Media",
+                    "Is In Front"
                 ],
                 [
                     "Preview Media",
                     "Is In Front",
-                    "script",
                     "Is In Front"
+                ],
+                [
+                    "Preview Media",
+                    "Is In Front",
+                    "colour"
                 ],
                 [
                     "Preview Media",
@@ -184,6 +123,25 @@
                     "Preview Media",
                     "Plane Ray",
                     "Plane Ray"
+                ],
+                [
+                    "Preview Media",
+                    "Point In Box"
+                ],
+                [
+                    "Preview Media",
+                    "Point In Box",
+                    "Box"
+                ],
+                [
+                    "Preview Media",
+                    "Point In Box",
+                    "Point"
+                ],
+                [
+                    "Preview Media",
+                    "Point In Box",
+                    "Point In Box"
                 ]
             ]
         ]
@@ -205,6 +163,7 @@
                 "1585697123422080:3822",
                 "1585699510007362:4118",
                 "1585699510008025:4120",
+                "1586920247269541:4613",
                 "1586920258631846:4620",
                 "1680625165262992:50724",
                 "1680625193102811:58002",
@@ -238,15 +197,17 @@
         "selection": {
             "resources": [
                 [
-                    "-1:-1",
+                    "1585699437933854:1680",
                     [
                         "Preview Media",
-                        "Plane Ray"
+                        "HSV to RGB",
+                        "HSV to RGB"
                     ]
                 ]
             ]
         }
     },
     "ObjectPrefabController": {},
-    "ObjectTracking3DController": {}
+    "ObjectTracking3DController": {},
+    "ScriptModulesController": {}
 }

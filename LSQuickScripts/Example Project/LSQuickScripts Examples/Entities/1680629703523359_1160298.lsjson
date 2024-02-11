@@ -6,7 +6,7 @@
     },
     "1680629703523359:1160298": {
         "IResourceController": {
-            "name": "Is In Box",
+            "name": "Point In Box",
             "type": 4,
             "subtype": 0,
             "dependency": 0,
@@ -14,7 +14,7 @@
             "uid": "1680629703523367:1160299",
             "fileId": "1680629703521205:1160297",
             "publicId": "1680629703526188:1160312",
-            "expected_hash": "68fcc74470d5302eff04c88ecb566d0f"
+            "expected_hash": "6ae534cb4fbe95008e6f51d6ae1ee248"
         },
         "IResourceManager": {
             "uid": "1680629703523367:1160299",
@@ -22,11 +22,16 @@
             "flags": 1
         }
     },
+    "1680629703523367:1160299": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1680629703526188:1160312": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/Is In Box/Is In Box.js",
-                "hash": "68fcc74470d5302eff04c88ecb566d0f"
+                "path": "Preview Media/Point In Box/Point In Box.js",
+                "hash": "6ae534cb4fbe95008e6f51d6ae1ee248"
             }
         }
     }

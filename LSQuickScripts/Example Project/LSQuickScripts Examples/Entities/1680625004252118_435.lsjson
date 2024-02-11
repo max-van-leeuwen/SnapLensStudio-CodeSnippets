@@ -1,4 +1,9 @@
 {
+    "1585597783250842:9210": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1680625004252118:435": {
         "IResourceController": {
             "name": "Is In Front",
@@ -9,7 +14,7 @@
             "uid": "1585597783250842:9210",
             "fileId": "1680625004252132:447",
             "publicId": "1680625004252212:472",
-            "expected_hash": "69711bb3fe840906bd005e49dbf0c1b1"
+            "expected_hash": "5cc4af957d04387672f97810d4f7cad7"
         },
         "IResourceManager": {
             "uid": "1585597783250842:9210",
@@ -25,8 +30,8 @@
     "1680625004252212:472": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/Is In Front/script/Is In Front.js",
-                "hash": "69711bb3fe840906bd005e49dbf0c1b1"
+                "path": "Preview Media/Is In Front/Is In Front.js",
+                "hash": "5cc4af957d04387672f97810d4f7cad7"
             }
         }
     }

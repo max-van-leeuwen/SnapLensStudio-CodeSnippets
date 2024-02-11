@@ -1,4 +1,9 @@
 {
+    "1585697158181178:4540": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1680625004252118:436": {
         "IResourceController": {
             "name": "Animate Box",
@@ -9,7 +14,7 @@
             "uid": "1585697158181178:4540",
             "fileId": "1680625004252133:448",
             "publicId": "1680625004252213:475",
-            "expected_hash": "82a39fab1108e4e9d9e225a30a27fb12"
+            "expected_hash": "ddb36d1da4fb5c9b17166aa4280638e6"
         },
         "IResourceManager": {
             "uid": "1585697158181178:4540",
@@ -25,8 +30,8 @@
     "1680625004252213:475": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/Animate Box/script/Animate Box.js",
-                "hash": "82a39fab1108e4e9d9e225a30a27fb12"
+                "path": "Preview Media/Animate Box/Animate Box.js",
+                "hash": "ddb36d1da4fb5c9b17166aa4280638e6"
             }
         }
     }

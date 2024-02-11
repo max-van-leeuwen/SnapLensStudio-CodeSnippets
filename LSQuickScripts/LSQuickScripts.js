@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7.5"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.7.6"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -74,7 +74,7 @@
 //
 //
 //
-// interp(startValue [Number], endValue [Number], t [Number], easing (optional) [Function], unclamped (optional) [bool]) : Number
+// interp(startValue [Number], endValue [Number], t [Number], easing [Function, optional], unclamped [bool, optional]) : Number
 // 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 //	Is identical to a linear lerp() when no Easing Function is given.
 //	Use one of the Easing Functions in global.EaseFunctions, or use your own!
@@ -146,9 +146,11 @@
 //
 //
 //
-// isInBox(point [vec3], unitBoxTrf [Transform]) : vec3
-// 	Checks if a world position is within the boundaries of a unit box, which can be rotated and scaled non-uniformly!
-//	Returns a vec3 with normalized positions (-1, 1, unclamped), if values exceed 1 or -1 it means the position is outside of the box.
+// pointInBox(point [vec3], unitBoxTrf [Transform], getRelativePosition [Bool, optional]) : vec3
+// 	Checks if a world position is within the boundaries of a unit box (by its Transform). The box can be moved, rotated, and scaled non-uniformly.
+//	Returns an object with two values:
+//		'isInside': boolean
+//		'relativePosition': (only if getRelativePosition is true) a vec3 with normalized positions relative to the box (-1 to 1, unclamped)
 //
 //
 //
@@ -210,7 +212,7 @@
 // -
 //
 //
-// instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
+// instSound(audioAsset [Asset.AudioTrackAsset], volume [Number, optional], fadeInTime [Number, optional], fadeOutTime [Number, optional], offset [Number, optional], mixToSnap [bool, optional]) : AudioComponent
 // 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 //
@@ -224,7 +226,7 @@
 // -
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number]) : InstSoundPooled Object
+// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime [Number, optional]) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 //	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
@@ -244,7 +246,7 @@
 // -
 //
 //
-// clamp(value [Number], low [Number] (optional, default 0), high [Number] (optional, default 1)) : Number
+// clamp(value [Number], low [Number, optional, default 0), high [Number, optional, default 1)) : Number
 // 	Returns the clamped value between the low and high values.
 //
 //
@@ -415,7 +417,7 @@
 // -
 //
 //
-// getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool]) : Array (Components)
+// getAllComponents(componentName [string, optional], startObj [SceneObject, optional], dontIncludeStartObj [bool, optional]) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
 //	If no componentName is given, it returns SceneObjects.
 //	If no startObj is given, it searches the whole scene.
@@ -430,7 +432,7 @@
 // -
 //
 //
-// parseNewLines(txt [string], customSplit (optional) [string]) : String
+// parseNewLines(txt [string], customSplit [string, optional]) : String
 // 	Takes a string passed in through an input string field containing '\n', and returns the same string but with real newlines (for use in a Text Component, for example).
 //	If customSplit is given, it replaces the '\n'-lookup with other character(s).
 //
@@ -849,7 +851,7 @@ global.AnimateProperty = function(updateFunction){
 			if(self.startFunction) self.startFunction();
 		}
 
-		let delay = self.delay;
+		var delay = self.delay;
 		if(reversed && typeof(self.reverseDelay) != 'undefined') delay = self.reverseDelay; // if reverse, use custom delay (if any)
 		if(!skipDelay && delay > 0){ // start after delay (if any)
 			delayedStart = new global.DoDelay(begin)
@@ -1013,7 +1015,7 @@ global.isInFront = function(pos1, pos2, fwd){
 
 
 
-global.isInBox = function(point, unitBoxTrf){
+global.pointInBox = function(point, unitBoxTrf, getRelativePosition){
 	var center = unitBoxTrf.getWorldPosition();
 	var worldScale = unitBoxTrf.getWorldScale();
 	var rotation = unitBoxTrf.getWorldRotation();
@@ -1022,11 +1024,20 @@ global.isInBox = function(point, unitBoxTrf){
 	var inverseRotation = mat4.fromRotation(rotation.invert());
 	var rotatedPoint = inverseRotation.multiplyPoint(localPoint);
 
-	return new vec3(
-		(rotatedPoint.x / worldScale.x) * 2,
-		(rotatedPoint.y / worldScale.y) * 2,
-		(rotatedPoint.z / worldScale.z) * 2
-	)
+	var isInside = (
+		Math.abs(rotatedPoint.x) <= worldScale.x/2 &&
+		Math.abs(rotatedPoint.y) <= worldScale.y/2 &&
+		Math.abs(rotatedPoint.z) <= worldScale.z/2
+  	);
+
+	return {
+		isInside : isInside,
+		relativePosition : !getRelativePosition ? null : new vec3(
+			(rotatedPoint.x / worldScale.x) * 2,
+			(rotatedPoint.y / worldScale.y) * 2,
+			(rotatedPoint.z / worldScale.z) * 2
+		)
+	}
 }
 
 
@@ -1500,10 +1511,10 @@ global.screenTransformToScreen = function(screenTransformCenter){
 
 
 global.shuffleArray = function(array) {
-	let shuffledArray = array.slice();
+	var shuffledArray = array.slice();
 
-	for (let i = shuffledArray.length - 1; i > 0; i--){
-		let j = Math.floor(Math.random() * (i + 1));
+	for (var i = shuffledArray.length - 1; i > 0; i--){
+		var j = Math.floor(Math.random() * (i + 1));
 		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
 	}
 
@@ -1754,12 +1765,13 @@ global.mat4FromDescription = function(matDescription){
 
 
 
-global.wrapFunction = function(originalFunction, newFunction){
-    return function(...args){
-        if(originalFunction) originalFunction(...args);
-        newFunction(...args);
+global.wrapFunction = function(originalFunction, newFunction) {
+    return function() {
+        var args = Array.prototype.slice.call(arguments);
+        if (originalFunction) originalFunction.apply(this, args);
+        newFunction.apply(this, args);
     };
-}
+};
 
 
 

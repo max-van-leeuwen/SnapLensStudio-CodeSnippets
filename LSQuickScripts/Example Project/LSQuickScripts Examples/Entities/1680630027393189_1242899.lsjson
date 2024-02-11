@@ -15,7 +15,7 @@
             "fileId": "1680630027392335:1242898",
             "originalId": "1680630027421344:1242906",
             "publicId": "1680630027491984:1242914",
-            "expected_hash": "b9613fd7049dff402ce9ee0cfa2b0238"
+            "expected_hash": "79861e3c544ffdb4d07650275f7cc855"
         },
         "IResourceManager": {
             "uid": "1680630027393193:1242900",
@@ -31,8 +31,8 @@
     "1680630027491984:1242914": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/Is In Box/Box.lsmat",
-                "hash": "9c00815180fe19cd0192cde83e4d1f18"
+                "path": "Preview Media/Point In Box/Box.lsmat",
+                "hash": "61ce89c8d6a47860950bfd128e59a814"
             }
         }
     }

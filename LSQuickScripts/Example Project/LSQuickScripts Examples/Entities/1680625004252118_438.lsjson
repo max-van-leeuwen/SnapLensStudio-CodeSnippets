@@ -1,4 +1,9 @@
 {
+    "1585699437933854:1680": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1680625004252118:438": {
         "IResourceController": {
             "name": "HSV to RGB",
@@ -9,7 +14,7 @@
             "uid": "1585699437933854:1680",
             "fileId": "1680625004252137:451",
             "publicId": "1680625004252215:481",
-            "expected_hash": "c5f0f7beb77ea8be688ae38155b19093"
+            "expected_hash": "56f8091f851d0c80c3dc67c540b6c74c"
         },
         "IResourceManager": {
             "uid": "1585699437933854:1680",
@@ -25,8 +30,8 @@
     "1680625004252215:481": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/HSV to RGB/script/HSV to RGB.js",
-                "hash": "c5f0f7beb77ea8be688ae38155b19093"
+                "path": "Preview Media/HSV to RGB/HSV to RGB.js",
+                "hash": "56f8091f851d0c80c3dc67c540b6c74c"
             }
         }
     }

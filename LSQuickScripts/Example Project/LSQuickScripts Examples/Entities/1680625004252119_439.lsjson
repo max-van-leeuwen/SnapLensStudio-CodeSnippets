@@ -1,4 +1,9 @@
 {
+    "1586920321895714:5928": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1680625004252119:439": {
         "IResourceController": {
             "name": "Instance Sound",
@@ -9,7 +14,7 @@
             "uid": "1586920321895714:5928",
             "fileId": "1680625004252138:452",
             "publicId": "1680625004252216:484",
-            "expected_hash": "a8f28ed659f099074dc5fb7244b4217c"
+            "expected_hash": "900caa2e311370975b5fa080373396f6"
         },
         "IResourceManager": {
             "uid": "1586920321895714:5928",
@@ -25,8 +30,8 @@
     "1680625004252216:484": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/Instance Sound/script/Instance Sound.js",
-                "hash": "a8f28ed659f099074dc5fb7244b4217c"
+                "path": "Preview Media/Instance Sound/Instance Sound.js",
+                "hash": "900caa2e311370975b5fa080373396f6"
             }
         }
     }

@@ -21,11 +21,10 @@ function onUpdate(){
 	// plane position, forward
 	var planePos = script.plane.getTransform().getWorldPosition();
 	var planeFwd = script.plane.getTransform().forward;
-	
+
 	// check ray intersection
-	var planeRayResult = global.planeRay(rayPoint, rayFwd, planePos, planeFwd);
+	var planeRayResult = planeRay(rayPoint, rayFwd, planePos, planeFwd);
 	if(planeRayResult){ // if hitting the plane
-		print('plane hit: ' + planeRayResult.toString());
 		script.hitVisualizerMat.mainPass.planeRayPosition = planeRayResult;
 	}
 }

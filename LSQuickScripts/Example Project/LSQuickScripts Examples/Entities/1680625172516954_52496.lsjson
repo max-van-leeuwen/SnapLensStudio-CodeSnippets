@@ -1,7 +1,7 @@
 {
     "1680625172516954:52496": {
         "IResourceController": {
-            "name": "Is In Box",
+            "name": "Point In Box",
             "type": 0,
             "subtype": -1,
             "dependency": 0,
@@ -17,7 +17,7 @@
     "1680625172517171:52497": {
         "IResourceController": {
             "public": {
-                "path": "Preview Media/Is In Box"
+                "path": "Preview Media/Point In Box"
             }
         }
     }

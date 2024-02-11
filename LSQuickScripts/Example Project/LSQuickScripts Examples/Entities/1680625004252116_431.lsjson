@@ -1,4 +1,9 @@
 {
+    "1585588591968896:1854": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1680625004252116:431": {
         "IResourceController": {
             "name": "LSQuickScripts",
@@ -9,7 +14,7 @@
             "uid": "1585588591968896:1854",
             "fileId": "1680625004252119:442",
             "publicId": "1680625004252170:465",
-            "expected_hash": "59542ff2e7708fccd24f0b5bcf75a975"
+            "expected_hash": "cb483af182306b4670978ce7063a9118"
         },
         "IResourceManager": {
             "uid": "1585588591968896:1854",
@@ -26,7 +31,7 @@
         "IResourceController": {
             "public": {
                 "path": "LSQuickScripts/LSQuickScripts.js",
-                "hash": "59542ff2e7708fccd24f0b5bcf75a975"
+                "hash": "cb483af182306b4670978ce7063a9118"
             }
         }
     }
