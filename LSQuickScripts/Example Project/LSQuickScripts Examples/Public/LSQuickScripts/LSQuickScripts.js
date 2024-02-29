@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.7.6"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.8"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -74,7 +74,7 @@
 //
 //
 //
-// interp(startValue [Number], endValue [Number], t [Number], easing [Function, optional], unclamped [bool, optional]) : Number
+// interp(startValue [Number], endValue [Number], t [Number], easing (optional) [Function], unclamped (optional) [bool]) : Number
 // 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 //	Is identical to a linear lerp() when no Easing Function is given.
 //	Use one of the Easing Functions in global.EaseFunctions, or use your own!
@@ -212,7 +212,7 @@
 // -
 //
 //
-// instSound(audioAsset [Asset.AudioTrackAsset], volume [Number, optional], fadeInTime [Number, optional], fadeOutTime [Number, optional], offset [Number, optional], mixToSnap [bool, optional]) : AudioComponent
+// instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
 // 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 //
@@ -226,7 +226,7 @@
 // -
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime [Number, optional]) : InstSoundPooled Object
+// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number]) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 //	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
@@ -246,7 +246,7 @@
 // -
 //
 //
-// clamp(value [Number], low [Number, optional, default 0), high [Number, optional, default 1)) : Number
+// clamp(value [Number], low [Number] (optional, default 0), high [Number] (optional, default 1)) : Number
 // 	Returns the clamped value between the low and high values.
 //
 //
@@ -417,7 +417,7 @@
 // -
 //
 //
-// getAllComponents(componentName [string, optional], startObj [SceneObject, optional], dontIncludeStartObj [bool, optional]) : Array (Components)
+// getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool]) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
 //	If no componentName is given, it returns SceneObjects.
 //	If no startObj is given, it searches the whole scene.
@@ -432,7 +432,7 @@
 // -
 //
 //
-// parseNewLines(txt [string], customSplit [string, optional]) : String
+// parseNewLines(txt [string], customSplit (optional) [string]) : String
 // 	Takes a string passed in through an input string field containing '\n', and returns the same string but with real newlines (for use in a Text Component, for example).
 //	If customSplit is given, it replaces the '\n'-lookup with other character(s).
 //
@@ -1636,7 +1636,9 @@ global.mod = function(a, b){
 	if(a >= 0){
 		return a%b;
 	}else{
-		return b-(Math.abs(a)%b);
+		const m = Math.abs(a)%b;
+		if(m == 0) return 0;
+		return b-m;
 	}
 }
 
