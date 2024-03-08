@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.9"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.10"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -484,24 +484,26 @@
 // -
 //
 //
-// VisualizePositions() : VisualizePositions object
-//	A class that places cubes on each position in the 'positions' array, given through the update function. Useful for quick visualizations of 3D positions.
+// VisualizePoints() : VisualizePoints object
+//	A class that places a mesh on each point in the given array. Useful for quick visualization of 3D points in your scene.
+//	For a one-liner, you can pass the array of points as the first optional argument when creating a VisualizePoints(<points>) instance.
+//
+//		Points can be defined in 3 ways: positions (vec3), Objects ({position:vec3, rotation:quat, scale:vec3}), or transformation matrices (mat4)
+//			points = [ <vec3> ]
+// 			points = [ {position: <vec3>, rotation: <quat>, scale: <vec3>} ]
+// 			points = [ <transform (mat4)> ]
 //
 //		Example, showing all properties
 //
-//			var v = new VisualizePositions()							// create VisualizePositions instance
-//			v.scale														// (optional) the scale of the cubes (world size, default is 1)
-//			v.rotation													// (optional) the rotation of the cubes (if continuousRotationis set to false)
-//			v.continuousRotation										// (optional) make the cubes rotate around local up, clockwise (boolean, default is true)
-//			v.material													// (optional) the material of the cubes (Asset.Material)
-//			v.showPositions( [vec3 Array] )								// show cubes on the given positions (array), returns the array of created SceneObjects for further customization
-//			v.getPositions()											// returns currently visualized positions
-//			v.remove()													// clear all created visualizations
-//
-//		Example, shorter format
-//
-//			var positions = [new vec3(0, 0, 0), new vec3(1, 0, 0)] 		// some world positions to visualize
-//			new VisualizePositions().showPositions(positions)
+//			var v = new VisualizePoints(points))						// create instance ('points' argument is optional, this will invoke .show(points) right away)
+//			v.parent													// (optional) SceneObject to parent the points to (default is LSQS' SceneObject)
+//			v.scale														// (optional) scale multiplier for the mesh when created (vec3)
+//			v.material													// (optional) the material on the mesh (Asset.Material)
+//			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
+//			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
+//			v.show(points)												// show an array of points (see different ways to define a point below), returns the array of created SceneObjects for further customization
+//			v.getTransforms()											// get all objects' transform components (<Transform> array)
+//			v.clear()													// destroy all objects
 //
 //
 //
@@ -1778,124 +1780,122 @@ global.wrapFunction = function(originalFunction, newFunction) {
 
 
 
-global.VisualizePositions = function(){
+global.VisualizePoints = function(showPointsOnStart){
 	var self = this;
 
 	/**
-	 * @type {vec3}
-	 * @description Size of objects. Default is vec3.one(). */
-	this.scale = vec3.one();
+	 * @type {SceneObject}
+	 * @description (optional) SceneObject to parent the points to (default is LSQS' SceneObject) */
+	this.parent = script.getSceneObject();
 
 	/**
-	 * @type {quat}
-	 * @description Rotation (if continuousRotation is set to false). */
-	this.rotation = quat.quatIdentity();
-	
-	/**
-	 * @type {Boolean}
-	 * @description If constantly rotating. */
-	this.continuousRotation = true;
+	 * @type {vec3}
+	 * @description (optional) scale multiplier for the mesh when created (vec3) */
+	this.scale;
 
 	/**
 	 * @type {Material}
-	 * @description Material to place on box mesh. */
+	 * @description (optional) the material on the mesh (Asset.Material) */
 	this.material;
 
 	/**
-	 * @type {Function}
-	 * @description Returns currently visualized positions. */
-	this.getPositions = function(){
-		return allPositions;
-	}
+	 * @type {Asset.RenderMesh}
+	 * @description (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box) */
+	this.mesh;
+
+	/**
+	 * @type {Number}
+	 * @description (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited) */
+	this.maxCount;
 
 	/**
 	 * @type {Function}
-	 * @description Call to create objects. */
-	this.showPositions = function(positions){
+	 * @description show an array of points, returns the array of created SceneObjects for further customization */
+	this.show = function(allPoints){
 		// remove existing
-		self.remove();
+		self.clear();
+
+		if(allPoints.length == 0) return;
+		var points = [...allPoints]; // make copy of list
+		if(self.maxCount != null){
+			if(allPoints.length > self.maxCount){
+				points = allPoints.slice(-self.maxCount);
+			}
+		}
+
+		const pointType = getPointType(points[0]); // get point type (string: vec3, object, mat4)
 
 		// add new
-		for(var i = 0; i < positions.length; i++){
-			if(!positions[i]) continue;
+		for(var i = 0; i < points.length; i++){
+			// get this point (could be vec3, object, or mat4)
+			const p = points[i];
 			
-			// create
-			var obj = global.scene.createSceneObject("visualizer-cube-" + i.toString());
+			// create mesh
+			var obj = global.scene.createSceneObject("point " + i.toString());
+			obj.setParent(self.parent);
 			var rmv = obj.createComponent("Component.RenderMeshVisual");
-			rmv.mesh = cube;
-
-			// material
+			rmv.mesh = self.mesh ? self.mesh : cube;
 			if(self.material) rmv.addMaterial(self.material);
 
-			// position, scale
+			// set transform
 			var trf = obj.getTransform();
-			trf.setWorldPosition(positions[i]);
-			trf.setWorldScale(self.scale);
+			if(pointType == 'vec3'){ // position only
+				trf.setWorldPosition(p);
+				trf.setWorldRotation(quat.quatIdentity());
+				trf.setWorldScale(self.scale ? self.scale : vec3.one());
+			}else if(pointType == 'object'){ // position, rotation, scale manual object
+				trf.setWorldPosition(p.position);
+				trf.setWorldRotation(p.rotation);
+				trf.setWorldScale(self.scale ? p.scale.mult(self.scale) : p.scale);
+			}else{ // world transform
+				trf.setWorldTransform(p);
+				if(self.scale) trf.setWorldScale(trf.getWorldScale().mult(self.scale));
+			}
 
 			// register
-			objs.push(obj);
-			allPositions.push(positions[i]);
+			allSceneObjects.push(obj);
+			allTransforms.push(trf);
 		}
 
-		// do continuous rotation
-		if(self.continuousRotation){
-			if(!keepRotatingEvent){ // if no rotating event yet, create new
-				function keepRotating(){
-					rot = quat.angleAxis(-getTime(), vec3.up());
-					for(var i = 0; i < objs.length; i++){
-						objs[i].getTransform().setWorldRotation(rot);
-					}
-				}
-				keepRotatingEvent = script.createEvent("UpdateEvent");
-				keepRotatingEvent.bind(keepRotating);
-			}
-		}else{
-			// delete existing rotation (if any)
-			stopEvents();
-
-			// set rotation
-			for(var i = 0; i < objs.length; i++){
-				objs[i].getTransform().setWorldRotation(self.rotation);
-			}
-		}
-
-		return objs;
+		return allSceneObjects;
 	};
+
+
 
 	/**
 	 * @type {Function}
-	 * @description Call to clear objects. */
-	this.remove = function(){
-		for(var i = 0; i < objs.length; i++){
-			objs[i].destroy();
-		}
-		objs = [];
-		allPositions = [];
+	 * @description get all objects' transform components (<Transform> array) */
+	this.getTransforms = function(){
+		return allTransforms;
 	}
+
+
+
+	/**
+	 * @type {Function}
+	 * @description destroy all objects */
+	this.clear = function(){
+		// delete objects
+		for(var i = 0; i < allSceneObjects.length; i++){
+			allSceneObjects[i].destroy();
+		}
+
+		// reset lists
+		allSceneObjects = [];
+		allTransforms = [];
+	}
+
 
 
 	// private
-	var objs = []; // list of created sceneobjects
-	var allPositions = []; // list of created positions
-	var keepRotatingEvent; // rotation animation event
-	var cube = makeCube(); // get mesh
-	var rot = quat.angleAxis(0, vec3.up()); // starting rotation
-
-	// stops animation event
-	function stopEvents(){
-		if(keepRotatingEvent){
-			script.removeEvent(keepRotatingEvent);
-			keepRotatingEvent = null;
-		}
-	}
-
-	// generated mesh to be used on created objects
-	function makeCube(){
-		// cube from MeshBuilder documentation
+	var allSceneObjects = [];
+	var allTransforms = [];
+	const cube = function(){ // generate cube mesh (once on start)
+		// simple cube with texture and normals
 		var builder = new MeshBuilder([
-			{ name: "position", components: 3 },
-			{ name: "normal", components: 3, normalized: true },
-			{ name: "texture0", components: 2 },
+			{name: "position", components: 3},
+			{name: "normal", components: 3, normalized: true},
+			{name: "texture0", components: 2},
 		]);
 		builder.topology = MeshTopology.Triangles;
 		builder.indexType = MeshIndexType.UInt16;
@@ -1946,8 +1946,22 @@ global.VisualizePositions = function(){
 			addQuadIndices(builder, index, index+1, index+2, index+3);
 		}
 
-		// return generated mesh
+		// return mesh only
 		builder.updateMesh();
 		return builder.getMesh();
+	}();
+
+
+
+	// returns 'vec3', 'object' or 'mat4' depending on type
+	function getPointType(p){
+		if(p.x != null) return 'vec3';
+		if(p.position != null) return 'object';
+		return 'mat4';
 	}
+
+
+
+	// start right away if array given
+	if(showPointsOnStart) self.show(showPointsOnStart);
 }
