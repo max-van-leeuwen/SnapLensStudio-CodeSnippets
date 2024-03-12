@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.10"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.11"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -298,7 +298,7 @@
 // -
 //
 //
-// remap(value [Number], low1 [Number], high1 [Number], low2 [Number], high2 [Number], clamped [Bool]) : Number
+// remap(value [Number], low1 [Number], high1 [Number], low2 (optional, default 0) [Number], high2 (optional, default 1) [Number], clamped (optional, default false) [Bool]) : Number
 // 	Returns value remapped from range low1-high1 to range low2-high2.
 //
 //
@@ -1437,6 +1437,8 @@ global.pickRandomDistributed = function(obj){
 
 
 global.remap = function(value, low1, high1, low2, high2, clamped){
+	low2 = low2 == null ? 0 : low2;
+	high2 = high2 == null ? 1 : high2;
 	var remapped = low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 	return clamped ? clamp(remapped, low2, high2) : remapped;
 }
