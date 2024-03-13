@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.11"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.12"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -488,10 +488,10 @@
 //	A class that places a mesh on each point in the given array. Useful for quick visualization of 3D points in your scene.
 //	For a one-liner, you can pass the array of points as the first optional argument when creating a VisualizePoints(<points>) instance.
 //
-//		Points can be defined in 3 ways: positions (vec3), Objects ({position:vec3, rotation:quat, scale:vec3}), or transformation matrices (mat4)
-//			points = [ <vec3> ]
-// 			points = [ {position: <vec3>, rotation: <quat>, scale: <vec3>} ]
-// 			points = [ <transform (mat4)> ]
+//		Points can be defined in 3 ways: positions (vec3), Objects (position, rotation, scale, text label), or transformation matrices (mat4)
+//			points = [ vec3 ]
+// 			points = [ {position: vec3, (optional) rotation: quat, (optional) scale: vec3, (optional) label: string} ]
+// 			points = [ transform (mat4) ]
 //
 //		Example, showing all properties
 //
@@ -501,7 +501,7 @@
 //			v.material													// (optional) the material on the mesh (Asset.Material)
 //			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 //			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
-//			v.show(points)												// show an array of points (see different ways to define a point below), returns the array of created SceneObjects for further customization
+//			v.show(points)												// show an array of points, returns the array of created SceneObjects for further customization
 //			v.getTransforms()											// get all objects' transform components (<Transform> array)
 //			v.clear()													// destroy all objects
 //
@@ -1847,8 +1847,13 @@ global.VisualizePoints = function(showPointsOnStart){
 				trf.setWorldScale(self.scale ? self.scale : vec3.one());
 			}else if(pointType == 'object'){ // position, rotation, scale manual object
 				trf.setWorldPosition(p.position);
-				trf.setWorldRotation(p.rotation);
-				trf.setWorldScale(self.scale ? p.scale.mult(self.scale) : p.scale);
+				if(p.rotation != null) trf.setWorldRotation(p.rotation);
+				if(p.scale == null){
+                    trf.setWorldScale(self.scale != null ? self.scale : vec3.one());
+                }else{
+                    trf.setWorldScale(self.scale != null ? p.scale.mult(self.scale) : p.scale);
+                }
+                if(p.label != null) setLabel(p, obj);
 			}else{ // world transform
 				trf.setWorldTransform(p);
 				if(self.scale) trf.setWorldScale(trf.getWorldScale().mult(self.scale));
@@ -1952,6 +1957,14 @@ global.VisualizePoints = function(showPointsOnStart){
 		builder.updateMesh();
 		return builder.getMesh();
 	}();
+
+
+
+	// creates label on top of rendered point
+	function setLabel(point, obj){
+		var txtComp = obj.createComponent("Component.Text");
+		txtComp.text = point.label;
+	}
 
 
 
