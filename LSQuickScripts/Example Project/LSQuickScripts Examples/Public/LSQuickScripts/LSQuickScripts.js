@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.12"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.13"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -1963,6 +1963,7 @@ global.VisualizePoints = function(showPointsOnStart){
 	// creates label on top of rendered point
 	function setLabel(point, obj){
 		var txtComp = obj.createComponent("Component.Text");
+		txtComp.getMaterial(0).mainPass.twoSided = true;
 		txtComp.text = point.label;
 	}
 
