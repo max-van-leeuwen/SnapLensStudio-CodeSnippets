@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.13"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.14"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -155,7 +155,7 @@
 //
 //
 // planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
-//	Checks if a line starting at point with normalized direction dir, intersects a plane (of infinite size) at position planePos, with normalized normal planeFwd. Returns world position if it does, returns null otherwise.
+//	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise.
 //
 //
 //
@@ -300,6 +300,12 @@
 //
 // remap(value [Number], low1 [Number], high1 [Number], low2 (optional, default 0) [Number], high2 (optional, default 1) [Number], clamped (optional, default false) [Bool]) : Number
 // 	Returns value remapped from range low1-high1 to range low2-high2.
+//
+//
+//
+// centerRemap(value [Number], center (optional, default 0.5) [Number], width (optional, default 0) [Number]) : Object
+//	Remaps the value (0-1) to 0-1-0, with a custom center and a width for the center.
+//	Returns an object containing 'remapped' [Number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
 //
 //
 // -
@@ -485,8 +491,8 @@
 //
 //
 // VisualizePoints() : VisualizePoints object
-//	A class that places a mesh on each point in the given array. Useful for quick visualization of 3D points in your scene.
-//	For a one-liner, you can pass the array of points as the first optional argument when creating a VisualizePoints(<points>) instance.
+//	An instanced function that places a mesh on each point in the given array. Useful for quick visualization of 3D points in your scene.
+//	For a one-liner (optional), pass the array of points as the first argument.
 //
 //		Points can be defined in 3 ways: positions (vec3), Objects (position, rotation, scale, text label), or transformation matrices (mat4)
 //			points = [ vec3 ]
@@ -502,7 +508,7 @@
 //			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 //			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
 //			v.show(points)												// show an array of points, returns the array of created SceneObjects for further customization
-//			v.getTransforms()											// get all objects' transform components (<Transform> array)
+//			v.getTransforms()											// get an array of transform components
 //			v.clear()													// destroy all objects
 //
 //
@@ -1441,6 +1447,25 @@ global.remap = function(value, low1, high1, low2, high2, clamped){
 	high2 = high2 == null ? 1 : high2;
 	var remapped = low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 	return clamped ? clamp(remapped, low2, high2) : remapped;
+}
+
+
+
+
+global.centerRemap = function(value, center, width){
+	if(center == null && width == null){ // simple 0-1-0 remap
+		const remapped = value < .5 ? value*2 : 1-((value-.5)*2);
+		const passedCenter = (value > .5) * 2; // 0 or 2 are only possible outcomes
+		return {remapped:remapped, passedCenter:passedCenter};
+	}
+	if(center == null) center = .5;
+	if(width == null) width = 0;
+    const halfWidth = width/2;
+    const left = center - halfWidth;
+    const right = center + halfWidth;
+    const remapped = value < left ? remap(value, 0, left) : value > right ? remap(value, right, 1, 1, 0) : 1;
+    const passedCenter = value < left ? 0 : value < right ? 1 : 2;
+    return {remapped:remapped, passedCenter:passedCenter};
 }
 
 
