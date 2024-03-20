@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.14"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.15"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -49,7 +49,7 @@
 // -
 //
 //
-// EaseFunctions : Object, containing Functions
+// EaseFunctions : object
 //	Contains all Tween Easing Functions, with their In/Out/InOut types.
 //	Use it on any number to get its lookup-value back.
 // 	These functions can be used with Interp and AnimateProperty.
@@ -74,7 +74,7 @@
 //
 //
 //
-// interp(startValue [Number], endValue [Number], t [Number], easing (optional) [Function], unclamped (optional) [bool]) : Number
+// interp(startValue [number], endValue [number], t [number], easing (optional) [function], unclamped (optional) [bool]) : number
 // 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 //	Is identical to a linear lerp() when no Easing Function is given.
 //	Use one of the Easing Functions in global.EaseFunctions, or use your own!
@@ -120,7 +120,7 @@
 //
 //
 //
-// getAllAnimateProperty() : array
+// getAllAnimateProperty() : AnimateProperty array
 //	Get a list of all instances created using 'AnimateProperty'. Useful, for example, when you want to stop all instances running in your lens.
 //
 //
@@ -128,13 +128,13 @@
 // -
 //
 //
-// degToRad(degrees [Number/vec3]) : Number/vec3
-// 	Converts Number or vec3 of degrees to Number or vec3 of radians.
+// degToRad(degrees [Number/vec3]) : number/vec3
+// 	Converts number or vec3 of degrees to number or vec3 of radians.
 //
 //
 //
-// radToDeg(radians [Number/vec3]) : Number/vec3
-// 	Converts Number or vec3 of radians to Number or vec3 of degrees.
+// radToDeg(radians [Number/vec3]) : number/vec3
+// 	Converts number or vec3 of radians to number or vec3 of degrees.
 //
 //
 //
@@ -172,7 +172,7 @@
 // -
 //
 //
-// hsvToRgb(h [Number], s [Number], v [Number]) : vec3
+// hsvToRgb(h [number], s [number], v [number]) : vec3
 // 	Returns the RGB color for a Hue, Saturation, and Value. Inputs and outputs are in range 0-1.
 //
 //
@@ -185,7 +185,7 @@
 // -
 //
 //
-// DoDelay(function (optional) [Function], arguments (optional) [Array] ) : DoDelay object
+// DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay object
 //	An object that makes it easy to schedule a function to run in the future (by frames or by seconds).
 //
 //		Example, showing all properties
@@ -204,7 +204,7 @@
 //
 //
 //
-// stopAllDelays() : array of DoDelay instances
+// stopAllDelays() : DoDelay array
 //	Instantly stops all delays created using 'DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
 //
 //
@@ -212,13 +212,13 @@
 // -
 //
 //
-// instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [Number], fadeInTime (optional) [Number], fadeOutTime (optional) [Number], offset (optional) [Number], mixToSnap (optional) [bool]) : AudioComponent
-// 	Plays a sound on a new (temporary) sound component, which allows multiple plays simultaneously without the audio clipping when it restarts.
+// instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [number], fadeInTime (optional) [number], fadeOutTime (optional) [number], offset (optional) [number], mixToSnap (optional) [bool]) : AudioComponent
+// 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 //
 //
 //
-// stopAllSoundInstances() : array of sound components
+// stopAllSoundInstances() : AudioComponent array
 // 	Instantly stops all sound instances created using 'instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
 //
 //
@@ -226,7 +226,7 @@
 // -
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [Number], waitTime (optional) [Number]) : InstSoundPooled Object
+// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number]) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 //	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
@@ -246,7 +246,7 @@
 // -
 //
 //
-// clamp(value [Number], low (optional, default 0) [Number] ), high (optional, default 1) [Number] ) : Number
+// clamp(value [number], low (optional, default 0) [number] ), high (optional, default 1) [number] ) : number
 // 	Returns the clamped value between the low and high values.
 //
 //
@@ -254,22 +254,22 @@
 // -
 //
 //
-// randSeed(seed [int]) : Number
+// randSeed(seed [int]) : number
 // 	Returns a random value (0-1) based on an input seed. Uses mulberry32.
 //
 //
 //
-// randInt(min [int], max [int]) : Number
+// randInt(min [int], max [int]) : number
 // OR
-// randInt(array [size 2]) : Number
+// randInt(array [size 2]) : number
 //	Returns a random rounded integer between min and max (inclusive).
 //	The two arguments can be replaced by a single array argument, for example [0, 10] for a random int between 0-10.
 //
 //
 //
-// randFloat(min [Number], max [Number]) : Number
+// randFloat(min [number], max [number]) : number
 // OR
-// randFloat(array [size 2]) : Number
+// randFloat(array [size 2]) : number
 //	Returns a random number within a range min (inclusive) and max (exclusive).
 //	The two arguments can be replaced by a single array argument, for example [0, 1] for a random value between 0-1.
 //
@@ -298,25 +298,25 @@
 // -
 //
 //
-// remap(value [Number], low1 [Number], high1 [Number], low2 (optional, default 0) [Number], high2 (optional, default 1) [Number], clamped (optional, default false) [Bool]) : Number
+// remap(value [number], low1 [number], high1 [number], low2 (optional, default 0) [number], high2 (optional, default 1) [number], clamped (optional, default false) [Bool]) : number
 // 	Returns value remapped from range low1-high1 to range low2-high2.
 //
 //
 //
-// centerRemap(value [Number], center (optional, default 0.5) [Number], width (optional, default 0) [Number]) : Object
+// centerRemap(value [number], center (optional, default 0.5) [number], width (optional, default 0) [number]) : Object
 //	Remaps the value (0-1) to 0-1-0, with a custom center and a width for the center.
-//	Returns an object containing 'remapped' [Number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
+//	Returns an object containing 'remapped' [number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
 //
 //
 // -
 //
 //
-// encodeFloat(data [Number], min [Number], max [Number]) : vec4
+// encodeFloat(data [number], min [number], max [number]) : vec4
 // 	Equivalent of the 'Pack' node in the material graph editor (32-bits).
 //
 //
 //
-// decodeToFloat(encoded data [vec4], min [Number], max [Number]) : Number
+// decodeToFloat(encoded data [vec4], min [number], max [number]) : number
 // 	Equivalent of the 'Unpack' node in the material graph editor (32-bits).
 //
 //
@@ -367,7 +367,7 @@
 // -
 //
 //
-// PerformanceStopwatch() : PerformanceStopwatch Object
+// PerformanceStopwatch() : PerformanceStopwatch object
 // 	Debugging tool. Prints precise time measures to see how well a function performs. Has built-in rolling average!
 //
 //		Example, showing all properties
@@ -389,7 +389,7 @@
 // -
 //
 //
-// rotateCoords(point [vec2], pivot [vec2], angle [Number]) : vec2
+// rotateCoords(point [vec2], pivot [vec2], angle [number]) : vec2
 // 	Rotate a 2D point around a pivot with specified angle (radians). Returns new 2D position.
 //
 //
@@ -397,7 +397,7 @@
 // -
 //
 //
-// circularDistance(a [Number], b [Number], mod [Number]) : Number
+// circularDistance(a [number], b [number], mod [number]) : number
 // 	Returns the closest distance from a to b if the number line is a circle with radius 'mod'. For example: if mod is 1, the distance between 0.9 and 0.1 would be 0.2.
 //
 //
@@ -405,7 +405,7 @@
 // -
 //
 //
-// mod(a [Number], b [Number]) : Number
+// mod(a [number], b [number]) : number
 // 	Modulo, like the % operator, but this respects negative numbers.
 //	For example, mod(-1, 3) returns 2. Whereas -1%3 would return -1.
 //
@@ -414,7 +414,7 @@
 // -
 //
 //
-// measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [Number]) : vec3
+// measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [number]) : vec3
 // 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 //	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
 //
@@ -438,13 +438,13 @@
 // -
 //
 //
-// parseNewLines(txt [string], customSplit (optional) [string]) : String
+// parseNewLines(txt [string], customSplit (optional) [string]) : string
 // 	Takes a string passed in through an input string field containing '\n', and returns the same string but with real newlines (for use in a Text Component, for example).
 //	If customSplit is given, it replaces the '\n'-lookup with other character(s).
 //
 //
 //
-// pad(num [Number], size [Number]) : String
+// pad(num [number], size [number]) : string
 // 	Takes a number and a padding amount, and returns a padded string of the number.
 //
 //		Example
@@ -456,7 +456,7 @@
 // -
 //
 //
-// median(arr [Array]) : Number
+// median(arr [Array]) : number
 //	Takes an array of Numbers, and returns the median value.
 //
 //
@@ -482,8 +482,18 @@
 // -
 //
 //
-// wrapFunction(originalFunction [Function], newFunction [Function]) : Function
+// wrapFunction(originalFunction [function], newFunction [function]) : function
 //	Wrap two functions into one. Works with arguments.
+//
+//
+//
+// makeSignal(callback [function]) : object
+//	Makes a function into a signal that you can bind functions to. Returns an object containing a 'callback', an 'add' and a 'remove' function.
+//	Bind using 'add' and 'remove', and call the 'callback' to execute.
+//
+//	Example
+// 		script.signal = makeSignal(); 								// in another script, bind a function using 'script.signal.add(function)' or 'script.signal.remove(function)'
+// 		if(somethingHappens) script.signal.callback(args);
 //
 //
 //
@@ -1796,13 +1806,36 @@ global.mat4FromDescription = function(matDescription){
 
 
 
-global.wrapFunction = function(originalFunction, newFunction) {
+global.wrapFunction = function(originalFunction, newFunction){
     return function() {
         var args = Array.prototype.slice.call(arguments);
         if (originalFunction) originalFunction.apply(this, args);
         newFunction.apply(this, args);
     };
 };
+
+
+
+
+global.makeSignal = function(){
+	var callbacks = [];
+	function add(f){
+		callbacks.push(f);
+	}
+	function remove(f){
+		for(let i = callbacks.length - 1; i >= 0; i--){
+			if(callbacks[i] === f){
+				callbacks.splice(i, 1);
+			}
+		}
+	}
+	function callback(...args){
+		for(var i = 0; i < callbacks.length; i++){
+			callbacks[i](...args);
+		}
+	}
+	return {add, remove, callback};
+}
 
 
 
