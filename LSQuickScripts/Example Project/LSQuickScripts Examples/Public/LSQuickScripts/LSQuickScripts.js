@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.15"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.16"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -423,11 +423,12 @@
 // -
 //
 //
-// getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool]) : Array (Components)
+// getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool], maxCount (optional) [number]) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
-//	If no componentName is given, it returns SceneObjects.
+//	If no componentName is given, it returns SceneObjects instead.
 //	If no startObj is given, it searches the whole scene.
 //	If dontIncludeStartObj is true, the startObj will not be included in the final list.
+//  If maxCount is given, the search stops after having found a specific amount of components.
 //
 // 		Example
 //			var components = getAllComponents("Component.VFXComponent")
@@ -1692,8 +1693,9 @@ global.measureWorldPos = function(screenPos, screenTrf, cam, dist){
 
 
 
-global.getAllComponents = function(componentName, startObj, dontIncludeStartObj){
+global.getAllComponents = function(componentName, startObj, dontIncludeStartObj, maxCount){
     var found = [];
+    if(maxCount == null) maxCount = Infinity;
 
     function scanSceneObject(obj){
 		if(dontIncludeStartObj && obj.isSame(startObj)) return;
@@ -1708,26 +1710,30 @@ global.getAllComponents = function(componentName, startObj, dontIncludeStartObj)
 		var comps = obj.getComponents(componentName);
 		for(var j = 0; j < comps.length; j++){
 			found.push(comps[j]);
+            if(found.length >= maxCount) return;
 		}
     }
 
     function iterateObj(obj){
         for(var i = 0; i < obj.getChildrenCount(); i++){
             var child = obj.getChild(i);
-            scanSceneObject(child)
+            scanSceneObject(child);
+            if(found.length >= maxCount) return;
 			iterateObj(child);
         }
     }
 
 	if(startObj){ // start at specific object if it exists
-		if(isNull(startObj)) throw new Error("Starting Object does not exist! It might have been deleted.");
+		if(isNull(startObj)) return found; // no starting object, return empty list
 		scanSceneObject(startObj);
+        if(found.length >= maxCount.length) return found;
 		iterateObj(startObj);
 	}else{ // go through whole scene
 		var rootObjectsCount = global.scene.getRootObjectsCount();
 		for(var i = 0; i < rootObjectsCount; i++){
 			var rootObj = global.scene.getRootObject(i);
 			scanSceneObject(rootObj);
+            if(found.length >= maxCount) return found;
 			iterateObj(rootObj);
 		}
 	}
