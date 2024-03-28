@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.16"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.17"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -489,12 +489,14 @@
 //
 //
 // makeSignal(callback [function]) : object
-//	Makes a function into a signal that you can bind functions to. Returns an object containing a 'callback', an 'add' and a 'remove' function.
+//	Makes a function into a signal that you can bind functions to. Returns an object.
 //	Bind using 'add' and 'remove', and call the 'callback' to execute.
 //
 //	Example
-// 		script.signal = makeSignal(); 								// in another script, bind a function using 'script.signal.add(function)' or 'script.signal.remove(function)'
-// 		if(somethingHappens) script.signal.callback(args);
+// 		var signal = makeSignal()
+//		signal.add(someFunction)
+// 		signal.callback(args)
+//		signal.remove(someFunction)
 //
 //
 //
