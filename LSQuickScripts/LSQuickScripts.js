@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.17"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.18"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -515,12 +515,13 @@
 //		Example, showing all properties
 //
 //			var v = new VisualizePoints(points))						// create instance ('points' argument is optional, this will invoke .show(points) right away)
-//			v.parent													// (optional) SceneObject to parent the points to (default is LSQS' SceneObject)
+//			v.parent													// (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject)
 //			v.scale														// (optional) scale multiplier for the mesh when created (vec3)
 //			v.material													// (optional) the material on the mesh (Asset.Material)
 //			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 //			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
-//			v.show(points)												// show an array of points, returns the array of created SceneObjects for further customization
+//			v.show(points)												// show an array of points, returns the array of created SceneObjects
+//			v.add(points)												// append to array of points, returns the total array of SceneObjects
 //			v.getTransforms()											// get an array of transform components
 //			v.clear()													// destroy all objects
 //
@@ -1851,9 +1852,11 @@ global.makeSignal = function(){
 global.VisualizePoints = function(showPointsOnStart){
 	var self = this;
 
+
+    
 	/**
 	 * @type {SceneObject}
-	 * @description (optional) SceneObject to parent the points to (default is LSQS' SceneObject) */
+	 * @description (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject) */
 	this.parent = script.getSceneObject();
 
 	/**
@@ -1876,13 +1879,25 @@ global.VisualizePoints = function(showPointsOnStart){
 	 * @description (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited) */
 	this.maxCount;
 
+
+
 	/**
 	 * @type {Function}
-	 * @description show an array of points, returns the array of created SceneObjects for further customization */
+	 * @description show an array of points, returns the array of created SceneObjects */
 	this.show = function(allPoints){
 		// remove existing
 		self.clear();
 
+        // add new
+        return self.add(allPoints);
+	};
+
+
+
+    /**
+	 * @type {Function}
+	 * @description append to array of points, returns the total array of created SceneObjects */
+    this.add = function(allPoints){
 		if(allPoints.length == 0) return;
 		var points = [...allPoints]; // make copy of list
 		if(self.maxCount != null){
@@ -1911,7 +1926,7 @@ global.VisualizePoints = function(showPointsOnStart){
 				trf.setWorldPosition(p);
 				trf.setWorldRotation(quat.quatIdentity());
 				trf.setWorldScale(self.scale ? self.scale : vec3.one());
-			}else if(pointType == 'object'){ // position, rotation, scale manual object
+			}else if(pointType == 'object'){ // position, rotation, scale, text label
 				trf.setWorldPosition(p.position);
 				if(p.rotation != null) trf.setWorldRotation(p.rotation);
 				if(p.scale == null){
@@ -1928,10 +1943,10 @@ global.VisualizePoints = function(showPointsOnStart){
 			// register
 			allSceneObjects.push(obj);
 			allTransforms.push(trf);
-		}
+        }
 
-		return allSceneObjects;
-	};
+        return allSceneObjects;
+    }
 
 
 
@@ -2026,12 +2041,12 @@ global.VisualizePoints = function(showPointsOnStart){
 
 
 
-	// creates label on top of rendered point
-	function setLabel(point, obj){
-		var txtComp = obj.createComponent("Component.Text");
-		txtComp.getMaterial(0).mainPass.twoSided = true;
-		txtComp.text = point.label;
-	}
+    // creates label on top of rendered point
+    function setLabel(point, obj){
+        var txtComp = obj.createComponent("Component.Text");
+        txtComp.getMaterial(0).mainPass.twoSided = true;
+        txtComp.text = point.label;
+    }
 
 
 
