@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.18"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.19"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -8,9 +8,8 @@
 
 
 // Max van Leeuwen
-// twitter      @maksvanleeuwen
-// instagram    @max.van.leeuwen
-// maxvanleeuwen.com
+//  @maksvanleeuwen
+//  links.maxvanleeuwen.com
 
 
 
@@ -497,6 +496,11 @@
 //		signal.add(someFunction)
 // 		signal.callback(args)
 //		signal.remove(someFunction)
+//
+//
+//
+// nullish(a, b) : a ?? b
+//	Simple replacement for nullish coalescing operator ('??', useful if this operator doesn't exist)
 //
 //
 //
@@ -1844,6 +1848,13 @@ global.makeSignal = function(){
 		}
 	}
 	return {add, remove, callback};
+}
+
+
+
+
+global.nullish = function(a, b){
+    return (a !== undefined && a !== null) ? a : b;
 }
 
 

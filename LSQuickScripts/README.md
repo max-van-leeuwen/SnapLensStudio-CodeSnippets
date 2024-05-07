@@ -500,6 +500,11 @@ makeSignal(callback [function]) : object
 
 
 
+nullish(a, b) : a ?? b
+	Simple replacement for nullish coalescing operator ('??', useful if this operator doesn't exist)
+
+
+
 -
 
 
