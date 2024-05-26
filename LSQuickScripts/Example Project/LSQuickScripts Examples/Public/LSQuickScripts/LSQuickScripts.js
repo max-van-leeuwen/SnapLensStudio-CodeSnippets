@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.19"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.20"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -94,6 +94,7 @@
 //			anim.startFunction = function(){}								// function to call on animation start.
 //			anim.updateFunction = function(v, vLinear){}					// function to call on each animation frame, with animation value (0-1, inclusive) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
 //			anim.endFunction = function(){}									// function to call on animation end.
+//			anim.onReverseChange = function(){}								// Function to call any time the forwards direction of the animation is changed.
 //			anim.duration = 1												// duration in seconds. Default is 1.
 //			anim.reverseDuration = 1										// duration in seconds when reversed. If no value assigned, default is equal to duration.
 //			anim.delay = 0													// delay after starting animation. Default is 0.
@@ -158,7 +159,7 @@
 //
 //
 //
-// projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec3]) : vec2
+// projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec2]) : vec2
 // 	Projects a 3D point onto a plane with custom position, orientation, and non-uniform scale. Returns normalized 2D coordinates on plane at this position.
 //
 //
@@ -518,7 +519,7 @@
 //
 //		Example, showing all properties
 //
-//			var v = new VisualizePoints(points))						// create instance ('points' argument is optional, this will invoke .show(points) right away)
+//			var v = new VisualizePoints(points)							// create instance ('points' argument is optional, this will invoke .show(points) right away)
 //			v.parent													// (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject)
 //			v.scale														// (optional) scale multiplier for the mesh when created (vec3)
 //			v.material													// (optional) the material on the mesh (Asset.Material)
@@ -771,6 +772,11 @@ global.AnimateProperty = function(updateFunction){
 	this.endFunction = function(){};
 
 	/**
+	 * @type {Function} 
+	 * @description Function to call any time the forwards direction of the animation is changed. */
+	this.onReverseChange = function(){};
+
+	/**
 	 * @type {Number}
 	 * @description Duration in seconds. Default is 1. */
 	this.duration = 1;
@@ -805,9 +811,7 @@ global.AnimateProperty = function(updateFunction){
 	 * @argument {Number} newTimeRatio
 	 * @description Updates the animation once, stops the currently running animation. Sets the time value to newTimeRatio (linear 0-1). */
 	this.pulse = function(newTimeRatio){
-		stopAnimEvent();
-		timeRatio = reversed ? 1-newTimeRatio : newTimeRatio; // reset animation time
-		setValue(getInterpolated());
+		pulse(newTimeRatio, false);
 	}
 
 	/**
@@ -827,6 +831,7 @@ global.AnimateProperty = function(updateFunction){
 		}else{
 			reversed = reverse;
 		}
+		self.onReverseChange()
 	}
 
 	/**
@@ -862,20 +867,23 @@ global.AnimateProperty = function(updateFunction){
 		stopDelayedStart();
 
 		function begin(){
+			if(self.startFunction) self.startFunction();
 			if(newTimeRatio != null){ // custom time ratio given
-				self.pulse(newTimeRatio);
+				pulse(newTimeRatio, true);
 			}else{
 				// pulse first frame of animation already, next frame the animation event will take over
 				if(self.getTimeRatio() == 1){
-					self.pulse(0);
+					pulse(0, true);
 				}else{
-					self.pulse(self.getTimeRatio());
+					pulse(self.getTimeRatio(), true);
 				}
 			}
 			updateDuration();
 			startAnimEvent();
-			if(self.startFunction) self.startFunction();
 		}
+
+		// force isPlaying to true at this point already (delayed animation also counts as playing)
+		isPlaying = true;
 
 		var delay = self.delay;
 		if(reversed && typeof(self.reverseDelay) != 'undefined') delay = self.reverseDelay; // if reverse, use custom delay (if any)
@@ -885,9 +893,6 @@ global.AnimateProperty = function(updateFunction){
 		}else{
 			begin();
 		}
-
-		// force isPlaying to true (delayed animation also counts as playing)
-		isPlaying = true;
 	}
 	
 	/**
@@ -895,6 +900,7 @@ global.AnimateProperty = function(updateFunction){
 	 * @description stop the animation at its current time. With an optional argument to call the endFunction (argument should be a bool, default is false). */
 	this.stop = function(callEndFunction){
 		stopAnimEvent();
+		isPlaying = false;
 		if(callEndFunction) self.endFunction();
 	}
 
@@ -960,12 +966,19 @@ global.AnimateProperty = function(updateFunction){
 		if(reversed && self.reverseEaseFunction) easeFunction = self.reverseEaseFunction; // if reverse, use custom ease function (if any)
 		return global.interp(0, 1, timeRatio, easeFunction);
 	}
+
+	function pulse(newTimeRatio, isPlayingTrue){
+		stopAnimEvent();
+		isPlaying = isPlayingTrue;
+		timeRatio = reversed ? 1-newTimeRatio : newTimeRatio; // reset animation time
+		setValue(getInterpolated());
+	}
 	
 	function startAnimEvent(){
 		stopAnimEvent(); // stop currently playing (if any)
+		isPlaying = true;
 		animEvent = script.createEvent("UpdateEvent");
 		animEvent.bind(animation);
-		isPlaying = true;
 	}
 
 	function stopAnimEvent(){
@@ -973,7 +986,6 @@ global.AnimateProperty = function(updateFunction){
 			script.removeEvent(animEvent);
 			animEvent = null;
 		}
-		isPlaying = false;
 
 		stopDelayedStart();
 
@@ -1080,7 +1092,7 @@ global.planeRay = function(point, dir, planePos, planeFwd){
 
 
 
-global.projectPointToPlane = function(point, planePos, planeFwd, planeScale) {
+global.projectPointToPlane = function(point, planePos, planeFwd, planeScale){
     var relativePosition = point.sub(planePos);
     var projection = planeFwd.uniformScale(planeFwd.dot(relativePosition))
     var positionInPlane = relativePosition.sub(projection);

@@ -95,6 +95,7 @@ AnimateProperty() : AnimateProperty object
 			anim.startFunction = function(){}								// function to call on animation start.
 			anim.updateFunction = function(v, vLinear){}					// function to call on each animation frame, with animation value (0-1, inclusive) as its first argument. The second argument is the linear animation value. These ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
 			anim.endFunction = function(){}									// function to call on animation end.
+			anim.onReverseChange = function(){}								// Function to call any time the forwards direction of the animation is changed.
 			anim.duration = 1												// duration in seconds. Default is 1.
 			anim.reverseDuration = 1										// duration in seconds when reversed. If no value assigned, default is equal to duration.
 			anim.delay = 0													// delay after starting animation. Default is 0.
@@ -159,7 +160,7 @@ planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
 
 
 
-projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec3]) : vec2
+projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec2]) : vec2
 	Projects a 3D point onto a plane with custom position, orientation, and non-uniform scale. Returns normalized 2D coordinates on plane at this position.
 
 
@@ -519,7 +520,7 @@ VisualizePoints() : VisualizePoints object
 
 		Example, showing all properties
 
-			var v = new VisualizePoints(points))						// create instance ('points' argument is optional, this will invoke .show(points) right away)
+			var v = new VisualizePoints(points)							// create instance ('points' argument is optional, this will invoke .show(points) right away)
 			v.parent													// (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject)
 			v.scale														// (optional) scale multiplier for the mesh when created (vec3)
 			v.material													// (optional) the material on the mesh (Asset.Material)
