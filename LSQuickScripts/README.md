@@ -41,12 +41,14 @@ HOW TO USE
 -------------------
 
 
+
 lsqs : Script Component
  Returns the Script component this script is on.
 
 
 
 -
+
 
 
 EaseFunctions : object
@@ -74,6 +76,10 @@ EaseFunctions : object
 
 
 
+-
+
+
+
 interp(startValue [number], endValue [number], t [number], easing (optional) [function], unclamped (optional) [bool]) : number
 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 	Is identical to a linear lerp() when no Easing Function is given.
@@ -83,6 +89,10 @@ interp(startValue [number], endValue [number], t [number], easing (optional) [fu
 			Cubic in/out	interp(-5, 5, x, EaseFunctions.Cubic.InOut)
 			Linear (lerp)	interp(-5, 5, x)
 			Custom			interp(-5, 5, x, function(v){ return v })
+
+
+
+-
 
 
 
@@ -122,11 +132,34 @@ AnimateProperty() : AnimateProperty object
 
 
 getAllAnimateProperty() : AnimateProperty array
-	Get a list of all instances created using 'AnimateProperty'. Useful, for example, when you want to stop all instances running in your lens.
+	Get a list of all AnimateProperty instances. Useful when you want to forcibly stop all instances running in your lens at once, without keeping track of them.
 
 
 
 -
+
+
+
+autoAnimate(
+			obj [SceneObject or Component.Image]
+			duration [Number] (default 0.7 if SceneObject, 0.5 if Image Component)
+			delay [Number] (default 0)
+			isInAnim [bool] (default true)
+			easeFunction (EaseFunction, default EaseFunctions.Cubic.Out/In)
+) : null
+	A smooth appear/disappear animation, automatically picking the best way to do it based on given object.
+	Works with ScreenTransforms and with regular Transforms, and if an Image Component is given it will try to fade its alpha!
+	Doesn't return anything, enables SceneObject on start (or disables on end if !isInAnim).
+
+		Example
+			autoAnimate(script.obj) 									// simply enables and scales-in this SceneObject
+			autoAnimate(script.obj, .5, 1, false) 						// scale-out this SceneObject after 1 second, with a duration of 0.5s.
+			autoAnimate(script.image, null, null, false) 				// fade-out this Image component with default settings
+
+
+
+-
+
 
 
 degToRad(degrees [Number/vec3]) : number/vec3
@@ -142,8 +175,13 @@ radToDeg(radians [Number/vec3]) : number/vec3
 -
 
 
+
 isInFront(pos1 [vec3], pos2 [vec3], fwd [vec3]) : bool
 	Checks if pos1 is in front of pos2, assuming pos2 has normalized forward vector fwd.
+
+
+
+-
 
 
 
@@ -155,13 +193,25 @@ pointInBox(point [vec3], unitBoxTrf [Transform], getRelativePosition (optional) 
 
 
 
+-
+
+
+
 planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
 	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise.
 
 
 
+-
+
+
+
 projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec2]) : vec2
 	Projects a 3D point onto a plane with custom position, orientation, and non-uniform scale. Returns normalized 2D coordinates on plane at this position.
+
+
+
+-
 
 
 
@@ -171,6 +221,7 @@ distanceAlongVector(pos1 [vec3], pos2 [vec3], fwd [vec3]) : vec3
 
 
 -
+
 
 
 hsvToRgb(h [number], s [number], v [number]) : vec3
@@ -184,6 +235,7 @@ rgbToHsv(rgb [vec3/vec4]) : vec3
 
 
 -
+
 
 
 DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay object
@@ -213,7 +265,14 @@ stopAllDelays() : DoDelay array
 -
 
 
-instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [number], fadeInTime (optional) [number], fadeOutTime (optional) [number], offset (optional) [number], mixToSnap (optional) [bool]) : AudioComponent
+instSound(
+			audioAsset [Asset.AudioTrackAsset]
+			volume (optional) [number]
+			fadeInTime (optional) [number]
+			fadeOutTime (optional) [number]
+			offset (optional) [number]
+			mixToSnap (optional) [bool]
+) : AudioComponent
 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 
@@ -225,6 +284,7 @@ stopAllSoundInstances() : AudioComponent array
 
 
 -
+
 
 
 InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number]) : InstSoundPooled Object
@@ -247,6 +307,7 @@ InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number],
 -
 
 
+
 clamp(value [number], low (optional, default 0) [number] ), high (optional, default 1) [number] ) : number
 	Returns the clamped value between the low and high values.
 
@@ -255,24 +316,35 @@ clamp(value [number], low (optional, default 0) [number] ), high (optional, defa
 -
 
 
+
 randSeed(seed [int]) : number
 	Returns a random value (0-1) based on an input seed. Uses mulberry32.
 
 
 
+-
+
+
+
 randInt(min [int], max [int]) : number
 OR
-randInt(array [size 2]) : number
-	Returns a random rounded integer between min and max (inclusive).
-	The two arguments can be replaced by a single array argument, for example [0, 10] for a random int between 0-10.
+randInt(range [array size 2]) : number
+OR
+randInt(range [vec2]) : number
+	Returns a random rounded integer between min (inclusive) and max (exclusive).
 
 
 
 randFloat(min [number], max [number]) : number
 OR
-randFloat(array [size 2]) : number
+randFloat(range [array size 2]) : number
+OR
+randFloat(range [vec2]) : number
 	Returns a random number within a range min (inclusive) and max (exclusive).
-	The two arguments can be replaced by a single array argument, for example [0, 1] for a random value between 0-1.
+
+
+
+-
 
 
 
@@ -282,9 +354,8 @@ randArray(array [Array]) : Object
 
 
 pickRandomDistributed(objects [Object]) : Object
-	Picks one of the items in an object, and looks at the item's property called 'chance' to determine the odds of the one to pick.
-	Provide it with an object looking like the example below.
-	The 'chance' properties don't have to add up to 1! Their values are normalized before picking a random index.
+	Picks one of the items in an object, based on the odds of a property called 'chance'!
+	The 'chance' values are automatically normalized, so they don't need to add up to 1 like in this example.
 
 		var list = {
 			item1 : {name:'item1', chance:0.1}, // this item has a 10% chance of being chosen
@@ -292,14 +363,22 @@ pickRandomDistributed(objects [Object]) : Object
 			item3 : {name:'item3', chance:0.3}, // 30% chance
 		}
 		var picked = pickRandomDistributed(list)
-		picked.name == 'item1', 'item2' or 'item3', based on chance
+		picked.name == (randomly picked from list)
 
 
 
 -
 
 
-remap(value [number], low1 [number], high1 [number], low2 (optional, default 0) [number], high2 (optional, default 1) [number], clamped (optional, default false) [Bool]) : number
+
+remap(
+		value [number]
+		low1 [number]
+		high1 [number]
+		low2 (optional, default 0) [number]
+		high2 (optional, default 1) [number]
+		clamped (optional, default false) [Bool]
+) : number
 	Returns value remapped from range low1-high1 to range low2-high2.
 
 
@@ -309,7 +388,9 @@ centerRemap(value [number], center (optional, default 0.5) [number], width (opti
 	Returns an object containing 'remapped' [number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
 
 
+
 -
+
 
 
 encodeFloat(data [number], min [number], max [number]) : vec4
@@ -323,6 +404,7 @@ decodeToFloat(encoded data [vec4], min [number], max [number]) : number
 
 
 -
+
 
 
 screenToScreenTransform(screenPos [vec2]) : vec2
@@ -340,8 +422,13 @@ screenTransformToScreen(screenTransformCenter [vec2]) : vec2
 -
 
 
+
 shuffleArray(array [array]) : array
 	Returns a randomly shuffled copy of the array.
+
+
+
+-
 
 
 
@@ -351,6 +438,7 @@ concatArrays(array [any], array [any]) : array
 
 
 -
+
 
 
 MovingAverage() : MovingAverage Object
@@ -366,6 +454,7 @@ MovingAverage() : MovingAverage Object
 
 
 -
+
 
 
 PerformanceStopwatch() : PerformanceStopwatch object
@@ -398,12 +487,14 @@ rotateCoords(point [vec2], pivot [vec2], angle [number]) : vec2
 -
 
 
+
 circularDistance(a [number], b [number], mod [number]) : number
 	Returns the closest distance from a to b if the number line is a circle with radius 'mod'. For example: if mod is 1, the distance between 0.9 and 0.1 would be 0.2.
 
 
 
 -
+
 
 
 mod(a [number], b [number]) : number
@@ -415,6 +506,7 @@ mod(a [number], b [number]) : number
 -
 
 
+
 measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [number]) : vec3
 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
@@ -424,7 +516,12 @@ measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Co
 -
 
 
-getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool], maxCount (optional) [number]) : Array (Components)
+
+getAllComponents(componentName (optional) [string]
+					startObj (optional) [SceneObject]
+					dontIncludeStartObj (optional) [bool]
+					maxCount (optional) [number]
+) : Array (Components)
 	Returns an array containing all components of type componentNames, also those on child objects.
 	If no componentName is given, it returns SceneObjects instead.
 	If no startObj is given, it searches the whole scene.
@@ -438,6 +535,7 @@ getAllComponents(componentName (optional) [string], startObj (optional) [SceneOb
 
 
 -
+
 
 
 parseNewLines(txt [string], customSplit (optional) [string]) : string
@@ -458,12 +556,14 @@ pad(num [number], size [number]) : string
 -
 
 
+
 median(arr [Array]) : number
 	Takes an array of Numbers, and returns the median value.
 
 
 
 -
+
 
 
 lookAtUp(posA [vec3], posB [vec3], offset) : quat
@@ -476,6 +576,7 @@ lookAtUp(posA [vec3], posB [vec3], offset) : quat
 -
 
 
+
 mat4FromDescription(matDescription [string]) : mat4
 	Returns a mat4, based on a mat4's string description. Useful when trying to retrieve one stored as JSON format.
 
@@ -484,8 +585,13 @@ mat4FromDescription(matDescription [string]) : mat4
 -
 
 
+
 wrapFunction(originalFunction [function], newFunction [function]) : function
 	Wrap two functions into one. Works with arguments.
+
+
+
+-
 
 
 
@@ -501,12 +607,17 @@ makeSignal(callback [function]) : object
 
 
 
+-
+
+
+
 nullish(a, b) : a ?? b
 	Simple replacement for nullish coalescing operator ('??', useful if this operator doesn't exist)
 
 
 
 -
+
 
 
 VisualizePoints() : VisualizePoints object

@@ -1,4 +1,4 @@
-//@ui {"widget":"label", "label":"LSQuickScripts v2.20"}
+//@ui {"widget":"label", "label":"LSQuickScripts v2.21"}
 //@ui {"widget":"label", "label":"By Max van Leeuwen"}
 //@ui {"widget":"label", "label":"-"}
 //@ui {"widget":"label", "label":"Place on top of scene ('On Awake')"}
@@ -40,12 +40,14 @@
 // -------------------
 //
 //
+//
 // lsqs : Script Component
 //  Returns the Script component this script is on.
 //
 //
 //
 // -
+//
 //
 //
 // EaseFunctions : object
@@ -73,6 +75,10 @@
 //
 //
 //
+// -
+//
+//
+//
 // interp(startValue [number], endValue [number], t [number], easing (optional) [function], unclamped (optional) [bool]) : number
 // 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 //	Is identical to a linear lerp() when no Easing Function is given.
@@ -82,6 +88,10 @@
 // 			Cubic in/out	interp(-5, 5, x, EaseFunctions.Cubic.InOut)
 // 			Linear (lerp)	interp(-5, 5, x)
 //			Custom			interp(-5, 5, x, function(v){ return v })
+//
+//
+//
+// -
 //
 //
 //
@@ -121,11 +131,34 @@
 //
 //
 // getAllAnimateProperty() : AnimateProperty array
-//	Get a list of all instances created using 'AnimateProperty'. Useful, for example, when you want to stop all instances running in your lens.
+//	Get a list of all AnimateProperty instances. Useful when you want to forcibly stop all instances running in your lens at once, without keeping track of them.
 //
 //
 //
 // -
+//
+//
+//
+// autoAnimate(
+//			obj [SceneObject or Component.Image]
+//			duration [Number] (default 0.7 if SceneObject, 0.5 if Image Component)
+//			delay [Number] (default 0)
+//			isInAnim [bool] (default true)
+//			easeFunction (EaseFunction, default EaseFunctions.Cubic.Out/In)
+// ) : null
+//	A smooth appear/disappear animation, automatically picking the best way to do it based on given object.
+//	Works with ScreenTransforms and with regular Transforms, and if an Image Component is given it will try to fade its alpha!
+//	Doesn't return anything, enables SceneObject on start (or disables on end if !isInAnim).
+//
+//		Example
+//			autoAnimate(script.obj) 									// simply enables and scales-in this SceneObject
+//			autoAnimate(script.obj, .5, 1, false) 						// scale-out this SceneObject after 1 second, with a duration of 0.5s.
+//			autoAnimate(script.image, null, null, false) 				// fade-out this Image component with default settings
+//
+//
+//
+// -
+//
 //
 //
 // degToRad(degrees [Number/vec3]) : number/vec3
@@ -141,8 +174,13 @@
 // -
 //
 //
+//
 // isInFront(pos1 [vec3], pos2 [vec3], fwd [vec3]) : bool
 // 	Checks if pos1 is in front of pos2, assuming pos2 has normalized forward vector fwd.
+//
+//
+//
+// -
 //
 //
 //
@@ -154,13 +192,25 @@
 //
 //
 //
+// -
+//
+//
+//
 // planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
 //	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise.
 //
 //
 //
+// -
+//
+//
+//
 // projectPointToPlane(point [vec3], planePos [vec3], planeFwd [vec3], planeScale [vec2]) : vec2
 // 	Projects a 3D point onto a plane with custom position, orientation, and non-uniform scale. Returns normalized 2D coordinates on plane at this position.
+//
+//
+//
+// -
 //
 //
 //
@@ -170,6 +220,7 @@
 //
 //
 // -
+//
 //
 //
 // hsvToRgb(h [number], s [number], v [number]) : vec3
@@ -183,6 +234,7 @@
 //
 //
 // -
+//
 //
 //
 // DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay object
@@ -212,7 +264,14 @@
 // -
 //
 //
-// instSound(audioAsset [Asset.AudioTrackAsset], volume (optional) [number], fadeInTime (optional) [number], fadeOutTime (optional) [number], offset (optional) [number], mixToSnap (optional) [bool]) : AudioComponent
+// instSound(
+//			audioAsset [Asset.AudioTrackAsset]
+//			volume (optional) [number]
+//			fadeInTime (optional) [number]
+//			fadeOutTime (optional) [number]
+//			offset (optional) [number]
+//			mixToSnap (optional) [bool]
+// ) : AudioComponent
 // 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
 //
@@ -224,6 +283,7 @@
 //
 //
 // -
+//
 //
 //
 // InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number]) : InstSoundPooled Object
@@ -246,6 +306,7 @@
 // -
 //
 //
+//
 // clamp(value [number], low (optional, default 0) [number] ), high (optional, default 1) [number] ) : number
 // 	Returns the clamped value between the low and high values.
 //
@@ -254,24 +315,35 @@
 // -
 //
 //
+//
 // randSeed(seed [int]) : number
 // 	Returns a random value (0-1) based on an input seed. Uses mulberry32.
 //
 //
 //
+// -
+//
+//
+//
 // randInt(min [int], max [int]) : number
 // OR
-// randInt(array [size 2]) : number
-//	Returns a random rounded integer between min and max (inclusive).
-//	The two arguments can be replaced by a single array argument, for example [0, 10] for a random int between 0-10.
+// randInt(range [array size 2]) : number
+// OR
+// randInt(range [vec2]) : number
+//	Returns a random rounded integer between min (inclusive) and max (exclusive).
 //
 //
 //
 // randFloat(min [number], max [number]) : number
 // OR
-// randFloat(array [size 2]) : number
+// randFloat(range [array size 2]) : number
+// OR
+// randFloat(range [vec2]) : number
 //	Returns a random number within a range min (inclusive) and max (exclusive).
-//	The two arguments can be replaced by a single array argument, for example [0, 1] for a random value between 0-1.
+//
+//
+//
+// -
 //
 //
 //
@@ -281,9 +353,8 @@
 //
 //
 // pickRandomDistributed(objects [Object]) : Object
-// 	Picks one of the items in an object, and looks at the item's property called 'chance' to determine the odds of the one to pick.
-//	Provide it with an object looking like the example below.
-//	The 'chance' properties don't have to add up to 1! Their values are normalized before picking a random index.
+// 	Picks one of the items in an object, based on the odds of a property called 'chance'!
+// 	The 'chance' values are automatically normalized, so they don't need to add up to 1 like in this example.
 //
 //		var list = {
 //			item1 : {name:'item1', chance:0.1}, // this item has a 10% chance of being chosen
@@ -291,14 +362,22 @@
 //			item3 : {name:'item3', chance:0.3}, // 30% chance
 //		}
 //		var picked = pickRandomDistributed(list)
-//		picked.name == 'item1', 'item2' or 'item3', based on chance
+//		picked.name == (randomly picked from list)
 //
 //
 //
 // -
 //
 //
-// remap(value [number], low1 [number], high1 [number], low2 (optional, default 0) [number], high2 (optional, default 1) [number], clamped (optional, default false) [Bool]) : number
+//
+// remap(
+//		value [number]
+//		low1 [number]
+//		high1 [number]
+//		low2 (optional, default 0) [number]
+//		high2 (optional, default 1) [number]
+//		clamped (optional, default false) [Bool]
+// ) : number
 // 	Returns value remapped from range low1-high1 to range low2-high2.
 //
 //
@@ -308,7 +387,9 @@
 //	Returns an object containing 'remapped' [number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
 //
 //
+//
 // -
+//
 //
 //
 // encodeFloat(data [number], min [number], max [number]) : vec4
@@ -322,6 +403,7 @@
 //
 //
 // -
+//
 //
 //
 // screenToScreenTransform(screenPos [vec2]) : vec2
@@ -339,8 +421,13 @@
 // -
 //
 //
+//
 // shuffleArray(array [array]) : array
 // 	Returns a randomly shuffled copy of the array.
+//
+//
+//
+// -
 //
 //
 //
@@ -350,6 +437,7 @@
 //
 //
 // -
+//
 //
 //
 // MovingAverage() : MovingAverage Object
@@ -365,6 +453,7 @@
 //
 //
 // -
+//
 //
 //
 // PerformanceStopwatch() : PerformanceStopwatch object
@@ -397,12 +486,14 @@
 // -
 //
 //
+//
 // circularDistance(a [number], b [number], mod [number]) : number
 // 	Returns the closest distance from a to b if the number line is a circle with radius 'mod'. For example: if mod is 1, the distance between 0.9 and 0.1 would be 0.2.
 //
 //
 //
 // -
+//
 //
 //
 // mod(a [number], b [number]) : number
@@ -414,6 +505,7 @@
 // -
 //
 //
+//
 // measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [number]) : vec3
 // 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 //	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
@@ -423,7 +515,12 @@
 // -
 //
 //
-// getAllComponents(componentName (optional) [string], startObj (optional) [SceneObject], dontIncludeStartObj (optional) [bool], maxCount (optional) [number]) : Array (Components)
+//
+// getAllComponents(componentName (optional) [string]
+//					startObj (optional) [SceneObject]
+//					dontIncludeStartObj (optional) [bool]
+//					maxCount (optional) [number]
+// ) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
 //	If no componentName is given, it returns SceneObjects instead.
 //	If no startObj is given, it searches the whole scene.
@@ -437,6 +534,7 @@
 //
 //
 // -
+//
 //
 //
 // parseNewLines(txt [string], customSplit (optional) [string]) : string
@@ -457,12 +555,14 @@
 // -
 //
 //
+//
 // median(arr [Array]) : number
 //	Takes an array of Numbers, and returns the median value.
 //
 //
 //
 // -
+//
 //
 //
 // lookAtUp(posA [vec3], posB [vec3], offset) : quat
@@ -475,6 +575,7 @@
 // -
 //
 //
+//
 // mat4FromDescription(matDescription [string]) : mat4
 //	Returns a mat4, based on a mat4's string description. Useful when trying to retrieve one stored as JSON format.
 //
@@ -483,8 +584,13 @@
 // -
 //
 //
+//
 // wrapFunction(originalFunction [function], newFunction [function]) : function
 //	Wrap two functions into one. Works with arguments.
+//
+//
+//
+// -
 //
 //
 //
@@ -500,12 +606,17 @@
 //
 //
 //
+// -
+//
+//
+//
 // nullish(a, b) : a ?? b
 //	Simple replacement for nullish coalescing operator ('??', useful if this operator doesn't exist)
 //
 //
 //
 // -
+//
 //
 //
 // VisualizePoints() : VisualizePoints object
@@ -1013,6 +1124,58 @@ global.getAllAnimateProperty = function(){
 
 
 
+global.autoAnimate = function(obj, duration, delay, isInAnim, easeFunction){
+	// check object type
+	var fade = obj.getTypeName() == "Component.Image"; // whether this animation should do a fade
+	var img = obj; // store the Image Component
+	if(fade){
+		obj = obj.getSceneObject(); // make sure the 'obj' is a SceneObject
+		var baseColor = img.mainPass.baseColor; // get starting color value
+		if(!baseColor) fade = false; // make sure retrieving baseColor was succesful
+	}
+
+    // defaults
+    if(duration == null) duration = fade ? .5 : .7; // fading is faster by default
+    if(delay == null) delay = 0;
+    if(isInAnim == null) isInAnim = true;
+	if(easeFunction == null) easeFunction = isInAnim ? EaseFunctions.Cubic.Out : EaseFunctions.Cubic.In;
+
+	// get relevant transforms
+    const trf = obj.getTransform(); // Transform
+    const screenTrf = obj.getComponent("Component.ScreenTransform"); // ScreenTransform
+    const startScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
+
+	// create animation
+    const anim = new AnimateProperty(function(v, vLinear){
+        const s = isInAnim ? v : 1-v;
+		const remappedScale = fade ? remap(s, 0, 1, .5, 1) : s; // if also fading, the scale can start halfway through, that looks nicer
+        if(screenTrf){
+            screenTrf.anchors.setSize(startScale.uniformScale(remappedScale));
+        }else{
+            trf.setLocalScale(startScale.uniformScale(remappedScale));
+        }
+
+		if(fade && baseColor){
+			const a = interp(isInAnim?0:1, isInAnim?1:0, vLinear, EaseFunctions.Cubic.InOut);
+			const newColor = new vec4(baseColor.x, baseColor.y, baseColor.z, baseColor.a * a);
+			img.mainPass.baseColor = newColor;
+		}
+    });
+    anim.startFunction = function(){
+        if(isInAnim) obj.enabled = true;
+    }
+    anim.endFunction = function(){
+        if(!isInAnim) obj.enabled = false;
+    }
+    anim.delay = delay;
+    anim.duration = duration;
+	anim.easeFunction = easeFunction;
+    anim.start();
+}
+
+
+
+
 global.degToRad = function(degrees){
 	if(typeof degrees == 'number'){
 		return degrees * Math.PI/180;
@@ -1424,23 +1587,38 @@ global.randSeed = function(seed){
 
 
 global.randInt = function(min, max){
-	var _min = min;
-	var _max = max;
-	if(typeof min != 'number'){
+	var _min;
+	var _max;
+	if(min.x != null){ // assume vec2
+		_min = min.x;
+		_max = min.y;
+	}else if(min[0] != null){ // assume array
 		_min = min[0];
 		_max = min[1];
+	}else{ // number
+		_min = min;
+		_max = max;
 	}
-    _min = Math.ceil(_min);
-    _max = Math.floor(_max);
-    return Math.floor(Math.random() * (_max - _min + 1)) + _min;
+	return Math.floor(remap(Math.random(), 0, 1, _min, _max));
 }
 
 
 
 
 global.randFloat = function(min, max){
-	if(typeof min != 'number') return remap(Math.random(), 0, 1, min[0], min[1]); // assume array instead of numbers
-    return remap(Math.random(), 0, 1, min, max);
+	var _min;
+	var _max;
+	if(min.x != null){ // assume vec2
+		_min = min.x;
+		_max = min.y;
+	}else if(min[0] != null){ // assume array
+		_min = min[0];
+		_max = min[1];
+	}else{ // number
+		_min = min;
+		_max = max;
+	}
+	return remap(Math.random(), 0, 1, _min, _max);
 }
 
 
