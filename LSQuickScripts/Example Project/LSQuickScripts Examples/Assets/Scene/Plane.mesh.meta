@@ -1,0 +1,16 @@
+- !<AssetImportMetadata/a20f4c5d-4e49-4dbb-b705-21fbfe81405e>
+  ImportedAssetIds:
+    FileMesh: !<reference> aefd9efd-cc47-4544-a5c8-853013d4cc30
+  ImporterName: FileMeshImporter
+  PrimaryAsset: !<reference> aefd9efd-cc47-4544-a5c8-853013d4cc30
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    {}
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/e37765dc-36b6-4946-a145-25a5b53d86f4>
+    {}
+  CompressionSettings: !<SingleCompressionSettings/02522b6f-e838-4e37-95a2-cb31350fcbd1>
+    CompressorName: None
+    CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000

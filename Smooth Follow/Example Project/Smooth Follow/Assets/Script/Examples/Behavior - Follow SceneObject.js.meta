@@ -1,0 +1,48 @@
+- !<AssetImportMetadata/fc04337a-f139-4c10-904a-2b9f546dcab1>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> d967a93c-d582-474a-89d1-29339cc84830
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> d967a93c-d582-474a-89d1-29339cc84830
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> 0895c359-b171-4bfd-bc19-c1710a9be8df
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/86cef022-672a-4c53-b380-f11358a68a14>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/0895c359-b171-4bfd-bc19-c1710a9be8df>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    doPosition: false
+    doPositionX: false
+    doPositionY: false
+    doPositionZ: false
+    doRotation: false
+    doScale: false
+    objectToFollow: false
+    smoothing: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - objectToFollow: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      smoothing: !<float> 1.000000
+      doPosition: true
+      doPositionX: true
+      doPositionY: true
+      doPositionZ: true
+      doRotation: true
+      doScale: true
+  ScriptTypes:
+    -
+      {}

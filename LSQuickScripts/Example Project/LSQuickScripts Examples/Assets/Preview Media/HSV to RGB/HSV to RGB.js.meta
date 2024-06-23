@@ -1,0 +1,48 @@
+- !<AssetImportMetadata/1b56a50d-639b-404b-90ed-5f2625415f79>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> d7d1aa06-26e7-4e2a-a07e-f2b0604cbfd2
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> d7d1aa06-26e7-4e2a-a07e-f2b0604cbfd2
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> 3f351f8f-aac2-4d8f-8527-286c4666a444
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/fe162849-93a5-457a-8a16-79d211d79fc6>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/3f351f8f-aac2-4d8f-8527-286c4666a444>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    animate: false
+    hue: false
+    mat: false
+    saturation: false
+    speed: false
+    value: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - mat: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      animate: false
+      Speed: !<float> 0.000000
+      Hue: !<float> 0.000000
+      Saturation: !<float> 0.000000
+      Value: !<float> 0.000000
+      speed: !<float> 0.000000
+      hue: !<float> 0.000000
+      saturation: !<float> 0.000000
+      value: !<float> 0.000000
+  ScriptTypes:
+    -
+      {}
