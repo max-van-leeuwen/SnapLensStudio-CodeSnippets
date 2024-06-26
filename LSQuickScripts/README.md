@@ -1,28 +1,38 @@
-
-# My Cheat Sheet with Handy JS Snippets for Lens Studio
+# 📜 LSQuickScripts
+My Cheat Sheet of Handy JS Snippets for Lens Studio.
 
 *Updated regularly!*
 
+<br>
+
 ## Installation
-Throw `LSQuickScripts.js` on a SceneObject at the top of your scene.<br>Scroll down for a list of all features and how to use them!
-
-## Features
-- Game dev maths helpers
-- Useful classes to create scripted animations or delays
-- Sound instancing solutions
-- Lens Studio API helpers
-- Debugging helpers
-
-[Twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
+Throw `LSQuickScripts.js` on a SceneObject at the top of your scene.
 
 <br>
 
-![LSQuickScripts Example](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Media/preview_LSQS.gif)
+## Features
+- Game dev/maths helpers
+- Useful animation classes (including QuickFlow)
+- Sound instancing and pooling
+- Lens Studio API helpers
+- Debugging helpers
+- and more :)
 
-![QuickFlow Example](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Media/preview_quickflow.gif)
+[Twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
 
 <br><br>
 
+<p align="center">
+	<small><i>Game dev/maths helpers</small></i><br>
+  <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/LSQuickScripts/Media/preview_LSQS.gif" />
+	<br><br><br>
+	<small><i>QuickFlow animations</small></i><br>
+  <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/LSQuickScripts/Media/preview_quickflow.gif" />
+</p>
+
+
+<br><br><br>
+  
 ## Documentation
 
 ```
