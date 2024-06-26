@@ -1,9 +1,9 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>LSQuickScripts 2.22</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.23</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
-//@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/lsquickscripts</a>"}
+//@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
 //@ui {"widget":"separator"}
 //@ui {"widget":"label"}
 
@@ -104,10 +104,10 @@
 //
 //			var anim = new AnimateProperty( updateFunction (optional) )		// create a new animation instance called 'anim'
 //			anim.startFunction = function(){}								// called on animation start
-//			anim.updateFunction = function(v, vLinear){}					// called on each animation frame, with animation value (0-1) as its first argument. the second argument is the linear animation value. these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
+//			anim.updateFunction = function(v, vLinear, runtime){}			// called on each animation frame, with animation value (0-1) as its first argument. the second argument is the linear animation value. these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]). the third argument is runtime (seconds).
 //			anim.endFunction = function(){}									// called on animation end
 //			anim.onReverseChange = function(){}								// called when the forwards direction of the animation is changed
-//			anim.duration = 1												// duration in seconds, default is 1
+//			anim.duration = 1												// duration in seconds, default is 1. tip: for a continuous animation, set duration to Infinity and use the 'runtime' argument in the updateFunction
 //			anim.reverseDuration = 1										// reverse duration in seconds, default is .duration
 //			anim.delay = 0													// delay before starting animation, default is 0
 //			anim.reverseDelay = 0											// delay before starting animation when reversed, default is .delay
@@ -117,10 +117,10 @@
 //			anim.getTimeRatio()												// get current linear animation time (0-1)
 //			anim.setReversed(reverse)										// set animation direction, toggles if no argument given. reverse: 'true' to set to reverse.
 //			anim.getReversed()												// returns true if the animation is currently reversed
-//			anim.isPlaying()												// returns true if the animation is currently playing
+//			anim.isPlaying()												// returns true if the animation is currently playing (waiting for delay also counts as playing)
 //			anim.setCallbackAtTime(v, f)									// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). only 1 callback is supported at this time. call without arguments to clear. v: the linear animation time (0-1) at which to call this callback. f: the function to call.
 //			anim.start(atTime, skipDelay)									// start the animation. atTime: (optional) time ratio (0-1) to start playing from. skipDelay: (optional) ignore the delay value.
-//			anim.stop(callEndFunction)										// stop the animation. callEndFunction: (optional) whether to call the .endFunction, default is false.
+//			anim.stop(callEndFunction)										// stop the animation. callEndFunction: (optional) whether to call the .endFunction (if animation was still playing), default is false.
 //
 //		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
 //
@@ -141,22 +141,53 @@
 //
 //
 //
-// AutoAnimate(obj [SceneObject]) : AutoAnimate object
-//	A simple way to do in/out animations on any object!
+// QuickFlow(obj [SceneObject]) : QuickFlow object
+//	A simple way to animate objects with just a single line of code!
+//	All animations work for orthographic and perspective objects.
+//	Pass 'undefined' for an argument to use its default value.
 //		
-//		Example, showing all properties:
+//		Example:
 //
-//			var anim = new AutoAnimate(script.object)							// create an instance
-//			anim.fadeIn(duration, delay, easeFunction)							// start fade-in (if a visual component is present), automatically enables the sceneobject. arguments are optional. duration: length of animation. delay: wait before animation start. easeFunction: animation look-up curve. defaults differ.
-//			anim.fadeOut(duration, delay, easeFunction)							// start fade-out
-//			anim.scaleIn(duration, delay, easeFunction)							// start scale-in (automatically picks ScreenTransform if present, otherwise uses local scale on the Transform)
-//			anim.scaleOut(duration, delay, easeFunction)						// start scale-out
-//		
-//		Each animation returns the object itself, so they could be chained into a one-liner like so:
-//		
-//			new AutoAnimate(script.object).fadeIn(.5).scaleIn(.5);				// does a fade-in and a scale-in at the same time, with custom durations
+//			var anim = new QuickFlow(script.object)											// create an instance
+//			anim.fadeIn(duration, delay, easeFunction)										// start fade-in (if a visual component is present), automatically enables the sceneobject.
 //
-//		Note: after the last out-animation stops playing, the SceneObject will automatically be disabled.
+//
+//		All animations and their (optional) arguments:
+//
+//			.fadeIn(delay, duration, easeFunction)											// start fade-in (enables SceneObject on start)
+//			.fadeOut(delay, duration, easeFunction)											// start fade-out (disables SceneObject and all running animations on end)
+//			.scaleIn(delay, duration, easeFunction)											// start scale-in (enables SceneObject on start)
+//			.scaleOut(delay, duration, easeFunction)										// start scale-out (disables SceneObject and all running animations on end)
+//			.squeeze(delay, strength, duration)												// do scale squeeze
+//			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
+// 			.scaleTo(delay, toScale, duration, easeFunction)								// scale towards new size (overrides other rotation animations)
+// 			.moveTo(delay, point, duration, easeFunction)									// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
+// 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
+//			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
+//			.keepRotating(delay, speed, axis)												// keep rotating around an axis
+//			.keepBouncingRotation(delay, strength, interval, axis, easeFunction, smoothIn)	// keep bouncing a rotation around an axis
+//			.keepBouncingPosition(delay, distance, interval, axis, easeFunction, smoothIn)	// keep bouncing a position up and down along an axis
+//			.keepBouncingScale(delay, strength, interval, easeFunction, smoothIn)			// keep bouncing a scale
+// 			.stop(delay)																	// stop all active animations (overrides all other animations)
+//			.reset(delay, duration, easeFunction)											// stop and undo all animations, back to original (before animations were applied) (overrides all other animations)
+//			.loop	 																		// repeats all animations added so far (no animations can be added after this)
+//		
+//
+//		Each animation returns the same QuickFlow object, so they can be easily chained into one-liners like so:
+//		
+//			- new QuickFlow(object).rotateAround(0, 1)														// instantly do 1 clockwise rotation
+//			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											// fade-out and scale-out, for 0.5 seconds
+//			- new QuickFlow(object).keepBlinking().squeeze(.5)												// blinking alpha, squeeze after half a second
+//			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), 1).reset(1, .6, EaseFunctions.Bounce.Out)	// move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
+//			- new QuickFlow(object).moveTo(0, new vec2(0,1), 1).reset(1, .6, EaseFunctions.Bounce.Out)		// same as above, but for objects with a ScreenTransform
+//			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		// continuous wiggly animation
+//
+//
+//		Tips:
+//			- the first argument of any animation is always 'delay', which has a default value of 0
+//			- after the last out-animation stops playing, the SceneObject will automatically be disabled
+//			- when chaining animations as a one-liner, it's best to chain them chronologically (so their delay values increase from left to right)
+//			- the overruling animations that influence others (e.g. 'reset' or 'stop') only stop the animations starting before them
 //
 //
 //
@@ -252,6 +283,12 @@
 //			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0')
 //			delayed.now()									// call the function with the given arguments now
 //			delayed.stop()									// this will cancel the scheduled function
+//			delayed.isWaiting()								// returns true if currently counting down to call the function
+//			delayed.createdAtTime							// the time at which this instance was created
+//			delayed.getTimeLeft()							// get the time left before the function is called (null if unused)
+//			delayed.getFramesLeft()							// the frames left before the function is called (null if unused)
+//			delayed.getGivenTime()							// get the amount of time that was last given to wait (null if none yet)
+//			delayed.getGivenFrames()						// get the amount of frames that was last given to wait (null if none yet)
 //
 //		In one-liner format
 //
@@ -436,6 +473,15 @@
 //
 // concatArrays(array [any], array [any]) : array
 // 	Concatinates two arrays and returns the new one.
+//
+//
+//
+// -
+//
+//
+//
+// removeFromArray(item [any, or array of any], array [any]) : array
+// 	Removes item (or an array of items) from the given array, returns the resulting array.
 //
 //
 //
@@ -885,8 +931,9 @@ global.AnimateProperty = function(updateFunction){
 	 * @description called on each animation frame, with animation value (0-1) as its first argument.
 	 * the second argument is the linear animation value.
 	 * these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
+	 * the third argument is runtime (seconds).
 	*/
-	this.updateFunction = updateFunction ? updateFunction : function(v, vLinear){};
+	this.updateFunction = updateFunction ? updateFunction : function(v, vLinear, runtime){};
 
 	/**
 	 * @type {function}
@@ -902,7 +949,8 @@ global.AnimateProperty = function(updateFunction){
 
 	/**
 	 * @type {number}
-	 * @description duration in seconds, default is 1
+	 * @description duration in seconds, default is 1.
+	 * tip: for a continuous animation, set duration to Infinity and use the 'runtime' argument in the updateFunction
 	*/
 	this.duration = 1;
 
@@ -974,7 +1022,7 @@ global.AnimateProperty = function(updateFunction){
 	}
 
 	/**
-	 * @description returns true if the animation is currently playing
+	 * @description returns true if the animation is currently playing (waiting for delay also counts as playing)
 	*/
 	this.isPlaying = function(){
 		return isPlaying;
@@ -1034,12 +1082,13 @@ global.AnimateProperty = function(updateFunction){
 	
 	/**
 	 * @description stop the animation
-	 * @param {boolean} callEndFunction (optional) whether to call the .endFunction, default is false
+	 * @param {boolean} callEndFunction callEndFunction: (optional) whether to call the .endFunction (if animation was still playing), default is false.
 	*/
 	this.stop = function(callEndFunction){
 		stopAnimEvent();
+		var wasPlaying = isPlaying;
 		isPlaying = false;
-		if(callEndFunction) self.endFunction();
+		if(wasPlaying && callEndFunction) self.endFunction();
 	}
 
 
@@ -1056,9 +1105,10 @@ global.AnimateProperty = function(updateFunction){
 		f : null,
 		called : false,
 	}
+	var runtime = 0;
 
 	function setValue(v, lastFrame){
-		self.updateFunction(v, lastFrame ? v : timeRatio); // on last frame, take animation end value
+		self.updateFunction(v, lastFrame ? v : timeRatio, runtime); // on last frame, take animation end value
 	}
 
 	function updateDuration(){
@@ -1066,7 +1116,9 @@ global.AnimateProperty = function(updateFunction){
 	}
 	
 	function animation(){
-		if(!animEvent) return; // if update event was already stopped, prevent this function from being run again
+		if(!animEvent) return; // if update event was already stopped, prevent this function from running again
+
+		runtime += getDeltaTime();
 
 		if(duration == 0){ // if instant
 			timeRatio = reversed ? 0 : 1; // set to limit of allowed range to make the animation stop right away (1 tick of update function will be sent)
@@ -1115,6 +1167,7 @@ global.AnimateProperty = function(updateFunction){
 	function startAnimEvent(){
 		stopAnimEvent(); // stop currently playing (if any)
 		isPlaying = true;
+		runtime = 0;
 		animEvent = script.createEvent("UpdateEvent");
 		animEvent.bind(animation);
 	}
@@ -1151,179 +1204,921 @@ global.getAllAnimateProperty = function(){
 
 
 
-global.AutoAnimate = function(obj){
-	// defaults: fade
-	const fadeDurations = {in: .5, out: .3};
-	const fadeEasing = {in: EaseFunctions.Cubic.InOut, out: EaseFunctions.Cubic.InOut};
+global.QuickFlow = function(obj){
+	// links
+	const trf = obj.getTransform();
+    const screenTrf = obj.getComponent("Component.ScreenTransform"); // if it exists
+	var visual = obj.getComponent("Component.Visual"); // get visual on obj, if any
+	if(visual.mainPass == null) visual = null;
 
-	// defaults: scale
-	const scaleDurations = {in: .5, out: .3};
-	const scaleEasing = {in: EaseFunctions.Cubic.Out, out: EaseFunctions.Cubic.Out};
-	
+	// starting values (some animators update these on animation end)
+	var startPosition;
+    var startScale;
+	var startRotation;
+	var startBaseColor;
+	updateStartingValues();
+
+	// true starting values (in case of reset)
+	const trueEnabled = obj.enabled;
+	const truePosition = startPosition;
+	const trueScale = startScale;
+	const trueRotation = startRotation;
+	const trueBaseColor = startBaseColor;
+
+	// applying-transforms-event
+	var updateEvent = script.createEvent("LateUpdateEvent"); // after all animators are done
+	updateEvent.bind(onUpdate);
+	updateEvent.enabled = false;
+	var newPosition; // position to apply
+	var newScale; // scale
+	var newRotation; // rotation
+	var newBaseColor; // color/alpha
+
 	// placeholders
 	var self = this;
+	var allCommands = []; // all given animation commands stored in case of looping
+	var looping; // if currently playing the loop
 
-	// scale
-	const trf = obj.getTransform();
-    const screenTrf = obj.getComponent("Component.ScreenTransform");
-    const startScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value (depending on transform type)
-
-	// fade
-	var visual = obj.getComponent("Component.Visual"); // get visual on obj (if any)
-	var baseColor = visual ? visual.mainPass.baseColor : null; // get starting color value
-
-	// animators
+	// in/out animators (reused)
 	var fadeAnim;
 	var scaleAnim;
-	var animators;
+
+	// non-relative animators (reused because it's not possible to run multiple of these simultaneously)
+	var nrPositionAnim;
+	var nrScaleAnim;
+	var nrRotationAnim;
+	var nrBaseColorAnim;
+
+	// lists
+	var animators; // all animators (one-off animators are assigned in real-time and deleted on end)
+	var inOutAnimators; // in/out animators (to check when to enable/disable obj)
+	var delays = []; // all current delays
 
 
 
+	// initialize
 	function init(){
-		// create animations
-		fadeAnim = new AnimateProperty(function(v){
-			const newColor = new vec4(baseColor.x, baseColor.y, baseColor.z, baseColor.a * v);
-			visual.mainPass.baseColor = newColor;
-		});
-		fadeAnim.endFunction = function(){
-			if(fadeAnim.getReversed()){ // if end of out-anim
-				if(!areOtherAnimatorsPlaying()){ // if no other animators are playing
-					obj.enabled = false; // disable this sceneobject
-				}
-			}
-		}
+		// initialize start values
+		resetNewValues();
 
-		scaleAnim = new AnimateProperty(function(v){
-			if(screenTrf){
-				screenTrf.anchors.setSize(startScale.uniformScale(v));
-			}else{
-				trf.setLocalScale(startScale.uniformScale(v));
-			}
-		});
-		scaleAnim.endFunction = function(){
-			if(scaleAnim.getReversed()){ // if end of out-anim
-				if(!areOtherAnimatorsPlaying()){ // if no other animators are playing
-					obj.enabled = false; // disable this sceneobject
-				}
-			}
-		}
+		// create in/out animators
+		fadeAnim = new AnimateProperty();
+		scaleAnim = new AnimateProperty();
 
 		// collect
-		animators = [fadeAnim, scaleAnim];
+		inOutAnimators = [fadeAnim, scaleAnim];
+		animators = [fadeAnim, scaleAnim]; // all animators (will be updated on runtime)
+
+		// assign fade anim
+			fadeAnim.updateFunction = function(v){
+				newBaseColor = new vec4(newBaseColor.x, newBaseColor.y, newBaseColor.z, newBaseColor.a * v);
+			}
+			fadeAnim.endFunction = function(){
+				if(fadeAnim.getReversed()){ // if end of out-anim
+					onUpdate(null, true); // one last frame before stopping event, current transforms state will be starting point for new animations
+					stopAnimatorsExcept(inOutAnimators);
+					obj.enabled = false; // disable this sceneobject
+					resetStartingValues(); // reset all values to true values
+				}
+			}
+
+		// assign scale anim
+			scaleAnim.updateFunction = function(v){
+				newScale = newScale.uniformScale(v);
+
+			}
+			scaleAnim.endFunction = function(){
+				if(scaleAnim.getReversed()){ // if end of out-anim
+					onUpdate(null, true); // one last frame before stopping event, current transforms state will be starting point for new animations
+					stopAnimatorsExcept(inOutAnimators);
+					obj.enabled = false; // disable this sceneobject
+					resetStartingValues(); // reset all values to true values
+				}
+			}
 	}
 	init();
 
+	// a non-relative animation is an animation that is absolute - it doesn't use values like 'newScale', but instead overwrites the scale completely.
+	// running multiple non-relative animations simultaneously will stop/override the previous ones
+	function nonRelativeAnimationClear(anim){
+		if(anim == nrScaleAnim){ // scale anim
+			newScale = startScale; // reset relevant start values
+			if(nrScaleAnim){ // stop existing non-relative scale anim
+				nrScaleAnim.stop();
+				nrScaleAnim.endFunction();
+			}
+		}
+	}
 
+	function animationStarted(anim){
+		// start transform apply event
+		updateEvent.enabled = true;
+
+		// if a temp animation (not in/out)
+		if(!inOutAnimators.includes(anim)){
+			animators.push(anim); // register to animators list temporarily
+			anim.endFunction = wrapFunction(anim.endFunction, function(){ // wrap extra end function
+				removeFromArray(anim, animators); // remove from list
+				if(!areOtherAnimatorsPlaying(animators)){ // if no other animators are playing
+					updateEvent.enabled = false; // stop the update event
+				}
+				anim.endFunction = function(){}; // reset on end, so this can only be run once per temporary animation
+			});
+		}
+	}
+
+	// at the end of each animation frame, apply all transformations (doing this once at the end allows chaining the QuickFlow animations)
+	function onUpdate(eventArgs, updateStartingValuesInbetween){
+		// apply transforms
+		if(screenTrf){
+			screenTrf.anchors.setCenter(newPosition);
+			screenTrf.rotation = newRotation;
+			screenTrf.anchors.setSize(newScale);
+		}else{
+			trf.setLocalPosition(newPosition);
+			trf.setLocalRotation(newRotation);
+			trf.setLocalScale(newScale);
+		}
+		if(visual) visual.mainPass.baseColor = newBaseColor;
+		
+		// reset to defaults for next frame
+		if(updateStartingValuesInbetween) updateStartingValues();
+		resetNewValues();
+	}
 
 	// returns true if other animations are still playing
-	function areOtherAnimatorsPlaying(){
-		for(var i = 0; i < animators.length; i++){
-			if(animators[i].isPlaying()) return true;
+	function areOtherAnimatorsPlaying(list){
+		for(var i = 0; i < list.length; i++){
+			if(list[i].isPlaying()) return true;
 		}
 		return false;
 	}
+
+	// stop list of animators
+	function stopAnimators(anims){
+		updateEvent.enabled = false;
+		for(var i = 0; i < anims.length; i++){
+			anims[i].stop();
+			anims[i].endFunction(); // always call end function even if not a completed animation
+		}
+	}
+
+	// stop all animators and update, except for anim (can be array) (prevents endFunction from calling itself repeatedly)
+	function stopAnimatorsExcept(anim){
+		var animatorsList = removeFromArray(anim, animators); // all except for anim(s)
+		stopAnimators(animatorsList)
+	}
+
+	// stop all current delays
+	function stopDelays(fromBeforeTime){
+		fromBeforeTime = nullish(fromBeforeTime, Infinity); // stop all delays if no time cutoff given
+
+		for(var i = 0; i < delays.length; i++){
+			var delay = delays[i];
+			if(delay){
+				if((delay.createdAtTime + (delay.getGivenTime() || 0)) < fromBeforeTime){
+					delay.stop(); // stop delays from before cutoff
+				}
+			}
+		}
+		delays = [];
+	}
+
+	// create a delay and register it in a way so it's easy to stop it later
+	function CreateDelay(f){
+		var delay = new DoDelay(f);
+		delays.push(delay);
+		return delay;
+	}
+
+	// set the current transforms as the starting point for new animations
+	function updateStartingValues(){
+		startPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
+		startScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
+		startRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
+		startBaseColor = visual ? visual.mainPass.baseColor : null; // get starting color value
+	}
+
+	// set the new transforms as the starting point for new animations
+	function updateNewValues(){
+		newPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
+		newScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
+		newRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
+		newBaseColor = visual ? visual.mainPass.baseColor : null; // get starting color value
+	}
+
+	// resetting start values to true values
+	function resetStartingValues(){
+		startPosition = truePosition;
+		startRotation = trueRotation;
+		startScale = trueScale;
+		if(visual) startBaseColor = trueBaseColor;
+	}
+
+	// resetting newValues to the start values, so they can be chained for the next frame
+	function resetNewValues(){
+		newPosition = startPosition;
+		newRotation = startRotation;
+		newScale = startScale;
+		if(visual) newBaseColor = startBaseColor;
+	}
+
+	function registerCommand(f, args){
+		if(looping) return; // don't add commands if currently playing a loop
+		var item = {f, args};
+		allCommands.push(item);
+	}
+
+	function loopCommands(){
+		looping = true;
+		resetStartingValues();
+		for(var i = 0; i < allCommands.length; i++){
+			const item = allCommands[i];
+			item.f.apply(this, item.args);
+		}
+	}
+
+
+
+	// --- animations
 
 
 
 	/**
 	 * @description start fade-in
+	 * (enables SceneObject on start)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} duration duration - default: .5 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
 	*/
-	this.fadeIn = function(duration, delay, easeFunction){
+	this.fadeIn = function(delay = 0, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.fadeIn, [...arguments]);
+
 		if(!visual) return self; // if no visual present, ignore
 
-		// defaults
-		duration = nullish(duration, fadeDurations.in);
-		delay = nullish(delay, 0);
-		easeFunction = nullish(easeFunction, fadeEasing.in);
+		new CreateDelay(function(){
+			// enable object on start
+			obj.enabled = true;
+	
+			// animation
+			fadeAnim.setReversed(false);
+			fadeAnim.duration = duration;
+			fadeAnim.easeFunction = easeFunction;
+			fadeAnim.start();
+	
+			// register this animation
+			animationStarted(fadeAnim);
+		}).byTime(delay);
 
-		// enable object on start
-		obj.enabled = true;
-
-		// animation
-		fadeAnim.setReversed(false);
-		fadeAnim.duration = duration;
-		fadeAnim.delay = delay;
-		fadeAnim.easeFunction = easeFunction;
-		fadeAnim.start();
-
-		// return same object to chain animations
+		// return to allow chaining
 		return self;
 	}
 
 	/**
 	 * @description start fade-out
+	 * (disables SceneObject and all running animations on end)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} duration duration - default: .3 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
 	*/
-	this.fadeOut = function(duration, delay, easeFunction){
+	this.fadeOut = function(delay = 0, duration = .3, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.fadeOut, [...arguments]);
+
 		if(!visual) return self; // if no visual present, ignore
 
-		// defaults
-		duration = nullish(duration, fadeDurations.out);
-		delay = nullish(delay, 0);
-		easeFunction = nullish(easeFunction, fadeEasing.out);
+		new CreateDelay(function(){
+			// animation
+			fadeAnim.setReversed(true);
+			fadeAnim.duration = duration;
+			fadeAnim.easeFunction = easeFunction;
+			fadeAnim.start();
+	
+			// register this animation
+			animationStarted(fadeAnim);
+		}).byTime(delay);
 
-		// animation
-		fadeAnim.setReversed(true);
-		fadeAnim.duration = duration;
-		fadeAnim.delay = delay;
-		fadeAnim.easeFunction = easeFunction;
-		fadeAnim.start();
-
-		// return same object to chain animations
+		// return to allow chaining
 		return self;
 	}
 
 	/**
 	 * @description start scale-in
+	 * (enables SceneObject on start)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} duration duration - default: .5 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	*/
-	this.scaleIn = function(duration, delay, easeFunction){
-		// defaults
-		duration = nullish(duration, scaleDurations.in);
-		delay = nullish(delay, 0);
-		easeFunction = nullish(easeFunction, scaleEasing.in);
+	this.scaleIn = function(delay = 0, duration = .5, easeFunction = EaseFunctions.Cubic.Out){
+		// register
+		registerCommand(this.scaleIn, [...arguments]);
 
-		// enable object on start
-		obj.enabled = true;
+		new CreateDelay(function(){
+			// enable object on start
+			obj.enabled = true;
+	
+			// animation
+			scaleAnim.setReversed(false);
+			scaleAnim.duration = duration;
+			scaleAnim.easeFunction = easeFunction;
+			scaleAnim.start();
+	
+			// register this animation
+			animationStarted(scaleAnim);
+		}).byTime(delay);
 
-		// animation
-		scaleAnim.setReversed(false);
-		scaleAnim.duration = duration;
-		scaleAnim.delay = delay;
-		scaleAnim.easeFunction = easeFunction;
-		scaleAnim.start();
-
-		// return same object to chain animations
+		// return to allow chaining
 		return self;
 	}
 
 	/**
 	 * @description start scale-out
+	 * (disables SceneObject and all running animations on end)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} duration duration - default: .3 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	*/
-	this.scaleOut = function(duration, delay, easeFunction){
-		// defaults
-		duration = nullish(duration, scaleDurations.out);
-		delay = nullish(delay, 0);
-		easeFunction = nullish(easeFunction, scaleEasing.out);
+	this.scaleOut = function(delay = 0, duration = .3, easeFunction = EaseFunctions.Cubic.Out){
+		// register
+		registerCommand(this.scaleOut, [...arguments]);
 
-		// enable object on start
-		obj.enabled = true;
+		new CreateDelay(function(){
+			// animation
+			scaleAnim.setReversed(true);
+			scaleAnim.duration = duration;
+			scaleAnim.easeFunction = easeFunction;
+			scaleAnim.start();
+	
+			// register this animation
+			animationStarted(scaleAnim);
+		}).byTime(delay);
 
-		// animation
-		scaleAnim.setReversed(true);
-		scaleAnim.duration = duration;
-		scaleAnim.delay = delay;
-		scaleAnim.easeFunction = easeFunction;
-		scaleAnim.start();
-
-		// return same object to chain animations
+		// return to allow chaining
 		return self;
 	}
 
 	/**
-	 * @description stop all
+	 * @description do scale squeeze
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} strength strength - default: .5 (multiplier)
+	 * @param {number} duration duration - default: .75 seconds
 	*/
-	this.stop = function(){
-		fadeAnim.stop();
-		scaleAnim.stop();
+	this.squeeze = function(delay = 0, strength = .5, duration = .75){
+		// register
+		registerCommand(this.squeeze, [...arguments]);
+		
+		new CreateDelay(function(){
+			// prepare strength value for remap
+			strength += 1;
+
+			// animation
+			var squeezeAnim = new AnimateProperty(function(v, vL){
+				let r = centerRemap(vL, .3, .1); // 0-1-0 with custom center and width
+				r = interp(0, 1, r.remapped, r.passedCenter ? EaseFunctions.Bounce.In : EaseFunctions.Quartic.InOut); // easing
+	
+				// stretch and squeeze amounts
+				let squeeze = remap(r, 0, 1, 1, 1/strength);
+				let stretch = remap(r, 0, 1, 1, strength);
+	
+				// squeeze transform
+				if(screenTrf){
+					let mult = new vec2(squeeze, stretch);
+					newScale = newScale.mult(mult)
+				}else{
+					let mult = new vec3(squeeze, stretch, squeeze);
+					newScale = newScale.mult(mult)
+				}
+			});
+			squeezeAnim.duration = duration;
+			squeezeAnim.start();
+			
+			// register this temp animation
+			animationStarted(squeezeAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description do rotational swirl
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} rotations rotations - default: 1 full rotations
+	 * @param {vec3} axis axis - default: vec3.forward()
+	 * @param {number} duration duration - default: 1 second
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
+	*/
+	this.rotateAround = function(delay = 0, rotations = 1, axis = vec3.forward(), duration = 1, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.rotateAround, [...arguments]);
+
+		new CreateDelay(function(){
+			let rotateAmount = Math.PI * 2 * rotations;
+	
+			// animation
+			var rotateAnim = new AnimateProperty(function(v){
+				if(screenTrf){
+					let rot = quat.angleAxis(v * -rotateAmount, axis);
+					newRotation = newRotation.multiply(rot);
+				}else{
+					let rot = quat.angleAxis(v * -rotateAmount, axis);
+					newRotation = newRotation.multiply(rot);
+				}
+			});
+			rotateAnim.easeFunction = easeFunction;
+			rotateAnim.duration = duration;
+			rotateAnim.start();
+			
+			// register this temp animation
+			animationStarted(rotateAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description scale towards new size
+	 * (overrides other rotation animations)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {(vec2|vec3)} toScale toScale - default: original scale (before animations were applied)
+	 * @param {number} duration duration - default: .5 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
+	*/
+	this.scaleTo = function(delay = 0, toScale = trueScale, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.scaleTo, [...arguments]);
+
+		new CreateDelay(function(){
+			// clear non-relative animation
+			nonRelativeAnimationClear(nrScaleAnim);
+	
+			// animation
+			nrScaleAnim = new AnimateProperty(function(v){
+				if(screenTrf){
+					newScale = vec2.lerp(startScale, toScale, v);
+				}else{
+					newScale = vec3.lerp(startScale, toScale, v);
+				}
+			});
+			nrScaleAnim.easeFunction = easeFunction;
+			nrScaleAnim.duration = duration;
+			nrScaleAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				startScale = screenTrf?screenTrf.anchors.getSize():trf.getLocalScale();
+			}
+			nrScaleAnim.start();
+	
+			// register this temp animation
+			animationStarted(nrScaleAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description move towards new position (local screen space if ScreenTransform, world space if Transform)
+	 * (overrides other position animations)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {(vec2|vec3)} point point - default: original position (before animations were applied)
+	 * @param {number} duration duration - default: .5 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
+	*/
+	this.moveTo = function(delay = 0, point = truePosition, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.moveTo, [...arguments]);
+
+		new CreateDelay(function(){
+			// clear non-relative animation
+			nonRelativeAnimationClear(nrPositionAnim);
+	
+			// convert toPosition from world space to local space on animation start (if not ScreenTransform)
+			if(!screenTrf){
+				var parent = obj.getParent(); // use parent's transform for local-to-world conversion
+				if(parent){
+					const mat = parent.getTransform().getInvertedWorldTransform();
+					point = mat.multiplyPoint(point);
+				}
+			}
+	
+			// animation
+			nrPositionAnim = new AnimateProperty(function(v){
+				if(screenTrf){
+					newPosition = vec2.lerp(startPosition, point, v);
+				}else{
+					newPosition = vec3.lerp(startPosition, point, v);
+				}
+			});
+			nrPositionAnim.easeFunction = easeFunction;
+			nrPositionAnim.duration = duration;
+			nrPositionAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				startPosition = screenTrf?screenTrf.anchors.getCenter():trf.getLocalPosition();
+			}
+			nrPositionAnim.start();
+	
+			// register this temp animation
+			animationStarted(nrPositionAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description keep blinking
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} interval interval - default: 1 second
+	 * @param {number} strength strength - default: .5 (multiplier, between 0-1)
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Sinusoidal.InOut
+	*/
+	this.keepBlinking = function(delay = 0, interval = 1, strength = .5, easeFunction = EaseFunctions.Sinusoidal.InOut){
+		// register
+		registerCommand(this.keepBlinking, [...arguments]);
+
+		if(!visual) return self; // if no visual present, ignore
+		new CreateDelay(function(){
+			// animation
+			var blinkAnim = new AnimateProperty(function(v, vL, runtime){
+				const fraction = (runtime%interval) / interval;
+				const centerRemapped = 1-centerRemap(fraction).remapped; // remap around center, start at 1
+				const interpolated = remap(interp(0, 1, centerRemapped, easeFunction), 0, 1, 1-strength, 1); // apply strength and easing
+				newBaseColor = new vec4(newBaseColor.x, newBaseColor.y, newBaseColor.z, newBaseColor.a * interpolated);
+			});
+			blinkAnim.easeFunction = EaseFunctions.Linear.InOut; // easefunction is used inside of the update event instead
+			blinkAnim.duration = Infinity;
+			blinkAnim.delay = delay;
+			blinkAnim.start();
+			
+			// register this temp animation
+			animationStarted(blinkAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description rotate to look at point (local screen space if ScreenTransform, world space if Transform)
+	 * (overrides other rotation animations)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {(vec2|vec3)} point point - default: rotates back to original rotation (before animations were applied)
+	 * @param {number} duration duration - default: .5 seconds
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
+	*/
+	this.lookAt = function(delay = 0, point, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.lookAt, [...arguments]);
+
+		new CreateDelay(function(){
+			// clear non-relative animation
+			nonRelativeAnimationClear(nrRotationAnim);
+
+			var toRotation;
+			if(screenTrf){
+				if(!point){
+					toRotation = trueRotation;
+				}else{
+					var vectorX = point.x - startPosition.x;
+					var vectorY = point.y - startPosition.y;
+					var angle = Math.atan2(vectorY, vectorX);
+					toRotation = quat.angleAxis(angle, vec3.forward());
+				}
+			}else{
+				if(point){
+					// convert point from world space to local space on animation start (if not ScreenTransform)
+					var parent = obj.getParent(); // use parent's transform for local-to-world conversion
+					if(parent){
+						const mat = parent.getTransform().getInvertedWorldTransform();
+						point = mat.multiplyPoint(point);
+					}
+					toRotation = quat.lookAt(point, vec3.up());
+				}else{
+					toRotation = trueRotation
+				}
+			}
+	
+			// animation
+			nrRotationAnim = new AnimateProperty(function(v){
+				newRotation = quat.slerp(startRotation, toRotation, v);
+			});
+			nrRotationAnim.easeFunction = easeFunction;
+			nrRotationAnim.duration = duration;
+			nrRotationAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				startRotation = screenTrf?screenTrf.rotation:trf.getLocalRotation();
+			}
+			nrRotationAnim.start();
+	
+			// register this temp animation
+			animationStarted(nrRotationAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description keep rotating around an axis
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} speed speed - default: 1 rotation/second
+	 * @param {vec3} axis axis - default: vec3.forward()
+	*/
+	this.keepRotating = function(delay = 0, speed = 1, axis = vec3.forward()){
+		// register
+		registerCommand(this.keepRotating, [...arguments]);
+
+		new CreateDelay(function(){
+			// animation
+			var rotatingAnim = new AnimateProperty(function(v, vL, runtime){
+				const angle = runtime * speed * Math.PI*2;
+				newRotation = newRotation.multiply(quat.angleAxis(angle, axis));
+			});
+			rotatingAnim.easeFunction = EaseFunctions.Linear.InOut; // easefunction is used inside of the update event instead
+			rotatingAnim.duration = Infinity;
+			rotatingAnim.delay = delay;
+			rotatingAnim.start();
+			
+			// register this temp animation
+			animationStarted(rotatingAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description keep bouncing a rotation around an axis
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds seconds
+	 * @param {number} strength strength - default: .1 full rotations
+	 * @param {number} interval interval - default: .75 seconds
+	 * @param {vec3} axis axis - default: vec3.forward()
+	 * @param {function} easeFunction easeFunction - EaseFunctions.Sinusoidal.InOut
+	 * @param {number} smoothIn smoothIn - smoothly animating the strength on animation start - default: .5 seconds
+	*/
+	this.keepBouncingRotation = function(delay = 0, strength = .1, interval = .75, axis = vec3.forward(), easeFunction = EaseFunctions.Sinusoidal.InOut, smoothIn = .5){
+		// register
+		registerCommand(this.keepBouncingRotation, [...arguments]);
+
+		new CreateDelay(function(){
+			const startTime = getTime();
+
+			// animation
+			var rotatingAnim = new AnimateProperty(function(v, vL, runtime){
+				const smoothInStrength = interp(0, 1, nullish(clamp((getTime()-startTime)/smoothIn), 1), EaseFunctions.Cubic.InOut); // smoothly animating in
+				let fraction = (runtime%interval) / interval;
+				fraction = (fraction+.25) % 1; // start centerRemapped at .5, so get fraction at half of that
+				const centerRemapped = centerRemap(fraction).remapped; // remap around center
+				const remapped = remap(interp(0, 1, centerRemapped, easeFunction), 0, 1, -1, 1); // apply strength and easing
+				const angle = remapped * (strength * smoothInStrength) * Math.PI * 2;
+				newRotation = newRotation.multiply(quat.angleAxis(angle, axis));
+			});
+			rotatingAnim.easeFunction = EaseFunctions.Linear.InOut; // easefunction is used inside of the update event instead
+			rotatingAnim.duration = Infinity;
+			rotatingAnim.delay = delay;
+			rotatingAnim.start();
+			
+			// register this temp animation
+			animationStarted(rotatingAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description keep bouncing a position up and down along an axis
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} distance distance - default: 1 local screen space if ScreenTransform, 10 world space if Transform
+	 * @param {number} interval interval - default: 1 second
+	 * @param {(vec2|vec3)} axis axis - default: up (vec2.up() if ScreenTransform, vec3.up() if Transform)
+	 * @param {function} easeFunction easeFunction - EaseFunctions.Sinusoidal.InOut
+	 * @param {number} smoothIn smoothIn - smoothly animating the strength on animation start - default: .5 seconds
+	*/
+	this.keepBouncingPosition = function(delay = 0, distance = screenTrf?1:10, interval = 1, axis = screenTrf?vec2.up():vec3.up(), easeFunction = EaseFunctions.Sinusoidal.InOut, smoothIn = .5){
+		// register
+		registerCommand(this.keepBouncingPosition, [...arguments]);
+
+		new CreateDelay(function(){
+			const startTime = getTime();
+
+			// animation
+			var positioningAnim = new AnimateProperty(function(v, vL, runtime){
+				const smoothInStrength = interp(0, 1, nullish(clamp((getTime()-startTime)/smoothIn), 0), EaseFunctions.Cubic.InOut); // smoothly animating in
+				let fraction = (runtime%interval) / interval;
+				fraction = (fraction+.25) % 1; // start centerRemapped at .5, so get fraction at half of that
+				const centerRemapped = centerRemap(fraction).remapped; // remap around center, start at 1
+				const move = axis.uniformScale(remap(interp(0, 1, centerRemapped, easeFunction), 0, 1, -1, 1) * distance * smoothInStrength); // apply strength and easing
+				newPosition = newPosition.add(move);
+			});
+			positioningAnim.easeFunction = EaseFunctions.Linear.InOut; // easefunction is used inside of the update event instead
+			positioningAnim.duration = Infinity;
+			positioningAnim.delay = delay;
+			positioningAnim.start();
+			
+			// register this temp animation
+			animationStarted(positioningAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description keep bouncing a scale
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} strength strength - default: .25 (multiplier of local scale)
+	 * @param {number} interval interval - default: 1 second
+	 * @param {function} easeFunction easeFunction - EaseFunctions.Sinusoidal.InOut
+	 * @param {number} smoothIn smoothIn - smoothly animating the strength on animation start - default: .5 seconds
+	*/
+	this.keepBouncingScale = function(delay = 0, strength = .25, interval = 1, easeFunction = EaseFunctions.Sinusoidal.InOut, smoothIn = .5){
+		// register
+		registerCommand(this.keepBouncingScale, [...arguments]);
+
+		new CreateDelay(function(){
+			const startTime = getTime();
+
+			// animation
+			var scalingAnim = new AnimateProperty(function(v, vL, runtime){
+				const smoothInStrength = interp(0, 1, nullish(clamp((getTime()-startTime)/smoothIn), 0), EaseFunctions.Cubic.InOut); // smoothly animating in
+				let fraction = (runtime%interval) / interval;
+				fraction = (fraction+.25) % 1; // start centerRemapped at .5, so get fraction at half of that
+				const centerRemapped = centerRemap(fraction).remapped; // remap around center, start at 1
+				const resize = remap(interp(0, 1, centerRemapped, easeFunction), 0, 1, 1-strength * smoothInStrength, 1+strength * smoothInStrength); // apply strength and easing
+				newScale = newScale.uniformScale(resize);
+			});
+			scalingAnim.easeFunction = EaseFunctions.Linear.InOut; // easefunction is used inside of the update event instead
+			scalingAnim.duration = Infinity;
+			scalingAnim.delay = delay;
+			scalingAnim.start();
+			
+			// register this temp animation
+			animationStarted(scalingAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description stop all active animations
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	*/
+	this.stop = function(delay = 0){
+		// register
+		registerCommand(this.stop, [...arguments]);
+
+		new CreateDelay(function(){
+			stop();
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	function stop(){
+		stopDelays(getTime());
+		stopAnimators(animators);
+		obj.enabled = trueEnabled; // out-anims disable the object on endFunction, but when an out-anim is stopped prematurely the object should be enabled
+		updateStartingValues();
+		updateNewValues();
+	}
+
+	/**
+	 * @description return all values back to original (before animations were applied)
+	 * (overrides all other animations)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay -  default: 0
+	 * @param {number} duration duration -  default: .5
+	 * @param {function} easeFunction easeFunction -  default: EaseFunctions.Cubic.InOut
+	*/
+	this.reset = function(delay = 0, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.reset, [...arguments]);
+
+		new CreateDelay(function(){
+			stop();
+			
+			// reset starting values to true start instead of to current
+			updateNewValues();
+
+			// enable object on start
+			obj.enabled = trueEnabled;
+			
+			// clear non-relative animations
+			nonRelativeAnimationClear(nrPositionAnim);
+			nonRelativeAnimationClear(nrScaleAnim);
+			nonRelativeAnimationClear(nrRotationAnim);
+			nonRelativeAnimationClear(nrBaseColorAnim);
+	
+			
+			// convert toPosition from world space to local space on animation start (if not ScreenTransform)
+			var toPosition = truePosition;
+			if(!screenTrf){
+				var parent = obj.getParent(); // use parent's transform for local-to-world conversion
+				if(parent){
+					const mat = parent.getTransform().getInvertedWorldTransform();
+					toPosition = mat.multiplyPoint(toPosition);
+				}
+			}
+	
+			// position
+			nrPositionAnim = new AnimateProperty(function(v){
+				if(screenTrf){
+					newPosition = vec2.lerp(startPosition, toPosition, v);
+				}else{
+					newPosition = vec3.lerp(startPosition, toPosition, v);
+				}
+			});
+			nrPositionAnim.easeFunction = easeFunction;
+			nrPositionAnim.duration = duration;
+			nrPositionAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				updateStartingValues();
+			}
+			nrPositionAnim.start();
+	
+			// scale
+			nrScaleAnim = new AnimateProperty(function(v){
+				if(screenTrf){
+					newScale = vec2.lerp(startScale, trueScale, v);
+				}else{
+					newScale = vec3.lerp(startScale, trueScale, v);
+				}
+			});
+			nrScaleAnim.easeFunction = easeFunction;
+			nrScaleAnim.duration = duration;
+			nrScaleAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				updateStartingValues();
+			}
+			nrScaleAnim.start();
+
+			// rotation
+			nrRotationAnim = new AnimateProperty(function(v){
+				newRotation = quat.slerp(startRotation, trueRotation, v);
+			});
+			nrRotationAnim.easeFunction = easeFunction;
+			nrRotationAnim.duration = duration;
+			nrRotationAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				updateStartingValues();
+			}
+			nrRotationAnim.start();
+
+			// basecolor
+			if(visual){
+				nrBaseColorAnim = new AnimateProperty(function(v){
+					newBaseColor = vec4.lerp(startBaseColor, trueBaseColor, v);
+				});
+				nrBaseColorAnim.easeFunction = easeFunction;
+				nrBaseColorAnim.duration = duration;
+				nrBaseColorAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+					updateStartingValues();
+				}
+				nrBaseColorAnim.start();
+			}
+	
+
+			// register this temp animation
+			animationStarted(nrPositionAnim);
+			animationStarted(nrScaleAnim);
+			animationStarted(nrRotationAnim);
+			if(visual) animationStarted(nrBaseColorAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+	/**
+	 * @description repeats all animations added so far
+	 * (no animations can be added after this)
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} cutoffAfter cutoffAfter - delay before starting the loop
+	*/
+	this.loop = function(cutoffAfter = 1){
+		registerCommand(this.loop, [...arguments]);
+
+		new CreateDelay(function(){
+			stop();
+			loopCommands();
+		}).byTime(cutoffAfter);
+
+		// return to allow chaining
+		return self;
 	}
 }
 
@@ -1517,6 +2312,51 @@ global.DoDelay = function(func, args){
 	this.args = args;
 
 	/**
+	 * @description returns true if currently counting down to call the function
+	*/
+	this.isWaiting = () => !!waitEvent;
+
+	/**
+	 * @type {number}
+	 * @description the time at which this instance was created
+	*/
+	this.createdAtTime = getTime();
+
+	/**
+	 * @type {number}
+	 * @description get the time left before the function is called (null if unused)
+	*/
+	this.getTimeLeft = function(){
+		if(!waitEvent || waitEvent.getTypeName() != "DelayedCallbackEvent") return;
+		return waitEvent.getTimeLeft();
+	};
+
+	/**
+	 * @type {number}
+	 * @description the frames left before the function is called (null if unused)
+	*/
+	this.getFramesLeft = () => framesLeft;
+
+	/**
+	 * @type {number}
+	 * @description get the amount of time that was last given to wait (null if none yet)
+	*/
+	this.getGivenTime = () => givenTime;
+
+	/**
+	 * @type {number}
+	 * @description get the amount of frames that was last given to wait (null if none yet)
+	*/
+	this.getGivenFrames = () => givenFrames;
+
+
+
+	var framesLeft;
+	var givenTime;
+	var givenFrames;
+
+
+	/**
 	 * @argument {number} n
 	 * @description schedule a function by n frames (int Number, will be rounded)
 	*/
@@ -1534,10 +2374,15 @@ global.DoDelay = function(func, args){
 		}
 
 		var wait = n == undefined ? 1 : Math.round(n); // if no arg n given, do on next frame, otherwise round n to whole frames for delay time
+		givenFrames = wait;
 		function onUpdate(){
+			framesLeft = wait;
+
 			if(wait <= 0){
-				script.removeEvent(waitEvent);
 				keepAlive.exec();
+				script.removeEvent(waitEvent);
+				waitEvent = null;
+				framesLeft = null;
 			}
 			wait--;
 		}
@@ -1545,8 +2390,10 @@ global.DoDelay = function(func, args){
 		stopWaitEvent();
 
 		if(wait == 0){ // instant if n is 0
+			framesLeft = 0;
 			keepAlive.exec();
 		}else{
+			framesLeft = wait;
 			waitEvent = script.createEvent("UpdateEvent");
 			waitEvent.bind(onUpdate);
 		}
@@ -1567,11 +2414,15 @@ global.DoDelay = function(func, args){
 		stopWaitEvent();
 
 		var wait = t;
+		givenTime = wait;
 		if(wait == 0 || wait == undefined){
 			keepAlive.exec();
 		}else{
 			waitEvent = script.createEvent("DelayedCallbackEvent");
-			waitEvent.bind(keepAlive.exec.bind(keepAlive));
+			waitEvent.bind(function(){
+				keepAlive.exec.bind(keepAlive)();
+				stopWaitEvent();
+			});
 			waitEvent.reset(wait);
 		}
 	}
@@ -1845,13 +2696,13 @@ global.centerRemap = function(value, center, width){
 const ENCODE_MAX_VALUE = 0.99;
 const MIN_POS_BITS_TO_FLOAT_CONSTANT = new vec4(1.0,1.0/255.0,1.0/65025.0,1.0/16581375.0);
 
-function fract(float) {
+function fract(float){
 	var n = Math.abs(float); 
 	var decimal = n - Math.floor(n);
 	return decimal;
 }
 
-function floatToBits(float) {
+function floatToBits(float){
 	var x = fract(1 * float),
 		y = fract(255 * float),
 		z = fract(65025 * float),
@@ -1868,8 +2719,8 @@ function floatToBits(float) {
 function bitsToFloat(raw) {
 	var v = raw;
 	
-	if (raw.w == undefined) {
-		var a = [raw.x,raw.y, raw.z].map(function(v) {
+	if(raw.w == undefined){
+		var a = [raw.x,raw.y, raw.z].map(function(v){
 			return Math.floor(v * 65025 + 0.5) /65025; 
 		});
 		v = new vec4(a[0], a[1], a[2], 0);
@@ -1878,11 +2729,11 @@ function bitsToFloat(raw) {
 	return v.dot(MIN_POS_BITS_TO_FLOAT_CONSTANT);
 }
 
-global.encodeFloat = function(value, min, max) {
+global.encodeFloat = function(value, min, max){
 	return floatToBits(remap(clamp(value, min, max), min, max, 0.0, ENCODE_MAX_VALUE));
 }
 
-global.decodeToFloat = function(value, min, max) {
+global.decodeToFloat = function(value, min, max){
 	return remap(bitsToFloat(value), 0.0, ENCODE_MAX_VALUE, min, max);
 }
 
@@ -1907,10 +2758,10 @@ global.screenTransformToScreen = function(screenTransformCenter){
 
 
 
-global.shuffleArray = function(array) {
+global.shuffleArray = function(array){
 	var shuffledArray = array.slice();
 
-	for (var i = shuffledArray.length - 1; i > 0; i--){
+	for(var i = shuffledArray.length - 1; i > 0; i--){
 		var j = Math.floor(Math.random() * (i + 1));
 		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
 	}
@@ -1921,11 +2772,20 @@ global.shuffleArray = function(array) {
 
 
 
-global.concatArrays = function(a, b) {
+global.concatArrays = function(a, b){
 	var c = new (a.constructor)(a.length + b.length);
 	c.set(a, 0);
 	c.set(b, a.length);
 	return c;
+}
+
+
+
+
+global.removeFromArray = function(item, array){
+	let itemsToRemove = Array.isArray(item) ? item : [item]; // ensure array input
+	let resultArray = array.filter(element => !itemsToRemove.includes(element));
+	return resultArray;
 }
 
 
@@ -1994,8 +2854,8 @@ global.PerformanceStopwatch = function(){
 
 
 
-global.setAllChildrenToLayer = function(sceneObj, layer) {
-	for (var i = 0; i < sceneObj.getChildrenCount(); i++) {
+global.setAllChildrenToLayer = function(sceneObj, layer){
+	for(var i = 0; i < sceneObj.getChildrenCount(); i++){
 		sceneObj.getChild(i).layer = layer;
 		global.setAllChildrenToLayer(sceneObj.getChild(i), layer); // recursive
 	}
@@ -2174,7 +3034,7 @@ global.mat4FromDescription = function(matDescription){
 global.wrapFunction = function(originalFunction, newFunction){
     return function() {
         var args = Array.prototype.slice.call(arguments);
-        if (originalFunction) originalFunction.apply(this, args);
+        if(originalFunction) originalFunction.apply(this, args);
         newFunction.apply(this, args);
     };
 };

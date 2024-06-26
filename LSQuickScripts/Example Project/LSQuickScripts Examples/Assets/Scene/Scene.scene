@@ -145,6 +145,21 @@
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/198b857a-c8f7-4360-a417-fc154226800b>
+  PrefabRemaps:
+    []
+  Name: QuickFlow
+  Enabled: false
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 7fc71c8d-1909-495f-a3f4-ae1ac915d121
+  Components:
+    []
 - !<SceneObject/1c0f6bcd-a54e-4fc7-a445-460b91bb7c66>
   PrefabRemaps:
     []
@@ -293,6 +308,22 @@
   BlendShapes:
     {}
   RayTracing: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptComponent/2df34c7d-c13d-436a-9442-84e81a8fd847>
+  PrefabRemaps:
+    []
+  Name: QuickFlow
+  Enabled: true
+  ScriptAsset: !<reference> 5df07afd-384c-49ed-b293-3b16718d424c
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      box: !<reference.SceneObject> 7fc71c8d-1909-495f-a3f4-ae1ac915d121
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/312ae749-0903-4fd6-840f-f542afe79222>
   PrefabRemaps:
     []
@@ -486,6 +517,22 @@
   BlendShapes:
     {}
   RayTracing: !<own> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/7fc71c8d-1909-495f-a3f4-ae1ac915d121>
+  PrefabRemaps:
+    []
+  Name: "Box [see script]"
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> ca9598f8-058b-406d-8f73-ddf1e237a90a
+    - !<own> 2df34c7d-c13d-436a-9442-84e81a8fd847
 - !<SceneObject/882f087a-2d9c-4dde-97d9-1d99ae5a5fc8>
   PrefabRemaps:
     []
@@ -565,6 +612,7 @@
     - !<own> d662ed4d-6dec-4ef4-bf9b-f152acd5df31
     - !<own> 014fed5d-6411-43fa-aa20-96eca458286d
     - !<own> d9a8bbf1-b157-4c28-871e-669f32fea709
+    - !<own> 198b857a-c8f7-4360-a417-fc154226800b
     - !<own> 1c0f6bcd-a54e-4fc7-a445-460b91bb7c66
   Components:
     []
@@ -615,6 +663,27 @@
   Components:
     - !<own> 2c2b2a9a-193a-4b22-b9ee-50458f718813
     - !<own> 02d2e7ec-2f2a-4a85-bb39-ff31425dc31e
+- !<RenderMeshVisual/ca9598f8-058b-406d-8f73-ddf1e237a90a>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 3abdab92-4d6d-46ce-8655-cfb9363c1aa9
+  Mesh: !<reference> f12a58d7-d170-4b28-bf96-9afaad209087
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/cad4feba-7a95-42df-8f83-547e9acac0f8>
   PrefabRemaps:
     []

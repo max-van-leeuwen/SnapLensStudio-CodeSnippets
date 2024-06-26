@@ -1,10 +1,31 @@
-<p class="has-line-data" data-line-start="1" data-line-end="2">Cheat sheet with some handy JS snippets for Lens Studio. Will update this every once in a while. Example project included!</p>
-<p class="has-line-data" data-line-start="1" data-line-end="2">Installation: Throw the LSQuickScripts.js on a SceneObject at the top of your scene.</p>
+
+# My Cheat Sheet with Handy JS Snippets for Lens Studio
+
+*Updated regularly!*
+
+## Installation
+Throw `LSQuickScripts.js` on a SceneObject at the top of your scene.<br>Scroll down for a list of all features and how to use them!
+
+## Features
+- Game dev maths helpers
+- Useful classes to create scripted animations or delays
+- Sound instancing solutions
+- Lens Studio API helpers
+- Debugging helpers
+
+[Twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
+
 <br>
-<p class="has-line-data" data-line-start="2" data-line-end="5"><a href="https://twitter.com/maksvanleeuwen">Twitter (@maksvanleeuwen)</a>
+
+![LSQuickScripts Example](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Media/preview_LSQS.gif)
+
+![QuickFlow Example](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Media/preview_quickflow.gif)
+
 <br><br>
 
-<pre><code>
+## Documentation
+
+```
 Max van Leeuwen
 links.maxvanleeuwen.com
 
@@ -95,10 +116,10 @@ AnimateProperty() : AnimateProperty object
 
 			var anim = new AnimateProperty( updateFunction (optional) )		// create a new animation instance called 'anim'
 			anim.startFunction = function(){}								// called on animation start
-			anim.updateFunction = function(v, vLinear){}					// called on each animation frame, with animation value (0-1) as its first argument. the second argument is the linear animation value. these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]).
+			anim.updateFunction = function(v, vLinear, runtime){}			// called on each animation frame, with animation value (0-1) as its first argument. the second argument is the linear animation value. these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]). the third argument is runtime (seconds).
 			anim.endFunction = function(){}									// called on animation end
 			anim.onReverseChange = function(){}								// called when the forwards direction of the animation is changed
-			anim.duration = 1												// duration in seconds, default is 1
+			anim.duration = 1												// duration in seconds, default is 1. tip: for a continuous animation, set duration to Infinity and use the 'runtime' argument in the updateFunction
 			anim.reverseDuration = 1										// reverse duration in seconds, default is .duration
 			anim.delay = 0													// delay before starting animation, default is 0
 			anim.reverseDelay = 0											// delay before starting animation when reversed, default is .delay
@@ -108,10 +129,10 @@ AnimateProperty() : AnimateProperty object
 			anim.getTimeRatio()												// get current linear animation time (0-1)
 			anim.setReversed(reverse)										// set animation direction, toggles if no argument given. reverse: 'true' to set to reverse.
 			anim.getReversed()												// returns true if the animation is currently reversed
-			anim.isPlaying()												// returns true if the animation is currently playing
+			anim.isPlaying()												// returns true if the animation is currently playing (waiting for delay also counts as playing)
 			anim.setCallbackAtTime(v, f)									// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). only 1 callback is supported at this time. call without arguments to clear. v: the linear animation time (0-1) at which to call this callback. f: the function to call.
 			anim.start(atTime, skipDelay)									// start the animation. atTime: (optional) time ratio (0-1) to start playing from. skipDelay: (optional) ignore the delay value.
-			anim.stop(callEndFunction)										// stop the animation. callEndFunction: (optional) whether to call the .endFunction, default is false.
+			anim.stop(callEndFunction)										// stop the animation. callEndFunction: (optional) whether to call the .endFunction (if animation was still playing), default is false.
 
 		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
 
@@ -132,22 +153,53 @@ getAllAnimateProperty() : AnimateProperty array
 
 
 
-AutoAnimate(obj [SceneObject]) : AutoAnimate object
-	A simple way to do in/out animations on any object!
+QuickFlow(obj [SceneObject]) : QuickFlow object
+	A simple way to animate objects with just a single line of code!
+	All animations work for orthographic and perspective objects.
+	Pass 'undefined' for an argument to use its default value.
 		
-		Example, showing all properties:
+		Example:
 
-			var anim = new AutoAnimate(script.object)							// create an instance
-			anim.fadeIn(duration, delay, easeFunction)							// start fade-in (if a visual component is present), automatically enables the sceneobject. arguments are optional. duration: length of animation. delay: wait before animation start. easeFunction: animation look-up curve. defaults differ.
-			anim.fadeOut(duration, delay, easeFunction)							// start fade-out
-			anim.scaleIn(duration, delay, easeFunction)							// start scale-in (automatically picks ScreenTransform if present, otherwise uses local scale on the Transform)
-			anim.scaleOut(duration, delay, easeFunction)						// start scale-out
-		
-		Each animation returns the object itself, so they could be chained into a one-liner like so:
-		
-			new AutoAnimate(script.object).fadeIn(.5).scaleIn(.5);				// does a fade-in and a scale-in at the same time, with custom durations
+			var anim = new QuickFlow(script.object)											// create an instance
+			anim.fadeIn(duration, delay, easeFunction)										// start fade-in (if a visual component is present), automatically enables the sceneobject.
 
-		Note: after the last out-animation stops playing, the SceneObject will automatically be disabled.
+
+		All animations and their (optional) arguments:
+
+			.fadeIn(delay, duration, easeFunction)											// start fade-in (enables SceneObject on start)
+			.fadeOut(delay, duration, easeFunction)											// start fade-out (disables SceneObject and all running animations on end)
+			.scaleIn(delay, duration, easeFunction)											// start scale-in (enables SceneObject on start)
+			.scaleOut(delay, duration, easeFunction)										// start scale-out (disables SceneObject and all running animations on end)
+			.squeeze(delay, strength, duration)												// do scale squeeze
+			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
+			.scaleTo(delay, toScale, duration, easeFunction)								// scale towards new size (overrides other rotation animations)
+			.moveTo(delay, point, duration, easeFunction)									// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
+			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
+			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
+			.keepRotating(delay, speed, axis)												// keep rotating around an axis
+			.keepBouncingRotation(delay, strength, interval, axis, easeFunction, smoothIn)	// keep bouncing a rotation around an axis
+			.keepBouncingPosition(delay, distance, interval, axis, easeFunction, smoothIn)	// keep bouncing a position up and down along an axis
+			.keepBouncingScale(delay, strength, interval, easeFunction, smoothIn)			// keep bouncing a scale
+			.stop(delay)																	// stop all active animations (overrides all other animations)
+			.reset(delay, duration, easeFunction)											// stop and undo all animations, back to original (before animations were applied) (overrides all other animations)
+			.loop	 																		// repeats all animations added so far (no animations can be added after this)
+		
+
+		Each animation returns the same QuickFlow object, so they can be easily chained into one-liners like so:
+		
+			- new QuickFlow(object).rotateAround(0, 1)														// instantly do 1 clockwise rotation
+			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											// fade-out and scale-out, for 0.5 seconds
+			- new QuickFlow(object).keepBlinking().squeeze(.5)												// blinking alpha, squeeze after half a second
+			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), 1).reset(1, .6, EaseFunctions.Bounce.Out)	// move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
+			- new QuickFlow(object).moveTo(0, new vec2(0,1), 1).reset(1, .6, EaseFunctions.Bounce.Out)		// same as above, but for objects with a ScreenTransform
+			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		// continuous wiggly animation
+
+
+		Tips:
+			- the first argument of any animation is always 'delay', which has a default value of 0
+			- after the last out-animation stops playing, the SceneObject will automatically be disabled
+			- when chaining animations as a one-liner, it's best to chain them chronologically (so their delay values increase from left to right)
+			- the overruling animations that influence others (e.g. 'reset' or 'stop') only stop the animations starting before them
 
 
 
@@ -243,6 +295,12 @@ DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay
 			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0')
 			delayed.now()									// call the function with the given arguments now
 			delayed.stop()									// this will cancel the scheduled function
+			delayed.isWaiting()								// returns true if currently counting down to call the function
+			delayed.createdAtTime							// the time at which this instance was created
+			delayed.getTimeLeft()							// get the time left before the function is called (null if unused)
+			delayed.getFramesLeft()							// the frames left before the function is called (null if unused)
+			delayed.getGivenTime()							// get the amount of time that was last given to wait (null if none yet)
+			delayed.getGivenFrames()						// get the amount of frames that was last given to wait (null if none yet)
 
 		In one-liner format
 
@@ -427,6 +485,15 @@ shuffleArray(array [array]) : array
 
 concatArrays(array [any], array [any]) : array
 	Concatinates two arrays and returns the new one.
+
+
+
+-
+
+
+
+removeFromArray(item [any, or array of any], array [any]) : array
+	Removes item (or an array of items) from the given array, returns the resulting array.
 
 
 
@@ -643,4 +710,3 @@ VisualizePoints() : VisualizePoints object
 
 
 -------------------
-</code></pre>
