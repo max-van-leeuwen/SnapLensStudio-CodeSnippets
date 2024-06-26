@@ -1,5 +1,6 @@
 # 📜 LSQuickScripts
 My Cheat Sheet of Handy JS Snippets for Lens Studio.
+<br>I always include this in my projects.
 
 *Updated regularly!*
 
