@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.23</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.24</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -1209,7 +1209,7 @@ global.QuickFlow = function(obj){
 	const trf = obj.getTransform();
     const screenTrf = obj.getComponent("Component.ScreenTransform"); // if it exists
 	var visual = obj.getComponent("Component.Visual"); // get visual on obj, if any
-	if(visual.mainPass == null) visual = null;
+	if(visual && visual.mainPass == null) visual = null;
 
 	// starting values (some animators update these on animation end)
 	var startPosition;
@@ -1254,6 +1254,12 @@ global.QuickFlow = function(obj){
 	var inOutAnimators; // in/out animators (to check when to enable/disable obj)
 	var delays = []; // all current delays
 
+	// checks if properties need to be applied on this frame
+	var doPosition;
+	var doRotation;
+	var doScale;
+	var doBaseColor;
+
 
 
 	// initialize
@@ -1272,6 +1278,7 @@ global.QuickFlow = function(obj){
 		// assign fade anim
 			fadeAnim.updateFunction = function(v){
 				newBaseColor = new vec4(newBaseColor.x, newBaseColor.y, newBaseColor.z, newBaseColor.a * v);
+				doBaseColor = true;
 			}
 			fadeAnim.endFunction = function(){
 				if(fadeAnim.getReversed()){ // if end of out-anim
@@ -1279,13 +1286,17 @@ global.QuickFlow = function(obj){
 					stopAnimatorsExcept(inOutAnimators);
 					obj.enabled = false; // disable this sceneobject
 					resetStartingValues(); // reset all values to true values
+				}else{ // if in-anim
+					if(!areOtherAnimatorsPlaying(animators)){
+						updateEvent.enabled = false; // stop update event
+					}
 				}
 			}
 
 		// assign scale anim
 			scaleAnim.updateFunction = function(v){
 				newScale = newScale.uniformScale(v);
-
+				doScale = true;
 			}
 			scaleAnim.endFunction = function(){
 				if(scaleAnim.getReversed()){ // if end of out-anim
@@ -1293,6 +1304,10 @@ global.QuickFlow = function(obj){
 					stopAnimatorsExcept(inOutAnimators);
 					obj.enabled = false; // disable this sceneobject
 					resetStartingValues(); // reset all values to true values
+				}else{ // if in-anim
+					if(!areOtherAnimatorsPlaying(animators)){
+						updateEvent.enabled = false; // stop update event
+					}
 				}
 			}
 	}
@@ -1331,15 +1346,21 @@ global.QuickFlow = function(obj){
 	function onUpdate(eventArgs, updateStartingValuesInbetween){
 		// apply transforms
 		if(screenTrf){
-			screenTrf.anchors.setCenter(newPosition);
-			screenTrf.rotation = newRotation;
-			screenTrf.anchors.setSize(newScale);
+			if(doPosition) screenTrf.anchors.setCenter(newPosition);
+			if(doRotation) screenTrf.rotation = newRotation;
+			if(doScale) screenTrf.anchors.setSize(newScale);
 		}else{
-			trf.setLocalPosition(newPosition);
-			trf.setLocalRotation(newRotation);
-			trf.setLocalScale(newScale);
+			if(doPosition) trf.setLocalPosition(newPosition);
+			if(doRotation) trf.setLocalRotation(newRotation);
+			if(doScale) trf.setLocalScale(newScale);
 		}
-		if(visual) visual.mainPass.baseColor = newBaseColor;
+		if(doBaseColor && visual) visual.mainPass.baseColor = newBaseColor;
+
+		// reset
+		doPosition = false;
+		doRotation = false;
+		doScale = false;
+		doBaseColor = false;
 		
 		// reset to defaults for next frame
 		if(updateStartingValuesInbetween) updateStartingValues();
@@ -1579,6 +1600,8 @@ global.QuickFlow = function(obj){
 
 			// animation
 			var squeezeAnim = new AnimateProperty(function(v, vL){
+				doScale = true;
+
 				let r = centerRemap(vL, .3, .1); // 0-1-0 with custom center and width
 				r = interp(0, 1, r.remapped, r.passedCenter ? EaseFunctions.Bounce.In : EaseFunctions.Quartic.InOut); // easing
 	
@@ -1594,6 +1617,8 @@ global.QuickFlow = function(obj){
 					let mult = new vec3(squeeze, stretch, squeeze);
 					newScale = newScale.mult(mult)
 				}
+
+				doScale = true;
 			});
 			squeezeAnim.duration = duration;
 			squeezeAnim.start();
@@ -1624,6 +1649,8 @@ global.QuickFlow = function(obj){
 	
 			// animation
 			var rotateAnim = new AnimateProperty(function(v){
+				doRotation = true;
+
 				if(screenTrf){
 					let rot = quat.angleAxis(v * -rotateAmount, axis);
 					newRotation = newRotation.multiply(rot);
@@ -1663,6 +1690,8 @@ global.QuickFlow = function(obj){
 	
 			// animation
 			nrScaleAnim = new AnimateProperty(function(v){
+				doScale = true;
+
 				if(screenTrf){
 					newScale = vec2.lerp(startScale, toScale, v);
 				}else{
@@ -1712,6 +1741,8 @@ global.QuickFlow = function(obj){
 	
 			// animation
 			nrPositionAnim = new AnimateProperty(function(v){
+				doPosition = true;
+
 				if(screenTrf){
 					newPosition = vec2.lerp(startPosition, point, v);
 				}else{
@@ -1749,6 +1780,8 @@ global.QuickFlow = function(obj){
 		new CreateDelay(function(){
 			// animation
 			var blinkAnim = new AnimateProperty(function(v, vL, runtime){
+				doBaseColor = true;
+
 				const fraction = (runtime%interval) / interval;
 				const centerRemapped = 1-centerRemap(fraction).remapped; // remap around center, start at 1
 				const interpolated = remap(interp(0, 1, centerRemapped, easeFunction), 0, 1, 1-strength, 1); // apply strength and easing
@@ -1810,6 +1843,8 @@ global.QuickFlow = function(obj){
 	
 			// animation
 			nrRotationAnim = new AnimateProperty(function(v){
+				doRotation = true;
+
 				newRotation = quat.slerp(startRotation, toRotation, v);
 			});
 			nrRotationAnim.easeFunction = easeFunction;
@@ -1841,6 +1876,8 @@ global.QuickFlow = function(obj){
 		new CreateDelay(function(){
 			// animation
 			var rotatingAnim = new AnimateProperty(function(v, vL, runtime){
+				doRotation = true;
+
 				const angle = runtime * speed * Math.PI*2;
 				newRotation = newRotation.multiply(quat.angleAxis(angle, axis));
 			});
@@ -1876,6 +1913,8 @@ global.QuickFlow = function(obj){
 
 			// animation
 			var rotatingAnim = new AnimateProperty(function(v, vL, runtime){
+				doRotation = true;
+
 				const smoothInStrength = interp(0, 1, nullish(clamp((getTime()-startTime)/smoothIn), 1), EaseFunctions.Cubic.InOut); // smoothly animating in
 				let fraction = (runtime%interval) / interval;
 				fraction = (fraction+.25) % 1; // start centerRemapped at .5, so get fraction at half of that
@@ -1916,6 +1955,8 @@ global.QuickFlow = function(obj){
 
 			// animation
 			var positioningAnim = new AnimateProperty(function(v, vL, runtime){
+				doPosition = true;
+
 				const smoothInStrength = interp(0, 1, nullish(clamp((getTime()-startTime)/smoothIn), 0), EaseFunctions.Cubic.InOut); // smoothly animating in
 				let fraction = (runtime%interval) / interval;
 				fraction = (fraction+.25) % 1; // start centerRemapped at .5, so get fraction at half of that
@@ -1954,6 +1995,8 @@ global.QuickFlow = function(obj){
 
 			// animation
 			var scalingAnim = new AnimateProperty(function(v, vL, runtime){
+				doScale = true;
+
 				const smoothInStrength = interp(0, 1, nullish(clamp((getTime()-startTime)/smoothIn), 0), EaseFunctions.Cubic.InOut); // smoothly animating in
 				let fraction = (runtime%interval) / interval;
 				fraction = (fraction+.25) % 1; // start centerRemapped at .5, so get fraction at half of that
@@ -2039,6 +2082,8 @@ global.QuickFlow = function(obj){
 	
 			// position
 			nrPositionAnim = new AnimateProperty(function(v){
+				doPosition = true;
+
 				if(screenTrf){
 					newPosition = vec2.lerp(startPosition, toPosition, v);
 				}else{
@@ -2054,6 +2099,8 @@ global.QuickFlow = function(obj){
 	
 			// scale
 			nrScaleAnim = new AnimateProperty(function(v){
+				doScale = true;
+
 				if(screenTrf){
 					newScale = vec2.lerp(startScale, trueScale, v);
 				}else{
@@ -2069,6 +2116,8 @@ global.QuickFlow = function(obj){
 
 			// rotation
 			nrRotationAnim = new AnimateProperty(function(v){
+				doRotation = true;
+
 				newRotation = quat.slerp(startRotation, trueRotation, v);
 			});
 			nrRotationAnim.easeFunction = easeFunction;
@@ -2081,6 +2130,7 @@ global.QuickFlow = function(obj){
 			// basecolor
 			if(visual){
 				nrBaseColorAnim = new AnimateProperty(function(v){
+					doBaseColor = true;
 					newBaseColor = vec4.lerp(startBaseColor, trueBaseColor, v);
 				});
 				nrBaseColorAnim.easeFunction = easeFunction;
