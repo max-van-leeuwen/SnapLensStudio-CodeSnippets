@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "core_version": 207,
+    "core_version": 225,
     "lifecycleMode": {
         "value": 0,
         "description": "legacy"
@@ -25,6 +25,6 @@
     "previewOutput": "-1:-1",
     "overlayOutput": "-1:-1",
     "logstreamingsystem": {
-        "mobileStudioLogStreamingExperienceId": ""
+        "mobileDataStreamingSystemId": ""
     }
 }

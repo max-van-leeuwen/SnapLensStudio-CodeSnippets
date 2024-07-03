@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.24</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.25</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -156,8 +156,8 @@
 //
 //			.fadeIn(delay, duration, easeFunction)											// start fade-in (enables SceneObject on start)
 //			.fadeOut(delay, duration, easeFunction)											// start fade-out (disables SceneObject and all running animations on end)
-//			.scaleIn(delay, duration, easeFunction)											// start scale-in (enables SceneObject on start)
-//			.scaleOut(delay, duration, easeFunction)										// start scale-out (disables SceneObject and all running animations on end)
+//			.scaleIn(delay, duration, startAtTime, easeFunction)							// start scale-in (enables SceneObject on start)
+//			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
 //			.squeeze(delay, strength, duration)												// do scale squeeze
 //			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
 // 			.scaleTo(delay, toScale, duration, easeFunction)								// scale towards new size (overrides other rotation animations)
@@ -326,17 +326,19 @@
 //
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number]) : InstSoundPooled Object
+// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number], volume (optional, default 1) [number]) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 //	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
+//	'Volume' Sets the AudioComponent's volume (default is 1).
+// 	
 //
-//	The 'instance' function has two optional arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume (0-1 number).
+//	The 'instance' function has two optional arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume override (0-1 number).
 //
 //		For example, if you want to randomly pick laser sounds coming from a gun.
 //		The following parameters give it a maximum of 10 plays, with 0.2 seconds inbetween, before looping back to the first sound component:
 //
-//			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 )
+//			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2)
 //			function onFiringLaser(){
 //				soundPool.instance() 	// call 'onFiringLaser()' whenever you want to hear one of the laser sound samples!
 //			}
@@ -704,6 +706,30 @@
 
 // access
 global.lsqs = script;
+
+
+
+// --- private functions
+
+// returns true if a SceneObject or Component has been destroyed or is null.
+// (the usual 'isNullPatch' is not working in LS 5.0.12)
+function isNullPatch(obj){
+	// usual check
+	if(!obj) return true;
+	try{ // SceneObject test
+		obj.name;
+		return false;
+	}catch(error){ // Component test
+		try{
+			obj.getSceneObject();
+			return false;
+		}catch(error){
+			return true;
+		}
+	}
+}
+
+// --- end of private functions
 
 
 
@@ -1260,6 +1286,9 @@ global.QuickFlow = function(obj){
 	var doScale;
 	var doBaseColor;
 
+	// object persistence check
+	var objectWasDeleted = false;
+
 
 
 	// initialize
@@ -1284,7 +1313,7 @@ global.QuickFlow = function(obj){
 				if(fadeAnim.getReversed()){ // if end of out-anim
 					onUpdate(null, true); // one last frame before stopping event, current transforms state will be starting point for new animations
 					stopAnimatorsExcept(inOutAnimators);
-					obj.enabled = false; // disable this sceneobject
+					if(!isNullPatch(obj)) obj.enabled = false; // disable this sceneobject
 					resetStartingValues(); // reset all values to true values
 				}else{ // if in-anim
 					if(!areOtherAnimatorsPlaying(animators)){
@@ -1295,6 +1324,7 @@ global.QuickFlow = function(obj){
 
 		// assign scale anim
 			scaleAnim.updateFunction = function(v){
+				if(scaleAnim.startAtTime != 0) v = remap(v, 0, 1, scaleAnim.startAtTime, 1);
 				newScale = newScale.uniformScale(v);
 				doScale = true;
 			}
@@ -1302,7 +1332,7 @@ global.QuickFlow = function(obj){
 				if(scaleAnim.getReversed()){ // if end of out-anim
 					onUpdate(null, true); // one last frame before stopping event, current transforms state will be starting point for new animations
 					stopAnimatorsExcept(inOutAnimators);
-					obj.enabled = false; // disable this sceneobject
+					if(!isNullPatch(obj)) obj.enabled = false; // disable this sceneobject
 					resetStartingValues(); // reset all values to true values
 				}else{ // if in-anim
 					if(!areOtherAnimatorsPlaying(animators)){
@@ -1344,6 +1374,8 @@ global.QuickFlow = function(obj){
 
 	// at the end of each animation frame, apply all transformations (doing this once at the end allows chaining the QuickFlow animations)
 	function onUpdate(eventArgs, updateStartingValuesInbetween){
+		if(!objStillExists()) return;
+
 		// apply transforms
 		if(screenTrf){
 			if(doPosition) screenTrf.anchors.setCenter(newPosition);
@@ -1414,6 +1446,7 @@ global.QuickFlow = function(obj){
 
 	// set the current transforms as the starting point for new animations
 	function updateStartingValues(){
+		if(!objStillExists()) return;
 		startPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
 		startScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
 		startRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
@@ -1422,6 +1455,7 @@ global.QuickFlow = function(obj){
 
 	// set the new transforms as the starting point for new animations
 	function updateNewValues(){
+		if(!objStillExists()) return;
 		newPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
 		newScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
 		newRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
@@ -1459,6 +1493,32 @@ global.QuickFlow = function(obj){
 		}
 	}
 
+	// checks if the component has not been deleted in the meantime, in which case the whole QuickFlow animation is stopped (and 'true' is not returns)
+	function objStillExists(){
+		if(objectWasDeleted) return false; // deleted and already checked
+		const objDeleted = isNullPatch(obj) || (!!screenTrf && isNullPatch(screenTrf)); // check if deleted
+		if(objDeleted){
+			objectWasDeleted = true;
+			kill();
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	function stop(){
+		stopDelays(getTime());
+		stopAnimators(animators);
+		if(!isNullPatch(obj)) obj.enabled = trueEnabled; // out-anims disable the object on endFunction, but when an out-anim is stopped prematurely the object should be enabled
+		updateStartingValues();
+		updateNewValues();
+	}
+
+	function kill(){
+		stopDelays();
+		stopAnimators(animators);
+	}
+
 
 
 	// --- animations
@@ -1480,6 +1540,8 @@ global.QuickFlow = function(obj){
 		if(!visual) return self; // if no visual present, ignore
 
 		new CreateDelay(function(){
+			if(!objStillExists()) return;
+
 			// enable object on start
 			obj.enabled = true;
 	
@@ -1532,18 +1594,22 @@ global.QuickFlow = function(obj){
 	 * @description (use undefined for any argument to pick its default value)
 	 * @param {number} delay delay - default: 0 seconds
 	 * @param {number} duration duration - default: .5 seconds
+	 * @param {number} startAtTime startAtTime - default: 0 (0-1 ratio)
 	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	*/
-	this.scaleIn = function(delay = 0, duration = .5, easeFunction = EaseFunctions.Cubic.Out){
+	this.scaleIn = function(delay = 0, duration = .5, startAtTime = 0, easeFunction = EaseFunctions.Cubic.Out){
 		// register
 		registerCommand(this.scaleIn, [...arguments]);
 
 		new CreateDelay(function(){
+			if(!objStillExists()) return;
+
 			// enable object on start
 			obj.enabled = true;
 	
 			// animation
 			scaleAnim.setReversed(false);
+			scaleAnim.startAtTime = startAtTime;
 			scaleAnim.duration = duration;
 			scaleAnim.easeFunction = easeFunction;
 			scaleAnim.start();
@@ -1562,15 +1628,17 @@ global.QuickFlow = function(obj){
 	 * @description (use undefined for any argument to pick its default value)
 	 * @param {number} delay delay - default: 0 seconds
 	 * @param {number} duration duration - default: .3 seconds
+	 * @param {number} startAtTime startAtTime - default: 0 (0-1 ratio)
 	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	*/
-	this.scaleOut = function(delay = 0, duration = .3, easeFunction = EaseFunctions.Cubic.Out){
+	this.scaleOut = function(delay = 0, duration = .3, startAtTime = 0, easeFunction = EaseFunctions.Cubic.Out){
 		// register
 		registerCommand(this.scaleOut, [...arguments]);
 
 		new CreateDelay(function(){
 			// animation
 			scaleAnim.setReversed(true);
+			scaleAnim.startAtTime = startAtTime;
 			scaleAnim.duration = duration;
 			scaleAnim.easeFunction = easeFunction;
 			scaleAnim.start();
@@ -1610,7 +1678,7 @@ global.QuickFlow = function(obj){
 				let stretch = remap(r, 0, 1, 1, strength);
 	
 				// squeeze transform
-				if(screenTrf){
+				if(!!screenTrf){
 					let mult = new vec2(squeeze, stretch);
 					newScale = newScale.mult(mult)
 				}else{
@@ -1651,7 +1719,7 @@ global.QuickFlow = function(obj){
 			var rotateAnim = new AnimateProperty(function(v){
 				doRotation = true;
 
-				if(screenTrf){
+				if(!!screenTrf){
 					let rot = quat.angleAxis(v * -rotateAmount, axis);
 					newRotation = newRotation.multiply(rot);
 				}else{
@@ -1692,7 +1760,7 @@ global.QuickFlow = function(obj){
 			nrScaleAnim = new AnimateProperty(function(v){
 				doScale = true;
 
-				if(screenTrf){
+				if(!!screenTrf){
 					newScale = vec2.lerp(startScale, toScale, v);
 				}else{
 					newScale = vec3.lerp(startScale, toScale, v);
@@ -1701,6 +1769,8 @@ global.QuickFlow = function(obj){
 			nrScaleAnim.easeFunction = easeFunction;
 			nrScaleAnim.duration = duration;
 			nrScaleAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				if(!objStillExists()) return;
+
 				startScale = screenTrf?screenTrf.anchors.getSize():trf.getLocalScale();
 			}
 			nrScaleAnim.start();
@@ -1727,6 +1797,8 @@ global.QuickFlow = function(obj){
 		registerCommand(this.moveTo, [...arguments]);
 
 		new CreateDelay(function(){
+			if(!objStillExists()) return;
+
 			// clear non-relative animation
 			nonRelativeAnimationClear(nrPositionAnim);
 	
@@ -1752,6 +1824,8 @@ global.QuickFlow = function(obj){
 			nrPositionAnim.easeFunction = easeFunction;
 			nrPositionAnim.duration = duration;
 			nrPositionAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				if(!objStillExists()) return;
+
 				startPosition = screenTrf?screenTrf.anchors.getCenter():trf.getLocalPosition();
 			}
 			nrPositionAnim.start();
@@ -1814,6 +1888,8 @@ global.QuickFlow = function(obj){
 		registerCommand(this.lookAt, [...arguments]);
 
 		new CreateDelay(function(){
+			if(!objStillExists()) return;
+
 			// clear non-relative animation
 			nonRelativeAnimationClear(nrRotationAnim);
 
@@ -1850,6 +1926,8 @@ global.QuickFlow = function(obj){
 			nrRotationAnim.easeFunction = easeFunction;
 			nrRotationAnim.duration = duration;
 			nrRotationAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
+				if(!objStillExists()) return;
+
 				startRotation = screenTrf?screenTrf.rotation:trf.getLocalRotation();
 			}
 			nrRotationAnim.start();
@@ -2034,14 +2112,6 @@ global.QuickFlow = function(obj){
 		return self;
 	}
 
-	function stop(){
-		stopDelays(getTime());
-		stopAnimators(animators);
-		obj.enabled = trueEnabled; // out-anims disable the object on endFunction, but when an out-anim is stopped prematurely the object should be enabled
-		updateStartingValues();
-		updateNewValues();
-	}
-
 	/**
 	 * @description return all values back to original (before animations were applied)
 	 * (overrides all other animations)
@@ -2056,6 +2126,8 @@ global.QuickFlow = function(obj){
 
 		new CreateDelay(function(){
 			stop();
+
+			if(!objStillExists()) return;
 			
 			// reset starting values to true start instead of to current
 			updateNewValues();
@@ -2084,7 +2156,7 @@ global.QuickFlow = function(obj){
 			nrPositionAnim = new AnimateProperty(function(v){
 				doPosition = true;
 
-				if(screenTrf){
+				if(!!screenTrf){
 					newPosition = vec2.lerp(startPosition, toPosition, v);
 				}else{
 					newPosition = vec3.lerp(startPosition, toPosition, v);
@@ -2101,7 +2173,7 @@ global.QuickFlow = function(obj){
 			nrScaleAnim = new AnimateProperty(function(v){
 				doScale = true;
 
-				if(screenTrf){
+				if(!!screenTrf){
 					newScale = vec2.lerp(startScale, trueScale, v);
 				}else{
 					newScale = vec3.lerp(startScale, trueScale, v);
@@ -2545,7 +2617,7 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 	function destroyAudioComponent(audioComp){
 		audioComp.stop(false); // stop playing
 		new global.DoDelay(function(){
-			if(audioComp && !isNull(audioComp)) audioComp.destroy(); // destroy if it still exists (might have been deleted using stopAllSoundInstances)
+			if(audioComp && !isNullPatch(audioComp)) audioComp.destroy(); // destroy if it still exists (might have been deleted using stopAllSoundInstances)
 		}).byFrame(); // delete on next frame
 	}
 	new global.DoDelay( destroyAudioComponent, [audioComp]).byTime(audioComp.duration + .1); // stop playing after audio asset duration
@@ -2560,7 +2632,7 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 global.stopAllSoundInstances = function(){
 	for(var i = 0; i < allSoundInstances.length; i++){
 		var soundInstance = allSoundInstances[i];
-		if(soundInstance && !isNull(soundInstance)){
+		if(soundInstance && !isNullPatch(soundInstance)){
 			soundInstance.stop(false);
 			soundInstance.destroy();
 		}
@@ -2571,7 +2643,7 @@ global.stopAllSoundInstances = function(){
 
 
 
-global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
+global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, volume = 1){
 	var self = this;
 
 	var pool = [];
@@ -2588,6 +2660,7 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
 			for(var j = 0; j < listOfAssets.length; j++){
 				var thisAudioComp = self.soundInstancesObject.createComponent("Component.AudioComponent");
 				thisAudioComp.audioTrack = listOfAssets[j];
+				thisAudioComp.volume = volume;
 				components.push(thisAudioComp);
 			}
 			pool.push(components);
@@ -2616,7 +2689,7 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime){
 
 		if(indexToPlay == null) indexToPlay = Math.floor(Math.random() * listOfAssets.length); // if no index is given, pick at random
 		var component = pool[poolIndex][indexToPlay];
-		component.volume = volume ? volume : 1;
+		if(volume != null) component.volume = volume;
 		component.play(1);
 
 		// increment
@@ -2993,7 +3066,7 @@ global.getAllComponents = function(componentName, startObj, dontIncludeStartObj,
     }
 
 	if(startObj){ // start at specific object if it exists
-		if(isNull(startObj)) return found; // no starting object, return empty list
+		if(isNullPatch(startObj)) return found; // no starting object, return empty list
 		scanSceneObject(startObj);
         if(found.length >= maxCount.length) return found;
 		iterateObj(startObj);

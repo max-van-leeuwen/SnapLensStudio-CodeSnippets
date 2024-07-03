@@ -1,58 +1,70 @@
 // Max van Leeuwen
-// twitter      @maksvanleeuwen
-// instagram    @max.van.leeuwen
-// maxvanleeuwen.com
-//
-// Places and orients a scene in front of the user, handy when using World Tracking.
-//
-// Requires:
-//  LSQuickScripts 2.0+     https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/tree/main/LSQuickScripts
+//  @maksvanleeuwen
+//  links.maxvanleeuwen.com
+
+// Spectacles Radial Menu
+
+// Requires LSQuickScripts 2.25
+if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
 
 
 
-//	To use, make a new instance like so
-// 		var worldPlacementAnim = new global.WorldPlacement();
-//
-//	Then start it with
-//		worldPlacementAnim.start();
-//
-//	To read the final transform information (an object containing the keys 'pos' (vec3), 'rot' (quat)), use
-//		worldPlacementAnim.getFinalTransformData();
-//
-//	This function can be used after start() was called. No moveObject is necessary in this case!
+//@ui {"widget":"label"}
+//@ui {"widget":"separator"}
+//@ui {"widget":"label", "label":"<big><b>World Placement</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"Place and orient a scene in front of the user."}
+//@ui {"widget":"label"}
+//@ui {"widget":"label", "label":"Requires LSQuickScripts"}
+//@ui {"widget":"separator"}
+
+//@ui {"widget":"label"}
+//@ui {"widget":"group_start", "label":"<b>Usage"}
+	//@ui {"widget":"label"}
+    //@ui {"widget":"label", "label":"Use <font color='#56b1fc'>new WorldPlacement(</font><small>moveObject</small><font color='#56b1fc'>)"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.cameraObject"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.moveObject"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.distanceFromCamera</font><small> = <i>100"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> = <i>0"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> = <i>.5"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.spherical</font><small> = <i>false"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.callback </font><small><i>bind using <font color='#56b1fc'>.add(</font>f<font color='#56b1fc'>)</font> and <font color='#56b1fc'>.remove(</font>f<font color='#56b1fc'>)"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> = <i>EaseFunctions.Cubic.InOut"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.start(</font><small>doInstant</small><font color='#56b1fc'>)"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.getFinalTransformData()</font><small> → {pos, rot} (no moveObject needed)"}
+//@ui {"widget":"group_end"}
+//@ui {"widget":"label"}
 
 
 
-// defaults, used if not overwritten in the new instance of this class
-//@input SceneObject cameraObject
-//@input SceneObject moveObject
-//@input float distanceFromCamera = 100
-//@input float height = 0
+//@ui {"widget":"label"}
+//@ui {"widget":"separator"}
+//@input Component.Camera defaultCam
+//@ui {"widget":"label"}
 
 
 
-global.WorldPlacement = function(){
+global.WorldPlacement = function(moveObject){
 	var self = this;
 
 	/**
 	 * @type {SceneObject}
 	 * @description The SceneObject of the camera to move the object to. */
-	this.cameraObject = script.cameraObject;
+	this.cameraObject = script.defaultCam;
 
 	/**
 	 * @type {SceneObject}
 	 * @description The SceneObject to move to the user's visible space. */
-	this.moveObject = script.moveObject;
+	this.moveObject = moveObject;
 
 	/**
 	 * @type {Number}
 	 * @description Distance from camera (world units, cm). Default is 100. */
-	this.distanceFromCamera = script.distanceFromCamera;
+	this.distanceFromCamera = 100;
 
 	/**
 	 * @type {Number}
 	 * @description Height offset (world units, cm). Default is 0. */
-	this.height = script.height;
+	this.height = 0;
 
 	/**
 	 * @type {Number}

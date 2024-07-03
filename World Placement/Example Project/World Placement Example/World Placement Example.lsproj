@@ -2,7 +2,7 @@
     "lens_id": "",
     "document_id": "UF06ERKmwxFa5BXFNqug",
     "original_document_id": "UF06ERKmwxFa5BXFNqug",
-    "version": "31",
+    "version": "33",
     "preview": "icon.png",
     "videoPreview": "preview.mp4",
     "videoPreviewUpdateTime": "",
@@ -21,7 +21,7 @@
         "lastSavedWith": {
             "type": "Public",
             "major": "4",
-            "minor": "46",
+            "minor": "55",
             "patch": "0",
             "build": "0"
         }
@@ -29,16 +29,26 @@
     "view": {
         "InspectorUiComponent": "",
         "MapUiComponent": {
-            "mapPinPoints": ""
+            "mapPinPoints": "",
+            "mapCurrentCity": "0"
         },
         "Material::UiComponent": "",
         "MetaInfoUIComponent": {
-            "hints": "",
-            "lens": "Untitled",
+            "icon_hash": "56814dbefc6c60009fe6066406087653",
+            "icon_path": "icon.png",
+            "hints": [
+                ""
+            ],
+            "lens": "World Placement",
             "applicability": "3",
+            "compatibility_descriptors": [
+                "mobile",
+                "web"
+            ],
             "lens_descriptors": "",
             "sg": "false",
             "git_friendly": "true",
+            "activation_camera": "rear",
             "Spectacles2021UseAllowed": "false"
         },
         "ObjectTracking3DUIComponent": "",
@@ -49,6 +59,7 @@
             },
             "show_snap_ui": "true",
             "show_sponsored_ui": "false",
+            "input_stream_type": "InteractiveEnvironment",
             "preview_images_project_config": {
                 "back_preview_id": "bundle:Preview\/Images\/Beach.jpg",
                 "back_preview_is_favorite": "false",
@@ -66,6 +77,18 @@
                 "back_preview_is_favorite": "false",
                 "front_preview_id": "bundle:Preview\/InteractiveEnvironments\/Colorful Home",
                 "front_preview_is_favorite": "false"
+            },
+            "ie_saved_device_transformation": {
+                "eulerRotation": {
+                    "x": "-17.4436054",
+                    "y": "29.0398083",
+                    "z": "0"
+                },
+                "translation": {
+                    "x": "70.2433014",
+                    "y": "-23.8076344",
+                    "z": "-75.1736832"
+                }
             }
         },
         "ResourceUiComponent": "",
@@ -128,7 +151,8 @@
         },
         "ObjectTracking3DController": {
             "hand_tracking_mode": "0"
-        }
+        },
+        "ScriptModulesController": ""
     },
     "templateName": "Empty Project",
     "templateUrl": "Lens Studio version 4.16.0"

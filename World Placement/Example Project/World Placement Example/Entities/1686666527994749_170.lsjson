@@ -1,4 +1,9 @@
 {
+    "1648305789831586:15716": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1686666527994749:170": {
         "IResourceController": {
             "name": "Place World On Tap",
@@ -9,7 +14,7 @@
             "uid": "1648305789831586:15716",
             "fileId": "1686666527994766:180",
             "publicId": "1686666527994773:186",
-            "expected_hash": "69613de822e9ac23f62a565a2a7ea258"
+            "expected_hash": "bf7be11996ac6ffc9aba51cc2551968c"
         },
         "IResourceManager": {
             "uid": "1648305789831586:15716",
@@ -26,7 +31,7 @@
         "IResourceController": {
             "public": {
                 "path": "Place World On Tap.js",
-                "hash": "69613de822e9ac23f62a565a2a7ea258"
+                "hash": "bf7be11996ac6ffc9aba51cc2551968c"
             }
         }
     }

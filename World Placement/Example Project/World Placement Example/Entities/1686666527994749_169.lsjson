@@ -1,4 +1,9 @@
 {
+    "1648305774799255:13829": {
+        "ScriptModulesController": {
+            "dependent_module_names": []
+        }
+    },
     "1686666527994749:169": {
         "IResourceController": {
             "name": "World Placement",
@@ -9,7 +14,7 @@
             "uid": "1648305774799255:13829",
             "fileId": "1686666527994764:179",
             "publicId": "1686666527994773:185",
-            "expected_hash": "50fb62df1a4da43d1720daabe99a4799"
+            "expected_hash": "2ca9c78fbe66e98e0a361755812a9215"
         },
         "IResourceManager": {
             "uid": "1648305774799255:13829",
@@ -26,7 +31,7 @@
         "IResourceController": {
             "public": {
                 "path": "World Placement.js",
-                "hash": "50fb62df1a4da43d1720daabe99a4799"
+                "hash": "2ca9c78fbe66e98e0a361755812a9215"
             }
         }
     }
