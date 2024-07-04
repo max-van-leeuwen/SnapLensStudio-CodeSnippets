@@ -25,7 +25,7 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.moveObject</font> <small><i>SceneObject"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.distanceFromCamera</font><small> = <i>100"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> = <i>0"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> = <i>.5"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> = <i>.4"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.spherical</font><small> = <i>false"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.callback </font><small><i>bind using <font color='#56b1fc'>.add(</font>f<font color='#56b1fc'>)</font> and <font color='#56b1fc'>.remove(</font>f<font color='#56b1fc'>)"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> = <i>EaseFunctions.Cubic.InOut"}
@@ -37,6 +37,10 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 
 //@ui {"widget":"label"}
 //@input Component.Camera defaultCam
+//@input float defaultHeight = -30
+//@input float defaultDistanceFromCamera = 100
+//@input float defaultDuration = .4
+//@input bool defaultSpherical = false
 //@ui {"widget":"label"}
 
 
@@ -57,22 +61,22 @@ global.WorldPlacement = function(moveObject){
 	/**
 	 * @type {Number}
 	 * @description Distance from camera (world units, cm). Default is 100. */
-	this.distanceFromCamera = 100;
+	this.distanceFromCamera = script.defaultDistanceFromCamera;
 
 	/**
 	 * @type {Number}
-	 * @description Height offset (world units, cm). Default is 0. */
-	this.height = 0;
+	 * @description Height offset from eye-height (world units, cm). Default is -30. */
+	this.height = script.defaultHeight;
 
 	/**
 	 * @type {Number}
-	 * @description Length of animation (s). Default is 0.5. */
-	this.duration = .5;
+	 * @description Length of animation (s). Default is 0.4. */
+	this.duration = script.defaultDuration;
 
     /**
 	 * @type {Boolean}
 	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is false. */
-	this.spherical = false;
+	this.spherical = script.defaultSpherical;
 
     /**
 	 * @type {Function}
