@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.25</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.26</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -160,7 +160,7 @@
 //			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
 //			.squeeze(delay, strength, duration)												// do scale squeeze
 //			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
-// 			.scaleTo(delay, toScale, duration, easeFunction)								// scale towards new size (overrides other rotation animations)
+// 			.scaleTo(delay, toScale, isLocal, duration, easeFunction)						// scale towards new size (overrides other rotation animations)
 // 			.moveTo(delay, point, duration, easeFunction)									// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 // 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 //			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
@@ -696,6 +696,22 @@
 //			v.add(points)												// append to array of points, returns the total array of SceneObjects
 //			v.getTransforms()											// get an array of transform components
 //			v.clear()													// destroy all objects
+//
+//
+//
+// -
+//
+//
+//
+// rankedAction(label [string], prio [number], func [function])
+//	Ranked Actions make it easy to compare a bunch of features coming from different scripts on the same frame, and only call the one with the highest priority at the end of the frame.
+//
+//	An example of when this would be useful:
+//		Imagine a scene containing a button and another tap event of some kind (like on-screen taps).
+//		When the user taps on the button, the other event is also triggered.
+//		By having the actions of both interactables pass through rankedAction first, the highest-prio action at the end of each frame is triggered and the other is ignored.
+//
+//	All actions to be pooled together should have the same label. At the end of each frame, all pools are cleared.
 //
 //
 //
@@ -1789,10 +1805,11 @@ global.QuickFlow = function(obj){
 	 * @description (use undefined for any argument to pick its default value)
 	 * @param {number} delay delay - default: 0 seconds
 	 * @param {(vec2|vec3)} point point - default: original position (before animations were applied)
+	 * @param {boolean} isLocal isLocal - default: false (only relevant for 3D motion, set to true to apply as local space instead of world space)
 	 * @param {number} duration duration - default: .5 seconds
 	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
 	*/
-	this.moveTo = function(delay = 0, point = truePosition, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
+	this.moveTo = function(delay = 0, point = truePosition, isLocal = false, duration = .5, easeFunction = EaseFunctions.Cubic.InOut){
 		// register
 		registerCommand(this.moveTo, [...arguments]);
 
@@ -1803,7 +1820,7 @@ global.QuickFlow = function(obj){
 			nonRelativeAnimationClear(nrPositionAnim);
 	
 			// convert toPosition from world space to local space on animation start (if not ScreenTransform)
-			if(!screenTrf){
+			if(!isLocal && !screenTrf){
 				var parent = obj.getParent(); // use parent's transform for local-to-world conversion
 				if(parent){
 					const mat = parent.getTransform().getInvertedWorldTransform();
@@ -3451,4 +3468,37 @@ global.VisualizePoints = function(showPointsOnStart){
 
 	// start right away if array given
 	if(showPointsOnStart) self.show(showPointsOnStart);
+}
+
+
+
+
+global.rankedAction = function(label, prio, func){
+	// store a given action/prio combo (creates store and label if not already there)
+	function store(){
+		if(!global.rankedActionStore) global.rankedActionStore = {}; // create store
+		if(!global.rankedActionStore[label]) global.rankedActionStore[label] = {}; // create label
+		global.rankedActionStore[label].func = func; // assign function
+		global.rankedActionStore[label].prio = prio; // assign prio
+	}
+
+	if(global.rankedActionStore){ // if a store was already made by another script
+		if(global.rankedActionStore[label]){ // if this specific label already exists in the store
+			if(prio > global.rankedActionStore[label].prio) store(); // store this new action if new prio is greater than existing
+		}else{ // if label does not exist yet
+			store(); // store new action under new label
+		}
+	}else{ // if this is the first script to make a store
+		store(); // initialize with new action
+	}
+	
+	// do check at end of frame
+	var rankedActionEvent = script.createEvent("LateUpdateEvent");
+	rankedActionEvent.bind(function(){ // the end-of-frame check
+		for(const thisLabel in global.rankedActionStore){ // go through all labels' stored data
+			if(global.rankedActionStore[thisLabel].func) global.rankedActionStore[thisLabel].func(); // call winner
+			delete global.rankedActionStore[thisLabel]; // remove from list (but keep the overall store)
+		}
+		script.removeEvent(rankedActionEvent); // only do this for one frame
+	});
 }

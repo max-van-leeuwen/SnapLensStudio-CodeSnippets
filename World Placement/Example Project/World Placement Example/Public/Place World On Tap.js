@@ -9,9 +9,10 @@
 // make instance with customizations
 //@input SceneObject obj
 var worldPlacementAnim = new WorldPlacement(script.obj);
-worldPlacementAnim.duration = .3;
-worldPlacementAnim.spherical = false;
-worldPlacementAnim.distanceFromCamera = 80;
+
+// set custom distance from camera
+//@input float customDistanceFromCamera
+worldPlacementAnim.distanceFromCamera = script.customDistanceFromCamera;
 
 
 
@@ -19,3 +20,5 @@ worldPlacementAnim.distanceFromCamera = 80;
 script.createEvent("TapEvent").bind(function(){
 	worldPlacementAnim.start();
 })
+
+worldPlacementAnim.start(true); // do on script start with isInstant=true, to instantly see the block in front of you

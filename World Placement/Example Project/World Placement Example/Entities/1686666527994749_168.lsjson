@@ -117,7 +117,7 @@
     "1686666527994773:184": {
         "IResourceController": {
             "public": {
-                "path": "Box.mesh",
+                "path": "Other/Box.mesh",
                 "hash": "621da74e06cc402b895f39376927a9d1"
             }
         }

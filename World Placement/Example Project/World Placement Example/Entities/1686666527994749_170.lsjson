@@ -14,7 +14,7 @@
             "uid": "1648305789831586:15716",
             "fileId": "1686666527994766:180",
             "publicId": "1686666527994773:186",
-            "expected_hash": "bf7be11996ac6ffc9aba51cc2551968c"
+            "expected_hash": "c66fdc490afeea7025cbdec4aaa261cf"
         },
         "IResourceManager": {
             "uid": "1648305789831586:15716",
@@ -31,7 +31,7 @@
         "IResourceController": {
             "public": {
                 "path": "Place World On Tap.js",
-                "hash": "bf7be11996ac6ffc9aba51cc2551968c"
+                "hash": "c66fdc490afeea7025cbdec4aaa261cf"
             }
         }
     }

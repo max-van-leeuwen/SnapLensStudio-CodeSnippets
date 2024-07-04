@@ -4,7 +4,7 @@
 
 // World Placement
 
-// Requires LSQuickScripts 2.25
+// Requires LSQuickScripts 2.26
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
 
 
@@ -42,6 +42,12 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 //@input float defaultDuration = .4
 //@input bool defaultSpherical = false
 //@ui {"widget":"label"}
+
+
+
+// action priority settings
+script.rankedPriority = 10; // priority level for interactions created by this button (only relevant if other action ranking scripts with the same label are used in this project)
+const rankedLabel = 'interactables'; // the priority pool name (should be same for other interactables)
 
 
 
@@ -101,20 +107,24 @@ global.WorldPlacement = function(moveObject){
 	 * @type {Function} 
 	 * @description Starts the animation. If first argument is true, the animation will be skipped and placement will be instant. */
 	this.start = function(doInstant){
+		rankedAction(rankedLabel, script.rankedPriority, ()=>start(doInstant) ); // rankedAction makes sure other interactables (if there are any) are prioritized correctly
+	}
+
+	function start(doInstant){
 		// get transformation info
 		var camTrf = self.cameraObject.getTransform();
 		if(self.moveObject) var sceneTrf = self.moveObject.getTransform();
-	
+
 		var camPos = camTrf.getWorldPosition();
 		var camFwd = camTrf.forward;
 		var cursorPos = camPos.add(camFwd);
 		var camPosXZ = new vec3(camPos.x, 0, camPos.z);
 		var cursorPosXZ = new vec3(cursorPos.x, 0, cursorPos.z);
 		var fwdXZ = camPosXZ.sub(cursorPosXZ).normalize();
-	
+
 		// facing user, y-axis only
 		var newRot = quat.angleAxis( Math.atan2(fwdXZ.x, fwdXZ.z) + Math.PI, vec3.up());
-	
+
 		// positioned in front of user at correct height
 		var camHeight = new vec3(0, camPos.y, 0);
 		var sphericalHeight = 0;
@@ -122,7 +132,7 @@ global.WorldPlacement = function(moveObject){
 		var heightOffset = new vec3(0, self.height + sphericalHeight, 0);
 		var newPos = camPosXZ.add(fwdXZ.uniformScale(self.distanceFromCamera));
 		newPos = newPos.add(heightOffset).add(camHeight);
-	
+
 		// animate properties
 		if(sceneTrf){
 			var curPos = sceneTrf.getWorldPosition();
@@ -130,7 +140,7 @@ global.WorldPlacement = function(moveObject){
 		}
 
 		finalTransformData = {pos:newPos, rot:newRot};
-		
+
 		function animationStep(v){
 			// apply (if moveObject was given)
 			if(sceneTrf){
