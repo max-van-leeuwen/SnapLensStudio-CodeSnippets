@@ -179,11 +179,11 @@ QuickFlow(obj [SceneObject]) : QuickFlow object
 
 			.fadeIn(delay, duration, easeFunction)											// start fade-in (enables SceneObject on start)
 			.fadeOut(delay, duration, easeFunction)											// start fade-out (disables SceneObject and all running animations on end)
-			.scaleIn(delay, duration, easeFunction)											// start scale-in (enables SceneObject on start)
-			.scaleOut(delay, duration, easeFunction)										// start scale-out (disables SceneObject and all running animations on end)
+			.scaleIn(delay, duration, startAtTime, easeFunction)							// start scale-in (enables SceneObject on start)
+			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
 			.squeeze(delay, strength, duration)												// do scale squeeze
 			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
-			.scaleTo(delay, toScale, duration, easeFunction)								// scale towards new size (overrides other rotation animations)
+			.scaleTo(delay, toScale, isLocal, duration, easeFunction)						// scale towards new size (overrides other rotation animations)
 			.moveTo(delay, point, duration, easeFunction)									// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
@@ -349,17 +349,19 @@ stopAllSoundInstances() : AudioComponent array
 
 
 
-InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number]) : InstSoundPooled Object
+InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number], volume (optional, default 1) [number]) : InstSoundPooled Object
 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
+	'Volume' Sets the AudioComponent's volume (default is 1).
+	
 
-	The 'instance' function has two optional arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume (0-1 number).
+	The 'instance' function has two optional arguments: the first is the index of the sound to be played (a random index is picked if it is null). The second is the volume override (0-1 number).
 
 		For example, if you want to randomly pick laser sounds coming from a gun.
 		The following parameters give it a maximum of 10 plays, with 0.2 seconds inbetween, before looping back to the first sound component:
 
-			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2 )
+			var soundPool = new InstSoundPooled( [script.laserSound1, script.laserSound2, script.laserSound3], 10, 0.2)
 			function onFiringLaser(){
 				soundPool.instance() 	// call 'onFiringLaser()' whenever you want to hear one of the laser sound samples!
 			}
@@ -717,6 +719,22 @@ VisualizePoints() : VisualizePoints object
 			v.add(points)												// append to array of points, returns the total array of SceneObjects
 			v.getTransforms()											// get an array of transform components
 			v.clear()													// destroy all objects
+
+
+
+-
+
+
+
+rankedAction(label [string], prio [number], func [function])
+	Ranked Actions make it easy to compare a bunch of features coming from different scripts on the same frame, and only call the one with the highest priority at the end of the frame.
+
+	An example of when this would be useful:
+		Imagine a scene containing a button and another tap event of some kind (like on-screen taps).
+		When the user taps on the button, the other event is also triggered.
+		By having the actions of both interactables pass through rankedAction first, the highest-prio action at the end of each frame is triggered and the other is ignored.
+
+	All actions to be pooled together should have the same label. At the end of each frame, all pools are cleared.
 
 
 
