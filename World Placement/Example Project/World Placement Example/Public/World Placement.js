@@ -2,7 +2,7 @@
 //  @maksvanleeuwen
 //  links.maxvanleeuwen.com
 
-// Spectacles Radial Menu
+// World Placement
 
 // Requires LSQuickScripts 2.25
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
@@ -21,8 +21,8 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 //@ui {"widget":"group_start", "label":"<b>Usage"}
 	//@ui {"widget":"label"}
     //@ui {"widget":"label", "label":"Use <font color='#56b1fc'>new WorldPlacement(</font><small>moveObject</small><font color='#56b1fc'>)"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.cameraObject"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.moveObject"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.cameraObject</font> <small><i>SceneObject"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.moveObject</font> <small><i>SceneObject"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.distanceFromCamera</font><small> = <i>100"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> = <i>0"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> = <i>.5"}
@@ -30,14 +30,12 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.callback </font><small><i>bind using <font color='#56b1fc'>.add(</font>f<font color='#56b1fc'>)</font> and <font color='#56b1fc'>.remove(</font>f<font color='#56b1fc'>)"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> = <i>EaseFunctions.Cubic.InOut"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.start(</font><small>doInstant</small><font color='#56b1fc'>)"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.getFinalTransformData()</font><small> → {pos, rot} (no moveObject needed)"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.getFinalTransformData()</font><small> → {pos, rot}, no <font color='#56b1fc'>.moveObject</font> needed"}
 //@ui {"widget":"group_end"}
 //@ui {"widget":"label"}
-
-
+//@ui {"widget":"separator"}
 
 //@ui {"widget":"label"}
-//@ui {"widget":"separator"}
 //@input Component.Camera defaultCam
 //@ui {"widget":"label"}
 
@@ -93,7 +91,6 @@ global.WorldPlacement = function(moveObject){
 		return finalTransformData;
 	}
 	var finalTransformData;
-
 
 
 	/**
