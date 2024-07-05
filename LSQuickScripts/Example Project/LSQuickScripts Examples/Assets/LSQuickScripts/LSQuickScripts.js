@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.26</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.27</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -3476,15 +3476,15 @@ global.VisualizePoints = function(showPointsOnStart){
 global.rankedAction = function(label, prio, func){
 	// store a given action/prio combo (creates store and label if not already there)
 	function store(){
-		if(!global.rankedActionStore) global.rankedActionStore = {}; // create store
-		if(!global.rankedActionStore[label]) global.rankedActionStore[label] = {}; // create label
-		global.rankedActionStore[label].func = func; // assign function
-		global.rankedActionStore[label].prio = prio; // assign prio
+		if(!script.rankedActionStore) script.rankedActionStore = {}; // create store
+		if(!script.rankedActionStore[label]) script.rankedActionStore[label] = {}; // create label
+		script.rankedActionStore[label].func = func; // assign function
+		script.rankedActionStore[label].prio = prio; // assign prio
 	}
 
-	if(global.rankedActionStore){ // if a store was already made by another script
-		if(global.rankedActionStore[label]){ // if this specific label already exists in the store
-			if(prio > global.rankedActionStore[label].prio) store(); // store this new action if new prio is greater than existing
+	if(script.rankedActionStore){ // if a store was already made by another script
+		if(script.rankedActionStore[label]){ // if this specific label already exists in the store
+			if(prio > script.rankedActionStore[label].prio) store(); // store this new action if new prio is greater than existing
 		}else{ // if label does not exist yet
 			store(); // store new action under new label
 		}
@@ -3495,9 +3495,9 @@ global.rankedAction = function(label, prio, func){
 	// do check at end of frame
 	var rankedActionEvent = script.createEvent("LateUpdateEvent");
 	rankedActionEvent.bind(function(){ // the end-of-frame check
-		for(const thisLabel in global.rankedActionStore){ // go through all labels' stored data
-			if(global.rankedActionStore[thisLabel].func) global.rankedActionStore[thisLabel].func(); // call winner
-			delete global.rankedActionStore[thisLabel]; // remove from list (but keep the overall store)
+		for(const thisLabel in script.rankedActionStore){ // go through all labels' stored data
+			if(script.rankedActionStore[thisLabel].func) script.rankedActionStore[thisLabel].func(); // call winner
+			delete script.rankedActionStore[thisLabel]; // remove from list (but keep the overall store)
 		}
 		script.removeEvent(rankedActionEvent); // only do this for one frame
 	});
