@@ -3,6 +3,8 @@
 Some handy interaction helpers with tap emulation for Lens Studio.
 <br>[twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
 
+<br>
+
 <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Hand Tracking Setup/Media/preview.gif" />
 
 <br>
