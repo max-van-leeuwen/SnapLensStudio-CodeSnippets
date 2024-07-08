@@ -74,6 +74,8 @@ script.getPinchPosition = () => cursorPos; // pos
 //@ui {"widget":"group_start", "label":"", "showIf":"allowHandTracking"}
     //@input Component.ObjectTracking3D handLeft
     //@input Component.ObjectTracking3D handRight
+    //@input int stabilityFrames = 4 {"min":0} // on any track or pinch change, there will be a delay of this many frames to catch some false negatives (set to 0 to disable)
+    //@ui {"widget":"label", "label":"<small>amount of frames delay before a track change or pinch end, 0=disable"}
 //@ui {"widget":"group_end", "showIf":"allowHandTracking"}
 //@ui {"widget":"label"}
 
@@ -87,7 +89,7 @@ if(global.Sequence && Sequence.delivery){
 
 // params
 var dominantHand = 'right'; // dominant hand
-const pinchThreshold = global.deviceInfoSystem.isEditor() ? 3 : 2.5; // thumb & index distance threshold for hand tracking, cm (slightly bigger threshold when in editor because the tracking is more stable on mobile)
+const pinchThreshold = 3.3; // thumb & index distance threshold for hand tracking, cm
 
 
 
@@ -95,6 +97,9 @@ const pinchThreshold = global.deviceInfoSystem.isEditor() ? 3 : 2.5; // thumb & 
 var activeHand = null; // string 'right' or 'left', or null if none. defaults to dominant hand if tapping
 var isPinching = false;
 var activeHandObject; // active hand object
+var stabilityDelayPinch = 0; // countdowns
+var stabilityDelayTrackLeft = 0;
+var stabilityDelayTrackRight = 0;
 
 var cursorPos; // most recent average position between thumb and index
 var thumbPos;
@@ -202,9 +207,6 @@ function startHandTracking(){
     var onHandChange = new Callback();
     var forceStopPinch;
 
-    // events
-    var pinchEvent;
-    var trackStateEvent;
 
     // hand objects
     const leftHandObject = {
@@ -225,11 +227,11 @@ function startHandTracking(){
     // begin tracking
     function start(){
         // continuous cursor position
-        trackStateEvent = script.createEvent("UpdateEvent");
+        var trackStateEvent = script.createEvent("UpdateEvent");
         trackStateEvent.bind(updateTrackingState);
 
         // pinch check
-        pinchEvent = script.createEvent('UpdateEvent');
+        var pinchEvent = script.createEvent('UpdateEvent');
         pinchEvent.bind(pinchingUpdate);
 
         // when hand switches
@@ -245,6 +247,7 @@ function startHandTracking(){
                 script.onTrackStart.callback(false);
             }
             if(activeHand && !newHand){
+                if(isPinching) script.onPinchEnd.callback(cursorPos, false);
                 activeHand = newHand;
                 cursorPos = null;
                 isPinching = false;
@@ -281,30 +284,66 @@ function startHandTracking(){
     }
 
 
+    // stability delay when tracking
+    function awaitTrackStabilityDelay(handName){ // returns true when new track state needs to wait
+        // check relevant hand
+        if(handName == 'left'){
+            if(stabilityDelayTrackLeft > 0){ // countdown was already started
+                stabilityDelayTrackLeft--; // increment
+            }else{ // countdown was not yet started
+                stabilityDelayTrackLeft = script.stabilityFrames; // start countdown for this hand
+            }
+            if(stabilityDelayTrackLeft == 0) return false; // can proceed now, no delay
+            return true; // delay
+
+        }else if(handName == 'right'){
+            if(stabilityDelayTrackRight > 0){ // countdown was already started
+                stabilityDelayTrackRight--; // increment
+            }else{ // countdown was not yet started
+                stabilityDelayTrackRight = script.stabilityFrames; // start countdown for this hand
+            }
+            if(stabilityDelayTrackRight == 0) return false; // can proceed now, no delay
+            return true; // delay
+        }
+    }
+
+
     // cursor position
     function updateTrackingState(){
+        // stability delay
+        if(script.stabilityFrames){ // auto-reset delay values when tracking is found
+            if(script.handLeft.isTracking()) stabilityDelayTrackLeft = 0;
+            if(script.handRight.isTracking()) stabilityDelayTrackRight = 0;
+        }
+        
         // get hand tracks (onTrackStarted and onTrackingLost don't work on Component.ObjectTracking3D)
         if(script.handLeft.isTracking() && !leftTracking){
             leftTracking = true;
             updateTracking();
         }
         if(!script.handLeft.isTracking() && leftTracking){
-            leftTracking = false;
-            updateTracking();
+            if(script.stabilityFrames && awaitTrackStabilityDelay('left')){ // skip this check if awaiting a state delay
+            }else{
+                leftTracking = false;
+                updateTracking();
+            }
         }
         if(script.handRight.isTracking() && !rightTracking){
             rightTracking = true;
             updateTracking();
         }
         if(!script.handRight.isTracking() && rightTracking){
-            rightTracking = false;
-            updateTracking();
+            if(script.stabilityFrames && awaitTrackStabilityDelay('right')){ // skip this check if awaiting a state delay
+            }else{
+                rightTracking = false;
+                updateTracking();
+            }
         }
 
         // get hand positions
         if(activeHandObject){
-            thumbPos = activeHandObject.thumbTip.getWorldPosition();
-            indexPos = activeHandObject.indexTip.getWorldPosition();
+            if(script.stabilityFrames && stabilityDelayTrackLeft==0 || !script.stabilityFrames) thumbPos = activeHandObject.thumbTip.getWorldPosition();
+            if(script.stabilityFrames && stabilityDelayTrackRight==0 || !script.stabilityFrames) indexPos = activeHandObject.indexTip.getWorldPosition();
             cursorPos = vec3.lerp(thumbPos, indexPos, .5); // get center between fingers
         }
     }
@@ -313,8 +352,6 @@ function startHandTracking(){
     // pinch detection
     var wasPinching;
     function pinchingUpdate(){
-        if(!thumbPos || !indexPos) return;
-
         // force pinch stop on this frame
         if(forceStopPinch){
             forceStopPinch = false;
@@ -325,18 +362,30 @@ function startHandTracking(){
             return;
         }
 
+        if(!thumbPos || !indexPos){
+            if(script.stabilityFrames && stabilityDelayPinch > 0) HandTracking.onPinchHold.callback(cursorPos, false);
+            return;
+        }
+
         if(!leftTracking && !rightTracking) return;
 
         // check if pinching
         isPinching = thumbPos.distance(indexPos) < pinchThreshold;
+        if(isPinching && script.stabilityFrames) stabilityDelayPinch = script.stabilityFrames;
 
         if(!wasPinching && isPinching){ // on pinch start
             HandTracking.onPinchStart.callback(cursorPos, false);
         }else if(wasPinching && isPinching){ // on pinch continue
             HandTracking.onPinchHold.callback(cursorPos, false);
         }else if(wasPinching && !isPinching){ // on pinch stop
-            HandTracking.onPinchEnd.callback(cursorPos, false);
-            cursorPos = null;
+            if(script.stabilityFrames && stabilityDelayPinch > 0){ // keep pinch alive
+                stabilityDelayPinch--;
+                return;
+            }else{
+                stabilityDelayPinch = 0;
+                HandTracking.onPinchEnd.callback(cursorPos, false);
+                cursorPos = null;
+            }
         }
 
         // store prv value for next frame

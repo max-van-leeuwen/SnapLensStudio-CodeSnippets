@@ -31,6 +31,7 @@
     distFromCamera: false
     handLeft: false
     handRight: false
+    stabilityFrames: false
   ScriptTypesHidden:
     {}
   DefaultScriptInputs:
@@ -47,6 +48,7 @@
       handLeft: !<reference.ObjectTracking3D> 00000000-0000-0000-0000-000000000000
       handRight: !<reference.ObjectTracking3D> 00000000-0000-0000-0000-000000000000
       allowTapDelivery: false
+      stabilityFrames: 4
   ScriptTypes:
     -
       {}

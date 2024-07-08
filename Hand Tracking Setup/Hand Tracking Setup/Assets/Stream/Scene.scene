@@ -125,7 +125,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> b10f0678-db14-4f74-ba30-f6fdc72cb418
+    - !<reference> ab87235c-92b6-409d-a147-a3e82cf2a060
   Mesh: !<reference> e89ff8ac-d07e-41d6-8498-f160101df00f
   Skin: !<reference> e7bdb595-b340-48e9-950c-cd83ccf0b3b6
   BlendShapesEnabled: true
@@ -1379,6 +1379,7 @@
   ScriptAsset: !<reference> 87252e87-5140-49b4-9082-99d83c51ebcb
   ScriptInputsDefault:
     distFromCamera: true
+    stabilityFrames: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1390,6 +1391,7 @@
       allowHandTracking: true
       handLeft: !<reference.ObjectTracking3D> 3983c1b0-04f8-41b0-b70b-ec411c03d28d
       handRight: !<reference.ObjectTracking3D> 402af493-4241-42e2-9a42-b98e6164ea93
+      stabilityFrames: 4
   ScriptTypes:
     "":
       {}
@@ -1589,7 +1591,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> b10f0678-db14-4f74-ba30-f6fdc72cb418
+    - !<reference> ab87235c-92b6-409d-a147-a3e82cf2a060
   Mesh: !<reference> 78744435-e357-4665-a082-c52599c76e51
   Skin: !<reference> cf04379b-e9d4-45ec-9e0f-dc7ad6c4964c
   BlendShapesEnabled: true
