@@ -11,7 +11,7 @@ Some handy interaction helpers with tap emulation for Lens Studio.
 
 ## Usage
 
-### Callbacks
+### Callbacks (any hand)
 
 Bind using `.add(f)` and `.remove(f)`.
 
