@@ -26,3 +26,5 @@ Contents:
   - Make an object follow the user's gaze, with nice animations. Useful for placing the scene in front of you in the Spectacles.
 - Smooth Follow
   - Make any 3D Transform or Number smoothly interpolate with only a couple lines of code.
+- Hand Tracking
+  - A setup that makes pinch-detection super easy (and supports tap emulation in preview window)
