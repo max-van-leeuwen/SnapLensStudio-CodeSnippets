@@ -1,0 +1,73 @@
+- !<Material/2fc294ab-23b7-48a8-bc60-ffd980be89ef>
+  PackagePath: ""
+  PassesInfo:
+    - !<own> 6a600696-f4a7-4c38-a09c-bd2670da9d36
+- !<PassInfo/6a600696-f4a7-4c38-a09c-bd2670da9d36>
+  DepthWrite: true
+  DepthTest: true
+  DepthFunction: LessEqual
+  TwoSided: true
+  ColorMask: {x: true, y: true, z: true, w: true}
+  CullMode: Back
+  PolygonOffset: {x: 0.000000, y: 0.000000}
+  FrustumCulling: Auto
+  FrustumCullPad: 0.000000
+  InstanceCount: 1
+  Defines:
+    - DDROPLIST_BACK_CAP_MODE 2
+    - DROPLIST_BACK_CAP_MODE 2
+    - DROPLIST_FRONT_CAP_MODE 2
+    - DROPLIST_INNER_EDGE_MODE 2
+    - DROPLIST_OUTER_EDGE_MODE 2
+    - NODE_11_DROPLIST_ITEM 0
+    - NODE_151_DROPLIST_ITEM 0
+    - NODE_41_DROPLIST_ITEM 0
+    - NODE_9_DROPLIST_ITEM 0
+  BlendMode: Disabled
+  Properties:
+    InnerEdgeStartingColor:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    Port_Default_N010:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+    Port_Default_N046:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+    Port_Default_N077:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+    Port_Default_N146:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+    Port_Input1_N014:
+      typeIdx: 1
+      value: 0.500000
+    Port_Input1_N043:
+      typeIdx: 1
+      value: 0.250000
+    Port_Input1_N054:
+      typeIdx: 1
+      value: 0.500000
+    PreviewEnabled:
+      typeIdx: 0
+      value: 0
+    backCapStartingColor:
+      typeIdx: 5
+      value: {x: 1.000000, y: 0.773526, z: 0.094118, w: 1.000000}
+    frontCapStartingColor:
+      typeIdx: 5
+      value: {x: 1.000000, y: 0.772717, z: 0.094850, w: 1.000000}
+    outerEdgeStartingColor:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    overrideTimeDelta:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeElapsed:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeEnabled:
+      typeIdx: 0
+      value: 0
+  Pass: !<reference> 46abbebd-3cfb-4cb4-a5ea-b3fa4685b02f

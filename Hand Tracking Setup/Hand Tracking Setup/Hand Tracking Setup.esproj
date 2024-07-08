@@ -1,0 +1,34 @@
+studioVersion:
+  major: 5
+  minor: 0
+  patch: 14
+  build: 24061804
+updateCheckpoint: 37
+sceneId: 0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99
+viewConfig:
+  simulation:
+    device: No Simulation
+    cameraFov: 66.519997
+    fullFrameAspect: nan
+    viewport: Maximized
+    output: Live
+    stereoOutputEye: Center
+  cameraType: Front
+metaInfo:
+  hints:
+    []
+  lensName: Hand Tracking
+  lensDescriptors:
+    []
+  lensApplicability:
+    - Back
+  lensClientCompatibilities:
+    - Mobile
+    - Web
+    - Spectacles
+  iconHash: ""
+  fromTemplateName: Default
+  fromTemplateUrl: Lens Studio 5.0.12.24051520
+  activationCamera: Rear
+  hasVideoPreview: false
+  sourceMapEnabled: false
