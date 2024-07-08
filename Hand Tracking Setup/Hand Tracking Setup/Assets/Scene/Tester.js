@@ -35,7 +35,7 @@ HandTracking.onPinchStart.add(function(pos, isTap){
 
 HandTracking.onPinchHold.add(function(pos, isTap){
     script.status.getTransform().setWorldPosition(pos);
-    script.status.text = `pinch\n${short(pos)}`;
+    script.status.text = `pinching\n${short(pos)}`;
 });
 
 HandTracking.onPinchEnd.add(function(pos, isTap){

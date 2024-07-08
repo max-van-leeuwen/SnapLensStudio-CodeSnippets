@@ -359,14 +359,13 @@ function startHandTracking(){
             cursorPos = null;
             isPinching = false;
             wasPinching = false;
+            stabilityDelayPinch = 0;
             return;
         }
 
-        if(!thumbPos || !indexPos){
-            if(script.stabilityFrames && stabilityDelayPinch > 0) HandTracking.onPinchHold.callback(cursorPos, false);
-            return;
-        }
-
+        if(script.stabilityFrames && stabilityDelayPinch > 0) HandTracking.onPinchHold.callback(cursorPos, false);
+        
+        if(!thumbPos || !indexPos) return;
         if(!leftTracking && !rightTracking) return;
 
         // check if pinching
