@@ -344,7 +344,7 @@ function startHandTracking(){
         if(activeHandObject){
             if(script.stabilityFrames && stabilityDelayTrackLeft==0 || !script.stabilityFrames) thumbPos = activeHandObject.thumbTip.getWorldPosition();
             if(script.stabilityFrames && stabilityDelayTrackRight==0 || !script.stabilityFrames) indexPos = activeHandObject.indexTip.getWorldPosition();
-            cursorPos = vec3.lerp(thumbPos, indexPos, .5); // get center between fingers
+            if(thumbPos && indexPos) cursorPos = vec3.lerp(thumbPos, indexPos, .5); // get center between fingers
         }
     }
 
