@@ -1,11 +1,7 @@
 # SnapLensStudio-CodeSnippets
-Handy code, will update every once in a while.
+Coding essentials for all your projects!
 
-To use, simply add the script to your scene.<br/>
-Call the function as described at the top of the script in the comments.<br/>
-This can be done from any script in the scene.
-
-All scripts have a simple example project showing how they work!<br/><br/><br/>
+All scripts have a simple example project demonstrating how they work.<br/><br/><br/>
 
 Contents:
 - LSQuickScripts
