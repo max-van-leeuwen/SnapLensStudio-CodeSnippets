@@ -1,0 +1,36 @@
+- !<AssetImportMetadata/fb42473d-fce4-47bf-8c00-cb7ea84b1796>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 58c7726c-7a43-45b2-beb8-2ae695c613db
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 58c7726c-7a43-45b2-beb8-2ae695c613db
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> 569902c9-4cce-47e6-a4c5-6c9f64d66cbc
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/91a1bddb-64e2-465e-8d0a-6604ce6c98f5>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/569902c9-4cce-47e6-a4c5-6c9f64d66cbc>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    customDistanceFromCamera: false
+    obj: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - obj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      customDistanceFromCamera: !<float> 0.000000
+  ScriptTypes:
+    -
+      {}

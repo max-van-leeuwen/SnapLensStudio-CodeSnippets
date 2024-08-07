@@ -280,6 +280,15 @@ distanceAlongVector(pos1 [vec3], pos2 [vec3], fwd [vec3]) : vec3
 
 
 
+distanceToLine(p1 [vec3], p2 [vec3], point [vec3]) : {dist:number, pos:vec3}
+	Returns info about the position on the line (p1-p2) that's closest to the given point (vec3).
+
+
+
+-
+
+
+
 hsvToRgb(h [number], s [number], v [number]) : vec3
 	Returns the RGB color for a Hue, Saturation, and Value. Inputs and outputs are in range 0-1.
 
@@ -336,7 +345,8 @@ instSound(
 			mixToSnap (optional) [bool]
 ) : AudioComponent
 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
-	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
+	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing.
+	Does not work on Spectacles.
 
 
 
@@ -676,12 +686,13 @@ Callback(callback [function]) : Callback object
 			function someFunction(arg1, arg2){} 					// a function to be called at a certain time
 
 			var c = new Callback()									// create instance
-			c.add(someFunction)										// add a function to be called when running this.callback(...args)
+			c.add(someFunction, noAddedCallback)					// add a function to be called when running this.callback(...args), with optional noAddedCallback (default is false)
+			c.remove(someFunction, noRemovedCallback)				// Remove a callback function (if it was added earlier), with optional noRemovedCallback (default is false)
 			c.callback(a, b)										// call all functions (any arguments will be passed on)
-			c.remove(someFunction)									// Remove a callback function (if it was added earlier)
 			c.getCallbacks()										// get all callback functions
 			c.onCallbackAdded										// function called when a callback was added (assign to property)
 			c.onCallbackRemoved										// function called when a callback was removed (assign to property)
+			c.enabled = true										// when false, callback() will not call anything
 
 
 
@@ -715,8 +726,8 @@ VisualizePoints() : VisualizePoints object
 			v.material													// (optional) the material on the mesh (Asset.Material)
 			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
-			v.show(points)												// show an array of points, returns the array of created SceneObjects
-			v.add(points)												// append to array of points, returns the total array of SceneObjects
+			v.show(points)												// show points, returns the array of created SceneObjects
+			v.add(points)												// append to points, returns the total array of SceneObjects
 			v.getTransforms()											// get an array of transform components
 			v.clear()													// destroy all objects
 

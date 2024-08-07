@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.27</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.29</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -257,6 +257,15 @@
 //
 //
 //
+// distanceToLine(p1 [vec3], p2 [vec3], point [vec3]) : {dist:number, pos:vec3}
+//	Returns info about the position on the line (p1-p2) that's closest to the given point (vec3).
+//
+//
+//
+// -
+//
+//
+//
 // hsvToRgb(h [number], s [number], v [number]) : vec3
 // 	Returns the RGB color for a Hue, Saturation, and Value. Inputs and outputs are in range 0-1.
 //
@@ -313,7 +322,8 @@
 //			mixToSnap (optional) [bool]
 // ) : AudioComponent
 // 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
-// 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing
+// 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing.
+//	Does not work on Spectacles.
 //
 //
 //
@@ -653,12 +663,13 @@
 //			function someFunction(arg1, arg2){} 					// a function to be called at a certain time
 //
 // 			var c = new Callback()									// create instance
-//			c.add(someFunction)										// add a function to be called when running this.callback(...args)
+//			c.add(someFunction, noAddedCallback)					// add a function to be called when running this.callback(...args), with optional noAddedCallback (default is false)
+//			c.remove(someFunction, noRemovedCallback)				// Remove a callback function (if it was added earlier), with optional noRemovedCallback (default is false)
 // 			c.callback(a, b)										// call all functions (any arguments will be passed on)
-//			c.remove(someFunction)									// Remove a callback function (if it was added earlier)
 // 			c.getCallbacks()										// get all callback functions
 // 			c.onCallbackAdded										// function called when a callback was added (assign to property)
 // 			c.onCallbackRemoved										// function called when a callback was removed (assign to property)
+//			c.enabled = true										// when false, callback() will not call anything
 //
 //
 //
@@ -692,8 +703,8 @@
 //			v.material													// (optional) the material on the mesh (Asset.Material)
 //			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 //			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
-//			v.show(points)												// show an array of points, returns the array of created SceneObjects
-//			v.add(points)												// append to array of points, returns the total array of SceneObjects
+//			v.show(points)												// show points, returns the array of created SceneObjects
+//			v.add(points)												// append to points, returns the total array of SceneObjects
 //			v.getTransforms()											// get an array of transform components
 //			v.clear()													// destroy all objects
 //
@@ -1473,8 +1484,8 @@ global.QuickFlow = function(obj){
 	function updateNewValues(){
 		if(!objStillExists()) return;
 		newPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
-		newScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
 		newRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
+		newScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
 		newBaseColor = visual ? visual.mainPass.baseColor : null; // get starting color value
 	}
 
@@ -2376,6 +2387,19 @@ global.distanceAlongVector = function(pos1, pos2, fwd){
 
 
 
+global.distanceToLine = function(p1, p2, p){
+	let lineVector = p2.sub(p1);
+	let pointVector = p.sub(p1);
+	let t = pointVector.dot(lineVector) / lineVector.dot(lineVector);
+	t = clamp(t);
+	let closestPoint = p1.add(lineVector.uniformScale(t));
+	let distanceVector = p.sub(closestPoint);
+	return {dist:distanceVector.length, pos:closestPoint};
+}
+
+
+
+
 global.hsvToRgb = function(h, s, v){
 	h = h % 1;
 	s = clamp(s);
@@ -2617,11 +2641,11 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 	var audioComp = script.getSceneObject().createComponent("Component.AudioComponent");
 	audioComp.audioTrack = audioAsset;
 
-	if(volume == 0 || volume) audioComp.volume = volume;
-	if(fadeInTime) 	audioComp.fadeInTime = fadeInTime;
+	if(volume != null) audioComp.volume = volume;
+	if(fadeInTime) audioComp.fadeInTime = fadeInTime;
 	if(fadeOutTime) audioComp.fadeOutTime = fadeOutTime;
 
-	if(offset){
+	if(offset != null){
 		audioComp.position = offset;
 		audioComp.pause();
 		audioComp.resume();
@@ -2637,7 +2661,7 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 			if(audioComp && !isNullPatch(audioComp)) audioComp.destroy(); // destroy if it still exists (might have been deleted using stopAllSoundInstances)
 		}).byFrame(); // delete on next frame
 	}
-	new global.DoDelay( destroyAudioComponent, [audioComp]).byTime(audioComp.duration + .1); // stop playing after audio asset duration
+	new DoDelay( destroyAudioComponent, [audioComp]).byTime(audioComp.duration + .1); // stop playing after audio asset duration
 
 	allSoundInstances.push(audioComp);
 	return audioComp;
@@ -3189,23 +3213,25 @@ global.Callback = function(){
 	/**
 	 * @description add a function to be called when running this.callback(...args)
 	 * @param {Function} f the function to be added
+	 * @param {boolean} noAddedCallback if true, 'onCallbackAdded' is not called
 	*/
-	this.add = function(f){
+	this.add = function(f, noAddedCallback=false){
 		callbacks.push(f);
-		self.onCallbackAdded(f);
+		if(!noAddedCallback && self.onCallbackAdded) self.onCallbackAdded(f);
 	}
 
 	/**
 	 * @description remove a callback function (if it was added earlier)
 	 * @param {Function} f the function to be removed
+	 * @param {boolean} noRemovedCallback if true, 'onCallbackRemoved' is not called
 	*/
-	this.remove = function(f){
+	this.remove = function(f, noRemovedCallback=false){
 		for(let i = callbacks.length - 1; i >= 0; i--){
 			if(callbacks[i] === f){
 				callbacks.splice(i, 1);
 			}
 		}
-		self.onCallbackRemoved(f);
+		if(!noRemovedCallback && self.onCallbackRemoved) self.onCallbackRemoved(f);
 	}
 
 	/**
@@ -3213,6 +3239,7 @@ global.Callback = function(){
 	 * @param {...*} args the arguments to be passed to the callback function
 	*/
 	this.callback = function(...args){
+		if(!self.enabled) return;
 		for(var i = 0; i < callbacks.length; i++){
 			callbacks[i](...args);
 		}
@@ -3239,6 +3266,12 @@ global.Callback = function(){
 	 * @param {Function} callbackName - the function that was removed
 	*/
 	this.onCallbackRemoved = function(thisFunction){};
+
+	/**
+	 * @type {boolean}
+	 * @description when false, callback() will not call anything
+	*/
+	this.enabled = true;
 }
 
 
@@ -3289,9 +3322,12 @@ global.VisualizePoints = function(showPointsOnStart){
 
 
 	/**
-	 * @description show an array of points, returns the array of created SceneObjects
+	 * @description show points, returns the array of created SceneObjects
 	*/
 	this.show = function(allPoints){
+		// make array
+		if(!Array.isArray(allPoints)) allPoints = Array.from(arguments);
+
 		// remove existing
 		self.clear();
 
@@ -3302,9 +3338,12 @@ global.VisualizePoints = function(showPointsOnStart){
 
 
     /**
-	 * @description append to array of points, returns the total array of created SceneObjects
+	 * @description append to points, returns the total array of created SceneObjects
 	*/
     this.add = function(allPoints){
+		// make array
+		if(!Array.isArray(allPoints)) allPoints = Array.from(arguments);
+
 		if(allPoints.length == 0) return;
 		var points = [...allPoints]; // make copy of list
 		if(self.maxCount != null){
