@@ -1,7 +1,7 @@
 // Max van Leeuwen
 //  @maksvanleeuwen
 //  links.maxvanleeuwen.com
-//
+
 // Smooth Follow example, made compatible with behavior script.
 
 

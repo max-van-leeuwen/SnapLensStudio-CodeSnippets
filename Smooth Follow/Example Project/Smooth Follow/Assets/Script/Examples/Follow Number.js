@@ -1,9 +1,9 @@
 // Max van Leeuwen
 //  @maksvanleeuwen
 //  links.maxvanleeuwen.com
-//
-// Smooth Follow on a value (like numbers, vec2, vec3, or quat)
-// Tap to generate a random number, and see the previous value animate towards it (printed in logger)
+
+// Smooth Follow works with value as well! Numbers, vec2, vec3, and quat.
+// Tap to generate a random number, and see the previous value animate towards it (printed in logger).
 
 
 

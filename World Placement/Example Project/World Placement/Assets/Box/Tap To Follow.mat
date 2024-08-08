@@ -1,8 +1,8 @@
-- !<Material/a653e2b5-0fca-469d-b4ba-4e333888231b>
+- !<Material/82c37c26-302b-451e-b6e5-35e8d5a17627>
   PackagePath: ""
   PassesInfo:
-    - !<own> cd8fe3c4-6e17-4b52-8852-b3ba58c44d0e
-- !<PassInfo/cd8fe3c4-6e17-4b52-8852-b3ba58c44d0e>
+    - !<own> 6cbe9cb5-7c9d-4bf2-9efc-f6a4d5f4d3fb
+- !<PassInfo/6cbe9cb5-7c9d-4bf2-9efc-f6a4d5f4d3fb>
   DepthWrite: true
   DepthTest: true
   DepthFunction: LessEqual
@@ -14,31 +14,24 @@
   FrustumCullPad: 0.000000
   InstanceCount: 1
   Defines:
-    []
+    - ENABLE_BASE_TEX
+    - ENABLE_NORMALMAP
+    - ENABLE_LIGHTING
   BlendMode: Disabled
   Properties:
-    Port_AO_N000:
+    Port_AO_N006:
       typeIdx: 4
       value: {x: 1.000000, y: 1.000000, z: 1.000000}
-    Port_Emissive_N000:
+    Port_Emissive_N006:
       typeIdx: 4
       value: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Port_Metallic_N000:
-      typeIdx: 1
-      value: 0.000000
-    Port_Opacity_N000:
+    Port_Opacity_N006:
       typeIdx: 1
       value: 1.000000
-    Port_Roughness_N000:
-      typeIdx: 1
-      value: 0.000000
-    Port_SpecularAO_N000:
-      typeIdx: 4
-      value: {x: 1.000000, y: 1.000000, z: 1.000000}
     PreviewEnabled:
       typeIdx: 0
       value: 0
     c:
       typeIdx: 4
-      value: {x: 1.000000, y: 0.000000, z: 0.000000}
-  Pass: !<reference> 30834b09-f97e-4c3a-9c49-d31c2bab8551
+      value: {x: 1.000000, y: 0.000000, z: 0.016663}
+  Pass: !<reference> 692c5ed7-d335-4be3-8c49-3b60be3e8fd2

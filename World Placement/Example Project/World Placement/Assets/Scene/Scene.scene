@@ -1,11 +1,10 @@
 - !<Scene/0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99>
   PackagePath: ""
   objects:
-    - !<own> dfed9d56-dd5a-42e5-9f37-5adb37365019
+    - !<own> fa0d7bcc-99ba-45d5-aee4-bcd1f8340a58
     - !<own> ea170d83-5d63-4c28-9de6-1392abfbfa6f
-    - !<own> 3e7c2195-4744-4350-8fbf-f15a3dd72ded
-    - !<own> cde6cb09-43b5-4680-b2ea-ecbb16fb38e3
-    - !<own> 1dc74231-7f24-4cc2-8d5c-8e5a599b888f
+    - !<own> fd7d069c-9fdf-48da-a605-08495f4eedd7
+    - !<own> d8672d20-00c5-4a2a-a308-c52e89dcea38
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -14,6 +13,21 @@
   RenderPreviewOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   RenderOverlayOutput: !<reference> 00000000-0000-0000-0000-000000000000
   PhysicsRootWorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/00736905-f78b-44ec-a6cb-928c28926dc1>
+  PrefabRemaps:
+    []
+  Name: Tap To Follow
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 1dc74231-7f24-4cc2-8d5c-8e5a599b888f
+  Components:
+    []
 - !<SceneObject/04833dc7-4974-4ce0-a235-1053367cad8e>
   PrefabRemaps:
     []
@@ -29,6 +43,26 @@
     []
   Components:
     - !<own> e8f38b3a-ee8b-4c29-8c58-ad3f1ff97c37
+- !<RenderMeshVisual/0683f333-23f7-4871-9396-7ead613bb6f8>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 1cc40ca6-07b0-44bb-bf13-cc002c84011f
+  Mesh: !<reference> c25e71e4-fa92-42fa-8d13-cb513ea99bef
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<Camera/0d09197f-b000-4f6a-a991-cd2cc87903f3>
   PrefabRemaps:
     []
@@ -41,12 +75,14 @@
   Near: 1.000000
   Far: 1000.000000
   Fov: 63.541019
-  ClearColor:
-    mode: None
-    color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-  ClearDepth:
-    mode: Custom
-    value: 1.000000
+  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+    Mode: None
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
+  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+    Mode: Value
+    Value: 1.000000
+    InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
   Aspect: 1.000000
   CameraType: Perspective
   DepthMode: Regular
@@ -56,12 +92,11 @@
   RenderTarget: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/1dc74231-7f24-4cc2-8d5c-8e5a599b888f>
   PrefabRemaps:
     []
-  Name: Box
+  Name: Box - Tap To Follow
   Enabled: true
   Layers: 1
   LocalTransform:
@@ -81,17 +116,17 @@
   Enabled: true
   ScriptAsset: !<reference> dff963b3-e6f7-4d08-a750-a1ba73726b95
   ScriptInputsDefault:
-    defaultHeight: true
     defaultDistanceFromCamera: true
+    defaultHeight: true
     defaultDuration: true
     defaultSpherical: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      defaultCam: !<reference.Camera> 0d09197f-b000-4f6a-a991-cd2cc87903f3
-      defaultHeight: !<float> -30.000000
+      defaultCameraObject: !<reference.Camera> 0d09197f-b000-4f6a-a991-cd2cc87903f3
       defaultDistanceFromCamera: !<float> 100.000000
+      defaultHeight: !<float> -30.000000
       defaultDuration: 0.400000
       defaultSpherical: false
   ScriptTypes:
@@ -112,6 +147,22 @@
     []
   Components:
     - !<own> 60d75264-5511-4fdf-ae9b-cb4a70b91c54
+- !<SceneObject/380ceed7-259e-4c4d-b3db-49504499b8f0>
+  PrefabRemaps:
+    []
+  Name: Continuous
+  Enabled: false
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> e7e8f4ec-4e8b-4600-901c-5f681139b9a1
+    - !<own> 4adbf698-5d17-42c0-985a-b999b8482424
+  Components:
+    []
 - !<SceneObject/3e7c2195-4744-4350-8fbf-f15a3dd72ded>
   PrefabRemaps:
     []
@@ -128,6 +179,22 @@
   Components:
     - !<own> 0d09197f-b000-4f6a-a991-cd2cc87903f3
     - !<own> a2ca2ccc-80d9-4d36-b66c-7dda44940da6
+- !<SceneObject/4adbf698-5d17-42c0-985a-b999b8482424>
+  PrefabRemaps:
+    []
+  Name: Box - Continuous
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 20.000000, y: 20.000000, z: 20.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0683f333-23f7-4871-9396-7ead613bb6f8
+    - !<own> a3e56a2a-aa62-42da-92f6-be3b52c60ce0
 - !<LightSource/60d75264-5511-4fdf-ae9b-cb4a70b91c54>
   PrefabRemaps:
     []
@@ -169,14 +236,31 @@
   Name: Device Tracking
   Enabled: true
   DeviceTrackingMode: World
-  RotationOptions:
-    invertRotation: false
-  SurfaceOptions:
-    enhanceWithNativeAR: false
+  RotationOptions: !<RotationOptions/00000000-0000-0000-0000-000000000000>
+    InvertRotation: false
+  SurfaceOptions: !<SurfaceOptions/00000000-0000-0000-0000-000000000000>
+    EnhanceWithNativeAR: false
+- !<ScriptComponent/a3e56a2a-aa62-42da-92f6-be3b52c60ce0>
+  PrefabRemaps:
+    []
+  Name: Continuous
+  Enabled: true
+  ScriptAsset: !<reference> 70ea813a-399f-49d4-9894-32a7ff71e650
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      obj: !<reference.SceneObject> 4adbf698-5d17-42c0-985a-b999b8482424
+      customDistanceFromCamera: !<float> 100.000000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/b92a3861-ca86-45d9-90f1-05a20aca0622>
   PrefabRemaps:
     []
-  Name: Place World On Tap
+  Name: Tap To Follow
   Enabled: true
   ScriptAsset: !<reference> 58c7726c-7a43-45b2-beb8-2ae695c613db
   ScriptInputsDefault:
@@ -210,7 +294,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/cde6cb09-43b5-4680-b2ea-ecbb16fb38e3>
   PrefabRemaps:
     []
@@ -227,10 +310,26 @@
     - !<own> 04833dc7-4974-4ce0-a235-1053367cad8e
   Components:
     []
-- !<SceneObject/dfed9d56-dd5a-42e5-9f37-5adb37365019>
+- !<SceneObject/d8672d20-00c5-4a2a-a308-c52e89dcea38>
   PrefabRemaps:
     []
-  Name: "[LSQuickScripts here!"
+  Name: "Examples [Enable me!]"
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 00736905-f78b-44ec-a6cb-928c28926dc1
+    - !<own> 380ceed7-259e-4c4d-b3db-49504499b8f0
+  Components:
+    []
+- !<SceneObject/e7e8f4ec-4e8b-4600-901c-5f681139b9a1>
+  PrefabRemaps:
+    []
+  Name: Download SmoothFollow!
   Enabled: true
   Layers: 1
   LocalTransform:
@@ -292,3 +391,34 @@
     []
   Components:
     - !<own> 271d78b7-f44d-4617-b9ec-88109d2761b6
+- !<SceneObject/fa0d7bcc-99ba-45d5-aee4-bcd1f8340a58>
+  PrefabRemaps:
+    []
+  Name: Download LSQuickScripts!
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
+- !<SceneObject/fd7d069c-9fdf-48da-a605-08495f4eedd7>
+  PrefabRemaps:
+    []
+  Name: Scene
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 3e7c2195-4744-4350-8fbf-f15a3dd72ded
+    - !<own> cde6cb09-43b5-4680-b2ea-ecbb16fb38e3
+  Components:
+    []

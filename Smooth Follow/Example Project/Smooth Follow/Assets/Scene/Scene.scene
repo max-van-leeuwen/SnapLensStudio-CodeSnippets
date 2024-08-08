@@ -3,8 +3,8 @@
   objects:
     - !<own> 0bfec5d2-efa1-4094-9d1c-53c7476cd7c0
     - !<own> 64de51a8-7e34-4a6e-924a-f06a498f9fcd
-    - !<own> b555031a-43fb-46a4-bb38-cf8bbedd1000
     - !<own> 150c3cf7-7f0f-4944-a39c-9b78b21bc59e
+    - !<own> b555031a-43fb-46a4-bb38-cf8bbedd1000
     - !<own> ff9dba33-d769-43c6-b423-2c08333b4e21
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
@@ -72,12 +72,14 @@
   Near: 1.000000
   Far: 1000.000000
   Fov: 63.541019
-  ClearColor:
-    mode: None
-    color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-  ClearDepth:
-    mode: Custom
-    value: 1.000000
+  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+    Mode: None
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
+  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+    Mode: Value
+    Value: 1.000000
+    InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
   Aspect: 1.000000
   CameraType: Perspective
   DepthMode: Regular
@@ -87,7 +89,6 @@
   RenderTarget: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/150c3cf7-7f0f-4944-a39c-9b78b21bc59e>
   PrefabRemaps:
@@ -155,7 +156,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/3e7c2195-4744-4350-8fbf-f15a3dd72ded>
   PrefabRemaps:
     []
@@ -258,7 +258,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/6f7ffcb0-08bd-4145-8023-c3ffc7b311c4>
   PrefabRemaps:
     []
@@ -1046,10 +1045,10 @@
   Name: Device Tracking
   Enabled: true
   DeviceTrackingMode: World
-  RotationOptions:
-    invertRotation: false
-  SurfaceOptions:
-    enhanceWithNativeAR: false
+  RotationOptions: !<RotationOptions/00000000-0000-0000-0000-000000000000>
+    InvertRotation: false
+  SurfaceOptions: !<SurfaceOptions/00000000-0000-0000-0000-000000000000>
+    EnhanceWithNativeAR: false
 - !<RenderMeshVisual/edb38f01-cb34-442a-906f-b7eb59ba1159>
   PrefabRemaps:
     []
@@ -1070,11 +1069,10 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/ff9dba33-d769-43c6-b423-2c08333b4e21>
   PrefabRemaps:
     []
-  Name: "Examples [enable to try!]"
+  Name: "Examples [Enable Me!]"
   Enabled: true
   Layers: 1
   LocalTransform:

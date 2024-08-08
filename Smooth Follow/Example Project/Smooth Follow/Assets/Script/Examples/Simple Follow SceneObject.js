@@ -1,8 +1,7 @@
 // Max van Leeuwen
-// twitter      @maksvanleeuwen
-// instagram    @max.van.leeuwen
-// maxvanleeuwen.com
-//
+//  @maksvanleeuwen
+//  links.maxvanleeuwen.com
+
 // Simple Smooth Follow example
 
 

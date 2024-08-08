@@ -2,45 +2,45 @@
 //  @maksvanleeuwen
 //  links.maxvanleeuwen.com
 
-// Smooth Follow
 
-// Requires LSQuickScripts 2.22
+
+// Requires LSQuickScripts 2.29
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
 
 
 
-// UI
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"<big><b>Smooth Follow</b> <small>by Max van Leeuwen"}
-//@ui {"widget":"label", "label":"Smooth following SceneObjects or custom values (Number, vec2, vec3, quat)."}
+//@ui {"widget":"label", "label":"Smoothly follow SceneObjects, or blur"}
+//@ui {"widget":"label", "label":"continuous values (Number, vec2, vec3, quat)!"}
 //@ui {"widget":"label"}
-//@ui {"widget":"label", "label":"Requires LSQS 2.22"}
+//@ui {"widget":"label", "label":"Requires LSQuickScripts"}
 //@ui {"widget":"separator"}
 
 //@ui {"widget":"label"}
 //@ui {"widget":"group_start", "label":"<b>Usage"}
     //@ui {"widget":"label", "label":"<small>creating an instance"}
     //@ui {"widget":"label", "label":"<font color='#56b1fc'>new SmoothFollow()"}
-    //@ui {"widget":"label", "label":"<font color='#56b1fc'>.smoothing = 1 </font><i><small>strength, 0=no smoothing"}
+    //@ui {"widget":"label", "label":"<font color='#56b1fc'>.smoothing </font><i><small>= 1"}
     //@ui {"widget":"label"}
     //@ui {"widget":"label", "label":"<small>following a SceneObject"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.follow = SceneObject </font><i><small>to take motion from"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.apply = SceneObject </font><i><small>to apply motion to"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.follow </font><i><small>= SceneObject to take motion from"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.apply </font><i><small>= SceneObject to apply motion to"}
     //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.start()"}
     //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.stop()"}
     //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.doInstant() </font><i><small>jump once"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.rotation = true </font><i><small>allow rotation"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.scale = true </font><i><small>allow scale"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translation = true </font><i><small>allow translation"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translationX = true </font><i><small>allow x"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translationY = true </font><i><small>allow y"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translationZ = true </font><i><small>allow z"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.rotation </font><i><small>= true"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.scale </font><i><small>= true"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translation </font><i><small>= true"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translationX </font><i><small>= true"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translationY </font><i><small>= true"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.translationZ </font><i><small>= true"}
     //@ui {"widget":"label"}
 	//@ui {"widget":"label", "label":"<small>alternatively, follow a custom value"}
-	//@ui {"widget":"label", "label":" • <font color='#56b1fc'>.addValue(v, *instant) </font><i><small>smoothly move towards v"}
+	//@ui {"widget":"label", "label":" • <font color='#56b1fc'>.addValue(</font>v, *instant<font color='#56b1fc'>)</font><i><small> smoothly move towards v"}
 	//@ui {"widget":"label", "label":" • <font color='#56b1fc'>.getValue() </font><i><small>returns current value"}
-	//@ui {"widget":"label", "label":" • <font color='#56b1fc'>.EPS = .001 </font><i><small>stopping proximity threshold"}
+	//@ui {"widget":"label", "label":" • <font color='#56b1fc'>.EPS </font><i><small>= .001"}
     //@ui {"widget":"label"}
     //@ui {"widget":"label", "label":"<small>callbacks, bind using <font color='#56b1fc'><i>.add(</font><i>f<font color='#56b1fc'>)</i></font> and <font color='#56b1fc'><i>.remove(</font><i>f<font color='#56b1fc'>)</i></font>"}
 	//@ui {"widget":"label", "label":" • <font color='#56b1fc'>.onUpdate </font><i><small>called on each smoothing frame"}

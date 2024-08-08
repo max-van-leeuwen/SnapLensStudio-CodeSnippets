@@ -24,7 +24,7 @@
   CurrentVisibility: Editable
   MaxVisibility: Editable
   ScriptInputsHidden:
-    defaultCam: false
+    defaultCameraObject: false
     defaultDistanceFromCamera: false
     defaultDuration: false
     defaultHeight: false
@@ -37,6 +37,7 @@
       defaultDistanceFromCamera: !<float> 100.000000
       defaultDuration: 0.400000
       defaultSpherical: false
+      defaultCameraObject: !<reference.Camera> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

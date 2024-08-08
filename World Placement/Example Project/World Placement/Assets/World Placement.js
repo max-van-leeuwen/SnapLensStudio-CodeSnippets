@@ -12,7 +12,7 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"<big><b>World Placement</b> <small>by Max van Leeuwen"}
-//@ui {"widget":"label", "label":"Place and orient a scene in front of the user."}
+//@ui {"widget":"label", "label":"Easily place a scene in front of the user!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"Requires LSQuickScripts"}
 //@ui {"widget":"separator"}
@@ -20,26 +20,40 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 //@ui {"widget":"label"}
 //@ui {"widget":"group_start", "label":"<b>Usage"}
 	//@ui {"widget":"label"}
-    //@ui {"widget":"label", "label":"Use <font color='#56b1fc'>new WorldPlacement(</font><small>moveObject</small><font color='#56b1fc'>)"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.cameraObject</font> <small><i>SceneObject"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.moveObject</font> <small><i>SceneObject"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.distanceFromCamera</font><small> = <i>100"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> = <i>-30"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> = <i>.4"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.spherical</font><small> = <i>false"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> = <i>EaseFunctions.Cubic.InOut"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.start(</font><small>doInstant</small><font color='#56b1fc'>)"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.getFinalTransformData()</font><small> → {pos, rot}, no <font color='#56b1fc'>.moveObject</font> needed"}
+	//@ui {"widget":"label", "label":"Use <font color='#56b1fc'>new WorldPlacement(</font><small>moveObject</small><font color='#56b1fc'>)"}
+	//@ui {"widget":"label"}
+    //@ui {"widget":"label", "label":"<b>Animating once"}
+	//@ui {"widget":"label", "label":"• <font color='#56b1fc'>.start(</font><small>doInstant</small><font color='#56b1fc'>)"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.getFinalTransformData()</font><small> → {pos, rot}"}
+	//@ui {"widget":"label", "label":"• <font color='#56b1fc'>.onAnimatonStep </font><small><i>bind using <font color='#56b1fc'>.add(</font>f<font color='#56b1fc'>)</font> and <font color='#56b1fc'>.remove(</font>f<font color='#56b1fc'>)"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.onEnd </font><small><i>bind using <font color='#56b1fc'>.add(</font>f<font color='#56b1fc'>)</font> and <font color='#56b1fc'>.remove(</font>f<font color='#56b1fc'>)"}
-    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.onAnimatonStep </font><small><i>bind using <font color='#56b1fc'>.add(</font>f<font color='#56b1fc'>)</font> and <font color='#56b1fc'>.remove(</font>f<font color='#56b1fc'>)"}
+	//@ui {"widget":"label", "label":"• <font color='#56b1fc'>.rankedPriority</font><small> <i>= 10 (use null to disable)"}
+
+	//@ui {"widget":"label"}
+	//@ui {"widget":"label", "label":"<b>Continuous in-your-face following"}
+	//@ui {"widget":"label", "label":"<small><font color='orange'>Requires SmoothFollow"}
+	//@ui {"widget":"label", "label":"• <font color='#56b1fc'>.smoothing</font><small> <i>= .25"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.startContinuous()"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.stopContinuous()"}
+
+	//@ui {"widget":"label"}
+	//@ui {"widget":"label", "label":"<b>Overall Parameters"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.moveObject</font> <small><i>SceneObject"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.cameraObject</font> <small><i>Component.Camera"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.distanceFromCamera</font><small> <i>= 100"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> <i>= -30"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> <i>= .4"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.spherical</font><small> <i>= false"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> <i>= EaseFunctions.Cubic.InOut"}
 //@ui {"widget":"group_end"}
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
 
 //@ui {"widget":"label"}
-//@input Component.Camera defaultCam
-//@input float defaultHeight = -30
+//@ui {"widget":"label", "label":"<b>Overall Parameter Defaults"}
+//@input Component.Camera defaultCameraObject
 //@input float defaultDistanceFromCamera = 100
+//@input float defaultHeight = -30
 //@input float defaultDuration = .4
 //@input bool defaultSpherical = false
 //@ui {"widget":"label"}
@@ -47,7 +61,6 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 
 
 // action priority settings
-script.rankedPriority = 10; // priority level for interactions created by this button (only relevant if other action ranking scripts with the same label are used in this project)
 const rankedLabel = 'interactables'; // the priority pool name (should be same for other interactables)
 
 
@@ -56,9 +69,48 @@ global.WorldPlacement = function(moveObject){
 	var self = this;
 
 	/**
-	 * @type {SceneObject}
-	 * @description The SceneObject of the camera to move the object to. */
-	this.cameraObject = script.defaultCam;
+	 * @description Starts the animation. If first argument is true, the animation will be skipped and placement will be instant. */
+	this.start = function(doInstant){
+		if(self.rankedPriority==null){
+			start(doInstant);
+		}else{
+			rankedAction(rankedLabel, self.rankedPriority, ()=>start(doInstant) ); // rankedAction makes sure other interactables are prioritized correctly
+		}
+	}
+	
+	/**
+	 * @description Gets the final transform information, an object containing 'pos' (vec3) and 'rot' (quat). */
+	this.getFinalTransformData = getFinalTransformData;
+
+	/**
+	 * @description Callback called on every animation frame, with first argument 0-1 linear normalized time. */
+	this.onAnimatonStep = new Callback();
+	
+	/**
+	 * @description Function to call on animation end. */
+	this.onEnd = new Callback();
+
+	/**
+	 * @type {number}
+	 * @description If using LSQuickScripts' Ranked Priority system, this is the assigned priority (pool: 'interactables'). Use null to disable. Default is 10. */
+	this.rankedPriority = 10;
+
+	/**
+	 * @type {number}
+	 * @description Continuous movement smoothing. Default is 0.25. */
+	this.smoothing = .25;
+
+	/**
+	 * @description Starts continuously following. */
+	this.startContinuous = function(){
+		startContinuous();
+	}
+
+	/**
+	 * @description Stops continuously following. */
+	this.stopContinuous = function(){
+		clearSmoothFollowing();	
+	}
 
 	/**
 	 * @type {SceneObject}
@@ -66,57 +118,44 @@ global.WorldPlacement = function(moveObject){
 	this.moveObject = moveObject;
 
 	/**
-	 * @type {Number}
+	 * @type {Component.Camera}
+	 * @description The SceneObject of the camera to move the object to. */
+	this.cameraObject = script.defaultCameraObject;
+
+	/**
+	 * @type {number}
 	 * @description Distance from camera (world units, cm). Default is 100. */
 	this.distanceFromCamera = script.defaultDistanceFromCamera;
 
 	/**
-	 * @type {Number}
+	 * @type {number}
 	 * @description Height offset from eye-height (world units, cm). Default is -30. */
 	this.height = script.defaultHeight;
 
 	/**
-	 * @type {Number}
+	 * @type {number}
 	 * @description Length of animation (s). Default is 0.4. */
 	this.duration = script.defaultDuration;
 
     /**
-	 * @type {Boolean}
+	 * @type {boolean}
 	 * @description Places world at look-at position, instead of just in front of user at eye-height. Default is false. */
 	this.spherical = script.defaultSpherical;
 
-    /**
-	 * @type {Function}
-	 * @description Function to call on animation end. */
-	this.onEnd = new Callback();
-
 	/**
-	 * @type {String}
+	 * @type {function}
 	 * @description Animation curve. Use EaseFunctions, or a custom callback. */
 	this.easeFunction = EaseFunctions.Cubic.InOut;
 
-    /**
-	 * @description Gets the final transform information - an object containing the keys 'pos' (vec3) and 'rot' (quat). Can only be called once 'start' was called. */
-	this.getFinalTransformData = () => finalTransformData;
-	var finalTransformData;
 
 
-	/**
-	 * @description Starts the animation. If first argument is true, the animation will be skipped and placement will be instant. */
-	this.start = function(doInstant){
-		rankedAction(rankedLabel, script.rankedPriority, ()=>start(doInstant) ); // rankedAction makes sure other interactables (if there are any) are prioritized correctly
-	}
-
-	/**
-	 * @description Callback called on every animation frame, with first argument 0-1 linear normalized time. */
-	this.onAnimatonStep = new Callback();
+	// once
 
 
-	function start(doInstant){
+
+	function getFinalTransformData(){
 		// get transformation info
 		var camTrf = self.cameraObject.getTransform();
-		if(self.moveObject) var sceneTrf = self.moveObject.getTransform();
-
 		var camPos = camTrf.getWorldPosition();
 		var camFwd = camTrf.forward;
 		var cursorPos = camPos.add(camFwd);
@@ -135,21 +174,29 @@ global.WorldPlacement = function(moveObject){
 		var newPos = camPosXZ.add(fwdXZ.uniformScale(self.distanceFromCamera));
 		newPos = newPos.add(heightOffset).add(camHeight);
 
+		return {pos:newPos, rot:newRot};
+	}
+
+	function start(doInstant){
+		// get move object transform, if any
+		if(self.moveObject) var sceneTrf = self.moveObject.getTransform();
+
+		// get position and rotation to move towards
+		const finalTransformData = getFinalTransformData();
+
 		// animate properties
 		if(sceneTrf){
 			var curPos = sceneTrf.getWorldPosition();
 			var curRot = sceneTrf.getWorldRotation();
 		}
 
-		finalTransformData = {pos:newPos, rot:newRot};
-
 		function animationStep(v, vLinear){
 			self.onAnimatonStep.callback(vLinear);
 
 			// apply (if moveObject was given)
 			if(sceneTrf){
-				var pos = vec3.lerp(curPos, newPos, v);
-				var rot = quat.slerp(curRot, newRot, v);
+				var pos = vec3.lerp(curPos, finalTransformData.pos, v);
+				var rot = quat.slerp(curRot, finalTransformData.rot, v);
 				sceneTrf.setWorldPosition(pos);
 				sceneTrf.setWorldRotation(rot);
 			}
@@ -165,6 +212,62 @@ global.WorldPlacement = function(moveObject){
 			anim.easeFunction = self.easeFunction;
 			anim.endFunction = self.onEnd.callback;
 			anim.start();
+		}
+	}
+
+
+
+	// continuous
+
+
+
+	var updateEvent;
+	var continuousPos;
+	var continuousRot;
+	function startContinuous(){
+		// Requires Smooth Follow
+		if(!global.SmoothFollow) throw("SmoothFollow is missing! Install it from https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/tree/main/Smooth%20Follow");
+
+		// clear previous smooth follow setup
+		clearSmoothFollowing();
+
+		// smoothly follow position
+		continuousPos = new SmoothFollow();
+		continuousPos.smoothing = self.smoothing;
+		continuousPos.onUpdate.add(function(){
+			const p = continuousPos.getValue(); // get current smoothened position
+			self.moveObject.getTransform().setWorldPosition(p); // apply position
+		});
+
+		// smoothly follow rotation
+		continuousRot = new SmoothFollow();
+		continuousRot.smoothing = self.smoothing;
+		continuousRot.onUpdate.add(function(){
+			const r = continuousRot.getValue(); // get current smoothened rotation
+			self.moveObject.getTransform().setWorldRotation(r); // apply rotation
+		});
+
+		// on every frame, give the SmoothFollowers new values to work with
+		updateEvent = script.createEvent("UpdateEvent");
+		updateEvent.bind(function(){
+			const finalTransformData = getFinalTransformData();
+			continuousPos.addValue(finalTransformData.pos);
+			continuousRot.addValue(finalTransformData.rot);
+		});
+	}
+
+	function clearSmoothFollowing(){
+		if(updateEvent){
+			script.removeEvent(updateEvent);
+			updateEvent = null;
+		}
+		if(continuousPos){
+			continuousPos.stop();
+			continuousPos = null;
+		}
+		if(continuousRot){
+			continuousRot.stop();
+			continuousRot = null;
 		}
 	}
 }
