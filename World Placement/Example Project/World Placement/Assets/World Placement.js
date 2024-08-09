@@ -44,6 +44,7 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> <i>= -30"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> <i>= .4"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.spherical</font><small> <i>= false"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.lookAt</font><small> <i>= false"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> <i>= EaseFunctions.Cubic.InOut"}
 //@ui {"widget":"group_end"}
 //@ui {"widget":"label"}
@@ -143,6 +144,11 @@ global.WorldPlacement = function(moveObject){
 	this.spherical = script.defaultSpherical;
 
 	/**
+	 * @type {boolean}
+	 * @description Does a true look-at rotation, instead of only around the y-axis. Default is false. */
+	this.lookAt = false;
+
+	/**
 	 * @type {function}
 	 * @description Animation curve. Use EaseFunctions, or a custom callback. */
 	this.easeFunction = EaseFunctions.Cubic.InOut;
@@ -163,9 +169,6 @@ global.WorldPlacement = function(moveObject){
 		var cursorPosXZ = new vec3(cursorPos.x, 0, cursorPos.z);
 		var fwdXZ = camPosXZ.sub(cursorPosXZ).normalize();
 
-		// facing user, y-axis only
-		var newRot = quat.angleAxis( Math.atan2(fwdXZ.x, fwdXZ.z) + Math.PI, vec3.up());
-
 		// positioned in front of user at correct height
 		var camHeight = new vec3(0, camPos.y, 0);
 		var sphericalHeight = 0;
@@ -173,6 +176,15 @@ global.WorldPlacement = function(moveObject){
 		var heightOffset = new vec3(0, self.height + sphericalHeight, 0);
 		var newPos = camPosXZ.add(fwdXZ.uniformScale(self.distanceFromCamera));
 		newPos = newPos.add(heightOffset).add(camHeight);
+
+		// get look-at rotation
+		var newRot;
+		if(self.lookAt){ // facing user, y-axis only
+			newRot = quat.lookAt(camPos.sub(newPos).normalize(), vec3.up());
+		}else{
+			const angle = Math.atan2(fwdXZ.x, fwdXZ.z);
+			newRot = quat.angleAxis(angle + Math.PI, vec3.up());
+		}
 
 		return {pos:newPos, rot:newRot};
 	}
