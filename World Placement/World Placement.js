@@ -103,15 +103,11 @@ global.WorldPlacement = function(moveObject){
 
 	/**
 	 * @description Starts continuously following. */
-	this.startContinuous = function(){
-		startContinuous();
-	}
+	this.startContinuous = startContinuous;
 
 	/**
 	 * @description Stops continuously following. */
-	this.stopContinuous = function(){
-		clearSmoothFollowing();	
-	}
+	this.stopContinuous = clearSmoothFollowing;
 
 	/**
 	 * @type {SceneObject}
@@ -260,12 +256,18 @@ global.WorldPlacement = function(moveObject){
 		});
 
 		// on every frame, give the SmoothFollowers new values to work with
-		updateEvent = script.createEvent("UpdateEvent");
-		updateEvent.bind(function(){
+		function frameUpdate(){
 			const finalTransformData = getFinalTransformData();
 			continuousPos.addValue(finalTransformData.pos);
 			continuousRot.addValue(finalTransformData.rot);
-		});
+		}
+		updateEvent = script.createEvent("UpdateEvent");
+		updateEvent.bind(frameUpdate);
+
+		// do first frame already
+		const finalTransformData = getFinalTransformData();
+		self.moveObject.getTransform().setWorldPosition(finalTransformData.pos);
+		self.moveObject.getTransform().setWorldRotation(finalTransformData.rot);
 	}
 
 	function clearSmoothFollowing(){
