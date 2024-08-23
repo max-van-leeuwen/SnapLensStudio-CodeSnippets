@@ -212,6 +212,7 @@ global.WorldPlacement = function(moveObject){
 
 		if(self.duration === 0 || doInstant){ // instant
 			animationStep(1);
+			self.onEnd.callback();
 
 		}else{ // start animation
 			var anim = new global.AnimateProperty();
@@ -257,9 +258,10 @@ global.WorldPlacement = function(moveObject){
 
 		// on every frame, give the SmoothFollowers new values to work with
 		function frameUpdate(){
+			const noSmoothing = self.smoothing==0; // instant if no smoothing
 			const finalTransformData = getFinalTransformData();
-			continuousPos.addValue(finalTransformData.pos);
-			continuousRot.addValue(finalTransformData.rot);
+			continuousPos.addValue(finalTransformData.pos, noSmoothing);
+			continuousRot.addValue(finalTransformData.rot, noSmoothing);
 		}
 		updateEvent = script.createEvent("UpdateEvent");
 		updateEvent.bind(frameUpdate);

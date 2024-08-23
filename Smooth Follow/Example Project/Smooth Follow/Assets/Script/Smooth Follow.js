@@ -13,7 +13,7 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 //@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"<big><b>Smooth Follow</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"Smoothly follow SceneObjects, or blur"}
-//@ui {"widget":"label", "label":"continuous values (Number, vec2, vec3, quat)!"}
+//@ui {"widget":"label", "label":"continuous values (number, vec2, vec3, quat)!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"Requires LSQuickScripts"}
 //@ui {"widget":"separator"}
@@ -75,7 +75,7 @@ global.SmoothFollow = function(){
 	/**
 	 * @type {number}
 	 * @description following smoothness.
-	 * 0 = instant/no smoothing, default is 1
+	 * 0 = no smoothing, default is 1
 	*/
 	this.smoothing = 1;
 
@@ -235,8 +235,8 @@ global.SmoothFollow = function(){
 
 	/**
 	 * @type {number}
-	 * @description the distance to the target value at which it is considered 'close enough', and the animation ends (and snaps to this target value).
-	 * default is 0.001.
+	 * @description the distance to the target value at which it is considered 'close enough', and the animation ends (and snaps to target value).
+	 * default is 0.001 (this is distance for vectors and numbers, and quat.angleBetween for quats).
 	*/
 	this.EPS = 0.001;
 
@@ -249,7 +249,7 @@ global.SmoothFollow = function(){
 
 
 	function addValue(v, instant){
-		// get the kind of data (Number, vec2 or vec3)
+		// get data type
 		if(!dataType) dataType = getDataType(v);
 
 		// apply new value
@@ -259,6 +259,7 @@ global.SmoothFollow = function(){
 		// instant
 		if(instant){
 			customValue = v;
+			self.onUpdate.callback(customValue); // instantly apply custom callback
 		}else{
 			followingEvent = script.createEvent("UpdateEvent");
 			followingEvent.bind(customFollowing);
@@ -282,7 +283,7 @@ global.SmoothFollow = function(){
 			customValue = nextValue;
 		}else{
 			switch(dataType){
-				case 'Number':
+				case 'number':
 					customValue = interp(customValue, nextValue, d);
 					break;
 				case 'vec2':
@@ -299,7 +300,7 @@ global.SmoothFollow = function(){
 
 		// stop when close
 		switch(dataType){
-			case 'Number':
+			case 'number':
 				if(Math.abs(nextValue - customValue) < self.EPS){
 					customValue = nextValue;
 					stopFollowing();
@@ -329,7 +330,7 @@ global.SmoothFollow = function(){
 // returns whether this is a number, vec2, vec3 or quat
 function getDataType(x){
 	if(typeof x == 'number'){
-		return 'Number';
+		return 'number';
 	}else{ // assume vec2 or vec3
 		if(x.z == undefined){
 			return 'vec2';
