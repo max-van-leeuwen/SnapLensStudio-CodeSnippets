@@ -42,10 +42,12 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.cameraObject</font> <small><i>Component.Camera"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.distanceFromCamera</font><small> <i>= 100"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.height</font><small> <i>= -30"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.rotation</font><small> <i>= true"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.duration</font><small> <i>= .4"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.spherical</font><small> <i>= false"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.lookAt</font><small> <i>= false"}
     //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.easeFunction</font><small> <i>= EaseFunctions.Cubic.InOut"}
+    //@ui {"widget":"label", "label":"• <font color='#56b1fc'>.process</font><small> <i>= function(data){}"}
 //@ui {"widget":"group_end"}
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
@@ -130,6 +132,11 @@ global.WorldPlacement = function(moveObject){
 	this.height = script.defaultHeight;
 
 	/**
+	 * @type {boolean}
+	 * @description Animate rotation. Default is true. */
+	this.rotation = true;
+
+	/**
 	 * @type {number}
 	 * @description Length of animation (s). Default is 0.4. */
 	this.duration = script.defaultDuration;
@@ -148,6 +155,11 @@ global.WorldPlacement = function(moveObject){
 	 * @type {function}
 	 * @description Animation curve. Use EaseFunctions, or a custom callback. */
 	this.easeFunction = EaseFunctions.Cubic.InOut;
+
+	/**
+	 * @type {function}
+	 * @description on each getFinalTransformData call, process it using this function first. For example: if you want resulting world positions to always be rounded. */
+	this.process = function(data){return data};
 
 
 
@@ -182,7 +194,8 @@ global.WorldPlacement = function(moveObject){
 			newRot = quat.angleAxis(angle + Math.PI, vec3.up());
 		}
 
-		return {pos:newPos, rot:newRot};
+		const result = self.process({pos:newPos, rot:newRot});
+		return result;
 	}
 
 	function start(doInstant){
@@ -204,9 +217,12 @@ global.WorldPlacement = function(moveObject){
 			// apply (if moveObject was given)
 			if(sceneTrf){
 				var pos = vec3.lerp(curPos, finalTransformData.pos, v);
-				var rot = quat.slerp(curRot, finalTransformData.rot, v);
 				sceneTrf.setWorldPosition(pos);
-				sceneTrf.setWorldRotation(rot);
+				
+				if(self.rotation){
+					var rot = quat.slerp(curRot, finalTransformData.rot, v);
+					sceneTrf.setWorldRotation(rot);
+				}
 			}
 		}
 
@@ -249,19 +265,21 @@ global.WorldPlacement = function(moveObject){
 		});
 
 		// smoothly follow rotation
-		continuousRot = new SmoothFollow();
-		continuousRot.smoothing = self.smoothing;
-		continuousRot.onUpdate.add(function(){
-			const r = continuousRot.getValue(); // get current smoothened rotation
-			self.moveObject.getTransform().setWorldRotation(r); // apply rotation
-		});
+		if(self.rotation){
+			continuousRot = new SmoothFollow();
+			continuousRot.smoothing = self.smoothing;
+			continuousRot.onUpdate.add(function(){
+				const r = continuousRot.getValue(); // get current smoothened rotation
+				self.moveObject.getTransform().setWorldRotation(r); // apply rotation
+			});
+		}
 
 		// on every frame, give the SmoothFollowers new values to work with
 		function frameUpdate(){
 			const noSmoothing = self.smoothing==0; // instant if no smoothing
 			const finalTransformData = getFinalTransformData();
 			continuousPos.addValue(finalTransformData.pos, noSmoothing);
-			continuousRot.addValue(finalTransformData.rot, noSmoothing);
+			if(self.rotation) continuousRot.addValue(finalTransformData.rot, noSmoothing);
 		}
 		updateEvent = script.createEvent("UpdateEvent");
 		updateEvent.bind(frameUpdate);
@@ -269,7 +287,7 @@ global.WorldPlacement = function(moveObject){
 		// do first frame already
 		const finalTransformData = getFinalTransformData();
 		self.moveObject.getTransform().setWorldPosition(finalTransformData.pos);
-		self.moveObject.getTransform().setWorldRotation(finalTransformData.rot);
+		if(self.rotation) self.moveObject.getTransform().setWorldRotation(finalTransformData.rot);
 	}
 
 	function clearSmoothFollowing(){
