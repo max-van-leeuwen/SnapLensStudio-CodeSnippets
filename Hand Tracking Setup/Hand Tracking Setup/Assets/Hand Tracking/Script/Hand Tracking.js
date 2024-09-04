@@ -1,6 +1,6 @@
 // Max van Leeuwen
 //  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 // Hand Tracking
 

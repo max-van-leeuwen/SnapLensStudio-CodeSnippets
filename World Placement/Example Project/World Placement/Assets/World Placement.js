@@ -1,10 +1,9 @@
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 
 
-// Requires LSQuickScripts 2.29
+// Requires LSQuickScripts 2.30
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
 
 
@@ -208,7 +207,7 @@ global.WorldPlacement = function(moveObject){
 		// animate properties
 		if(sceneTrf){
 			var curPos = sceneTrf.getWorldPosition();
-			var curRot = sceneTrf.getWorldRotation();
+			if(self.rotation) var curRot = sceneTrf.getWorldRotation();
 		}
 
 		function animationStep(v, vLinear){

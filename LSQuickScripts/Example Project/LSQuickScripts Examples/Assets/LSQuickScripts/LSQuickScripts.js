@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.29</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.30</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -10,8 +10,7 @@
 
 
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 
 
@@ -103,9 +102,9 @@
 //		Example, showing all possible properties
 //
 //			var anim = new AnimateProperty( updateFunction (optional) )		// create a new animation instance called 'anim'
-//			anim.startFunction = function(){}								// called on animation start
+//			anim.startFunction = function(inAnim){}							// called on animation start ('inAnim' is a bool, true when getReversed() is false)
 //			anim.updateFunction = function(v, vLinear, runtime){}			// called on each animation frame, with animation value (0-1) as its first argument. the second argument is the linear animation value. these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]). the third argument is runtime (seconds).
-//			anim.endFunction = function(){}									// called on animation end
+//			anim.endFunction = function(inAnim){}							// called on animation end ('inAnim' is a bool, true when getReversed() is false)
 //			anim.onReverseChange = function(){}								// called when the forwards direction of the animation is changed
 //			anim.duration = 1												// duration in seconds, default is 1. tip: for a continuous animation, set duration to Infinity and use the 'runtime' argument in the updateFunction
 //			anim.reverseDuration = 1										// reverse duration in seconds, default is .duration
@@ -142,6 +141,7 @@
 //
 //
 // QuickFlow(obj [SceneObject]) : QuickFlow object
+//	- IN BETA: You might encounter unexpected behavior from time to time.
 //	A simple way to animate objects with just a single line of code!
 //	All animations work for orthographic and perspective objects.
 //	Pass 'undefined' for an argument to use its default value.
@@ -149,7 +149,7 @@
 //		Example:
 //
 //			var anim = new QuickFlow(script.object)											// create an instance
-//			anim.fadeIn(duration, delay, easeFunction)										// start fade-in (if a visual component is present), automatically enables the sceneobject.
+//			anim.fadeIn(duration, delay, easeFunction)										// start fade-in (if a visual or text component is present), automatically enables the sceneobject.
 //
 //
 //		All animations and their (optional) arguments:
@@ -323,7 +323,7 @@
 // ) : AudioComponent
 // 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing.
-//	Does not work on Spectacles.
+//	Doesn't always work on Spectacles.
 //
 //
 //
@@ -467,6 +467,20 @@
 // screenTransformToScreen(screenTransformCenter [vec2]) : vec2
 // 	Returns screen coordinates (range 0-1) of Screen Transform anchors center.
 //	Inverse of screenToScrTransform().
+//
+//
+//
+// -
+//
+//
+//
+// normalizeMeshScale(rmv [Component.RenderMeshVisual]) : vec3
+//	Get a scale multiplier to make a mesh's local scale 1x1x1 in the largest dimension.
+//
+//		Example
+//
+//			const scalar = normalizeMeshScale(script.rmv)
+//			script.rmv.getTransform().setLocalScale(scalar)
 //
 //
 //
@@ -627,7 +641,7 @@
 //
 //
 // lookAtUp(posA [vec3], posB [vec3], offset) : quat
-//	Takes two positions, returns the look-at rotation for A to look at B with the Y axis locked.
+//	Takes two world positions, returns the look-at rotation for A to look at B with the Y axis locked (so only .x and .z are used).
 //	Useful when objects have to face the user, but they are not allowed to rotate facing up or down.
 //	Use the optional 'offset' for a 0 - 2PI rotation offset.
 //
@@ -670,6 +684,34 @@
 // 			c.onCallbackAdded										// function called when a callback was added (assign to property)
 // 			c.onCallbackRemoved										// function called when a callback was removed (assign to property)
 //			c.enabled = true										// when false, callback() will not call anything
+//			c.clear()												// clear all callbacks (does not call onCallbackRemoved)
+//
+//
+//
+// -
+//
+//
+//
+// Flags() : Flags object
+//	Creates a flags object that you can assign flags with unique names and boolean values to.
+//	Each time a flag is added or modified, a 'state' object is returned in the callback function, giving you information about the combined flags.
+//
+//		Example, showing all properties
+//
+// 			var flags = new Flags()											// create instance
+//			flags.onChange.add(function(state){ print(state.anyTrue) })		// on flag change, print if any of the flags are true
+//			flags.set('flag1', false)										// add a flag called 'flag1', value false		-		callback now prints 'false'
+//			flags.getState()												// returns current state object
+//			flags.getFlags()												// returns flags object
+//			flags.clear()													// clears flags object
+//
+// 		States object contains the following bools:
+// 			anyTrue
+// 			allTrue
+// 			noneTrue
+// 			anyFalse
+// 			allFalse
+// 			noneFalse
 //
 //
 //
@@ -736,12 +778,11 @@ global.lsqs = script;
 
 
 
-// --- private functions
 
 // returns true if a SceneObject or Component has been destroyed or is null.
-// (the usual 'isNullPatch' is not working in LS 5.0.12)
+// (the usual 'isNull' is not working in LS 5.0.12)
 function isNullPatch(obj){
-	// usual check
+	// regular check
 	if(!obj) return true;
 	try{ // SceneObject test
 		obj.name;
@@ -755,8 +796,6 @@ function isNullPatch(obj){
 		}
 	}
 }
-
-// --- end of private functions
 
 
 
@@ -977,7 +1016,7 @@ global.AnimateProperty = function(updateFunction){
 	/**
 	 * @description called on animation start
 	*/
-	this.startFunction = function(){};
+	this.startFunction = function(inAnim){};
 
 	/**
 	 * @type {function}
@@ -992,7 +1031,7 @@ global.AnimateProperty = function(updateFunction){
 	 * @type {function}
 	 * @description called on animation end
 	*/
-	this.endFunction = function(){};
+	this.endFunction = function(inAnim){};
 
 	/**
 	 * @type {function}
@@ -1105,7 +1144,7 @@ global.AnimateProperty = function(updateFunction){
 		stopDelayedStart();
 
 		function begin(){
-			if(self.startFunction) self.startFunction();
+			if(self.startFunction) self.startFunction(!reversed);
 			if(atTime != null){ // custom time ratio given
 				pulse(atTime, true);
 			}else{
@@ -1141,7 +1180,7 @@ global.AnimateProperty = function(updateFunction){
 		stopAnimEvent();
 		var wasPlaying = isPlaying;
 		isPlaying = false;
-		if(wasPlaying && callEndFunction) self.endFunction();
+		if(wasPlaying && callEndFunction) self.endFunction(!reversed);
 	}
 
 
@@ -1262,13 +1301,18 @@ global.QuickFlow = function(obj){
 	const trf = obj.getTransform();
     const screenTrf = obj.getComponent("Component.ScreenTransform"); // if it exists
 	var visual = obj.getComponent("Component.Visual"); // get visual on obj, if any
-	if(visual && visual.mainPass == null) visual = null;
+	if(visual){
+		if(visual.getTypeName() == "Component.Text") visual = null; // text gets its own variable
+		else if(visual.mainPass == null) visual = null; // check if valid visual
+	}
+	if(!visual) var text = obj.getComponent("Component.Text"); // check for text component if no visual so far
 
 	// starting values (some animators update these on animation end)
 	var startPosition;
     var startScale;
 	var startRotation;
 	var startBaseColor;
+	var startTextBaseColors;
 	updateStartingValues();
 
 	// true starting values (in case of reset)
@@ -1277,6 +1321,7 @@ global.QuickFlow = function(obj){
 	const trueScale = startScale;
 	const trueRotation = startRotation;
 	const trueBaseColor = startBaseColor;
+	const trueTextBaseColors = {...startTextBaseColors};
 
 	// applying-transforms-event
 	var updateEvent = script.createEvent("LateUpdateEvent"); // after all animators are done
@@ -1285,7 +1330,8 @@ global.QuickFlow = function(obj){
 	var newPosition; // position to apply
 	var newScale; // scale
 	var newRotation; // rotation
-	var newBaseColor; // color/alpha
+	var newBaseColor; // color/alpha (vec4)
+	var newTextBaseColors; // misc text colors (vec4) (object: outline, dropshadow, background)
 
 	// placeholders
 	var self = this;
@@ -1333,8 +1379,15 @@ global.QuickFlow = function(obj){
 
 		// assign fade anim
 			fadeAnim.updateFunction = function(v){
-				newBaseColor = new vec4(newBaseColor.x, newBaseColor.y, newBaseColor.z, newBaseColor.a * v);
-				doBaseColor = true;
+				if(newBaseColor){
+					newBaseColor = new vec4(newBaseColor.r, newBaseColor.g, newBaseColor.b, newBaseColor.a * v);
+					if(newTextBaseColors){ // text components have multiple colors to fade out
+						newTextBaseColors.outline = new vec4(newTextBaseColors.outline.r, newTextBaseColors.outline.g, newTextBaseColors.outline.b, newTextBaseColors.outline.a * v);
+						newTextBaseColors.dropshadow = new vec4(newTextBaseColors.dropshadow.r, newTextBaseColors.dropshadow.g, newTextBaseColors.dropshadow.b, newTextBaseColors.dropshadow.a * v);
+						newTextBaseColors.background = new vec4(newTextBaseColors.background.r, newTextBaseColors.background.g, newTextBaseColors.background.b, newTextBaseColors.background.a * v);
+					}
+					doBaseColor = true;
+				}
 			}
 			fadeAnim.endFunction = function(){
 				if(fadeAnim.getReversed()){ // if end of out-anim
@@ -1413,7 +1466,15 @@ global.QuickFlow = function(obj){
 			if(doRotation) trf.setLocalRotation(newRotation);
 			if(doScale) trf.setLocalScale(newScale);
 		}
-		if(doBaseColor && visual) visual.mainPass.baseColor = newBaseColor;
+		if(doBaseColor && newBaseColor){
+			if(visual) visual.mainPass.baseColor = newBaseColor;
+			if(text){
+				text.textFill.color = newBaseColor;
+				text.outlineSettings.fill.color = newTextBaseColors.outline;
+				text.dropshadowSettings.fill.color = newTextBaseColors.dropshadow;
+				text.backgroundSettings.fill.color = newTextBaseColors.background;
+			}
+		}
 
 		// reset
 		doPosition = false;
@@ -1477,7 +1538,12 @@ global.QuickFlow = function(obj){
 		startPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
 		startScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
 		startRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
-		startBaseColor = visual ? visual.mainPass.baseColor : null; // get starting color value
+		startBaseColor = visual ? visual.mainPass.baseColor : text ? text.textFill.color : null; // get starting color value
+		if(text) startTextBaseColors = { // get starting misc text color values
+			outline : text.outlineSettings.fill.color,
+			dropshadow : text.dropshadowSettings.fill.color,
+			background : text.backgroundSettings.fill.color,
+		};
 	}
 
 	// set the new transforms as the starting point for new animations
@@ -1486,7 +1552,12 @@ global.QuickFlow = function(obj){
 		newPosition = screenTrf ? screenTrf.anchors.getCenter() : trf.getLocalPosition(); // get starting position (depending on transform type)
 		newRotation = screenTrf ? screenTrf.rotation : trf.getLocalRotation(); // get starting rotation
 		newScale = screenTrf ? screenTrf.anchors.getSize() : trf.getLocalScale(); // get starting scale value
-		newBaseColor = visual ? visual.mainPass.baseColor : null; // get starting color value
+		newBaseColor = visual ? visual.mainPass.baseColor : text ? text.textFill.color : null; // get starting color value
+		if(text) newTextBaseColors = { // get starting misc text color values
+			outline : text.outlineSettings.fill.color,
+			dropshadow : text.dropshadowSettings.fill.color,
+			background : text.backgroundSettings.fill.color,
+		};
 	}
 
 	// resetting start values to true values
@@ -1494,7 +1565,8 @@ global.QuickFlow = function(obj){
 		startPosition = truePosition;
 		startRotation = trueRotation;
 		startScale = trueScale;
-		if(visual) startBaseColor = trueBaseColor;
+		if(visual || text) startBaseColor = trueBaseColor;
+		if(text) startTextBaseColors = {...trueTextBaseColors};
 	}
 
 	// resetting newValues to the start values, so they can be chained for the next frame
@@ -1502,7 +1574,8 @@ global.QuickFlow = function(obj){
 		newPosition = startPosition;
 		newRotation = startRotation;
 		newScale = startScale;
-		if(visual) newBaseColor = startBaseColor;
+		if(visual || text) newBaseColor = startBaseColor;
+		if(text) newTextBaseColors = {...startTextBaseColors};
 	}
 
 	function registerCommand(f, args){
@@ -1564,7 +1637,7 @@ global.QuickFlow = function(obj){
 		// register
 		registerCommand(this.fadeIn, [...arguments]);
 
-		if(!visual) return self; // if no visual present, ignore
+		if(!visual && !text) return self; // if no visual present, ignore
 
 		new CreateDelay(function(){
 			if(!objStillExists()) return;
@@ -1598,7 +1671,7 @@ global.QuickFlow = function(obj){
 		// register
 		registerCommand(this.fadeOut, [...arguments]);
 
-		if(!visual) return self; // if no visual present, ignore
+		if(!visual && !text) return self; // if no visual present, ignore
 
 		new CreateDelay(function(){
 			// animation
@@ -1878,7 +1951,7 @@ global.QuickFlow = function(obj){
 		// register
 		registerCommand(this.keepBlinking, [...arguments]);
 
-		if(!visual) return self; // if no visual present, ignore
+		if(!visual && !text) return self; // if no visual present, ignore
 		new CreateDelay(function(){
 			// animation
 			var blinkAnim = new AnimateProperty(function(v, vL, runtime){
@@ -1887,7 +1960,12 @@ global.QuickFlow = function(obj){
 				const fraction = (runtime%interval) / interval;
 				const centerRemapped = 1-centerRemap(fraction).remapped; // remap around center, start at 1
 				const interpolated = remap(interp(0, 1, centerRemapped, easeFunction), 0, 1, 1-strength, 1); // apply strength and easing
-				newBaseColor = new vec4(newBaseColor.x, newBaseColor.y, newBaseColor.z, newBaseColor.a * interpolated);
+				if(newBaseColor) newBaseColor = new vec4(newBaseColor.r, newBaseColor.g, newBaseColor.b, newBaseColor.a * interpolated);
+				if(newTextBaseColors){
+					newTextBaseColors.outline = new vec4(newTextBaseColors.outline.r, newTextBaseColors.outline.g, newTextBaseColors.outline.b, newTextBaseColors.outline.a * interpolated);
+					newTextBaseColors.dropshadow = new vec4(newTextBaseColors.dropshadow.r, newTextBaseColors.dropshadow.g, newTextBaseColors.dropshadow.b, newTextBaseColors.dropshadow.a * interpolated);
+					newTextBaseColors.background = new vec4(newTextBaseColors.background.r, newTextBaseColors.background.g, newTextBaseColors.background.b, newTextBaseColors.background.a * interpolated);
+				}
 			});
 			blinkAnim.easeFunction = EaseFunctions.Linear.InOut; // easefunction is used inside of the update event instead
 			blinkAnim.duration = Infinity;
@@ -2228,10 +2306,15 @@ global.QuickFlow = function(obj){
 			nrRotationAnim.start();
 
 			// basecolor
-			if(visual){
+			if(visual || text){
 				nrBaseColorAnim = new AnimateProperty(function(v){
 					doBaseColor = true;
-					newBaseColor = vec4.lerp(startBaseColor, trueBaseColor, v);
+					if(startBaseColor && trueBaseColor) newBaseColor = vec4.lerp(startBaseColor, trueBaseColor, v);
+					if(startTextBaseColors && trueTextBaseColors) newTextBaseColors = {
+						outline : vec4.lerp(startTextBaseColors.outline, trueTextBaseColors.outline, v),
+						dropshadow : vec4.lerp(startTextBaseColors.dropshadow, trueTextBaseColors.dropshadow, v),
+						background : vec4.lerp(startTextBaseColors.background, trueTextBaseColors.background, v)
+					}
 				});
 				nrBaseColorAnim.easeFunction = easeFunction;
 				nrBaseColorAnim.duration = duration;
@@ -2246,7 +2329,7 @@ global.QuickFlow = function(obj){
 			animationStarted(nrPositionAnim);
 			animationStarted(nrScaleAnim);
 			animationStarted(nrRotationAnim);
-			if(visual) animationStarted(nrBaseColorAnim);
+			if(visual || text) animationStarted(nrBaseColorAnim);
 		}).byTime(delay);
 
 		// return to allow chaining
@@ -2694,6 +2777,7 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, volume = 1){
 	function init(){
 		// create sceneobject to create components on
 		self.soundInstancesObject = global.scene.createSceneObject("soundInstancesObject");
+		self.soundInstancesObject.setParent(script.getSceneObject()); // parent to lsqs
 
 		// create instances
 		for(var i = 0; i < poolSize; i++){
@@ -2917,6 +3001,26 @@ global.screenToScreenTransform = function(screenPos){
 global.screenTransformToScreen = function(screenTransformCenter){
 	return new vec2( screenTransformCenter.x/2 + .5,
 					 1-(screenTransformCenter.y/2 + .5) );
+}
+
+
+
+
+global.normalizeMeshScale = function(rmv){
+	// get mesh bounding corners
+	const aabbMin = rmv.localAabbMin();
+	const aabbMax = rmv.localAabbMax();
+
+	// get bbox
+	const width = aabbMax.x - aabbMin.x;
+	const height = aabbMax.y - aabbMin.y;
+	const depth = aabbMax.z - aabbMin.z;
+
+	// get max dimension
+	const maxDimension = Math.max(width, height, depth);
+
+	// normalize
+	return vec3.one().uniformScale(1 / maxDimension);
 }
 
 
@@ -3212,7 +3316,7 @@ global.Callback = function(){
 
 	/**
 	 * @description add a function to be called when running this.callback(...args)
-	 * @param {Function} f the function to be added
+	 * @param {function} f the function to be added
 	 * @param {boolean} noAddedCallback if true, 'onCallbackAdded' is not called
 	*/
 	this.add = function(f, noAddedCallback=false){
@@ -3222,7 +3326,7 @@ global.Callback = function(){
 
 	/**
 	 * @description remove a callback function (if it was added earlier)
-	 * @param {Function} f the function to be removed
+	 * @param {function} f the function to be removed
 	 * @param {boolean} noRemovedCallback if true, 'onCallbackRemoved' is not called
 	*/
 	this.remove = function(f, noRemovedCallback=false){
@@ -3256,14 +3360,14 @@ global.Callback = function(){
 	/**
 	 * @type {function}
 	 * @description function called when a callback was added (assign to property)
-	 * @param {Function} callbackName - The function that was aded
+	 * @param {function} callbackName - The function that was aded
 	*/
 	this.onCallbackAdded = function(thisFunction){};
 
 	/**
 	 * @type {function}
 	 * @description function called when a callback was removed (assign to property)
-	 * @param {Function} callbackName - the function that was removed
+	 * @param {function} callbackName - the function that was removed
 	*/
 	this.onCallbackRemoved = function(thisFunction){};
 
@@ -3272,6 +3376,102 @@ global.Callback = function(){
 	 * @description when false, callback() will not call anything
 	*/
 	this.enabled = true;
+
+	/**
+	 * @description clear all callbacks (does not call onCallbackRemoved)
+	*/
+	this.clear = function(){
+		callbacks = [];
+	}
+}
+
+
+
+global.Flags = function(){
+	var self = this;
+	var flags = {};
+
+	/**
+	 * @description add a flag (or change existing)
+	 * @param {string} name the name of the flag (will create new flag if none exist yet)
+	 * @param {boolean} bool the value of this flag
+	*/
+	this.set = function(name, bool){
+		if(flags[name] === bool) return; // no change made
+		flags[name] = bool;
+		updateState();
+		self.onChange.callback(state);
+	}
+
+	/**
+	 * @description callback to bind to, called any time a flag is changed (with callback argument 'state' object)
+	*/
+	this.onChange = new Callback();
+
+	/**
+	 * @description returns current state object
+	*/
+	this.getState = function(){
+		return state;
+	}
+
+	/**
+	 * @description returns flags object
+	*/
+	this.getFlags = function(){
+		return flags;
+	}
+
+	/**
+	 * @description clears flags object
+	*/
+	this.clear = function(){
+		flags = {};
+	}
+
+	
+	// private
+	var state = {
+		anyTrue : null,
+		allTrue : null,
+		noneTrue : null,
+		anyFalse : null,
+		allFalse : null,
+		noneFalse : null
+	};
+
+	// set states
+	function updateState(){
+        let anyTrue = false;
+        let allTrue = true;
+        let anyFalse = false;
+        let allFalse = true;
+
+        for(let key in flags){
+            const flag = flags[key];
+
+            if(flag === true){
+                anyTrue = true;
+                allFalse = false;
+            }else{
+                anyFalse = true;
+                allTrue = false;
+            }
+
+            if(anyTrue && anyFalse){
+                allTrue = false;
+                allFalse = false;
+                break;
+            }
+        }
+
+        state.anyTrue = anyTrue;
+        state.allTrue = allTrue;
+        state.noneTrue = !anyTrue;
+        state.anyFalse = anyFalse;
+        state.allFalse = allFalse;
+        state.noneFalse = !anyFalse;
+    }
 }
 
 
@@ -3287,8 +3487,6 @@ global.nullish = function(a, b){
 global.VisualizePoints = function(showPointsOnStart){
 	var self = this;
 
-
-    
 	/**
 	 * @type {SceneObject}
 	 * @description (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject)
