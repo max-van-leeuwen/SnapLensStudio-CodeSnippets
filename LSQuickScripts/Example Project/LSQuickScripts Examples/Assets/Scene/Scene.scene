@@ -83,7 +83,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/09a1d0a1-5cdf-455d-88f9-3108c520d9d5>
   PrefabRemaps:
     []
@@ -128,12 +127,14 @@
   Near: 1.000000
   Far: 1000.000000
   Fov: 63.541019
-  ClearColor:
-    mode: Color
-    color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-  ClearDepth:
-    mode: Custom
-    value: 1.000000
+  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+    Mode: Color
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
+  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+    Mode: Value
+    Value: 1.000000
+    InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
   Aspect: 1.000000
   CameraType: Perspective
   DepthMode: Regular
@@ -143,7 +144,6 @@
   RenderTarget: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/198b857a-c8f7-4360-a417-fc154226800b>
   PrefabRemaps:
@@ -307,7 +307,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/2df34c7d-c13d-436a-9442-84e81a8fd847>
   PrefabRemaps:
     []
@@ -359,7 +358,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/3e7c2195-4744-4350-8fbf-f15a3dd72ded>
   PrefabRemaps:
     []
@@ -429,7 +427,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<LookAtComponent/5062d1c8-ca99-42b0-a84c-44dc7fdebacd>
   PrefabRemaps:
     []
@@ -460,7 +457,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<LightSource/60d75264-5511-4fdf-ae9b-cb4a70b91c54>
   PrefabRemaps:
     []
@@ -516,7 +512,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/7fc71c8d-1909-495f-a3f4-ae1ac915d121>
   PrefabRemaps:
     []
@@ -683,7 +678,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/cad4feba-7a95-42df-8f83-547e9acac0f8>
   PrefabRemaps:
     []

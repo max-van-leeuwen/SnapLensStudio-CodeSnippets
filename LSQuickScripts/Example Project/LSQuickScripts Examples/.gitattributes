@@ -20,7 +20,7 @@ Assets/**/*.yaml !filter !diff !merge text
 Assets/**/*.meta !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
 
 Assets/**/*.animationAsset !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
-Assets/**/*.animationCurve !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
+Assets/**/*.animationCurveTrack !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
 Assets/**/*.animationLayer !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
 Assets/**/*.animationMixerLayer !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
 Assets/**/*.audioOutput !filter !diff !merge text linguist-language=yaml merge=lens-studio-yaml-merge
