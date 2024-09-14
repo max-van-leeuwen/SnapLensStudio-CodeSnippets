@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.30</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.31</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -161,7 +161,7 @@
 //			.squeeze(delay, strength, duration)												// do scale squeeze
 //			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
 // 			.scaleTo(delay, toScale, isLocal, duration, easeFunction)						// scale towards new size (overrides other rotation animations)
-// 			.moveTo(delay, point, duration, easeFunction)									// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
+// 			.moveTo(delay, point, isLocal, duration, easeFunction)							// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 // 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 //			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
 //			.keepRotating(delay, speed, axis)												// keep rotating around an axis
@@ -323,7 +323,7 @@
 // ) : AudioComponent
 // 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
 // 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing.
-//	Doesn't always work on Spectacles.
+//	Don't use on Spectacles! There is a limit of 32 components, so you should use InstSoundPooled with a small poolSize instead.
 //
 //
 //
