@@ -25,13 +25,16 @@
   MaxVisibility: Editable
   ScriptInputsHidden:
     allowHandTracking: false
+    allowSIK: false
     allowTap: false
     allowTapDelivery: false
     cam: false
     distFromCamera: false
     handLeft: false
     handRight: false
+    hover: false
     stabilityFrames: false
+    syncCombined: false
   ScriptTypesHidden:
     {}
   DefaultScriptInputs:
@@ -49,6 +52,7 @@
       handRight: !<reference.ObjectTracking3D> 00000000-0000-0000-0000-000000000000
       allowTapDelivery: false
       stabilityFrames: 4
+      syncCombined: false
   ScriptTypes:
     -
       {}

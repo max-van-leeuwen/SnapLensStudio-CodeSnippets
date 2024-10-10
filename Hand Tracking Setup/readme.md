@@ -1,6 +1,8 @@
 # Hand Tracking Manager for Lens Studio
 
-Some handy interaction helpers with tap emulation for Lens Studio.
+<br>This script unifies tap & hover interactions, Hand Tracking, and Spectacles Interaction Kit into a collection of useful callback!
+<br>Making it super easy to detect pinches (any hand), and emulate them in the preview panel.
+<br>
 <br>[twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
 
 <br><br>
@@ -10,6 +12,10 @@ Some handy interaction helpers with tap emulation for Lens Studio.
   <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Hand Tracking Setup/Media/preview.gif" width="400" />
 </p>
 
+<br>
+
+(This script needs [LSQuickScripts](https://maxvanleeuwen.com/lsquickscripts) in your project in order to work.)
+
 <br><br>
 
 ## Usage
@@ -18,9 +24,9 @@ Some handy interaction helpers with tap emulation for Lens Studio.
 
 Bind using `.add(f)` and `.remove(f)`.
 
-- **`.onPinchStart`** → (`Pos`, `isTap`)
-- **`.onPinchHold`** → (`Pos`, `isTap`)
-- **`.onPinchEnd`** → (`Pos`, `isTap`)
+- **`.onPinchStart`** → (`pos`, `isTap`)
+- **`.onPinchHold`** → (`pos`, `isTap`)
+- **`.onPinchEnd`** → (`pos`, `isTap`)
 - **`.onTrackStart`** → (`isTap`)
 - **`.onTrackEnd`** → (`isTap`)
 - **`.onActiveHandChange`** → (`prvHand`, `curHand`)
@@ -31,9 +37,13 @@ Bind using `.add(f)` and `.remove(f)`.
 - **`.getDominantHand()`** → `Hand`
 - **`.getPinching()`** → `bool`
 - **`.getPinchPosition()`** → `vec3`
+- **`.getPinchForward()`** → `vec3 (normalized)`
+- **`.getPinchUp()`** → `vec3 (normalized)`
+- **`.getHoverScreenPosition()`** → `vec2`
+- **`.getHoverWorldPosition()`** → `vec3`
 
 ## Data Types
 
-- **`Pos`**: position `vec3`, world space
+- **`pos`**: position `vec3`, world space
 - **`isTap`**: bool if emulated (not Hand Tracking)
 - **`Hand`**: string ('left'|'right')

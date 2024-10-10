@@ -15,7 +15,7 @@
   InstanceCount: 1
   Defines:
     []
-  BlendMode: Disabled
+  BlendMode: Add
   Properties:
     Port_Exponent_N007:
       typeIdx: 1
@@ -50,32 +50,6 @@
     PreviewEnabled:
       typeIdx: 0
       value: 0
-    deviceCamTex:
-      typeIdx: 9
-      value:
-        id: 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
-        sampler:
-          filteringMode: Trilinear
-          wrapModeU: Repeat
-          wrapModeV: Repeat
-          wrapModeW: Repeat
-          borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
-          mipmaps: false
-    deviceCamTexBorderColor:
-      typeIdx: 5
-      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    deviceCamTexDims:
-      typeIdx: 5
-      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-    deviceCamTexTransform:
-      typeIdx: 7
-      value:
-        0: {x: 1.000000, y: 0.000000, z: 0.000000}
-        1: {x: 0.000000, y: 1.000000, z: 0.000000}
-        2: {x: 0.000000, y: 0.000000, z: 1.000000}
-    deviceCamTexUvMinMax:
-      typeIdx: 5
-      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     overrideTimeElapsed:
       typeIdx: 1
       value: 0.000000

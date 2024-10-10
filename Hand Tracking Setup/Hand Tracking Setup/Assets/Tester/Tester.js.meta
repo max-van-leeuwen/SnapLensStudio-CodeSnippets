@@ -24,7 +24,6 @@
   CurrentVisibility: Editable
   MaxVisibility: Editable
   ScriptInputsHidden:
-    lookAt: false
     status: false
   ScriptTypesHidden:
     {}

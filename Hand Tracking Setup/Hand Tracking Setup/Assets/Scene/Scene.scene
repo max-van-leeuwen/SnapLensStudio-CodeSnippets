@@ -1,8 +1,8 @@
 - !<Scene/0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99>
   PackagePath: ""
   objects:
+    - !<own> 7addd579-f440-41b1-ba95-73acb051a05c
     - !<own> 3e7c2195-4744-4350-8fbf-f15a3dd72ded
-    - !<own> cde6cb09-43b5-4680-b2ea-ecbb16fb38e3
     - !<own> 5fd10f39-7c27-4c15-ba61-3cd7c8a3818b
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
@@ -12,16 +12,6 @@
   RenderPreviewOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   RenderOverlayOutput: !<reference> 00000000-0000-0000-0000-000000000000
   PhysicsRootWorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
-- !<LookAtComponent/026741e2-0e0b-4945-8bfe-7f46ee98864a>
-  PrefabRemaps:
-    []
-  Name: Look At
-  Enabled: false
-  LookAtMode: LookAtPoint
-  AimVectors: ZAimYUp
-  WorldUpVector: SceneY
-  Target: !<reference> 3e7c2195-4744-4350-8fbf-f15a3dd72ded
-  OffsetRotation: {x: 0.000000, y: 0.000000, z: 0.000000}
 - !<SceneObject/026fa5ba-eefc-4f05-a16c-237612f2d99d>
   PrefabRemaps:
     []
@@ -132,7 +122,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/0bff6594-91ca-4127-83e6-5abe84206e03>
   PrefabRemaps:
     []
@@ -160,12 +149,14 @@
   Near: 1.000000
   Far: 10000.000000
   Fov: 63.541019
-  ClearColor:
-    mode: None
-    color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-  ClearDepth:
-    mode: Custom
-    value: 1.000000
+  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+    Mode: None
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
+  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+    Mode: Value
+    Value: 1.000000
+    InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
   Aspect: 1.000000
   CameraType: Perspective
   DepthMode: Regular
@@ -175,7 +166,6 @@
   RenderTarget: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/1439c691-37cd-4a0b-8fc5-83f0855bde5b>
   PrefabRemaps:
@@ -342,6 +332,22 @@
     []
   Components:
     - !<own> 60d75264-5511-4fdf-ae9b-cb4a70b91c54
+- !<SceneObject/2c735921-ded5-40f4-86b8-5f77f8e80f7b>
+  PrefabRemaps:
+    []
+  Name: Mobile Trackers
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2f961cf9-6016-4f9c-86a9-b5ecbfaf1a2b
+    - !<own> c3f618c5-ab83-4210-9b10-b36fae740d73
+  Components:
+    []
 - !<SceneObject/2ebfab53-9273-4146-b5ae-343a00d9963e>
   PrefabRemaps:
     []
@@ -537,7 +543,7 @@
     scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     hasSegmentScaleCompensation: false
   Children:
-    - !<own> b15f28ca-eb5e-4474-9840-738745e72a6e
+    - !<own> e88f47ae-4109-4ac4-8f51-363013bab6b6
   Components:
     - !<own> 0d09197f-b000-4f6a-a991-cd2cc87903f3
     - !<own> e6a3735d-0482-4215-81d8-7730d2f29456
@@ -802,7 +808,7 @@
 - !<SceneObject/5fd10f39-7c27-4c15-ba61-3cd7c8a3818b>
   PrefabRemaps:
     []
-  Name: Tester Scene
+  Name: Tester Scene Mobile
   Enabled: true
   Layers: 1
   LocalTransform:
@@ -811,6 +817,7 @@
     scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     hasSegmentScaleCompensation: false
   Children:
+    - !<own> cde6cb09-43b5-4680-b2ea-ecbb16fb38e3
     - !<own> b3885e02-9844-4f7e-aeaf-0547e584cb9e
     - !<own> 7e296a83-098f-46fc-aabc-f609d533bf69
   Components:
@@ -1045,6 +1052,21 @@
     - !<own> 901aa9a4-6438-43e9-8636-fbf9837feffe
   Components:
     []
+- !<SceneObject/7addd579-f440-41b1-ba95-73acb051a05c>
+  PrefabRemaps:
+    []
+  Name: "LSQuickScripts [DOWNLOAD!]"
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/7cfbe8fb-397e-475f-b60e-d739a2e0aff2>
   PrefabRemaps:
     []
@@ -1093,7 +1115,7 @@
 - !<SceneObject/7e296a83-098f-46fc-aabc-f609d533bf69>
   PrefabRemaps:
     []
-  Name: Status
+  Name: Status Text
   Enabled: true
   Layers: 1
   LocalTransform:
@@ -1105,7 +1127,6 @@
     []
   Components:
     - !<own> a557b876-07c1-4b90-8660-eceb239e06aa
-    - !<own> 026741e2-0e0b-4945-8bfe-7f46ee98864a
 - !<SceneObject/82b8c296-2f73-4704-9efc-447f0951c081>
   PrefabRemaps:
     []
@@ -1271,7 +1292,7 @@
   ShadowDensity: 1.000000
   Materials:
     - !<reference> 2fc294ab-23b7-48a8-bc60-ffd980be89ef
-  Text: 3D Text
+  Text: Status Text
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1378,20 +1399,24 @@
   Enabled: true
   ScriptAsset: !<reference> 87252e87-5140-49b4-9082-99d83c51ebcb
   ScriptInputsDefault:
-    distFromCamera: true
-    stabilityFrames: true
+    allowTapDelivery: true
+    allowSIK: true
+    syncCombined: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       allowTap: true
-      allowTapDelivery: true
+      allowTapDelivery: false
       cam: !<reference.Camera> 0d09197f-b000-4f6a-a991-cd2cc87903f3
-      distFromCamera: !<float> 100.000000
+      distFromCamera: !<float> 50.000000
+      hover: true
       allowHandTracking: true
       handLeft: !<reference.ObjectTracking3D> 3983c1b0-04f8-41b0-b70b-ec411c03d28d
       handRight: !<reference.ObjectTracking3D> 402af493-4241-42e2-9a42-b98e6164ea93
-      stabilityFrames: 4
+      stabilityFrames: 3
+      allowSIK: false
+      syncCombined: false
   ScriptTypes:
     "":
       {}
@@ -1422,8 +1447,7 @@
     scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     hasSegmentScaleCompensation: false
   Children:
-    - !<own> 2f961cf9-6016-4f9c-86a9-b5ecbfaf1a2b
-    - !<own> c3f618c5-ab83-4210-9b10-b36fae740d73
+    []
   Components:
     - !<own> ae0dc2f5-c3ba-4b90-80cc-acd11f777726
 - !<SceneObject/b3885e02-9844-4f7e-aeaf-0547e584cb9e>
@@ -1499,7 +1523,6 @@
   ScriptInputs:
     "":
       status: !<reference.Text3D> a557b876-07c1-4b90-8660-eceb239e06aa
-      lookAt: !<reference.LookAtComponent> 026741e2-0e0b-4945-8bfe-7f46ee98864a
   ScriptTypes:
     "":
       {}
@@ -1598,7 +1621,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-  RayTracing: !<own> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/c7d7285e-80ea-4b26-b8c5-dc359fe6a104>
   PrefabRemaps:
     []
@@ -1905,10 +1927,10 @@
   Name: Device Tracking
   Enabled: true
   DeviceTrackingMode: World
-  RotationOptions:
-    invertRotation: false
-  SurfaceOptions:
-    enhanceWithNativeAR: false
+  RotationOptions: !<RotationOptions/00000000-0000-0000-0000-000000000000>
+    InvertRotation: false
+  SurfaceOptions: !<SurfaceOptions/00000000-0000-0000-0000-000000000000>
+    EnhanceWithNativeAR: false
 - !<Skin/e7bdb595-b340-48e9-950c-cd83ccf0b3b6>
   PrefabRemaps:
     []
@@ -1977,6 +1999,22 @@
     hasSegmentScaleCompensation: false
   Children:
     - !<own> 2397bda8-a6de-4738-9048-d64964bc8977
+  Components:
+    []
+- !<SceneObject/e88f47ae-4109-4ac4-8f51-363013bab6b6>
+  PrefabRemaps:
+    []
+  Name: "Mobile Hand Tracking Setup [PARENT TO CAMERA]"
+  Enabled: true
+  Layers: 1
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> b15f28ca-eb5e-4474-9840-738745e72a6e
+    - !<own> 2c735921-ded5-40f4-86b8-5f77f8e80f7b
   Components:
     []
 - !<LightSource/e8f38b3a-ee8b-4c29-8c58-ad3f1ff97c37>
