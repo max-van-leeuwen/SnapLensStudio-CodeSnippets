@@ -1,7 +1,6 @@
 # Hand Tracking Manager for Lens Studio
 
-<br>This script unifies tap & hover interactions, Hand Tracking, and Spectacles Interaction Kit into a collection of useful callback!
-<br>Making it super easy to detect pinches (any hand), and emulate them in the preview panel.
+<br>This script creates super handy callbacks for hand tracking - whether it's on mobile, Spectacles, or emulating using tap & hover in the preview panel!
 <br>
 <br>[twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
 
