@@ -210,6 +210,19 @@ function startTap(){
         pinchType = PinchTypes.Ended;
     }
     function pinchUpdate(){
+        if(script.hover){
+            if(!curHoverFrame) curHoverFrame = 0;
+            if(!prvHoverFrame) prvHoverFrame = 0;
+            if(isHovering && (curHoverFrame > prvHoverFrame)){
+                script.onHoverEnd.callback(hoverWorldPosition);
+                hoverScreenPosition = null;
+                hoverWorldPosition = null;
+                hoverUpdateEvent.enabled = false;
+                isHovering = false;
+            }
+            curHoverFrame++;
+        }
+
         switch(pinchType){
             case PinchTypes.Started:
                 // track
@@ -250,27 +263,22 @@ function startTap(){
     }
 
     // hover
-    var isInWindow;
+    var curHoverFrame;
+    var prvHoverFrame;
+    var isHovering;
     function hover(eventArgs){
         // cleaning the hover positions
         var newPos = eventArgs.getHoverPosition();
-        if(!newPos || newPos.x < 0){ // null if out of window
-            script.onHoverEnd.callback(hoverWorldPosition);
-            hoverScreenPosition = null;
-            hoverWorldPosition = null;
-            isInWindow = false;
-            hoverUpdateEvent.enabled = false;
-            return;
-        }
 
         hoverScreenPosition = newPos;
         hoverWorldPosition = script.cam.screenSpaceToWorldSpace(hoverScreenPosition, script.distFromCamera);
 
-        if(!isInWindow){
-            script.onHoverStart.callback(hoverWorldPosition);
-            isInWindow = true;
+        if(!isHovering){
             hoverUpdateEvent.enabled = true;
+            script.onHoverStart.callback(hoverWorldPosition);
+            isHovering = true;
         }
+        prvHoverFrame = curHoverFrame || 0;
     }
     function hoverUpdate(){
         script.onHovering.callback(hoverWorldPosition);

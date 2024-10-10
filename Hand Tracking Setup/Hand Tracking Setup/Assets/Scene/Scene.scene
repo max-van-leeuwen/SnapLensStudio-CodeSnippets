@@ -1400,6 +1400,7 @@
   ScriptAsset: !<reference> 87252e87-5140-49b4-9082-99d83c51ebcb
   ScriptInputsDefault:
     allowTapDelivery: true
+    hover: true
     allowSIK: true
     syncCombined: true
   ScriptTypesDefault:
@@ -1410,7 +1411,7 @@
       allowTapDelivery: false
       cam: !<reference.Camera> 0d09197f-b000-4f6a-a991-cd2cc87903f3
       distFromCamera: !<float> 50.000000
-      hover: true
+      hover: false
       allowHandTracking: true
       handLeft: !<reference.ObjectTracking3D> 3983c1b0-04f8-41b0-b70b-ec411c03d28d
       handRight: !<reference.ObjectTracking3D> 402af493-4241-42e2-9a42-b98e6164ea93
