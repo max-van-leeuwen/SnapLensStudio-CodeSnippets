@@ -8,8 +8,8 @@
 <br><br>
 
 <p float="left">
-  <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Hand Tracking Setup/Media/inspector.png" width="400" />
   <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Hand Tracking Setup/Media/preview.gif" width="400" />
+  <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Hand Tracking Setup/Media/inspector.png" width="400" />
 </p>
 
 <br>
