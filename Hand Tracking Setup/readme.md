@@ -1,6 +1,7 @@
 # Hand Tracking Manager for Lens Studio
 
 <br>This script creates super handy callbacks for hand tracking - whether it's on mobile, Spectacles, or emulating using tap & hover in the preview panel!
+<br>On Spectacles, this should be combined with Spectacles Interaction Kit.
 <br>
 <br>[twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
 
@@ -44,5 +45,5 @@ Bind using `.add(f)` and `.remove(f)`.
 ## Data Types
 
 - **`pos`**: position `vec3`, world space
-- **`isTap`**: bool if emulated (not Hand Tracking)
+- **`isTap`**: bool if emulated (preview panel tapping instead of pinch)
 - **`Hand`**: string ('left'|'right')
