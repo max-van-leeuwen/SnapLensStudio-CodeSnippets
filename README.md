@@ -1,9 +1,8 @@
 # SnapLensStudio-CodeSnippets
 Coding essentials for all your projects!
+<br>All scripts have a simple example project demonstrating how they work.<br/><br/><br/>
 
-All scripts have a simple example project demonstrating how they work.<br/><br/><br/>
-
-Contents:
+Contents
 - LSQuickScripts
   - My 'cheatsheet' collection of code snippets. I always have this in every project I do :)
 - Mesh Copy
@@ -14,6 +13,8 @@ Contents:
   - Lightweight setup to get a mesh's SDF information in the VFX editor.
 - Texture Sample
   - Simple function that samples the color of a (live) texture at a coordinate.
+- Radial Menu Spectacles
+  - A Radial Menu setup for the Spectacles
 - VoiceML Simple Transcribe
   - Lightweight setup to get the VoiceML transcription of the user's microphone.
 - Portal
