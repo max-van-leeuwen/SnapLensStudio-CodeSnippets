@@ -16,16 +16,14 @@
 - [Binding Callbacks](#binding-callbacks)
 - [Interacting with Hand Tracking](#interacting-with-hand-tracking)
 - [Customization Options](#customization-options)
-- [Enabling and Disabling the Menu](#enabling-and-disabling-the-menu)
 - [Helper Functions](#helper-functions)
-- [Button Properties and Data](#button-properties-and-data)
+- [Button Properties](#button-properties)
 - [Customizing Button Animations](#customizing-button-animations)
-- [Animation Constructors](#animation-constructors)
 
 
 
 ## Creating a Radial Menu
-Create a menu and add buttons using the `SpectaclesRadialMenu` instance.
+Create a menu and add buttons using the global `SpectaclesRadialMenu` instance.
 ```javascript
 var menu = new SpectaclesRadialMenu.Create(); // Radial instance
 var button1 = menu.addButton(script.button1, "button1"); // 1st button on main radial
@@ -65,8 +63,10 @@ HandTracking.onPinchEnd.add(function(){
 });
 ```
 
+This [Hand Tracking](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/tree/main/Hand%20Tracking%20Setup) setup makes the pinch callback easy to set up. It is also included in the example project.
+
 ## Customization Options
-Adjust various properties of the radial menu:
+Adjust properties of the radial menu:
 - `menu.radius` - Radial radius (world units). Default: `6cm`.
 - `menu.subRadius` - Radius of the sub-buttons ring. Default: `12cm`.
 - `menu.centerRadius` - Radius inside the ring to unselect radial buttons. Default: `2 rad`.
@@ -97,7 +97,7 @@ Useful functions for interacting with the radial menu:
 - `menu.openCloseAnim` - Animation instance for opening/closing.
 - `menu.onNoneHighlighted` - Callback: when all buttons are unhighlighted.
 
-## Button Properties and Data
+## Button Properties
 
 ### Button Object Data
 Button objects provide the following options:
@@ -112,10 +112,13 @@ Button objects provide the following options:
 - `.onHighlight` (callback: on highlight)
 - `.onUnHighlight` (callback: on unhighlight)
 
-## Customizing Button Animations
-Customize animations for button interactions:
+<br>
+
+Customizing animations on buttons, for example the highlight animation:
 ```javascript
 button.highlightAnim.updateFunction = function(v){
     button.sceneObject.getComponent("Component.Visual").mainPass.baseColor = new vec4(1, 1, 1, v); // white, with transparency 'v'
 };
 ```
+
+For more information on these animation functions, see the AnimateProperty class in [LSQuickScripts](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/LSQuickScripts/LSQuickScripts.js)!
