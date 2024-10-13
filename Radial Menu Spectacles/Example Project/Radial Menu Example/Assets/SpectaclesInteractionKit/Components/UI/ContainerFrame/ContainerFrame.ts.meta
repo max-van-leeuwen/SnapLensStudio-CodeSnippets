@@ -1,0 +1,123 @@
+- !<AssetImportMetadata/0aff702c-b4c4-4799-9528-39860f08952f>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    TypeScriptAsset: !<own> 24c148a6-9d32-4fd9-ab0a-631a5bd7d70e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/a377bcc4-a0b7-49ab-833e-3cfa27e364d7>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/24c148a6-9d32-4fd9-ab0a-631a5bd7d70e>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    allowScaling: false
+    allowTranslation: false
+    autoScaleContent: false
+    autoShowHide: false
+    border: false
+    constantPadding: false
+    innerSize: false
+    isContentInteractable: false
+    isFollowing: false
+    itemSnapping: false
+    maximumSize: false
+    minimumSize: false
+    showCloseButton: false
+    showFollowButton: false
+    useBillboarding: false
+    useFOVFollow: false
+    useSnapping: false
+    worldCursor: false
+    worldSnapping: false
+    xAlways: false
+    xOnTranslate: false
+    yAlways: false
+    yOnTranslate: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - worldCursor: !<MappingBased.CursorController> 00000000-0000-0000-0000-000000000000
+      autoShowHide: true
+      innerSize: !<Vec2> {x: 32.000000, y: 32.000000}
+      border: !<float> 4.000000
+      constantPadding: !<Vec2> {x: 0.000000, y: 0.000000}
+      allowScaling: true
+      autoScaleContent: true
+      isContentInteractable: false
+      allowTranslation: true
+      minimumSize: !<Vec2> {x: 10.000000, y: 10.000000}
+      maximumSize: !<Vec2> {x: 300.000000, y: 300.000000}
+      useBillboarding: false
+      xOnTranslate: false
+      xAlways: false
+      yOnTranslate: false
+      yAlways: false
+      useSnapping: false
+      itemSnapping: false
+      worldSnapping: false
+      showFollowButton: false
+      useFOVFollow: false
+      isFollowing: false
+      showCloseButton: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"group_start", "label":"Frame Defaults"}'
+    - // @input CursorController worldCursor
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"label", "label":""}'
+    - '// @ui {"widget":"group_start", "label":"Frame Settings"}'
+    - // @input bool autoShowHide = true
+    - '// @input vec2 innerSize = "{32,32}"'
+    - // @input float border = 7
+    - '// @input vec2 constantPadding = "{0,0}" {"hint":"In world units (cm), stays constant through scaling"}'
+    - // @input bool allowScaling = true
+    - // @input bool autoScaleContent = true
+    - // @input bool isContentInteractable = false
+    - // @input bool allowTranslation = true
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"label", "label":""}'
+    - '// @ui {"widget":"group_start", "label":"Min/Max Size"}'
+    - '// @input vec2 minimumSize = "{10,10}" {"hint":"In world units (cm)"}'
+    - '// @input vec2 maximumSize = "{150,150}" {"hint":"In world units (cm)"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"label", "label":""}'
+    - '// @ui {"widget":"group_start", "label":"Billboarding"}'
+    - // @input bool useBillboarding
+    - '// @input bool xOnTranslate = false {"showIf":"useBillboarding"}'
+    - '// @input bool xAlways = false {"showIf":"xOnTranslate"}'
+    - '// @input bool yOnTranslate = false {"showIf":"useBillboarding"}'
+    - '// @input bool yAlways = false {"showIf":"yOnTranslate"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"label", "label":""}'
+    - '// @ui {"widget":"group_start", "label":"Snapping"}'
+    - '// @input bool useSnapping = false {"hint":"Use Snapping Behaviors"}'
+    - '// @input bool itemSnapping = false {"hint":"Container to Container Snapping", "showIf":"useSnapping"}'
+    - '// @input bool worldSnapping = false {"hint":"Container to World Snapping", "showIf":"useSnapping"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"label", "label":""}'
+    - '// @ui {"widget":"group_start", "label":"Follow Behavior"}'
+    - // @input bool showFollowButton
+    - '// @input bool useFOVFollow = false {"label":"Front Follow Behavior", "showIf":"showFollowButton"}'
+    - '// @input bool isFollowing = false {"showIf":"useFOVFollow"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"label", "label":""}'
+    - '// @ui {"widget":"group_start", "label":"Close Button"}'
+    - // @input bool showCloseButton = true
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'

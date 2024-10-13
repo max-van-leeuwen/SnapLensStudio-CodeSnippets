@@ -1,0 +1,39 @@
+- !<AssetImportMetadata/eb494237-1013-49d7-bd0b-7259e1167d1a>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> b3f73013-148b-4dc9-a681-c11891902f6a
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> b3f73013-148b-4dc9-a681-c11891902f6a
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> add3016f-2b9f-476c-9043-a245f1ebfb46
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/49d39300-c815-48cd-9e5a-c8b7a39aee60>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/add3016f-2b9f-476c-9043-a245f1ebfb46>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    handText: false
+    removeMode: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - pinchHandVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      removeMode: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      handText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      dotObj: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      test: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}

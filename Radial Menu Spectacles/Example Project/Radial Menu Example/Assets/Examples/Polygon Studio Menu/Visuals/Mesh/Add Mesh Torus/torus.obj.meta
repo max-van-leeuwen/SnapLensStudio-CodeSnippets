@@ -1,0 +1,93 @@
+- !<AssetImportMetadata/0987faa5-6c85-48ba-87f3-ad29f02bc6e0>
+  ImportedAssetIds:
+    Meshes/Mesh 1: !<reference> 400f1cc7-55b3-461b-a523-437c0b8d3f7b
+    Scene: !<reference> 63b3eea5-1b6d-4289-a999-ed39fbcddd5c
+    _3DSceneImportRoot_0|: !<reference> f0ff82af-80f0-4f03-ba25-867633db3a29
+    _3DSceneImportRoot_0|__0|: !<reference> aaa3e50a-4d29-49c2-8c12-597cb8edffee
+    _3DSceneImportRoot_0|__0|_RenderMeshVisual_0|: !<reference> c9ae88d7-7ceb-4e67-9416-c25de1071299
+  ImporterName: ObjImporter
+  PrimaryAsset: !<reference> 63b3eea5-1b6d-4289-a999-ed39fbcddd5c
+  PackageType: LegacyPackage
+  PackagePolicy: CanBeUnpacked
+  AssetDataMap:
+    Scene: !<own> b0aad8e2-7a11-4ba2-872f-b373eae913a2
+  DependentFiles:
+    []
+  ImporterSettings: !<D3FileImporterSettingsBase/6ff94a87-897b-4866-b48f-e6c9dfcec22e>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategory
+    PersistentIdGenerationAlgorithm: Legacy
+  CompressionSettings: !<ComplexCompressionSettings/4c788015-abca-4666-890c-1bf1d375e2f9>
+    Presets:
+      None Compression: !<SingleCompressionSettings/e89559bf-1591-491c-9202-85fc6021a001>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+    ExtensionMappings:
+      mesh: None Compression
+    Overrides:
+      {}
+- !<ObjectPrefab/0e86254d-bef5-4473-9913-15a05bdc6b61>
+  PackagePath: ""
+  objects:
+    - !<own> d7a9e6d3-80c5-4a1e-bd53-56b49da28edf
+  LazyLoading: false
+  RetainAssets: true
+- !<ObjectPrefabAssetData/b0aad8e2-7a11-4ba2-872f-b373eae913a2>
+  SourceRemaps:
+    - aaa3e50a-4d29-49c2-8c12-597cb8edffee: ecf38667-675e-4180-8473-d6b839ff889c
+    - c9ae88d7-7ceb-4e67-9416-c25de1071299: d34fbb44-c506-478d-8b03-5dc73da17d1b
+    - f0ff82af-80f0-4f03-ba25-867633db3a29: d7a9e6d3-80c5-4a1e-bd53-56b49da28edf
+  SourceState: !<own> 0e86254d-bef5-4473-9913-15a05bdc6b61
+- !<RenderMeshVisual/d34fbb44-c506-478d-8b03-5dc73da17d1b>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    []
+  Mesh: !<reference> 400f1cc7-55b3-461b-a523-437c0b8d3f7b
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/d7a9e6d3-80c5-4a1e-bd53-56b49da28edf>
+  PrefabRemaps:
+    []
+  Name: torus
+  Enabled: true
+  Layer: 0
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    - !<own> ecf38667-675e-4180-8473-d6b839ff889c
+  Components:
+    []
+  Layers: 1
+- !<SceneObject/ecf38667-675e-4180-8473-d6b839ff889c>
+  PrefabRemaps:
+    []
+  Name: ""
+  Enabled: true
+  Layer: 0
+  LocalTransform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d34fbb44-c506-478d-8b03-5dc73da17d1b
+  Layers: 1

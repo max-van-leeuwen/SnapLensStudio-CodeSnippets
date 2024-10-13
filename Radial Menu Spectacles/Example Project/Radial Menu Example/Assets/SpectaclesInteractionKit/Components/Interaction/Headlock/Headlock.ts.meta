@@ -1,0 +1,81 @@
+- !<AssetImportMetadata/eff2e9d3-df93-4e87-a932-5caa21054e63>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 2a92f85a-a814-4f5d-bd73-4a2710147d01
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 2a92f85a-a814-4f5d-bd73-4a2710147d01
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    TypeScriptAsset: !<own> 28c0914b-70ba-4c3d-b30f-4490506d17f5
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/aa250891-09d9-43bc-b70e-a22fdc455cdd>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/28c0914b-70ba-4c3d-b30f-4490506d17f5>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    _distance: false
+    _lockedPitch: false
+    _lockedYaw: false
+    _pitchBufferDegrees: false
+    _pitchEasing: false
+    _pitchOffsetDegrees: false
+    _translationBuffer: false
+    _xzEasing: false
+    _xzEnabled: false
+    _yEasing: false
+    _yEnabled: false
+    _yawBufferDegrees: false
+    _yawEasing: false
+    _yawOffsetDegrees: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - _distance: !<float> 50.000000
+      _xzEnabled: true
+      _xzEasing: !<float> 1.000000
+      _yEnabled: true
+      _yEasing: !<float> 1.000000
+      _translationBuffer: !<float> 0.000000
+      _lockedPitch: true
+      _pitchEasing: !<float> 1.000000
+      _pitchOffsetDegrees: !<float> 0.000000
+      _pitchBufferDegrees: !<float> 0.000000
+      _lockedYaw: true
+      _yawEasing: !<float> 1.000000
+      _yawOffsetDegrees: !<float> 0.000000
+      _yawBufferDegrees: !<float> 0.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"group_start", "label":"Headlock"}'
+    - '// @input float _distance = 50 {"hint":"How far away the target will be from the camera"}'
+    - '// @ui {"widget":"group_start", "label":"Head Translation"}'
+    - '// @input bool _xzEnabled = true {"hint":"If the camera will follow when the user moves their head along XZ-plane"}'
+    - '// @input float _xzEasing = 1 {"hint":"How fast the camera will follow along the XZ-plane, 0.1 for delayed follow, 1 for instant follow."}'
+    - '// @input bool _yEnabled = true {"hint":"If the camera will follow when the user moves their head along Y-axis"}'
+    - '// @input float _yEasing = 1 {"hint":"How fast the camera will follow along the Y-axis, 0.1 for delayed follow, 1 for instant follow."}'
+    - '// @input float _translationBuffer = 0 {"hint":"The magnitude of change needed to activate a translation for the target to follow the camera."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Head Rotation"}'
+    - '// @input bool _lockedPitch = true {"hint":"If the camera will NOT follow when the user moves their head along the pitch-axis (looking up/down)"}'
+    - '// @input float _pitchEasing = 1 {"hint":"How fast the camera will follow along the pitch-axis, 0.1 for delayed follow, 1 for instant follow."}'
+    - '// @input float _pitchOffsetDegrees = 0 {"hint":"How many degrees of offset from the center point should the target sit"}'
+    - '// @input float _pitchBufferDegrees = 0 {"hint":"How many degrees of leeway along each direction (up/down) before change starts to occur"}'
+    - '// @input bool _lockedYaw = true {"hint":"If the camera will follow when the user moves their head along the yaw-axis (looking left/right)"}'
+    - '// @input float _yawEasing = 1 {"hint":"How fast the camera will follow along the yaw-axis, 0.1 for delayed follow, 1 for instant follow."}'
+    - '// @input float _yawOffsetDegrees = 0 {"hint":"How many degrees of offset from the center point should the target sit"}'
+    - '// @input float _yawBufferDegrees = 0 {"hint":"How many degrees of leeway along each direction (left/right) before change starts to occur"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_end"}'

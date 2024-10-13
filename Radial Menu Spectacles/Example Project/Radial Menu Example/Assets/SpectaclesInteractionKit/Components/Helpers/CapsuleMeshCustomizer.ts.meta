@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/74daf879-c4d5-4f37-a446-01f758be200e>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 2a71057d-f45b-4755-a592-fdd0e06065fc
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 2a71057d-f45b-4755-a592-fdd0e06065fc
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    TypeScriptAsset: !<own> f6801b30-1435-4a2d-a6b8-8e45e192c345
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/6069f3b7-9b44-49c8-9d5c-d74299ee1ae1>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f6801b30-1435-4a2d-a6b8-8e45e192c345>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    capsuleLength: false
+    cylinderStepCount: false
+    endXStepCount: false
+    meshVisual: false
+    radianStepCount: false
+    radius: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - meshVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      capsuleLength: !<float> 10.000000
+      radius: !<float> 1.000000
+      radianStepCount: 16
+      cylinderStepCount: 16
+      endXStepCount: 32
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Component.RenderMeshVisual meshVisual {"hint":"The mesh visual to modify into an extendable capsule."}'
+    - '// @input float capsuleLength = 10.0 {"hint":"The length of the cylindric section of the capsule (not including the end caps)."}'
+    - '// @input float radius = 1.0 {"hint":"The radius of the end caps and the radius of the cylindric section."}'
+    - '// @input int radianStepCount = 16 {"hint":"The number of points per circle in the mesh. Increase for a higher poly-count mesh."}'
+    - '// @input int cylinderStepCount = 16 {"hint":"The number of circles in the cylinder of the mesh. Increase for a higher poly-count mesh."}'
+    - '// @input int endXStepCount = 32 {"hint":"The number of circles in the end cap of the capsule of the mesh. Increase for a higher poly-count mesh."}'

@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/9b4da772-3ed1-4e7c-a164-d2ed41aa0425>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 19d3568e-3a3a-4b72-bc52-c6ffa6416301
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 19d3568e-3a3a-4b72-bc52-c6ffa6416301
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> 101a97d2-cbb9-475a-87c9-a7222140c02b
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/f100d4c9-ffd8-42da-ae15-30b7349d157f>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/101a97d2-cbb9-475a-87c9-a7222140c02b>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    functionalityVisual: false
+    functionalityVisual2: false
+    removeModeVisuals: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - can: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      canTrf: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      canTrf1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      canTrf2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lid: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lidTrf: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lidTrf1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      lidTrf2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      trash1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      trash2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      trash3: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      removeModeVisuals: !<reference.RenderMeshVisual[]>
+        []
+      functionalityVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      functionalityVisual2: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}

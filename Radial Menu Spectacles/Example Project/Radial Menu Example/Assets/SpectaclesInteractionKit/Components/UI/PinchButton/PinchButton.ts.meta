@@ -1,0 +1,45 @@
+- !<AssetImportMetadata/3a6ad000-f101-483f-a478-a8936781fc74>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> a54c5722-d3fb-4aa5-97ff-f7425978bc59
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> a54c5722-d3fb-4aa5-97ff-f7425978bc59
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    TypeScriptAsset: !<own> b86e782f-e9bd-41ee-91d4-75d22a8eb1d3
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/29e246b2-5bcc-4141-ad88-79c06ea817da>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/b86e782f-e9bd-41ee-91d4-75d22a8eb1d3>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    customFunctionForOnButtonPinched: false
+    editEventCallbacks: false
+    onButtonPinchedFunctionNames: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - editEventCallbacks: false
+      customFunctionForOnButtonPinched: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      onButtonPinchedFunctionNames: !<string[]>
+        []
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - "// @input bool editEventCallbacks = false {\"hint\":\"Enable this to add functions from another script to this component's callback events\"}"
+    - '// @ui {"widget":"group_start", "label":"On Button Pinched Callbacks", "showIf":"editEventCallbacks"}'
+    - '// @input Component.ScriptComponent customFunctionForOnButtonPinched {"hint":"The script containing functions to be called when button is pinched"}'
+    - '// @input string[] onButtonPinchedFunctionNames {"hint":"The names for the functions on the provided script, to be called on button pinch"}'
+    - '// @ui {"widget":"group_end"}'

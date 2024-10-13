@@ -1,0 +1,26 @@
+- !<AssetImportMetadata/ac2f39d1-b655-435a-8da3-78a705099bf3>
+  ImportedAssetIds:
+    FileMesh: !<reference> 8888f14e-fc5f-408e-baea-d0ea0facf21d
+  ImporterName: FileMeshImporter
+  PrimaryAsset: !<reference> 8888f14e-fc5f-408e-baea-d0ea0facf21d
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    {}
+  DependentFiles:
+    []
+  ImporterSettings: !<FileMeshImporterSettings/2c88b182-0176-49a6-a2b1-ffc0cf29a13f>
+    ModifiedVertexFormats:
+      color: Float
+      normal: Float
+      position: Float
+      texture0: Float
+  CompressionSettings: !<SingleCompressionSettings/4d9ca2a6-85f6-43da-8338-78361cad0661>
+    CompressionSettings: !<MeshCompressionSettings/9ccc3abe-e21f-4bc6-aaaf-7533a75da7a4>
+      EnableDracoCompression: false
+      CompressionLevel: 0
+      PositionBits: 11
+      TexcoordBits: 10
+      NormalBits: 8
+      ColorBits: 8
+    CompressorName: Draco

@@ -1,0 +1,60 @@
+- !<AssetImportMetadata/ffef0d89-62f4-482b-ae3f-cb52975f7af1>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 88d601cc-0bb5-4a41-9b90-f4b830273a55
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 88d601cc-0bb5-4a41-9b90-f4b830273a55
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> 80c2b728-42a9-4758-a462-6355e12fae8b
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/a29d6973-6aaf-4232-9873-f475e68af26f>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/80c2b728-42a9-4758-a462-6355e12fae8b>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    sliceTemplate: false
+    slices: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - button1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button1SubVisual1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button3: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      main1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      main2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      main3: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      main4: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      main5: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      sub1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      sub2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      sub3: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      sliceTemplate: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      mainSliceCount: 5
+      subSliceCount: 3
+      sliceMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      mainTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      mainTextures: !<reference.Texture[]>
+        []
+      main1subTextures: !<reference.Texture[]>
+        []
+      main3subTextures: !<reference.Texture[]>
+        []
+      buttonTexture: !<reference.Texture[]>
+        []
+      slices: 0
+  ScriptTypes:
+    -
+      {}

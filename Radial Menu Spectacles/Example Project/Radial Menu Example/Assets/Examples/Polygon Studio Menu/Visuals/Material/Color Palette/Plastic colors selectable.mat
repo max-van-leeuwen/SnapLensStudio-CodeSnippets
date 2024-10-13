@@ -1,0 +1,82 @@
+- !<Material/0358536c-d3d5-4a1a-b94f-0a5ac2773b00>
+  PackagePath: ""
+  PassesInfo:
+    - !<own> adbc6c0d-4ff7-470d-884f-cd21c3609d1e
+- !<PassInfo/adbc6c0d-4ff7-470d-884f-cd21c3609d1e>
+  DepthWrite: true
+  DepthTest: true
+  DepthFunction: LessEqual
+  TwoSided: true
+  ColorMask: {x: true, y: true, z: true, w: true}
+  CullMode: Back
+  PolygonOffset: {x: 0.000000, y: 0.000000}
+  FrustumCulling: Auto
+  FrustumCullPad: 0.000000
+  InstanceCount: 1
+  Defines:
+    []
+  BlendMode: Disabled
+  Properties:
+    Port_AO_N000:
+      typeIdx: 4
+      value: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Port_Exponent_N001:
+      typeIdx: 1
+      value: 3.000000
+    Port_Input1_N005:
+      typeIdx: 1
+      value: 0.300000
+    Port_Input1_N008:
+      typeIdx: 4
+      value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Port_Input1_N010:
+      typeIdx: 1
+      value: 0.900000
+    Port_Input1_N014:
+      typeIdx: 1
+      value: 1.100000
+    Port_Intensity_N001:
+      typeIdx: 1
+      value: 0.200000
+    Port_Metallic_N000:
+      typeIdx: 1
+      value: 0.000000
+    Port_Normal_N000:
+      typeIdx: 4
+      value: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Port_Normal_N001:
+      typeIdx: 4
+      value: {x: 0.000000, y: 0.000000, z: 1.000000}
+    Port_Opacity_N000:
+      typeIdx: 1
+      value: 1.000000
+    Port_Roughness_N000:
+      typeIdx: 1
+      value: 0.230000
+    Port_SpecularAO_N000:
+      typeIdx: 4
+      value: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Port_Value1_N011:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    PreviewEnabled:
+      typeIdx: 0
+      value: 0
+    c:
+      typeIdx: 4
+      value: {x: 0.913725, y: 0.913725, z: 0.913725}
+    isSelected:
+      typeIdx: 2
+      value: true
+    overrideTimeDelta:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeElapsed:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeEnabled:
+      typeIdx: 0
+      value: 0
+  Pass: !<reference> d220927d-4479-4816-95e9-642f59bf46be
+  RTCaster: false
+  RTReceiver: false

@@ -1,0 +1,99 @@
+- !<AssetImportMetadata/024b9ba9-8eb2-492d-9d53-1142c98cb61f>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 05916a28-6390-4372-8950-03c991780f28
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 05916a28-6390-4372-8950-03c991780f28
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> a6e9a527-b18c-4a84-bd93-8a2b95d117c3
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/818aac9f-779f-46e4-9638-294578027645>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/a6e9a527-b18c-4a84-bd93-8a2b95d117c3>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    addMeshButton: false
+    buttons: false
+    colorButton: false
+    colorPalette: false
+    colorPalettePaint: false
+    exitButton: false
+    removeButton: false
+    snappingButton: false
+    subBoxMeshButton: false
+    subColorTemplateButton: false
+    subDolphinMeshButton: false
+    subSphereMeshButton: false
+    subTorusMeshButton: false
+    subTriangleMeshButton: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - cam: !<reference.Camera> 00000000-0000-0000-0000-000000000000
+      button1: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button2: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button3: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button4: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button5: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button6: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button7: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button8: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      button: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      buttons:
+        []
+      exitButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      colorButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      removeButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      addMeshButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      subColorTemplateButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      subBoxMeshButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      subTriangleMeshButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      subSphereMeshButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      subDolphinMeshButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      colors: !<Vec3[]>
+        []
+      colorss: !<Vec4[]>
+        []
+      colorTest: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      subColors:
+        []
+      colorPalette:
+        []
+      mainHighlight: !<reference.AudioTrackAsset[]>
+        []
+      colorSubHighlight: !<reference.AudioTrackAsset[]>
+        []
+      meshSubHighlight: !<reference.AudioTrackAsset[]>
+        []
+      mainHighlightSound: !<reference.AudioTrackAsset[]>
+        []
+      colorSubHighlightSound: !<reference.AudioTrackAsset[]>
+        []
+      meshSubHighlightSound: !<reference.AudioTrackAsset[]>
+        []
+      colorPalettePaint: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      startColorIndex: 0
+      pressSounds: !<reference.AudioTrackAsset[]>
+        []
+      open: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      close: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      snappingButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      subTorusMeshButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      connectButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      exportButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      shareButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}

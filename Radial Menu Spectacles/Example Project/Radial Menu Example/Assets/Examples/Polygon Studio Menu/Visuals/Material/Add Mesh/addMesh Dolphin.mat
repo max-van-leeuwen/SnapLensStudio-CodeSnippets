@@ -1,0 +1,61 @@
+- !<Material/5be90f97-9630-44ac-9e05-ae06f6197235>
+  PackagePath: ""
+  PassesInfo:
+    - !<own> 528b95a6-dccd-45cd-9f88-4c5bb69c95e1
+- !<PassInfo/528b95a6-dccd-45cd-9f88-4c5bb69c95e1>
+  DepthWrite: true
+  DepthTest: true
+  DepthFunction: LessEqual
+  TwoSided: true
+  ColorMask: {x: true, y: true, z: true, w: true}
+  CullMode: Back
+  PolygonOffset: {x: 0.000000, y: 0.000000}
+  FrustumCulling: Auto
+  FrustumCullPad: 0.000000
+  InstanceCount: 1
+  Defines:
+    []
+  BlendMode: Disabled
+  Properties:
+    Port_AO_N000:
+      typeIdx: 4
+      value: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Port_Exponent_N001:
+      typeIdx: 1
+      value: 3.000000
+    Port_Import_N104:
+      typeIdx: 4
+      value: {x: 0.000000, y: 1.000000, z: 0.000000}
+    Port_Input1_N005:
+      typeIdx: 1
+      value: 0.300000
+    Port_Input1_N013:
+      typeIdx: 1
+      value: 0.700000
+    Port_Input1_N014:
+      typeIdx: 1
+      value: -0.200000
+    Port_Intensity_N001:
+      typeIdx: 1
+      value: 0.200000
+    Port_Multiplier_N007:
+      typeIdx: 1
+      value: 1.000000
+    Port_Opacity_N000:
+      typeIdx: 1
+      value: 1.000000
+    Port_Value_N011:
+      typeIdx: 4
+      value: {x: -9.000000, y: 0.000000, z: -20.000000}
+    PreviewEnabled:
+      typeIdx: 0
+      value: 0
+    overrideTimeElapsed:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeEnabled:
+      typeIdx: 0
+      value: 0
+  Pass: !<reference> 5c241d0e-e771-48bd-90b6-44a6f2e9730f
+  RTCaster: false
+  RTReceiver: false

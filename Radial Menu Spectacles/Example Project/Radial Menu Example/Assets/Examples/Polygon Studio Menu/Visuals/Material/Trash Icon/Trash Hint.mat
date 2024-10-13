@@ -1,0 +1,133 @@
+- !<Material/077dcfc0-45e8-4bb4-9556-203d33c5619b>
+  PackagePath: ""
+  PassesInfo:
+    - !<own> 81f24a3f-b95d-402d-b1bb-f82f38f02d53
+- !<PassInfo/81f24a3f-b95d-402d-b1bb-f82f38f02d53>
+  DepthWrite: false
+  DepthTest: false
+  DepthFunction: LessEqual
+  TwoSided: true
+  ColorMask: {x: true, y: true, z: true, w: true}
+  CullMode: Back
+  PolygonOffset: {x: 0.000000, y: 0.000000}
+  FrustumCulling: Auto
+  FrustumCullPad: 0.000000
+  InstanceCount: 1
+  Defines:
+    []
+  BlendMode: PremultipliedAlphaAuto
+  Properties:
+    Port_Default_N055:
+      typeIdx: 1
+      value: 0.000000
+    Port_Import_N023:
+      typeIdx: 1
+      value: 0.600000
+    Port_Import_N025:
+      typeIdx: 1
+      value: 0.000000
+    Port_Import_N082:
+      typeIdx: 1
+      value: 0.350000
+    Port_Import_N084:
+      typeIdx: 1
+      value: 0.000000
+    Port_Input1_N042:
+      typeIdx: 1
+      value: 3.000000
+    Port_Input1_N044:
+      typeIdx: 1
+      value: 3.000000
+    Port_Input1_N047:
+      typeIdx: 1
+      value: 2.000000
+    Port_Input1_N048:
+      typeIdx: 1
+      value: 3.000000
+    Port_Input1_N049:
+      typeIdx: 1
+      value: 3.000000
+    Port_Input1_N051:
+      typeIdx: 1
+      value: 2.000000
+    Port_Input1_N056:
+      typeIdx: 1
+      value: 0.000000
+    Port_Input2_N056:
+      typeIdx: 1
+      value: 1.000000
+    Port_Multiplier_N002:
+      typeIdx: 1
+      value: 15.000000
+    Port_RangeMaxA_N005:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N005:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMinA_N005:
+      typeIdx: 1
+      value: -1.000000
+    Port_RangeMinB_N005:
+      typeIdx: 1
+      value: 0.650000
+    Port_Value_N007:
+      typeIdx: 4
+      value: {x: 1.000000, y: 0.000000, z: 0.016663}
+    Port_Value_N015:
+      typeIdx: 4
+      value: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Port_Value_N026:
+      typeIdx: 1
+      value: 0.000100
+    Port_Value_N085:
+      typeIdx: 1
+      value: 0.000100
+    PreviewEnabled:
+      typeIdx: 0
+      value: 0
+    baseTex:
+      typeIdx: 9
+      value:
+        id: 6b765783-d05c-40e2-904a-707e4633399c
+        sampler:
+          filteringMode: Trilinear
+          wrapModeU: Repeat
+          wrapModeV: Repeat
+          wrapModeW: Repeat
+          borderColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
+          mipmaps: false
+        type: Texture2D
+    baseTexBorderColor:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    baseTexDims:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    baseTexTransform:
+      typeIdx: 7
+      value:
+        0: {x: 1.000000, y: 0.000000, z: 0.000000}
+        1: {x: 0.000000, y: 1.000000, z: 0.000000}
+        2: {x: 0.000000, y: 0.000000, z: 1.000000}
+    baseTexUvMinMax:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    endTime:
+      typeIdx: 1
+      value: -1.000000
+    overrideTimeDelta:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeElapsed:
+      typeIdx: 1
+      value: 0.000000
+    overrideTimeEnabled:
+      typeIdx: 0
+      value: 0
+    startTime:
+      typeIdx: 1
+      value: -1.000000
+  Pass: !<reference> ef2bdcf5-191b-495c-9514-990d4932f5be
+  RTCaster: false
+  RTReceiver: false

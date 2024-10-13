@@ -1,0 +1,88 @@
+- !<AssetImportMetadata/c76e5181-2dbb-41de-bd05-f2a0ac3e5931>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 4d0b0ec7-e669-4c4e-b2f7-32b9c59f24cc
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 4d0b0ec7-e669-4c4e-b2f7-32b9c59f24cc
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    TypeScriptAsset: !<own> affc12b2-1dd2-49b6-9e60-d48ba14bf896
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/18020884-b822-446f-85e2-1d6e5ea7d8ce>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/affc12b2-1dd2-49b6-9e60-d48ba14bf896>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    _drawDebug: false
+    _maxRaycastDistance: false
+    directColliderEnterRadius: false
+    directColliderExitRadius: false
+    directDragThreshold: false
+    forcePokeOnNonDominantPalmProximity: false
+    handType: false
+    indirectDragThreshold: false
+    indirectTargetingVolumeMultiplier: false
+    raycastAlgorithm: false
+    sphereCastEnabled: false
+    spherecastDistanceThresholds: false
+    spherecastRadii: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - _drawDebug: false
+      sphereCastEnabled: false
+      spherecastRadii: !<float[]>
+        - 0.500000
+        - 2.000000
+        - 4.000000
+      spherecastDistanceThresholds: !<float[]>
+        - 0.000000
+        - 12.000000
+        - 30.000000
+      _maxRaycastDistance: !<float> 500.000000
+      indirectTargetingVolumeMultiplier: !<float> 1.000000
+      indirectDragThreshold: !<float> 40.000000
+      handType: right
+      raycastAlgorithm: Proxy
+      forcePokeOnNonDominantPalmProximity: false
+      directColliderEnterRadius: !<float> 1.000000
+      directColliderExitRadius: 1.500000
+      directDragThreshold: !<float> 3.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"group_start", "label":"Interactor"}'
+    - // @input bool _drawDebug = false
+    - '// @ui {"widget":"group_start", "label":"Spherecast Configuration"}'
+    - // @input bool sphereCastEnabled = false
+    - '// @input number[] spherecastRadii = "{0.5, 2.0, 4.0}" {"showIf":"sphereCastEnabled", "showIfValue":true}'
+    - '// @input number[] spherecastDistanceThresholds = "{0, 12, 30}" {"showIf":"sphereCastEnabled", "showIfValue":true}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Targeting Configuration"}'
+    - // @input float _maxRaycastDistance = 500
+    - // @input float indirectTargetingVolumeMultiplier = 1
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Indirect Drag Provider"}'
+    - // @input float indirectDragThreshold = 3.0
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Hand Interactor"}'
+    - '// @input string handType = "right" {"widget":"combobox", "values":[{"label":"Left", "value":"left"}, {"label":"Right", "value":"right"}]}'
+    - "// @input string raycastAlgorithm = \"Proxy\" {\"hint\":\"Forwards the TargetingData received from LensCore's Gesture Module\", \"widget\":\"combobox\", \"values\":[{\"label\":\"AnchorVariableShoulder\", \"value\":\"AnchorVariableShoulder\"}, {\"label\":\"LegacySingleCamera\", \"value\":\"LegacySingleCamera\"}, {\"label\":\"AnchorHead\", \"value\":\"AnchorHead\"}, {\"label\":\"Proxy\", \"value\":\"Proxy\"}]}"
+    - "// @input bool forcePokeOnNonDominantPalmProximity = false {\"hint\":\"Forces the usage of Poke targeting when interacting near the nondominant hand's palm.\"}"
+    - '// @input float directColliderEnterRadius = 1 {"hint":"The radius around the midpoint of the index/thumb to target Interactables."}'
+    - '// @input float directColliderExitRadius = 1.5 {"hint":"The radius around the midpoint of the index/thumb to de-target Interactables (for bistable thresholding)."}'
+    - // @input float directDragThreshold = 3.0
+    - '// @ui {"widget":"group_end"}'

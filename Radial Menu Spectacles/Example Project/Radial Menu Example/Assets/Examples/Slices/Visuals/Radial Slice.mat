@@ -1,0 +1,186 @@
+- !<Material/d704cbf3-dbf4-46ca-aa38-6483f10e115e>
+  PackagePath: ""
+  PassesInfo:
+    - !<own> 8911b234-7c52-42b8-aefc-463c5f4a7700
+- !<PassInfo/8911b234-7c52-42b8-aefc-463c5f4a7700>
+  DepthWrite: false
+  DepthTest: false
+  DepthFunction: LessEqual
+  TwoSided: false
+  ColorMask: {x: true, y: true, z: true, w: true}
+  CullMode: Back
+  PolygonOffset: {x: 0.000000, y: 0.000000}
+  FrustumCulling: Auto
+  FrustumCullPad: 0.000000
+  InstanceCount: 1
+  Defines:
+    - NODE_13_DROPLIST_ITEM 0
+    - NODE_27_DROPLIST_ITEM 0
+    - NODE_49_DROPLIST_ITEM 0
+    - NODE_69_DROPLIST_ITEM 0
+    - ENABLE_BASE_TEX
+  BlendMode: PremultipliedAlphaAuto
+  Properties:
+    Port_Center_N009:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
+    Port_Center_N135:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
+    Port_Center_N136:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
+    Port_Import_N035:
+      typeIdx: 1
+      value: 0.001000
+    Port_Import_N051:
+      typeIdx: 1
+      value: 0.500000
+    Port_Import_N063:
+      typeIdx: 1
+      value: 0.001000
+    Port_Input0_N006:
+      typeIdx: 1
+      value: 1.000000
+    Port_Input1_N028:
+      typeIdx: 1
+      value: 0.001000
+    Port_Input1_N029:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
+    Port_Input1_N031:
+      typeIdx: 1
+      value: 180.000000
+    Port_Input1_N038:
+      typeIdx: 1
+      value: 2.000000
+    Port_Input1_N045:
+      typeIdx: 3
+      value: {x: 0.000000, y: 0.500000}
+    Port_Input1_N046:
+      typeIdx: 1
+      value: 2.000000
+    Port_Input1_N050:
+      typeIdx: 3
+      value: {x: 0.500000, y: 0.500000}
+    Port_Input1_N058:
+      typeIdx: 1
+      value: 0.500000
+    Port_Input1_N132:
+      typeIdx: 1
+      value: 0.500000
+    Port_RangeMaxA_N011:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxA_N044:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxA_N059:
+      typeIdx: 1
+      value: 0.500000
+    Port_RangeMaxA_N060:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxA_N133:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxA_N137:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N011:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N034:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N054:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N059:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N060:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMaxB_N064:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMaxB_N137:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMinA_N011:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinA_N044:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinA_N059:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinA_N060:
+      typeIdx: 1
+      value: 0.500000
+    Port_RangeMinA_N064:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinA_N133:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinA_N137:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinB_N011:
+      typeIdx: 1
+      value: 0.500000
+    Port_RangeMinB_N034:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinB_N054:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinB_N059:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinB_N060:
+      typeIdx: 1
+      value: 1.000000
+    Port_RangeMinB_N064:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinB_N133:
+      typeIdx: 1
+      value: 0.000000
+    Port_RangeMinB_N137:
+      typeIdx: 1
+      value: -1.000000
+    Port_Rotation_N135:
+      typeIdx: 1
+      value: -90.000000
+    Port_Scale_N136:
+      typeIdx: 3
+      value: {x: 1.000000, y: -1.000000}
+    PreviewEnabled:
+      typeIdx: 0
+      value: 0
+    fillColor:
+      typeIdx: 5
+      value: {x: 0.654597, y: 0.935622, z: 0.977432, w: 0.459998}
+    highlight:
+      typeIdx: 1
+      value: 0.000000
+    inset:
+      typeIdx: 1
+      value: 0.220000
+    opacity:
+      typeIdx: 1
+      value: 1.000000
+    outlineColor:
+      typeIdx: 5
+      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    outlineWidth:
+      typeIdx: 1
+      value: 0.020000
+    sliceCount:
+      typeIdx: 0
+      value: 4
+  Pass: !<reference> a1713df1-a492-48ce-8a45-afabcee1f97c

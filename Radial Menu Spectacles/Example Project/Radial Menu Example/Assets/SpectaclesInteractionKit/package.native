@@ -1,0 +1,29 @@
+- !<NativePackageDescriptor/be230f2e-d00c-4bf5-890e-aba4d64330f9>
+  PackagePath: ""
+  StudioVersion:
+    major: 5
+    minor: 1
+    patch: 0
+    build: 24090603
+    type: Unset
+  Description: Release
+  SvgIcon: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 8
+  VersionPatch: 2
+  UpdateCheckpoint: 48
+  ExportUid: f31a5ed7-407f-4b3b-b254-f6371f61c1da
+  ComponentUid: 0f7a0bbe-777c-41a5-b979-0b0430f25836
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  Instantiable: !<reference> 00000000-0000-0000-0000-000000000000
+  AssetLibraryDependencyStructure: !<AssetLibraryDependencyStructure/00000000-0000-0000-0000-000000000000>
+    Name: SpectaclesInteractionKit
+    AssetId: 1aPW5eMfMPeP1615dXiqyN
+    Hash: 342e917dd695ac027c21651d6ef37f80
+    Version:
+      major: 0
+      minor: 8
+      patch: 2
+      build: 0

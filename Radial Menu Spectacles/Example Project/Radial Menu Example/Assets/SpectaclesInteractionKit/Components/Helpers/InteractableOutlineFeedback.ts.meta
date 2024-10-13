@@ -1,0 +1,49 @@
+- !<AssetImportMetadata/c8d4be83-8333-4263-8197-da52ad355182>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    TypeScriptAsset: !<own> 0fe88c55-d0df-4a52-a1b5-258223848521
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/312b245e-c622-4570-9f2e-96d30970142c>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/0fe88c55-d0df-4a52-a1b5-258223848521>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    activatingColor: false
+    hoveringColor: false
+    meshVisuals: false
+    outlineWeight: false
+    targetOutlineMaterial: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
+      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.040000, w: 1.000000}
+      activatingColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      outlineWeight: -0.250000
+      meshVisuals: !<reference.RenderMeshVisual[]>
+        []
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material targetOutlineMaterial {"hint":"This is the material that will provide the mesh outline"}'
+    - '// @input vec4 hoveringColor = "{1, 1, 0.04, 1}" {"hint":"This is the colour of the outline when hovered", "widget":"color"}'
+    - '// @input vec4 activatingColor = "{1, 1, 1, 1}" {"hint":"This is the colour of the outline when pinched", "widget":"color"}'
+    - '// @input float outlineWeight = 0.25 {"hint":"This is the thickness of the outline"}'
+    - '// @input Component.RenderMeshVisual[] meshVisuals {"hint":"These are the meshes that will be outlined on pinch/hover"}'
