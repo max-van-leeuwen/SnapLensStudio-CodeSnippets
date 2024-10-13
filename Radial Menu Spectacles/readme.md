@@ -1,6 +1,9 @@
 # Radial Menu for Lens Studio (Spectacles 🕶️)
 
-<br>Easily create Radial Menus with Hand Tracking on the Spectacles!
+<br>If you’re developing for the Spectacles, this script creates Radial Menus for you!
+<br><br>Fully animated, customizable, supporting per-button secondary rings, and with a bunch of callbacks.
+<br>The interactions are easy to bind to - I recommend using my [Hand Tracking](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/tree/main/Hand%20Tracking%20Setup) setup + Spectacles Interaction Kit.
+<br><br>Examples shown in video are included in the download.
 
 <br>
 <img src="https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/Radial Menu Spectacles/Media/preview.gif"/>
