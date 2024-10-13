@@ -124,4 +124,4 @@ button.highlightAnim.updateFunction = function(v){
 };
 ```
 
-For more information on these animation functions, see the AnimateProperty class in [LSQuickScripts](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/blob/main/LSQuickScripts/LSQuickScripts.js)!
+For more information on these animation functions, see the AnimateProperty class in [LSQuickScripts](https://github.com/max-van-leeuwen/SnapLensStudio-CodeSnippets/tree/main/LSQuickScripts)!
