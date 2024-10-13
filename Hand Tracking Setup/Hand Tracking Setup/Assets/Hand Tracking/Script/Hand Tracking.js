@@ -120,8 +120,8 @@ script.Hands = {
 //@ui {"widget":"label"}
 //@input bool allowSIK {"label":"<b>SIK"}
 //@ui {"widget":"label", "label":"<small>Spectacles Interaction Kit 🕶️"}
+//@ui {"widget":"label", "label":"<small>make sure to right-click -> 'unpack' the SIK package"}
 //@ui {"widget":"group_start", "label":"", "showIf":"allowSIK"}
-    //@ui {"widget":"label", "label":"<small>make sure to right-click -> 'unpack' the SIK package"}
     //@input bool syncCombined
 //@ui {"widget":"group_end", "showIf":"allowSIK"}
 //@ui {"widget":"label"}
