@@ -23,7 +23,7 @@
 ### Callbacks (any hand)
 
 Bind using `.add(f)` and `.remove(f)`.
-<br>Bind to `HandTracking`, for example: `HandTracking.onPinchStart.add(function)`.
+<br>Bind to `HandTracking`, for example: `HandTracking.onPinchStart.add( function(pos, isTap){} )`.
 <br><br>
 
 - **`.onPinchStart`** → (`pos`, `isTap`)
