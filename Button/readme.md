@@ -1,5 +1,6 @@
-# Button
+# Button 🕹️
 Make any visual into a tappable button! (Or, for full-body lenses, use hand-hovering when standing far away from the camera.)
+<br><br>Works with custom callbacks, and with Behavior scripts.
 
 
 <br><br>
