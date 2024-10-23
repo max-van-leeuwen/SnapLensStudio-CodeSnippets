@@ -1,0 +1,44 @@
+- !<AssetImportMetadata/88070395-61e8-4c77-8410-2da4e81a303b>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> dbd959fb-255c-407e-8cbf-34e2af8c8191
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> dbd959fb-255c-407e-8cbf-34e2af8c8191
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> bcb0a7c1-654f-4b40-8ba3-7a9c0575a4c5
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/757999f2-b1c3-4137-865a-47298cd92eb1>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/bcb0a7c1-654f-4b40-8ba3-7a9c0575a4c5>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    button1: false
+    button2: false
+    image1: false
+    image2: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - pandaButton: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      hand2DButton: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      buttonMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      hand2DButtonImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      button1: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      button2: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      image1: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      image2: !<reference.Image> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}

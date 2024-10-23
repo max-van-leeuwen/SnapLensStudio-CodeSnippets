@@ -1,0 +1,116 @@
+- !<AssetImportMetadata/9e5b4f5b-7623-4ac4-8a5d-deb7e6919d15>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> 5bd91604-4503-4498-84ed-f7af7c999e21
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> 5bd91604-4503-4498-84ed-f7af7c999e21
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> 3c998e94-12c2-4de2-b47b-5458bd10ade8
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/c49d9134-ee12-4884-b126-a8ad11c719ea>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/3c998e94-12c2-4de2-b47b-5458bd10ade8>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    addHoverDetection: false
+    behaviorName: false
+    continuous: false
+    counterShowDuration: false
+    counterShowParam: false
+    counterTime: false
+    counterValueParam: false
+    counterVisuals: false
+    detectionMaxRadius: false
+    detectionRMV: false
+    detectionRadius: false
+    detectionType: false
+    disableButton: false
+    doHighlighting: false
+    doScaleOnHighlight: false
+    doScaleOnPress: false
+    doVisualParameterOnPress: false
+    filterByDepth: false
+    handInteraction2D: false
+    handInteraction3D: false
+    hiddenOnStart: false
+    highlightAnimScale: false
+    highlightDurations: false
+    highlightSound: false
+    pressAnimDurations: false
+    pressAnimScale: false
+    pressAnimVisuals: false
+    pressParam: false
+    pressSound: false
+    preventSlideTap: false
+    rankedPriority: false
+    showAnimDurations: false
+    tapInDelivery: false
+    tapInteraction: false
+    tapMeshVisuals: false
+    worldCamera: false
+    worldCamera2: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - disableButton: false
+      pressEval: ""
+      releaseEval: ""
+      continuous: false
+      pressSound: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      rankedPriority: !<float> 100.000000
+      hiddenOnStart: false
+      showAnimDurations: !<Vec2> {x: 0.300000, y: 0.300000}
+      pressAnimDurations: !<Vec2> {x: 0.150000, y: 0.250000}
+      doScaleOnPress: true
+      pressAnimScale: 0.700000
+      doVisualParameterOnPress: false
+      pressAnimVisuals: !<reference.Visual[]>
+        []
+      pressParam: pressValue
+      tapInteraction: true
+      tapInDelivery: true
+      preventSlideTap: true
+      filterByDepth: true
+      tapMeshVisuals: !<reference.BaseMeshVisual[]>
+        []
+      handInteraction2D: false
+      worldCamera: !<reference.Camera> 00000000-0000-0000-0000-000000000000
+      counterTime: 1.500000
+      counterVisuals: !<reference.Visual[]>
+        []
+      counterValueParam: counterValue
+      counterShowDuration: 0.400000
+      counterShowParam: showValue
+      handInteraction3D: false
+      detectionType: Radius around SceneObject
+      detectionRadius: !<float> 30.000000
+      detectionMaxRadius: !<float> 50.000000
+      detectionRMV: !<reference.RenderMeshVisual[]>
+        []
+      addHoverDetection: false
+      worldCamera2: !<reference.Camera> 00000000-0000-0000-0000-000000000000
+      doHighlighting: true
+      highlightDurations: !<Vec2> {x: 0.150000, y: 0.250000}
+      highlightSound: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      doScaleOnHighlight: true
+      highlightAnimScale: 1.400000
+      tester: false
+      behavior: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      behaviorTrigger: ""
+      customBehaviorName: ""
+      behaviorName: ""
+  ScriptTypes:
+    -
+      {}

@@ -1,0 +1,34 @@
+- !<AssetImportMetadata/dc46334a-4b3a-41e1-b17d-8fc6a4353ac8>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> bb6a9655-3add-48f6-b97f-06afc6cae71e
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> bb6a9655-3add-48f6-b97f-06afc6cae71e
+  PackageType: NotAPackage
+  PackagePolicy: CannotBeUnpacked
+  AssetDataMap:
+    JavaScriptAsset: !<own> ba96eb2b-c1bd-4f2a-ba97-9edd0b2d4bb9
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings/21a10837-a155-40e1-9fcd-0465cc8be667>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/ba96eb2b-c1bd-4f2a-ba97-9edd0b2d4bb9>
+  SvgIcon: ""
+  Description: ""
+  InternalVersion: 0
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  CurrentVisibility: Editable
+  MaxVisibility: Editable
+  ScriptInputsHidden:
+    pandaButton: false
+  ScriptTypesHidden:
+    {}
+  DefaultScriptInputs:
+    - pandaButton: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}

@@ -1,0 +1,574 @@
+{
+
+"images": [
+    "LPD-185_Show_Your_Palm_new.png"
+],
+
+"frames": [
+{
+    "name": "LPD-185_Show_Your_Palm_new_00000.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 3,
+        "width": 77,
+        "height": 91
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 16,
+        "top": 24,
+        "right": 93,
+        "bottom": 115
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00001.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 84,
+        "y": 3,
+        "width": 77,
+        "height": 91
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 16,
+        "top": 24,
+        "right": 93,
+        "bottom": 115
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00002.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 165,
+        "y": 3,
+        "width": 78,
+        "height": 90
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 15,
+        "top": 25,
+        "right": 93,
+        "bottom": 115
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00003.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 247,
+        "y": 3,
+        "width": 80,
+        "height": 88
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 13,
+        "top": 27,
+        "right": 93,
+        "bottom": 115
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00004.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 331,
+        "y": 3,
+        "width": 86,
+        "height": 91
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 25,
+        "right": 94,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00020.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 331,
+        "y": 3,
+        "width": 86,
+        "height": 91
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 25,
+        "right": 94,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00005.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 98,
+        "width": 91,
+        "height": 105
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 5,
+        "top": 11,
+        "right": 96,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00019.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 98,
+        "width": 91,
+        "height": 105
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 5,
+        "top": 11,
+        "right": 96,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00006.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 98,
+        "y": 98,
+        "width": 96,
+        "height": 111
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 5,
+        "top": 5,
+        "right": 101,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00007.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 198,
+        "y": 98,
+        "width": 95,
+        "height": 110
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 7,
+        "top": 6,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00017.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 198,
+        "y": 98,
+        "width": 95,
+        "height": 110
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 7,
+        "top": 6,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00008.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 297,
+        "y": 98,
+        "width": 95,
+        "height": 109
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 7,
+        "top": 7,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00016.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 297,
+        "y": 98,
+        "width": 95,
+        "height": 109
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 7,
+        "top": 7,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00009.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 213,
+        "width": 94,
+        "height": 108
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 8,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00015.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 213,
+        "width": 94,
+        "height": 108
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 8,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00010.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 101,
+        "y": 213,
+        "width": 94,
+        "height": 108
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 8,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00014.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 101,
+        "y": 213,
+        "width": 94,
+        "height": 108
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 8,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00011.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 199,
+        "y": 213,
+        "width": 94,
+        "height": 108
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 8,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00013.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 199,
+        "y": 213,
+        "width": 94,
+        "height": 108
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 8,
+        "right": 102,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00012.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 297,
+        "y": 213,
+        "width": 93,
+        "height": 107
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 8,
+        "top": 9,
+        "right": 101,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00018.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 394,
+        "y": 213,
+        "width": 95,
+        "height": 111
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 5,
+        "top": 5,
+        "right": 100,
+        "bottom": 116
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00021.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 328,
+        "width": 80,
+        "height": 88
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 13,
+        "top": 27,
+        "right": 93,
+        "bottom": 115
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00022.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 87,
+        "y": 328,
+        "width": 78,
+        "height": 90
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 15,
+        "top": 25,
+        "right": 93,
+        "bottom": 115
+    }
+},{
+    "name": "LPD-185_Show_Your_Palm_new_00023.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 169,
+        "y": 328,
+        "width": 77,
+        "height": 91
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 110,
+        "height": 121
+    },
+    "clipping": {
+        "left": 16,
+        "top": 24,
+        "right": 93,
+        "bottom": 115
+    }
+}
+],
+
+"animations": {
+    "LPD-185_Show_Your_Palm_new": { "frames": [0, 1, 2, 3, 4, 6, 8, 9, 11, 13, 15, 17, 19, 18, 16, 14, 12, 10, 20, 7, 5, 21, 22, 23] }
+},
+
+"meta": {
+        "app": "http://www.codeandweb.com/texturepacker",
+        "description": "Json file for Lens Studio Framework",
+        "version": "1.0",
+        "smartupdate": "$TexturePacker:SmartUpdate:34eb07e11a305d88fdc5094bda99a8b4:b9e1f3fb4e7a21297676654b8c632c81:db5563a58a486953e4f99bf8d6dec0a4$"
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for Lens Studio"
+    }
+}
