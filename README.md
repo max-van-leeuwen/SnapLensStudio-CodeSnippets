@@ -25,3 +25,5 @@ Contents
   - Make any 3D Transform or Number smoothly interpolate with only a couple lines of code.
 - Hand Tracking
   - A setup that makes pinch-detection super easy (and supports tap emulation in preview window)
+- Button
+  - Drag-and-drop solution to make any visual into a tappable button!
