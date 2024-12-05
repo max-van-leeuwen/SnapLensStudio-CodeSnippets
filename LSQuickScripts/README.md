@@ -19,7 +19,6 @@ Throw `LSQuickScripts.js` on a SceneObject at the top of your scene.
 - Debugging helpers
 - and more :)
 
-[Twitter (@maksvanleeuwen)](https://twitter.com/maksvanleeuwen)
 
 <br><br>
 
@@ -37,13 +36,6 @@ Throw `LSQuickScripts.js` on a SceneObject at the top of your scene.
 ## Documentation
 
 ```
-Max van Leeuwen
-links.maxvanleeuwen.com
-
-
-
-
-
 
 CREDITS
 -------------------
@@ -126,9 +118,9 @@ AnimateProperty() : AnimateProperty object
 		Example, showing all possible properties
 
 			var anim = new AnimateProperty( updateFunction (optional) )		// create a new animation instance called 'anim'
-			anim.startFunction = function(){}								// called on animation start
+			anim.startFunction = function(inAnim){}							// called on animation start ('inAnim' is a bool, true when getReversed() is false)
 			anim.updateFunction = function(v, vLinear, runtime){}			// called on each animation frame, with animation value (0-1) as its first argument. the second argument is the linear animation value. these ranges are exclusive for the first step, and inclusive for the last step of the animation (so when playing in reverse, the range becomes (1, 0]). the third argument is runtime (seconds).
-			anim.endFunction = function(){}									// called on animation end
+			anim.endFunction = function(inAnim){}							// called on animation end ('inAnim' is a bool, true when getReversed() is false)
 			anim.onReverseChange = function(){}								// called when the forwards direction of the animation is changed
 			anim.duration = 1												// duration in seconds, default is 1. tip: for a continuous animation, set duration to Infinity and use the 'runtime' argument in the updateFunction
 			anim.reverseDuration = 1										// reverse duration in seconds, default is .duration
@@ -165,6 +157,7 @@ getAllAnimateProperty() : AnimateProperty array
 
 
 QuickFlow(obj [SceneObject]) : QuickFlow object
+	- IN BETA: You might encounter unexpected behavior from time to time.
 	A simple way to animate objects with just a single line of code!
 	All animations work for orthographic and perspective objects.
 	Pass 'undefined' for an argument to use its default value.
@@ -172,7 +165,7 @@ QuickFlow(obj [SceneObject]) : QuickFlow object
 		Example:
 
 			var anim = new QuickFlow(script.object)											// create an instance
-			anim.fadeIn(duration, delay, easeFunction)										// start fade-in (if a visual component is present), automatically enables the sceneobject.
+			anim.fadeIn(duration, delay, easeFunction)										// start fade-in (if a visual or text component is present), automatically enables the sceneobject.
 
 
 		All animations and their (optional) arguments:
@@ -183,8 +176,8 @@ QuickFlow(obj [SceneObject]) : QuickFlow object
 			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
 			.squeeze(delay, strength, duration)												// do scale squeeze
 			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
-			.scaleTo(delay, toScale, isLocal, duration, easeFunction)						// scale towards new size (overrides other rotation animations)
-			.moveTo(delay, point, duration, easeFunction)									// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
+			.scaleTo(delay, toScale, duration, easeFunction)						        // scale towards new size (overrides other rotation animations)
+			.moveTo(delay, point, isLocal, duration, easeFunction)							// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
 			.keepRotating(delay, speed, axis)												// keep rotating around an axis
@@ -198,19 +191,20 @@ QuickFlow(obj [SceneObject]) : QuickFlow object
 
 		Each animation returns the same QuickFlow object, so they can be easily chained into one-liners like so:
 		
-			- new QuickFlow(object).rotateAround(0, 1)														// instantly do 1 clockwise rotation
-			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											// fade-out and scale-out, for 0.5 seconds
-			- new QuickFlow(object).keepBlinking().squeeze(.5)												// blinking alpha, squeeze after half a second
-			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), 1).reset(1, .6, EaseFunctions.Bounce.Out)	// move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
-			- new QuickFlow(object).moveTo(0, new vec2(0,1), 1).reset(1, .6, EaseFunctions.Bounce.Out)		// same as above, but for objects with a ScreenTransform
-			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		// continuous wiggly animation
+			- new QuickFlow(object).rotateAround(0, 1)														            // instantly do 1 clockwise rotation
+			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											            // fade-out and scale-out, for 0.5 seconds
+			- new QuickFlow(object).keepBlinking().squeeze(.5)												            // blinking alpha, squeeze after half a second
+			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)	    // move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
+			- new QuickFlow(object).moveTo(0, new vec2(0,1), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)		    // same as above, but for a 2D ScreenTransform
+			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		            // continuous wiggly animation
 
 
 		Tips:
+         - setting arguments to 'undefined' will make them pick their default values
 			- the first argument of any animation is always 'delay', which has a default value of 0
-			- after the last out-animation stops playing, the SceneObject will automatically be disabled
-			- when chaining animations as a one-liner, it's best to chain them chronologically (so their delay values increase from left to right)
-			- the overruling animations that influence others (e.g. 'reset' or 'stop') only stop the animations starting before them
+			- after the last out-animation stops playing, the SceneObject will automatically be disabled (for example after a fadeOut of a scaleOut)
+			- when chaining animations as a one-liner, it's best for readibility to chain them chronologically (so their delay values increase from left to right)
+			- animations like 'reset' and 'stop' only stop the animations starting before them
 
 
 
@@ -311,8 +305,8 @@ DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay
 			var delayed = new doDelay()
 			delayed.func = function(){} 					// the function to call after a delay
 			delayed.args = []								// function arguments should be given as an array
-			delayed.byFrame(10)								// this will call the function in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
-			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0')
+			delayed.byFrame(10)								// this will call the function in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0') - the DoDelay instance is returned
+			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0') - the DoDelay instance is returned
 			delayed.now()									// call the function with the given arguments now
 			delayed.stop()									// this will cancel the scheduled function
 			delayed.isWaiting()								// returns true if currently counting down to call the function
@@ -322,9 +316,9 @@ DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay
 			delayed.getGivenTime()							// get the amount of time that was last given to wait (null if none yet)
 			delayed.getGivenFrames()						// get the amount of frames that was last given to wait (null if none yet)
 
-		In one-liner format
+		In one-liner format:
 
-			new doDelay(func, args).byTime(5)				// calls function with arguments (array) after 5 seconds
+			var delay = new DoDelay(func, args).byTime(5)	// calls function with arguments (array) after 5 seconds
 
 
 
@@ -346,7 +340,7 @@ instSound(
 ) : AudioComponent
 	Plays a sound on a new (temporary) AudioComponent, which allows multiple plays simultaneously without the audio clipping when it restarts.
 	This function returns the AudioComponent! But be careful, the instance of this component will be removed when done playing.
-	Does not work on Spectacles.
+	Don't use on Spectacles! There is a limit of 32 components, so you should use InstSoundPooled with a small poolSize instead.
 
 
 
@@ -490,6 +484,20 @@ screenToScreenTransform(screenPos [vec2]) : vec2
 screenTransformToScreen(screenTransformCenter [vec2]) : vec2
 	Returns screen coordinates (range 0-1) of Screen Transform anchors center.
 	Inverse of screenToScrTransform().
+
+
+
+-
+
+
+
+normalizeMeshScale(rmv [Component.RenderMeshVisual]) : vec3
+	Get a scale multiplier to make a mesh's local scale 1x1x1 in the largest dimension.
+
+		Example
+
+			const scalar = normalizeMeshScale(script.rmv)
+			script.rmv.getTransform().setLocalScale(scalar)
 
 
 
@@ -650,7 +658,7 @@ median(arr [Array]) : number
 
 
 lookAtUp(posA [vec3], posB [vec3], offset) : quat
-	Takes two positions, returns the look-at rotation for A to look at B with the Y axis locked.
+	Takes two world positions, returns the look-at rotation for A to look at B with the Y axis locked (so only .x and .z are used).
 	Useful when objects have to face the user, but they are not allowed to rotate facing up or down.
 	Use the optional 'offset' for a 0 - 2PI rotation offset.
 
@@ -693,6 +701,34 @@ Callback(callback [function]) : Callback object
 			c.onCallbackAdded										// function called when a callback was added (assign to property)
 			c.onCallbackRemoved										// function called when a callback was removed (assign to property)
 			c.enabled = true										// when false, callback() will not call anything
+			c.clear()												// clear all callbacks (does not call onCallbackRemoved)
+
+
+
+-
+
+
+
+Flags() : Flags object
+	Creates a flags object that you can assign flags with unique names and boolean values to.
+	Each time a flag is added or modified, a 'state' object is returned in the callback function, giving you information about the combined flags.
+
+		Example, showing all properties
+
+			var flags = new Flags()											// create instance
+			flags.onChange.add(function(state){ print(state.anyTrue) })		// on flag change, print if any of the flags are true
+			flags.set('flag1', false)										// add a flag called 'flag1', value false		-		callback now prints 'false'
+			flags.getState()												// returns current state object
+			flags.getFlags()												// returns flags object
+			flags.clear()													// clears flags object
+
+		States object contains the following bools:
+			anyTrue
+			allTrue
+			noneTrue
+			anyFalse
+			allFalse
+			noneFalse
 
 
 

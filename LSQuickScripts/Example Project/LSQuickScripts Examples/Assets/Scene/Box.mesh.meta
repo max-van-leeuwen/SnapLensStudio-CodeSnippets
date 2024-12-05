@@ -9,8 +9,13 @@
     {}
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/5117f0a9-1b6d-49c1-a39f-c6d82686d61d>
-    {}
+  ImporterSettings: !<FileMeshImporterSettings/f284cd0d-51d5-4df8-ab5d-e9058c09f0df>
+    ModifiedVertexFormats:
+      bitangent: Float
+      normal: Float
+      position: Float
+      tangent: Float
+      texture0: Float
   CompressionSettings: !<SingleCompressionSettings/b859b1de-19ee-477e-93a1-255a412e0ef0>
     CompressorName: None
     CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000

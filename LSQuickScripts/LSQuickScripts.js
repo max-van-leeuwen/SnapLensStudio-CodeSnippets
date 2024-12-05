@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.31</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.32</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -160,7 +160,7 @@
 //			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
 //			.squeeze(delay, strength, duration)												// do scale squeeze
 //			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
-// 			.scaleTo(delay, toScale, isLocal, duration, easeFunction)						// scale towards new size (overrides other rotation animations)
+// 			.scaleTo(delay, toScale, duration, easeFunction)						        // scale towards new size (overrides other rotation animations)
 // 			.moveTo(delay, point, isLocal, duration, easeFunction)							// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 // 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 //			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
@@ -175,19 +175,20 @@
 //
 //		Each animation returns the same QuickFlow object, so they can be easily chained into one-liners like so:
 //		
-//			- new QuickFlow(object).rotateAround(0, 1)														// instantly do 1 clockwise rotation
-//			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											// fade-out and scale-out, for 0.5 seconds
-//			- new QuickFlow(object).keepBlinking().squeeze(.5)												// blinking alpha, squeeze after half a second
-//			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), 1).reset(1, .6, EaseFunctions.Bounce.Out)	// move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
-//			- new QuickFlow(object).moveTo(0, new vec2(0,1), 1).reset(1, .6, EaseFunctions.Bounce.Out)		// same as above, but for objects with a ScreenTransform
-//			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		// continuous wiggly animation
+//			- new QuickFlow(object).rotateAround(0, 1)														            // instantly do 1 clockwise rotation
+//			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											            // fade-out and scale-out, for 0.5 seconds
+//			- new QuickFlow(object).keepBlinking().squeeze(.5)												            // blinking alpha, squeeze after half a second
+//			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)	    // move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
+//			- new QuickFlow(object).moveTo(0, new vec2(0,1), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)		    // same as above, but for a 2D ScreenTransform
+//			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		            // continuous wiggly animation
 //
 //
 //		Tips:
+//          - setting arguments to 'undefined' will make them pick their default values
 //			- the first argument of any animation is always 'delay', which has a default value of 0
-//			- after the last out-animation stops playing, the SceneObject will automatically be disabled
-//			- when chaining animations as a one-liner, it's best to chain them chronologically (so their delay values increase from left to right)
-//			- the overruling animations that influence others (e.g. 'reset' or 'stop') only stop the animations starting before them
+//			- after the last out-animation stops playing, the SceneObject will automatically be disabled (for example after a fadeOut of a scaleOut)
+//			- when chaining animations as a one-liner, it's best for readibility to chain them chronologically (so their delay values increase from left to right)
+//			- animations like 'reset' and 'stop' only stop the animations starting before them
 //
 //
 //
@@ -288,8 +289,8 @@
 //			var delayed = new doDelay()
 //			delayed.func = function(){} 					// the function to call after a delay
 //			delayed.args = []								// function arguments should be given as an array
-//			delayed.byFrame(10)								// this will call the function in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0')
-//			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0')
+//			delayed.byFrame(10)								// this will call the function in 10 frames (function is called on the next frame if no argument given, or instantly if arg is '0') - the DoDelay instance is returned
+//			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0') - the DoDelay instance is returned
 //			delayed.now()									// call the function with the given arguments now
 //			delayed.stop()									// this will cancel the scheduled function
 //			delayed.isWaiting()								// returns true if currently counting down to call the function
@@ -299,9 +300,9 @@
 //			delayed.getGivenTime()							// get the amount of time that was last given to wait (null if none yet)
 //			delayed.getGivenFrames()						// get the amount of frames that was last given to wait (null if none yet)
 //
-//		In one-liner format
+//		In one-liner format:
 //
-//			new doDelay(func, args).byTime(5)				// calls function with arguments (array) after 5 seconds
+//			var delay = new DoDelay(func, args).byTime(5)	// calls function with arguments (array) after 5 seconds
 //
 //
 //
@@ -2643,6 +2644,8 @@ global.DoDelay = function(func, args){
 			waitEvent = script.createEvent("UpdateEvent");
 			waitEvent.bind(onUpdate);
 		}
+
+        return self;
 	}
 
 	/**
@@ -2671,6 +2674,8 @@ global.DoDelay = function(func, args){
 			});
 			waitEvent.reset(wait);
 		}
+
+        return self;
 	}
 
 	/**

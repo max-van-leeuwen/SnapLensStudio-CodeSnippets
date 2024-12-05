@@ -1,9 +1,9 @@
 studioVersion:
   major: 5
-  minor: 0
-  patch: 17
-  build: 24072403
-updateCheckpoint: 44
+  minor: 3
+  patch: 0
+  build: 24111410
+updateCheckpoint: 50
 sceneId: 0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99
 viewConfig:
   simulation:
@@ -18,6 +18,8 @@ viewConfig:
 metaInfo:
   hints:
     []
+  tags:
+    []
   lensName: LSQuickScripts
   lensDescriptors:
     []
@@ -28,8 +30,8 @@ metaInfo:
     - Mobile
     - Web
   iconHash: ""
+  videoPreviewHash: ""
   fromTemplateName: Default
   fromTemplateUrl: Lens Studio 5.0.14.24061804
   activationCamera: Front
-  hasVideoPreview: false
   sourceMapEnabled: false
