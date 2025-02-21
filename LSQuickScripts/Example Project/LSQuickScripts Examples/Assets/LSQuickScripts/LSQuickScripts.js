@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.32</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.33</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -374,7 +374,8 @@
 //
 //
 //
-// -
+// smoothNoise(seed [number]) : number
+//  Simple and very cheap Fractal Noise, outputs continuous 0-1 based on seed. Useful for quickly making things wiggle.
 //
 //
 //
@@ -393,10 +394,6 @@
 // OR
 // randFloat(range [vec2]) : number
 //	Returns a random number within a range min (inclusive) and max (exclusive).
-//
-//
-//
-// -
 //
 //
 //
@@ -2845,6 +2842,29 @@ global.randSeed = function(seed){
 	t = Math.imul(t ^ t >>> 15, t | 1);
 	t ^= t + Math.imul(t ^ t >>> 7, t | 61);
 	return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+
+
+
+
+global.smoothNoise = function(seed){
+    const OCTAVES = 4;
+    const FREQUENCY_BASE = 1.69;
+    const AMPLITUDE_DECAY = 0.45;
+    
+    let noiseValue = 0;
+    let amplitude = 1;
+    let totalAmplitude = 0;
+  
+    for(let i = 0; i < OCTAVES; i++){
+        const frequency = Math.pow(FREQUENCY_BASE, i);
+        noiseValue += Math.sin(seed * frequency) * amplitude;
+
+        totalAmplitude += amplitude;
+        amplitude *= AMPLITUDE_DECAY;
+    }
+
+    return (noiseValue / totalAmplitude + 1) / 2;
 }
 
 

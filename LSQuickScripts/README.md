@@ -390,7 +390,8 @@ randSeed(seed [int]) : number
 
 
 
--
+smoothNoise(seed [number]) : number
+ Simple and very cheap Fractal Noise, outputs continuous 0-1 based on seed. Useful for quickly making things wiggle.
 
 
 
@@ -409,10 +410,6 @@ randFloat(range [array size 2]) : number
 OR
 randFloat(range [vec2]) : number
 	Returns a random number within a range min (inclusive) and max (exclusive).
-
-
-
--
 
 
 
