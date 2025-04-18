@@ -136,6 +136,8 @@ AnimateProperty() : AnimateProperty object
 			anim.setCallbackAtTime(v, f)									// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). only 1 callback is supported at this time. call without arguments to clear. v: the linear animation time (0-1) at which to call this callback. f: the function to call.
 			anim.start(atTime, skipDelay)									// start the animation. atTime: (optional) time ratio (0-1) to start playing from. skipDelay: (optional) ignore the delay value.
 			anim.stop(callEndFunction)										// stop the animation. callEndFunction: (optional) whether to call the .endFunction (if animation was still playing), default is false.
+         anim.pause()                                                    // pause amimation (if playing)
+         anim.resume()                                                   // resume amimation (if paused)
 
 		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
 
@@ -309,10 +311,12 @@ DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay
 			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0') - the DoDelay instance is returned
 			delayed.now()									// call the function with the given arguments now
 			delayed.stop()									// this will cancel the scheduled function
-			delayed.isWaiting()								// returns true if currently counting down to call the function
+         delayed.pause()                                 // pause (if running)
+         delayed.resume()                                // resume (if paused)
+			delayed.isRunning()								// returns true if currently counting down to call the function
 			delayed.createdAtTime							// the time at which this instance was created
 			delayed.getTimeLeft()							// get the time left before the function is called (null if unused)
-			delayed.getFramesLeft()							// the frames left before the function is called (null if unused)
+			delayed.getFramesLeft()							// get the frames left before the function is called (null if unused)
 			delayed.getGivenTime()							// get the amount of time that was last given to wait (null if none yet)
 			delayed.getGivenFrames()						// get the amount of frames that was last given to wait (null if none yet)
 
@@ -322,8 +326,8 @@ DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay
 
 
 
-stopAllDelays() : DoDelay array
-	Instantly stops all delays created using 'DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
+getAllDelays() : DoDelay array
+	Returns all delays created using 'DoDelay'. This includes expired delays.
 
 
 
@@ -344,8 +348,8 @@ instSound(
 
 
 
-stopAllSoundInstances() : AudioComponent array
-	Instantly stops all sound instances created using 'instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
+getAllSoundInstances() : AudioComponent array
+	Returns all sound instances created using 'instSound'.
 
 
 
@@ -545,20 +549,6 @@ MovingAverage() : MovingAverage Object
 
 
 
-PerformanceStopwatch() : PerformanceStopwatch object
-	Debugging tool. Prints precise time measures to see how well a function performs. Has built-in rolling average!
-
-		Example, showing all properties
-			var stopwatch = new PerformanceStopwatch()		// create new PerformanceStopwatch object
-			stopwatch.start()								// starts the stopwatch
-			// < do something to measure on this line >
-			stopwatch.stop()								// stops the stopwatch, prints the result (and a rolling average of previous results) to the console
-
-
--
-
-
-
 setAllChildrenToLayer(sceneObj [sceneObject], layer [LayerSet])
 	Sets the sceneObject and all objects underneath it to a specific render layer (by LayerSet).
 
@@ -605,20 +595,23 @@ measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Co
 
 
 
-getAllComponents(componentName (optional) [string]
+getAllChildObjects(componentName (optional) [string]
 					startObj (optional) [SceneObject]
 					dontIncludeStartObj (optional) [bool]
 					maxCount (optional) [number]
 ) : Array (Components)
 	Returns an array containing all components of type componentNames, also those on child objects.
-	If no componentName is given, it returns SceneObjects instead.
-	If no startObj is given, it searches the whole scene.
+	If no componentName is given, all SceneObjects and child SceneObjects are returned instead.
+	If no startObj is given, the whole scene is searched.
 	If dontIncludeStartObj is true, the startObj will not be included in the final list.
  If maxCount is given, the search stops after having found a specific amount of components.
 
 		Example
-			var components = getAllComponents("Component.VFXComponent")
+			var components = getAllChildObjects("Component.VFXComponent")
 				components == [Array of all VFX Component in the scene]
+
+         var objects = getAllChildObjects("", obj)
+             objects == [Array of all SceneObjects under 'obj']
 
 
 

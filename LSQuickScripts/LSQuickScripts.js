@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.33</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.34</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -24,8 +24,6 @@
 // CREDITS
 // -------------------
 // Snap Inc.
-//
-// chatGPT :)
 //
 // Tween.js - Licensed under the MIT license
 // https://github.com/tweenjs/tween.js
@@ -120,6 +118,8 @@
 //			anim.setCallbackAtTime(v, f)									// registers a callback function on the first frame that v >= t (or v <= t if playing reversed). only 1 callback is supported at this time. call without arguments to clear. v: the linear animation time (0-1) at which to call this callback. f: the function to call.
 //			anim.start(atTime, skipDelay)									// start the animation. atTime: (optional) time ratio (0-1) to start playing from. skipDelay: (optional) ignore the delay value.
 //			anim.stop(callEndFunction)										// stop the animation. callEndFunction: (optional) whether to call the .endFunction (if animation was still playing), default is false.
+//          anim.pause()                                                    // pause amimation (if playing)
+//          anim.resume()                                                   // resume amimation (if paused)
 //
 //		Example, smoothly animating transform 'trf' one unit to the right (default duration is 1 second)
 //
@@ -293,10 +293,12 @@
 //			delayed.byTime(10)								// this will call the function in 10 seconds (function is called instantly if no argument given or if arg is '0') - the DoDelay instance is returned
 //			delayed.now()									// call the function with the given arguments now
 //			delayed.stop()									// this will cancel the scheduled function
-//			delayed.isWaiting()								// returns true if currently counting down to call the function
+//          delayed.pause()                                 // pause (if running)
+//          delayed.resume()                                // resume (if paused)
+//			delayed.isRunning()								// returns true if currently counting down to call the function
 //			delayed.createdAtTime							// the time at which this instance was created
 //			delayed.getTimeLeft()							// get the time left before the function is called (null if unused)
-//			delayed.getFramesLeft()							// the frames left before the function is called (null if unused)
+//			delayed.getFramesLeft()							// get the frames left before the function is called (null if unused)
 //			delayed.getGivenTime()							// get the amount of time that was last given to wait (null if none yet)
 //			delayed.getGivenFrames()						// get the amount of frames that was last given to wait (null if none yet)
 //
@@ -306,8 +308,8 @@
 //
 //
 //
-// stopAllDelays() : DoDelay array
-//	Instantly stops all delays created using 'DoDelay'. This is useful if you want to create a quick reset function for your lens without managing all the created delays throughout your project.
+// getAllDelays() : DoDelay array
+//	Returns all delays created using 'DoDelay'. This includes expired delays.
 //
 //
 //
@@ -328,8 +330,8 @@
 //
 //
 //
-// stopAllSoundInstances() : AudioComponent array
-// 	Instantly stops all sound instances created using 'instSound'. This is useful if you want to create a quick reset function for your lens without managing all the created sounds throughout your project.
+// getAllSoundInstances() : AudioComponent array
+// 	Returns all sound instances created using 'instSound'.
 //
 //
 //
@@ -529,20 +531,6 @@
 //
 //
 //
-// PerformanceStopwatch() : PerformanceStopwatch object
-// 	Debugging tool. Prints precise time measures to see how well a function performs. Has built-in rolling average!
-//
-//		Example, showing all properties
-//			var stopwatch = new PerformanceStopwatch()		// create new PerformanceStopwatch object
-//			stopwatch.start()								// starts the stopwatch
-//			// < do something to measure on this line >
-//			stopwatch.stop()								// stops the stopwatch, prints the result (and a rolling average of previous results) to the console
-//
-//
-// -
-//
-//
-//
 // setAllChildrenToLayer(sceneObj [sceneObject], layer [LayerSet])
 // 	Sets the sceneObject and all objects underneath it to a specific render layer (by LayerSet).
 //
@@ -589,20 +577,23 @@
 //
 //
 //
-// getAllComponents(componentName (optional) [string]
+// getAllChildObjects(componentName (optional) [string]
 //					startObj (optional) [SceneObject]
 //					dontIncludeStartObj (optional) [bool]
 //					maxCount (optional) [number]
 // ) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
-//	If no componentName is given, it returns SceneObjects instead.
-//	If no startObj is given, it searches the whole scene.
+//	If no componentName is given, all SceneObjects and child SceneObjects are returned instead.
+//	If no startObj is given, the whole scene is searched.
 //	If dontIncludeStartObj is true, the startObj will not be included in the final list.
 //  If maxCount is given, the search stops after having found a specific amount of components.
 //
 // 		Example
-//			var components = getAllComponents("Component.VFXComponent")
+//			var components = getAllChildObjects("Component.VFXComponent")
 //				components == [Array of all VFX Component in the scene]
+//
+//          var objects = getAllChildObjects("", obj)
+//              objects == [Array of all SceneObjects under 'obj']
 //
 //
 //
@@ -1142,7 +1133,9 @@ global.AnimateProperty = function(updateFunction){
 		stopDelayedStart();
 
 		function begin(){
-			if(self.startFunction) self.startFunction(!reversed);
+            stopDelayedStart();
+
+			if(self.startFunction && !pause) self.startFunction(!reversed); // play startFunction is this is not a resumed play
 			if(atTime != null){ // custom time ratio given
 				pulse(atTime, true);
 			}else{
@@ -1163,7 +1156,7 @@ global.AnimateProperty = function(updateFunction){
 		var delay = self.delay;
 		if(reversed && typeof(self.reverseDelay) != 'undefined') delay = self.reverseDelay; // if reverse, use custom delay (if any)
 		if(!skipDelay && delay > 0){ // start after delay (if any)
-			delayedStart = new global.DoDelay(begin)
+			delayedStart = new global.DoDelay(begin);
 			delayedStart.byTime(delay);
 		}else{
 			begin();
@@ -1175,11 +1168,45 @@ global.AnimateProperty = function(updateFunction){
 	 * @param {boolean} callEndFunction callEndFunction: (optional) whether to call the .endFunction (if animation was still playing), default is false.
 	*/
 	this.stop = function(callEndFunction){
+        pause = null;
 		stopAnimEvent();
 		var wasPlaying = isPlaying;
 		isPlaying = false;
 		if(wasPlaying && callEndFunction) self.endFunction(!reversed);
 	}
+
+    /**
+	 * @description pause the animation (if running)
+	*/
+    var pause;
+	this.pause = function(){
+        if(!self.isPlaying()) return;
+
+        const timeLeft = self.getTimeRatio();
+        if(delayedStart){
+            delayedStart.pause();
+            pause = {
+                time : null
+            }
+        }else{
+            stopAnimEvent();
+            isPlaying = false;
+
+            pause = {
+                time : timeLeft
+            }
+        }
+	}
+
+    /**
+	 * @description resume the animation (if paused)
+	*/
+    this.resume = function(){
+        if(!pause) return;
+        if(delayedStart) delayedStart.resume();
+        else self.start(pause.time, skipDelay=true);
+        pause = null;
+    }
 
 
 	// private
@@ -2558,7 +2585,7 @@ global.DoDelay = function(func, args){
 	/**
 	 * @description returns true if currently counting down to call the function
 	*/
-	this.isWaiting = () => !!waitEvent;
+	this.isRunning = () => !!waitEvent;
 
 	/**
 	 * @type {number}
@@ -2605,6 +2632,8 @@ global.DoDelay = function(func, args){
 	 * @description schedule a function by n frames (int Number, will be rounded)
 	*/
 	this.byFrame = function(n){
+        paused = null;
+
 		if(!this.func){
 			var trace = new Error().stack;
 			throw new Error("No function set to delay!" + '\n' + trace.toString());
@@ -2650,6 +2679,8 @@ global.DoDelay = function(func, args){
 	 * @description schedule a function by t seconds (Number)
 	*/
 	this.byTime = function(t){
+        paused = null;
+
 		const keepAlive = {
 			exec: function(){
 				var _args = self.args;
@@ -2679,6 +2710,7 @@ global.DoDelay = function(func, args){
 	 * @description call the function now
 	*/
 	this.now = function(){
+        paused = null;
 		const keepAlive = {
 			exec: function(){
 				var _args = self.args;
@@ -2701,7 +2733,30 @@ global.DoDelay = function(func, args){
 	 * @description stop the scheduled delay
 	*/
 	this.stop = function(){
+        paused = null;
 		stopWaitEvent();
+	}
+
+    /**
+	 * @description pauses the scheduled delay (if running)
+	*/
+    var paused;
+	this.pause = function(){
+        if(!waitEvent) return;
+        paused = {
+            frames : self.getFramesLeft(),
+            time : self.getTimeLeft()
+        }
+		stopWaitEvent();
+	}
+
+    /**
+	 * @description resumes the scheduled delay (if paused)
+	*/
+	this.resume = function(){
+        if(!paused) return;
+        if(paused.frames) self.byFrame(paused.frames);
+        else if(paused.time) self.byTime(paused.time);
 	}
 
 	allDelays.push(this);
@@ -2710,11 +2765,7 @@ global.DoDelay = function(func, args){
 
 
 
-global.stopAllDelays = function(){
-	for(var i = 0; i < allDelays.length; i++){
-		var delay = allDelays[i];
-		if(delay && delay.stop) delay.stop();
-	}
+global.getAllDelays = function(){
 	return allDelays;
 }
 
@@ -2743,7 +2794,7 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 	function destroyAudioComponent(audioComp){
 		audioComp.stop(false); // stop playing
 		new global.DoDelay(function(){
-			if(audioComp && !isNullPatch(audioComp)) audioComp.destroy(); // destroy if it still exists (might have been deleted using stopAllSoundInstances)
+			if(audioComp && !isNullPatch(audioComp)) audioComp.destroy(); // destroy if it still exists
 		}).byFrame(); // delete on next frame
 	}
 	new DoDelay( destroyAudioComponent, [audioComp]).byTime(audioComp.duration + .1); // stop playing after audio asset duration
@@ -2755,14 +2806,7 @@ global.instSound = function(audioAsset, volume, fadeInTime, fadeOutTime, offset,
 
 
 
-global.stopAllSoundInstances = function(){
-	for(var i = 0; i < allSoundInstances.length; i++){
-		var soundInstance = allSoundInstances[i];
-		if(soundInstance && !isNullPatch(soundInstance)){
-			soundInstance.stop(false);
-			soundInstance.destroy();
-		}
-	}
+global.getAllSoundInstances = function(){
 	return allSoundInstances;
 }
 
@@ -3123,30 +3167,6 @@ global.MovingAverage = function(){
 
 
 
-global.PerformanceStopwatch = function(){
-	var stopwatchStart;
-	var avg = new global.MovingAverage();
-
-	/**
-	 * @description starts this stopwatch
-	*/
-	this.start = function(){
-		stopwatchStart = performance.now();
-	}
-
-	/**
-	 * @description stops this stopwatch, prints the result to the console
-	*/
-	this.stop = function(){
-		var diff = (performance.now() - stopwatchStart)/1000; // differents in seconds
-		var thisAvg = avg.add(diff);
-		print('duration: ' + diff.toString() + '\n' + 'rolling avg: ' + thisAvg.toString());
-	}
-}
-
-
-
-
 global.setAllChildrenToLayer = function(sceneObj, layer){
 	for(var i = 0; i < sceneObj.getChildrenCount(); i++){
 		sceneObj.getChild(i).layer = layer;
@@ -3205,7 +3225,7 @@ global.measureWorldPos = function(screenPos, screenTrf, cam, dist){
 
 
 
-global.getAllComponents = function(componentName, startObj, dontIncludeStartObj, maxCount){
+global.getAllChildObjects = function(componentName, startObj, dontIncludeStartObj, maxCount){
     var found = [];
     if(maxCount == null) maxCount = Infinity;
 
