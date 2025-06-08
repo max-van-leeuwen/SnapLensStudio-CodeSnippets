@@ -5,7 +5,7 @@
 
 
 
-// Requires LSQuickScripts 2.31
+// Requires LSQuickScripts 2.35
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
 
 
@@ -47,7 +47,9 @@ script.Hands = {
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
 //@ui {"widget":"label", "label":"<big><b>Hand Tracking 👐</b> <small>by Max van Leeuwen"}
-//@ui {"widget":"label", "label":"Some handy hand tracking functions! With hovering, and tap emulation."}
+//@ui {"widget":"label", "label":"Easy events for either hand. 'Pinch' (thumb and index) detection, mouse hover, and tap emulation."}
+//@ui {"widget":"label", "label":"Use in combination with a Hand Tracking 2D/3D Component,"}
+//@ui {"widget":"label", "label":"or with SpectaclesInteractionKit."}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"Requires LSQuickScripts"}
 //@ui {"widget":"separator"}
@@ -102,26 +104,25 @@ script.Hands = {
 //@ui {"widget":"label"}
 //@input bool allowTap {"label":"<b>Tap"}
 //@ui {"widget":"group_start", "label":"", "showIf":"allowTap"}
-    //@input bool allowTapDelivery {"label":"In Delivery"}
     //@input Component.Camera cam
     //@input float distFromCamera = 50
-    //@input bool hover
+    //@input bool hover {"label":"Hover (editor only)"}
 //@ui {"widget":"group_end", "showIf":"allowTap"}
 
 //@ui {"widget":"label"}
-//@input bool allowHandTracking {"label":"<b>Hand Tracking"}
+//@input bool allowHandTracking {"label":"<b>Mobile Hand Tracking"}
 //@ui {"widget":"group_start", "label":"", "showIf":"allowHandTracking"}
     //@input Component.ObjectTracking3D handLeft
     //@input Component.ObjectTracking3D handRight
-    //@input int stabilityFrames = 3 {"min":0} // on any track or pinch change, there will be a delay of this many frames to catch some false negatives (set to 0 to disable)
-    //@ui {"widget":"label", "label":"<small>amount of frames delay before a track change or pinch end, 0=disable"}
+    //@input int stabilityFrames = 3 {"min":0}
+    //@ui {"widget":"label", "label":"<small>amount of frames to delay changes for stability, 0=disable"}
 //@ui {"widget":"group_end", "showIf":"allowHandTracking"}
 
 //@ui {"widget":"label"}
 //@input bool allowSIK {"label":"<b>SIK"}
 //@ui {"widget":"label", "label":"<small>Spectacles Interaction Kit 🕶️"}
+//@ui {"widget":"label", "label":"<small>make sure to right-click -> 'unpack' the SIK package"}
 //@ui {"widget":"group_start", "label":"", "showIf":"allowSIK"}
-    //@ui {"widget":"label", "label":"<small>make sure to right-click -> 'unpack' the SIK package"}
     //@input bool syncCombined
 //@ui {"widget":"group_end", "showIf":"allowSIK"}
 //@ui {"widget":"label"}
@@ -132,11 +133,6 @@ script.Hands = {
 const isEditor = global.deviceInfoSystem.isEditor();
 if(!isEditor){
     script.hover = false; // disable hovering, this is irrelevant outside of editor
-}
-
-// if using Sequence (a state manager), override debugging options for delivery. ignored if unused
-if(global.Sequence && Sequence.delivery){
-    if(!script.allowTapDelivery && !isEditor) script.allowTap = false; // stop allowing tap if 'allow in delivery' is false and we're in delivery + not in editor
 }
 
 

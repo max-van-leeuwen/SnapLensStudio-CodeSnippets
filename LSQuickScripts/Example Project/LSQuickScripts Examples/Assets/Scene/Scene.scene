@@ -2,8 +2,8 @@
   PackagePath: ""
   objects:
     - !<own> 29f8f57b-a8c9-4c0a-bf80-215417fc15ba
-    - !<own> 9aa4ea79-ba58-4811-8af8-3b350c314725
     - !<own> 882f087a-2d9c-4dde-97d9-1d99ae5a5fc8
+    - !<own> 9aa4ea79-ba58-4811-8af8-3b350c314725
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -83,22 +83,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<ScriptComponent/09a1d0a1-5cdf-455d-88f9-3108c520d9d5>
-  PrefabRemaps:
-    []
-  Name: LSQuickScripts
-  Enabled: true
-  ScriptAsset: !<reference> 2cce771c-c9df-4718-89c2-bd781d908b79
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/0b9e50fd-dbb8-4fd6-9a84-90f1350c4c85>
   PrefabRemaps:
     []
@@ -127,11 +111,11 @@
   Near: 1.000000
   Far: 1000.000000
   Fov: 63.541019
-  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+  ClearColor: !<CameraClearColor>
     Mode: Color
     Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
-  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+  ClearDepth: !<CameraClearDepth>
     Mode: Value
     Value: 1.000000
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -145,11 +129,12 @@
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
+  DevicePropertiesSource: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/198b857a-c8f7-4360-a417-fc154226800b>
   PrefabRemaps:
     []
   Name: QuickFlow
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform:
     position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -164,7 +149,7 @@
   PrefabRemaps:
     []
   Name: Plane Ray
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform:
     position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -202,16 +187,16 @@
     top: 2.250000
   OverflowVertical: Overflow
   OverflowHorizontal: Overflow
-  Fill: !<TextFill/00000000-0000-0000-0000-000000000000>
+  Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 0.816663, z: 0.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     TileCount: 5.000000
     TileZone: Rect
     TextureStretch: FitWidth
-  Outline: !<OutlineSettings/00000000-0000-0000-0000-000000000000>
+  Outline: !<OutlineSettings>
     Enabled: true
-    Fill: !<TextFill/00000000-0000-0000-0000-000000000000>
+    Fill: !<TextFill>
       Mode: Solid
       Color: {x: 1.000000, y: 0.816663, z: 0.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -219,9 +204,9 @@
       TileZone: Rect
       TextureStretch: FitWidth
     Size: 0.090000
-  Dropshadow: !<DropshadowSettings/00000000-0000-0000-0000-000000000000>
+  Dropshadow: !<DropshadowSettings>
     Enabled: false
-    Fill: !<TextFill/00000000-0000-0000-0000-000000000000>
+    Fill: !<TextFill>
       Mode: Solid
       Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -230,9 +215,9 @@
       TextureStretch: FitWidth
     OffsetX: 0.250000
     OffsetY: 0.250000
-  Background: !<BackgroundSettings/00000000-0000-0000-0000-000000000000>
+  Background: !<BackgroundSettings>
     Enabled: true
-    Fill: !<TextFill/00000000-0000-0000-0000-000000000000>
+    Fill: !<TextFill>
       Mode: Solid
       Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -245,7 +230,7 @@
       right: 0.000000
       top: 0.000000
     CornerRadius: 0.000000
-  AdvancedLayout: !<TextAdvancedLayout/00000000-0000-0000-0000-000000000000>
+  AdvancedLayout: !<TextAdvancedLayout>
     ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
     LetterSpacing: 0.000000
     LineSpacing: 1.000000
@@ -281,7 +266,7 @@
   Children:
     []
   Components:
-    - !<own> 09a1d0a1-5cdf-455d-88f9-3108c520d9d5
+    - !<own> 5cff03f4-43f7-4ff1-a7c2-43eb0fbdd6aa
 - !<ScriptComponent/2a132179-ad22-4f07-b0ef-5c0fef2774ac>
   PrefabRemaps:
     []
@@ -470,6 +455,22 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/5cff03f4-43f7-4ff1-a7c2-43eb0fbdd6aa>
+  PrefabRemaps:
+    []
+  Name: LSQuickScripts
+  Enabled: true
+  ScriptAsset: !<reference> 4e31d2cf-28d2-4926-8521-d068df3f0b25
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<LightSource/60d75264-5511-4fdf-ae9b-cb4a70b91c54>
   PrefabRemaps:
     []
@@ -490,8 +491,6 @@
   ShadowFrustumFarClipPlane: 1000.000000
   UseEnvMapFromCamera: false
   EnvMapFromCameraMode: Auto
-  UseEstimation: false
-  EstimationIntensity: 1.000000
   EstimationSharpness: 1.000000
   EnvMapExposure: 1.000000
   EnvMapRotation: 0.000000
@@ -774,8 +773,6 @@
   ShadowFrustumFarClipPlane: 1000.000000
   UseEnvMapFromCamera: false
   EnvMapFromCameraMode: Auto
-  UseEstimation: false
-  EstimationIntensity: 1.000000
   EstimationSharpness: 1.000000
   EnvMapExposure: 1.000000
   EnvMapRotation: 0.000000

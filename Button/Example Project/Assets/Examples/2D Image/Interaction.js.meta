@@ -5,21 +5,25 @@
   PrimaryAsset: !<reference> 01cf1670-1024-40f8-ad58-191eca682f27
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     JavaScriptAsset: !<own> 75d6b3c7-4117-41be-ba6d-31660decd469
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/fd4d38b6-2018-4448-9ea6-209b9168dde1>
+  ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptAssetData/75d6b3c7-4117-41be-ba6d-31660decd469>
   SvgIcon: ""
+  SetupScript:
+    code: ""
   Description: ""
   InternalVersion: 0
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: efd82cdb-0892-4647-bd12-ebeb35ef9fa8
   ExportUid: 00000000-0000-0000-0000-000000000000
   CurrentVisibility: Editable
   MaxVisibility: Editable
@@ -28,9 +32,10 @@
     button2: false
   ScriptTypesHidden:
     {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
   DefaultScriptInputs:
-    - pandaButton: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      button1: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+    - button1: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       button2: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -

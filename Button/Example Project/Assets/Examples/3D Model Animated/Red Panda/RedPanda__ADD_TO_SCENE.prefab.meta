@@ -5,11 +5,13 @@
   PrimaryAsset: !<reference> e1ebda5b-58b6-46e7-89eb-5c4d6dc6ce34
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     ObjectPrefab: !<own> ceea006e-319a-4c32-8428-f4b606ca2085
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/e8131744-217a-49ea-842c-d4ce796fb655>
+  ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
 - !<ObjectPrefab/07f51331-3409-4613-94b2-e70fbc43aee9>
@@ -181,25 +183,27 @@
   Autoplay: true
   ClipRangeType: Frames
   AnimationClips:
-    - !<AnimationClip/00000000-0000-0000-0000-000000000000>
+    - !<AnimationClip>
       AnimationAsset: !<reference> a9d749a3-e081-4306-9246-6082f5a20ab7
       Name: IDLE
       Weight: 1.000000
       PlaybackSpeed: 1.000000
       Begin: 0.000000
       End: 102.000000
+      Offset: 0.000000
       Reversed: false
       Disabled: false
       BlendMode: Default
       ScaleMode: Multiply
       PlaybackMode: Loop
-    - !<AnimationClip/00000000-0000-0000-0000-000000000000>
+    - !<AnimationClip>
       AnimationAsset: !<reference> a9d749a3-e081-4306-9246-6082f5a20ab7
       Name: ACTION
       Weight: 0.000000
       PlaybackSpeed: 1.000000
       Begin: 102.000000
       End: 198.000000
+      Offset: 0.000000
       Reversed: false
       Disabled: true
       BlendMode: Default

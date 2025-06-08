@@ -5,21 +5,25 @@
   PrimaryAsset: !<reference> 7092588d-7fcc-4d69-8eae-a02b4968d978
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     JavaScriptAsset: !<own> bde1bbb6-d5f3-44cc-a906-690a2d17719c
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/fc23334b-2a3d-4710-8dab-83cebdfe7f5d>
+  ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptAssetData/bde1bbb6-d5f3-44cc-a906-690a2d17719c>
   SvgIcon: ""
+  SetupScript:
+    code: ""
   Description: ""
   InternalVersion: 0
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: c39dddd0-a9c8-475a-94cc-d823f62caeff
   ExportUid: 00000000-0000-0000-0000-000000000000
   CurrentVisibility: Editable
   MaxVisibility: Editable
@@ -330,6 +334,8 @@
     tweenEndTweenName: false
   ScriptTypesHidden:
     {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
   DefaultScriptInputs:
     - triggeringEventType: TouchEvent
       touchEventEventType: TapEvent

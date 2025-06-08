@@ -332,25 +332,27 @@
   Autoplay: true
   ClipRangeType: Frames
   AnimationClips:
-    - !<AnimationClip/00000000-0000-0000-0000-000000000000>
+    - !<AnimationClip>
       AnimationAsset: !<reference> a9d749a3-e081-4306-9246-6082f5a20ab7
       Name: IDLE
       Weight: 1.000000
       PlaybackSpeed: 1.000000
       Begin: 0.000000
       End: 102.000000
+      Offset: 0.000000
       Reversed: false
       Disabled: false
       BlendMode: Default
       ScaleMode: Multiply
       PlaybackMode: Loop
-    - !<AnimationClip/00000000-0000-0000-0000-000000000000>
+    - !<AnimationClip>
       AnimationAsset: !<reference> a9d749a3-e081-4306-9246-6082f5a20ab7
       Name: ACTION
       Weight: 0.000000
       PlaybackSpeed: 1.000000
       Begin: 102.000000
       End: 198.000000
+      Offset: 0.000000
       Reversed: false
       Disabled: true
       BlendMode: Default

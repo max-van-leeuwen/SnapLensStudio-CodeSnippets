@@ -5,16 +5,18 @@
   PrimaryAsset: !<reference> 390ac9cb-e3a1-4652-bcb2-4d1fa61c594d
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     {}
   DependentFiles:
     []
-  ImporterSettings: !<FileMeshImporterSettings/ec766f3e-bc30-4a42-85aa-5f19fba9a80f>
+  ImporterSettings: !<FileMeshImporterSettings>
     ModifiedVertexFormats:
       normal: Float
       position: Float
       tangent: Float
       texture0: Float
-  CompressionSettings: !<SingleCompressionSettings/b62cab02-e6ab-4721-a669-07783b70c684>
+  CompressionSettings: !<SingleCompressionSettings>
     CompressorName: None
     CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000

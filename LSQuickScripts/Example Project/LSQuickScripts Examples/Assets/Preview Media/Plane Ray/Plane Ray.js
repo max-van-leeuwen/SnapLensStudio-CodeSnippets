@@ -1,9 +1,7 @@
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 // Checks if a ray intersects with a plane, and prints the local position on the plane
-
 // Requires LSQuickScripts
 
 

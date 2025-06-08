@@ -54,4 +54,3 @@
     - name: pinky-3
       parentPoint: pinky-2
   HandType: Left
-  TrackingMode: Human3D

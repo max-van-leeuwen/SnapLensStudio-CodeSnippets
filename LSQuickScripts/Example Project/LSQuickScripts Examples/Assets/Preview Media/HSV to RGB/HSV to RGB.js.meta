@@ -5,21 +5,25 @@
   PrimaryAsset: !<reference> d7d1aa06-26e7-4e2a-a07e-f2b0604cbfd2
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     JavaScriptAsset: !<own> 3f351f8f-aac2-4d8f-8527-286c4666a444
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/fe162849-93a5-457a-8a16-79d211d79fc6>
+  ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptAssetData/3f351f8f-aac2-4d8f-8527-286c4666a444>
   SvgIcon: ""
+  SetupScript:
+    code: ""
   Description: ""
   InternalVersion: 0
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 8b85f8d5-4c1c-42e1-93aa-b40f1b3f113d
   ExportUid: 00000000-0000-0000-0000-000000000000
   CurrentVisibility: Editable
   MaxVisibility: Editable
@@ -32,13 +36,11 @@
     value: false
   ScriptTypesHidden:
     {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
   DefaultScriptInputs:
     - mat: !<reference.Material> 00000000-0000-0000-0000-000000000000
       animate: false
-      Speed: !<float> 0.000000
-      Hue: !<float> 0.000000
-      Saturation: !<float> 0.000000
-      Value: !<float> 0.000000
       speed: !<float> 0.000000
       hue: !<float> 0.000000
       saturation: !<float> 0.000000

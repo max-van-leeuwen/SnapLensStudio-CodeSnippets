@@ -48,7 +48,7 @@
 - !<SceneObject/0bfec5d2-efa1-4094-9d1c-53c7476cd7c0>
   PrefabRemaps:
     []
-  Name: LSQuickScripts
+  Name: "LSQuickScripts [Download URL In Logger!]"
   Enabled: true
   Layers: 1
   LocalTransform:
@@ -72,11 +72,11 @@
   Near: 1.000000
   Far: 1000.000000
   Fov: 63.541019
-  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+  ClearColor: !<CameraClearColor>
     Mode: None
     Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     InputTexture: !<reference> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
-  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+  ClearDepth: !<CameraClearDepth>
     Mode: Value
     Value: 1.000000
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -90,6 +90,7 @@
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
+  DevicePropertiesSource: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/150c3cf7-7f0f-4944-a39c-9b78b21bc59e>
   PrefabRemaps:
     []
@@ -208,8 +209,6 @@
   ShadowFrustumFarClipPlane: 1000.000000
   UseEnvMapFromCamera: false
   EnvMapFromCameraMode: Auto
-  UseEstimation: false
-  EstimationIntensity: 1.000000
   EstimationSharpness: 1.000000
   EnvMapExposure: 1.000000
   EnvMapRotation: 0.000000
@@ -286,8 +285,8 @@
     {}
   ScriptInputs:
     "":
-      objectToFollow: !<reference.SceneObject> b555031a-43fb-46a4-bb38-cf8bbedd1000
-      smoothing: !<float> 1.000000
+      target: !<reference.SceneObject> b555031a-43fb-46a4-bb38-cf8bbedd1000
+      smoothing: 0.500000
   ScriptTypes:
     "":
       {}
@@ -576,7 +575,6 @@
     physicsApplyForceForceValue: true
     physicsApplyForceSpace: true
     physicsApplyForceObjectSpace: true
-    setBlendshapesBlendshapes: true
     setBlendshapesName: true
     setBlendshapesWeight: true
   ScriptTypesDefault:
@@ -907,7 +905,6 @@
       physicsApplyForceForceValue: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
       physicsApplyForceSpace: World
       physicsApplyForceObjectSpace: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      setBlendshapesBlendshapes: !<reference.BlendShapes> 00000000-0000-0000-0000-000000000000
       setBlendshapesName: ""
       setBlendshapesWeight: !<float> 0.000000
   ScriptTypes:
@@ -916,7 +913,7 @@
 - !<SceneObject/9a1aa7ac-40e3-45e6-ab80-fe087f1142c4>
   PrefabRemaps:
     []
-  Name: Behavior Follow Example
+  Name: Follow Behavior
   Enabled: false
   Layers: 1
   LocalTransform:
@@ -932,7 +929,7 @@
 - !<SceneObject/b555031a-43fb-46a4-bb38-cf8bbedd1000>
   PrefabRemaps:
     []
-  Name: "Following [move/rotate/scale me!]"
+  Name: "Target [Move Me!]"
   Enabled: true
   Layers: 1
   LocalTransform:
@@ -978,7 +975,7 @@
 - !<ScriptComponent/da938f30-8a2e-41c2-b2b0-8bd5b812ea9a>
   PrefabRemaps:
     []
-  Name: Behavior - Follow SceneObject
+  Name: Follow Behavior
   Enabled: true
   ScriptAsset: !<reference> d967a93c-d582-474a-89d1-29339cc84830
   ScriptInputsDefault:
@@ -1024,8 +1021,6 @@
   ShadowFrustumFarClipPlane: 1000.000000
   UseEnvMapFromCamera: false
   EnvMapFromCameraMode: Auto
-  UseEstimation: false
-  EstimationIntensity: 1.000000
   EstimationSharpness: 1.000000
   EnvMapExposure: 1.000000
   EnvMapRotation: 0.000000
@@ -1045,9 +1040,9 @@
   Name: Device Tracking
   Enabled: true
   DeviceTrackingMode: World
-  RotationOptions: !<RotationOptions/00000000-0000-0000-0000-000000000000>
+  RotationOptions: !<RotationOptions>
     InvertRotation: false
-  SurfaceOptions: !<SurfaceOptions/00000000-0000-0000-0000-000000000000>
+  SurfaceOptions: !<SurfaceOptions>
     EnhanceWithNativeAR: false
 - !<RenderMeshVisual/edb38f01-cb34-442a-906f-b7eb59ba1159>
   PrefabRemaps:
@@ -1072,7 +1067,7 @@
 - !<SceneObject/ff9dba33-d769-43c6-b423-2c08333b4e21>
   PrefabRemaps:
     []
-  Name: "Examples [Enable Me!]"
+  Name: "Examples [Enable One!]"
   Enabled: true
   Layers: 1
   LocalTransform:

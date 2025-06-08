@@ -37,11 +37,10 @@ Throw `LSQuickScripts.js` on a SceneObject at the top of your scene.
 
 ```
 
+
 CREDITS
 -------------------
 Snap Inc.
-
-chatGPT :)
 
 Tween.js - Licensed under the MIT license
 https://github.com/tweenjs/tween.js
@@ -96,7 +95,12 @@ EaseFunctions : object
 
 
 
-interp(startValue [number], endValue [number], t [number], easing (optional) [function], unclamped (optional) [bool]) : number
+interp(  startValue [number],
+         endValue [number],
+         t [number],
+         easing (optional) [function],
+         unclamped (optional) [bool]
+) : number
 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 	Is identical to a linear lerp() when no Easing Function is given.
 	Use one of the Easing Functions in global.EaseFunctions, or use your own!
@@ -159,10 +163,9 @@ getAllAnimateProperty() : AnimateProperty array
 
 
 QuickFlow(obj [SceneObject]) : QuickFlow object
-	- IN BETA: You might encounter unexpected behavior from time to time.
-	A simple way to animate objects with just a single line of code!
+	The fastest way to animate objects, using a single line of code!
 	All animations work for orthographic and perspective objects.
-	Pass 'undefined' for an argument to use its default value.
+	- IN BETA: You might encounter unexpected behavior from time to time.
 		
 		Example:
 
@@ -174,24 +177,28 @@ QuickFlow(obj [SceneObject]) : QuickFlow object
 
 			.fadeIn(delay, duration, easeFunction)											// start fade-in (enables SceneObject on start)
 			.fadeOut(delay, duration, easeFunction)											// start fade-out (disables SceneObject and all running animations on end)
-			.scaleIn(delay, duration, startAtTime, easeFunction)							// start scale-in (enables SceneObject on start)
-			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
+			.scaleIn(delay, duration, easeFunction, startAtTime)							// start scale-in (enables SceneObject on start)
+			.scaleOut(delay, duration, easeFunction, startAtTime)							// start scale-out (disables SceneObject and all running animations on end)
 			.squeeze(delay, strength, duration)												// do scale squeeze
 			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
 			.scaleTo(delay, toScale, duration, easeFunction)						        // scale towards new size (overrides other rotation animations)
 			.moveTo(delay, point, isLocal, duration, easeFunction)							// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
+         .bounce(delay, duration, strength, easeFunctionIn, easeFunctionOut)             // do a short scale-bump
 			.keepRotating(delay, speed, axis)												// keep rotating around an axis
 			.keepBouncingRotation(delay, strength, interval, axis, easeFunction, smoothIn)	// keep bouncing a rotation around an axis
 			.keepBouncingPosition(delay, distance, interval, axis, easeFunction, smoothIn)	// keep bouncing a position up and down along an axis
 			.keepBouncingScale(delay, strength, interval, easeFunction, smoothIn)			// keep bouncing a scale
-			.stop(delay)																	// stop all active animations (overrides all other animations)
-			.reset(delay, duration, easeFunction)											// stop and undo all animations, back to original (before animations were applied) (overrides all other animations)
-			.loop	 																		// repeats all animations added so far (no animations can be added after this)
+			.stop(delay)																	// stop active animations
+			.reset(delay, duration, easeFunction)											// stop and undo animations
+			.loop	 																		// repeats all animations added so far (animations added chronologically after this loop's cutoff are not visible)
+         .getSceneObject()                                                               // returns active SceneObject
+         .initialize()                                                                   // re-initializes QuickFlow using current transforms as starting point
+         .getTimeLeft()                                                                  // get total duration of all current animations (looping excluded)
 		
 
-		Each animation returns the same QuickFlow object, so they can be easily chained into one-liners like so:
+		Each animation returns this QuickFlow object, making them chainable into one-liners:
 		
 			- new QuickFlow(object).rotateAround(0, 1)														            // instantly do 1 clockwise rotation
 			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											            // fade-out and scale-out, for 0.5 seconds
@@ -200,13 +207,18 @@ QuickFlow(obj [SceneObject]) : QuickFlow object
 			- new QuickFlow(object).moveTo(0, new vec2(0,1), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)		    // same as above, but for a 2D ScreenTransform
 			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		            // continuous wiggly animation
 
+     If an object's transforms has been modified by other scripts in the meantime, you can re-initialize quickflow easily:
+
+         const qf = new QuickFlow(visual)                                                // a QuickFlow object for 'visual'
+         qf.initialize().scaleOut()                                                      // scale-out 'visual' using its current transforms as starting point
+
 
 		Tips:
-         - setting arguments to 'undefined' will make them pick their default values
-			- the first argument of any animation is always 'delay', which has a default value of 0
-			- after the last out-animation stops playing, the SceneObject will automatically be disabled (for example after a fadeOut of a scaleOut)
-			- when chaining animations as a one-liner, it's best for readibility to chain them chronologically (so their delay values increase from left to right)
-			- animations like 'reset' and 'stop' only stop the animations starting before them
+         - setting arguments to 'undefined' will use default values
+			- first argument of any animation is always 'delay' (s), which is 0 by default
+			- after the last out-animation finishes playing, the SceneObject will automatically disable (e.g. fadeOut, scaleOut)
+			- when chaining animations in a one-liner, it helps with readibility to chain them chronologically! (Increasing delay values left to right)
+			- animations like 'reset' and 'stop' only apply to the animations that started before they did, animations with a greater delay will still play
 
 
 
@@ -249,8 +261,13 @@ pointInBox(point [vec3], unitBoxTrf [Transform], getRelativePosition (optional) 
 
 
 
-planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
-	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise.
+planeRay(    point [vec3],
+             dir [vec3],
+             planePos [vec3],
+             planeFwd [vec3],
+             anyDirection (optional) [bool]
+) : vec3
+	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise. Allow backside of plane when 'anyDirection' is true.
 
 
 
@@ -299,7 +316,9 @@ rgbToHsv(rgb [vec3/vec4]) : vec3
 
 
 
-DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay object
+DoDelay( function (optional) [function],
+         arguments (optional) [Array]
+) : DoDelay object
 	An object that makes it easy to schedule a function to run in the future (by frames or by seconds).
 
 		Example, showing all properties
@@ -357,7 +376,11 @@ getAllSoundInstances() : AudioComponent array
 
 
 
-InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number], volume (optional, default 1) [number]) : InstSoundPooled Object
+InstSoundPooled( listOfAssets [List of Asset.AudioTrackAsset],
+                 poolSize [number],
+                 waitTime (optional, default .1) [number],
+                 volume (optional, default 1) [number]
+) : InstSoundPooled Object
 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
@@ -381,7 +404,7 @@ InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number],
 
 
 clamp(value [number], low (optional, default 0) [number] ), high (optional, default 1) [number] ) : number
-	Returns the clamped value between the low and high values.
+	Returns the clamped value between the low and high values. NaN is 0.
 
 
 
@@ -399,32 +422,33 @@ smoothNoise(seed [number]) : number
 
 
 
-randInt(min [int], max [int]) : number
+randInt(min [int], max [int], seed [int] (optional)) : number
 OR
-randInt(range [array size 2]) : number
+randInt(range [array size 2], seed [int] (optional)) : number
 OR
-randInt(range [vec2]) : number
+randInt(range [vec2], seed [int] (optional)) : number
 	Returns a random rounded integer between min (inclusive) and max (exclusive).
 
 
 
-randFloat(min [number], max [number]) : number
+randFloat(min [number], max [number], seed [int] (optional)) : number
 OR
-randFloat(range [array size 2]) : number
+randFloat(range [array size 2], seed [int] (optional)) : number
 OR
-randFloat(range [vec2]) : number
+randFloat(range [vec2], seed [int] (optional)) : number
 	Returns a random number within a range min (inclusive) and max (exclusive).
 
 
 
-randArray(array [Array]) : Object
+randArray(array [Array], seed [int] (optional)) : Object
 	Returns one random object from the given array
 
 
 
-pickRandomDistributed(objects [Object]) : Object
+pickRandomDistributed(objects [Object], seed [number] (optional)) : Object
 	Picks one of the items in an object, based on the odds of a property called 'chance'!
 	The 'chance' values are automatically normalized, so they don't need to add up to 1 like in this example.
+ Seed is optional, this ensures the same items are picked each time.
 
 		var list = {
 			item1 : {name:'item1', chance:0.1}, // this item has a 10% chance of being chosen
@@ -436,23 +460,30 @@ pickRandomDistributed(objects [Object]) : Object
 
 
 
+stringToInt(string [string]) : int
+ Creates a unique int (non-negative, 32-bit) out of a string, using the DJB2 hash algorithm.
+
+
+
 -
 
 
 
-remap(
-		value [number]
-		low1 [number]
-		high1 [number]
-		low2 (optional, default 0) [number]
-		high2 (optional, default 1) [number]
-		clamped (optional, default false) [Bool]
+remap(   value [number]
+		    low1 [number]
+		    high1 [number]
+		    low2 (optional, default 0) [number]
+		    high2 (optional, default 1) [number]
+		    clamped (optional, default false) [Bool]
 ) : number
 	Returns value remapped from range low1-high1 to range low2-high2.
 
 
 
-centerRemap(value [number], center (optional, default 0.5) [number], width (optional, default 0) [number]) : Object
+centerRemap( value [number],
+             center (optional, default 0.5) [number],
+             width (optional, default 0) [number]
+) : Object
 	Remaps the value (0-1) to 0-1-0, with a custom center and a width for the center.
 	Returns an object containing 'remapped' [number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
 
@@ -585,7 +616,10 @@ mod(a [number], b [number]) : number
 
 
 
-measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [number]) : vec3
+measureWorldPos( screenPos [vec2],
+                 screenTrf [Component.ScreenTransform],
+                 cam [Component.Camera], dist [number]
+) : vec3
 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
 
@@ -595,10 +629,10 @@ measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Co
 
 
 
-getAllChildObjects(componentName (optional) [string]
-					startObj (optional) [SceneObject]
-					dontIncludeStartObj (optional) [bool]
-					maxCount (optional) [number]
+getAllChildObjects(  componentName (optional) [string]
+					    startObj (optional) [SceneObject]
+					    dontIncludeStartObj (optional) [bool]
+					    maxCount (optional) [number]
 ) : Array (Components)
 	Returns an array containing all components of type componentNames, also those on child objects.
 	If no componentName is given, all SceneObjects and child SceneObjects are returned instead.
@@ -625,12 +659,17 @@ parseNewLines(txt [string], customSplit (optional) [string]) : string
 
 
 
-pad(num [number], size [number]) : string
+pad(int [number], size [number]) : string
 	Takes a number and a padding amount, and returns a padded string of the number.
 
 		Example
 			var s = pad(30, 4)
 				s == "0030"
+
+
+
+getOrdinalPlace(int [number]) : string
+ Returns 'nd' for 2 (2nd), 'rd' for 3 (3rd), etc.
 
 
 
@@ -749,12 +788,13 @@ VisualizePoints() : VisualizePoints object
 			var v = new VisualizePoints(points)							// create instance ('points' argument is optional, this will invoke .show(points) right away)
 			v.parent													// (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject)
 			v.scale														// (optional) scale multiplier for the mesh when created (vec3)
+         v.labelFontSize                                             // (optional) label font size (default is 48)
 			v.material													// (optional) the material on the mesh (Asset.Material)
 			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
 			v.show(points)												// show points, returns the array of created SceneObjects
 			v.add(points)												// append to points, returns the total array of SceneObjects
-			v.getTransforms()											// get an array of transform components
+			v.getSceneObjects()											// get all SceneObjects
 			v.clear()													// destroy all objects
 
 
@@ -764,12 +804,13 @@ VisualizePoints() : VisualizePoints object
 
 
 rankedAction(label [string], prio [number], func [function])
-	Ranked Actions make it easy to compare a bunch of features coming from different scripts on the same frame, and only call the one with the highest priority at the end of the frame.
+	Ranked Actions make it easy to compare a bunch of features coming from different scripts on the same frame, and only call the one with the highest priority at the end of the frame (LateUpdateEvent).
 
 	An example of when this would be useful:
-		Imagine a scene containing a button and another tap event of some kind (like on-screen taps).
+		Imagine a scene containing a button and another tap event of some kind.
 		When the user taps on the button, the other event is also triggered.
 		By having the actions of both interactables pass through rankedAction first, the highest-prio action at the end of each frame is triggered and the other is ignored.
+     -> In lots of cases with screen taps, the issue can be resolved with Interaction Components!
 
 	All actions to be pooled together should have the same label. At the end of each frame, all pools are cleared.
 

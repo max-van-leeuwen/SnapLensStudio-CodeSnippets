@@ -3,6 +3,13 @@
   PassesInfo:
     - !<own> 0ae2af33-5935-454b-b0ae-7c58f39cd593
 - !<PassInfo/0ae2af33-5935-454b-b0ae-7c58f39cd593>
+  CachedProperties:
+    - overrideTimeElapsed:
+        typeIdx: 1
+        value: 0.000000
+    - overrideTimeEnabled:
+        typeIdx: 0
+        value: 0
   DepthWrite: true
   DepthTest: true
   DepthFunction: LessEqual
@@ -48,12 +55,6 @@
       typeIdx: 5
       value: {x: 0.037400, y: 0.935180, z: 0.588266, w: 1.000000}
     PreviewEnabled:
-      typeIdx: 0
-      value: 0
-    overrideTimeElapsed:
-      typeIdx: 1
-      value: 0.000000
-    overrideTimeEnabled:
       typeIdx: 0
       value: 0
   Pass: !<reference> e012ba0d-0ae6-4a06-8cd8-b32461fb9817

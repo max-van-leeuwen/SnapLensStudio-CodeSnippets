@@ -1,9 +1,7 @@
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 // Starts animation on tap
-
 // Requires LSQuickScripts
 
 

@@ -3,7 +3,7 @@
 
 
 
-// Requires LSQuickScripts 2.30
+// Requires LSQuickScripts 2.35
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen.com/lsquickscripts");
 
 
@@ -22,10 +22,11 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
     //@ui {"widget":"label", "label":"<small>creating an instance"}
     //@ui {"widget":"label", "label":"<font color='#56b1fc'>new SmoothFollow()"}
     //@ui {"widget":"label", "label":"<font color='#56b1fc'>.smoothing </font><i><small>= 1"}
+    //@ui {"widget":"label", "label":"<font color='#56b1fc'>.useLateUpdate </font><i><small>= false"}
     //@ui {"widget":"label"}
     //@ui {"widget":"label", "label":"<small>following a SceneObject"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.follow </font><i><small>= SceneObject to take motion from"}
-    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.apply </font><i><small>= SceneObject to apply motion to"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.target </font><i><small>= SceneObject to take motion from"}
+    //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.follow </font><i><small>= SceneObject to apply motion to"}
     //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.start()"}
     //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.stop()"}
     //@ui {"widget":"label", "label":" • <font color='#56b1fc'>.doInstant() </font><i><small>jump once"}
@@ -47,19 +48,22 @@ if(!global.lsqs) throw("LSQuickScripts is missing! Install it from maxvanleeuwen
 
 //@ui {"widget":"label"}
 //@ui {"widget":"group_start", "label":"<b>Examples"}
+    //@ui {"widget":"label"}
     //@ui {"widget":"label", "label":"<small><font color='#4cad50'>// - following a SceneObject's transform"}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>var follower = new SmoothFollow()"}
-    //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.smoothing = .3"}
-    //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.follow = script.toFollow <font color='#4cad50'>// SceneObject"}
-    //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.apply = script.toApply <font color='#4cad50'>// SceneObject"}
+    //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.target = script.toFollow <font color='#4cad50'>// SceneObject"}
+    //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.follow = script.toApply <font color='#4cad50'>// SceneObject"}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.start()"}
+    //@ui {"widget":"label"}
     //@ui {"widget":"label"}
 	//@ui {"widget":"label", "label":"<small><font color='#4cad50'>// - smoothing 'handPos' (vec2)"}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>var follower = new SmoothFollow()"}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.smoothing = .3"}
+    //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.useLateUpdate = true <font color='#4cad50'>// callback event"}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.onUpdate.add(function(smoothHandPos){"}
-    //@ui {"widget":"label", "label":"<small><font color='#ffd059'><p>&nbsp;&nbsp;&nbsp;&nbsp;print(smoothHandPos) <font color='#4cad50'>// print smooth value"}
+    //@ui {"widget":"label", "label":"<small><font color='#ffd059'><p>&nbsp;&nbsp;&nbsp;&nbsp;print(smoothHandPos) <font color='#4cad50'>// print on each frame"}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>}"}
+    //@ui {"widget":"label", "label":""}
     //@ui {"widget":"label", "label":"<small><font color='#ffd059'>follower.addValue(handPos) <font color='#4cad50'>// call on each frame"}
 //@ui {"widget":"group_end"}
 //@ui {"widget":"label"}
@@ -73,131 +77,97 @@ global.SmoothFollow = function(){
 
 	/**
 	 * @type {number}
-	 * @description following smoothness.
-	 * 0 = no smoothing, default is 1
+	 * @description filtering the input.
+	 * 0 = no filtering, default is 1.
 	*/
 	this.smoothing = 1;
+
+    /**
+	 * @description use LateUpdateEvent instead of UpdateEvent.
+	*/
+	this.useLateUpdate = false;
 
 
 
 	// --- Transform following
 
 	/**
-	 * @description jump transform once without smoothing to the target
+	 * @type {SceneObject}
+	 * @description SceneObject to follow.
 	*/
-	this.doInstant = doInstant;
+	this.target = null;
 
 	/**
 	 * @type {SceneObject}
-	 * @description SceneObject to follow
+	 * @description SceneObject to apply the following to.
 	*/
 	this.follow = null;
 
 	/**
-	 * @type {SceneObject}
-	 * @description SceneObject to apply the following to
-	*/
-	this.apply = null;
-
-	/**
 	 * @type {boolean}
-	 * @description follow transform's position, default is true
+	 * @description follow transform's position.
+     * default is true.
 	*/
 	this.translation = true;
 
 	/**
 	 * @type {boolean}
-	 * @description follow transform's position X (if following position), default is true
+	 * @description follow transform's position X (if following position).
+     * default is true.
 	*/
 	this.translationX = true;
 
 	/**
 	 * @type {boolean}
-	 * @description follow transform's position Y (if following position), default is true
+	 * @description follow transform's position Y (if following position).
+     * default is true.
 	*/
 	this.translationY = true;
 
 	/**
 	 * @type {boolean}
-	 * @description follow transform's position Z (if following position), default is true
+	 * @description follow transform's position Z (if following position).
+     * default is true.
 	*/
 	this.translationZ = true;
 
 	/**
 	 * @type {boolean}
-	 * @description follow transform's rotation, default is true
+	 * @description follow transform's rotation.
+     * default is true.
 	*/
 	this.rotation = true;
 
 	/**
 	 * @type {boolean}
-	 * @description follow transform's scale, default is true
+	 * @description follow transform's scale.
+     * default is true.
 	*/
 	this.scale = true;
 
 
-	// placeholders
-	var followTrf;
-	var applyTrf;
-
-	
-	function init(){
-		followTrf = self.follow.getTransform();
-		applyTrf = self.apply.getTransform();
-	}
-
 	this.start = function(){
 		// stop previous, if any
 		self.stop();
-		init();
 	
-		followingEvent = script.createEvent("UpdateEvent");
+		followingEvent = script.createEvent(self.useLateUpdate ? "LateUpdateEvent" : "UpdateEvent");
 		followingEvent.bind(following);
 	}
 
-	function doInstant(){
-		init();
+    /**
+	 * @description jump transform to target immediately without smoothing.
+	*/
+	this.doInstant = function doInstant(){
 		if(self.translation){
-			var p1 = applyTrf.getWorldPosition();
-			var p2 = followTrf.getWorldPosition();
-			if(!self.translationX) p2.x = p1.x;
-			if(!self.translationY) p2.y = p1.y;
-			if(!self.translationZ) p2.z = p1.z;
-			applyTrf.setWorldPosition(p2);
+			var targetPos = self.target.getTransform().getWorldPosition();
+			var followPos = self.follow.getTransform().getWorldPosition();
+			if(self.translationX) followPos.x = targetPos.x;
+			if(self.translationY) followPos.y = targetPos.y;
+			if(self.translationZ) followPos.z = targetPos.z;
+			self.follow.getTransform().setWorldPosition(followPos);
 		}
-		if(self.rotation) applyTrf.setWorldRotation(followTrf.getWorldRotation());
-		if(self.scale) applyTrf.setWorldScale(followTrf.getWorldScale());
-	}
-
-	// following event on update
-	function following(){
-		// delta
-		var d = clamp(getDeltaTime() / self.smoothing);
-
-		if(self.translation){
-			var p1 = applyTrf.getWorldPosition();
-			var p2 = followTrf.getWorldPosition();
-			if(!self.translationX) p2.x = p1.x;
-			if(!self.translationY) p2.y = p1.y;
-			if(!self.translationZ) p2.z = p1.z;
-			var newPos = vec3.lerp(p1, p2, d);
-			applyTrf.setWorldPosition(newPos);
-		}
-		if(self.rotation){
-			var p1 = applyTrf.getWorldRotation();
-			var p2 = followTrf.getWorldRotation();
-			var newRot = quat.slerp(p1, p2, d);
-			applyTrf.setWorldRotation(newRot);
-		}
-		if(self.scale){
-			var p1 = applyTrf.getWorldScale();
-			var p2 = followTrf.getWorldScale();
-			var newScale = vec3.lerp(p1, p2, d);
-			applyTrf.setWorldScale(newScale);
-		}
-
-		// custom callback
-		self.onUpdate.callback();
+		if(self.rotation) self.follow.getTransform().setWorldRotation(self.target.getTransform().getWorldRotation());
+		if(self.scale) self.follow.getTransform().setWorldScale(self.target.getTransform().getWorldScale());
 	}
 
 	this.stop = function(){
@@ -208,6 +178,45 @@ global.SmoothFollow = function(){
 	}
 
 
+	// following event on update
+	function following(){
+        const alpha = self.smoothing == 0 ? 1 : 1 - Math.exp(-getDeltaTime() / self.smoothing);
+
+        // position
+		if(self.translation){
+            const currentPos = self.follow.getTransform().getWorldPosition();
+            const targetPos = self.target.getTransform().getWorldPosition();
+            var axisTargetPos = new vec3(currentPos.x, currentPos.y, currentPos.z);
+            if(self.translationX) axisTargetPos.x = targetPos.x; // constraints
+            if(self.translationY) axisTargetPos.y = targetPos.y;
+            if(self.translationZ) axisTargetPos.z = targetPos.z;
+
+            // filtering
+            var filteredPos = alpha == 1 ? axisTargetPos : vec3.lerp(currentPos, axisTargetPos, alpha);
+
+            self.follow.getTransform().setWorldPosition(filteredPos);
+		}
+
+        // rotation
+		if(self.rotation){
+            const currentRot = self.follow.getTransform().getWorldRotation();
+            const targetRot = self.target.getTransform().getWorldRotation();
+            const nextRot = quat.slerp(currentRot, targetRot, alpha);
+            self.follow.getTransform().setWorldRotation(nextRot);
+		}
+
+        // scale
+		if(self.scale){
+            const currentScale = self.follow.getTransform().getWorldScale();
+            const targetScale = self.target.getTransform().getWorldScale();
+            const nextScale = vec3.lerp(currentScale, targetScale, alpha);
+            self.follow.getTransform().setWorldScale(nextScale);
+		}
+
+		// custom callback
+		self.onUpdate.callback();
+	}
+
 
 
 	// -- Custom value following
@@ -215,7 +224,7 @@ global.SmoothFollow = function(){
 	/**
 	 * @description add a value
 	 * @param {(number|vec2|vec3|quat)} value value to smooth towards (number/vec2/vec3/quat, make sure this is consistent)
-	 * @param {boolean} instant (optional) discard smoothing for this frame
+	 * @param {boolean} instant (optional) discard smoothing on this frame
 	*/
 	this.addValue = addValue;
 
@@ -226,26 +235,24 @@ global.SmoothFollow = function(){
 	this.getValue = getValue;
 
 	/**
-	 * @description bind to this function (using .add or .remove, see LSQS Callback() for more info) to trigger each frame smoothing was applied.
-	 * the callback's returned argument is the current value (if using value following).
-	 * the callbacks stop when the value or transform is very close to the target value (< self.EPS).
+	 * @description bind to this function (using .add or .remove, see LSQuickScripts Callback()). triggers on each smoothed frame.
+	 * callback argument: current value.
+	 * the callbacks stop when the value or transform is very close to the target.
 	*/
 	this.onUpdate = new Callback();
 
 	/**
 	 * @type {number}
-	 * @description the distance to the target value at which it is considered 'close enough', and the animation ends (and snaps to target value).
-	 * default is 0.001 (this is distance for vectors and numbers, and quat.angleBetween for quats).
+	 * @description the distance to the target value at which it is considered 'close enough' and the smoothing automatically stops (and snaps to target).
+	 * default is 0.001 (this is a distance for vectors and numbers, and an angle (rad) between quats ).
 	*/
 	this.EPS = 0.001;
 
 
-	// placeholders
+	// store
 	var customValue;
 	var nextValue;
 	var dataType;
-
-
 
 	function addValue(v, instant){
 		// get data type
@@ -260,7 +267,7 @@ global.SmoothFollow = function(){
 			customValue = v;
 			self.onUpdate.callback(customValue); // instantly apply custom callback
 		}else{
-			followingEvent = script.createEvent("UpdateEvent");
+			followingEvent = script.createEvent(self.useLateUpdate ? "LateUpdateEvent" : "UpdateEvent");
 			followingEvent.bind(customFollowing);
 		}
 	}
@@ -277,22 +284,23 @@ global.SmoothFollow = function(){
 	}
 
 	function customFollowing(){
-		var d = clamp(getDeltaTime() / self.smoothing);
+        const alpha = self.smoothing == 0 ? 1 : 1 - Math.exp(-getDeltaTime() / self.smoothing);
+
 		if(customValue == null){
 			customValue = nextValue;
 		}else{
 			switch(dataType){
 				case 'number':
-					customValue = interp(customValue, nextValue, d);
+					customValue = alpha==1 ? nextValue : interp(customValue, nextValue, alpha);
 					break;
 				case 'vec2':
-					customValue = vec2.lerp(customValue, nextValue, d);
+					customValue = alpha==1 ? nextValue : vec2.lerp(customValue, nextValue, alpha);
 					break;
 				case 'vec3':
-					customValue = vec3.lerp(customValue, nextValue, d);
+					customValue = alpha==1 ? nextValue : vec3.lerp(customValue, nextValue, alpha);
 					break;
 				case 'quat':
-					customValue = quat.slerp(customValue, nextValue, d);
+					customValue = alpha==1 ? nextValue : quat.slerp(customValue, nextValue, alpha);
 					break;
 			}
 		}

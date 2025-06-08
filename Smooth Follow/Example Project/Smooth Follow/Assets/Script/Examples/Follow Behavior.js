@@ -1,6 +1,5 @@
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 // Smooth Follow example, made compatible with behavior script.
 
@@ -31,8 +30,8 @@
 
 // create following instance
 var smoothFollower = new SmoothFollow();
-smoothFollower.follow = script.objectToFollow;
-smoothFollower.apply = script.getSceneObject();
+smoothFollower.target = script.objectToFollow;
+smoothFollower.follow = script.getSceneObject();
 smoothFollower.smoothing = script.smoothing;
 smoothFollower.translation = script.doPosition;
 smoothFollower.translationX = script.doPositionX;

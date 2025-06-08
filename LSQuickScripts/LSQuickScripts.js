@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.34</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.35</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -78,7 +78,12 @@
 //
 //
 //
-// interp(startValue [number], endValue [number], t [number], easing (optional) [function], unclamped (optional) [bool]) : number
+// interp(  startValue [number],
+//          endValue [number],
+//          t [number],
+//          easing (optional) [function],
+//          unclamped (optional) [bool]
+// ) : number
 // 	Returns the value of t interpolated using an Easing Function, remapped to start and end values.
 //	Is identical to a linear lerp() when no Easing Function is given.
 //	Use one of the Easing Functions in global.EaseFunctions, or use your own!
@@ -141,10 +146,9 @@
 //
 //
 // QuickFlow(obj [SceneObject]) : QuickFlow object
-//	- IN BETA: You might encounter unexpected behavior from time to time.
-//	A simple way to animate objects with just a single line of code!
+//	The fastest way to animate objects, using a single line of code!
 //	All animations work for orthographic and perspective objects.
-//	Pass 'undefined' for an argument to use its default value.
+//	- IN BETA: You might encounter unexpected behavior from time to time.
 //		
 //		Example:
 //
@@ -156,24 +160,28 @@
 //
 //			.fadeIn(delay, duration, easeFunction)											// start fade-in (enables SceneObject on start)
 //			.fadeOut(delay, duration, easeFunction)											// start fade-out (disables SceneObject and all running animations on end)
-//			.scaleIn(delay, duration, startAtTime, easeFunction)							// start scale-in (enables SceneObject on start)
-//			.scaleOut(delay, duration, startAtTime, easeFunction)							// start scale-out (disables SceneObject and all running animations on end)
+//			.scaleIn(delay, duration, easeFunction, startAtTime)							// start scale-in (enables SceneObject on start)
+//			.scaleOut(delay, duration, easeFunction, startAtTime)							// start scale-out (disables SceneObject and all running animations on end)
 //			.squeeze(delay, strength, duration)												// do scale squeeze
 //			.rotateAround(delay, rotations, axis, duration, easeFunction)					// do rotational swirl
 // 			.scaleTo(delay, toScale, duration, easeFunction)						        // scale towards new size (overrides other rotation animations)
 // 			.moveTo(delay, point, isLocal, duration, easeFunction)							// move towards new position (local screen space if ScreenTransform, world space if Transform) (overrides other position animations)
 // 			.keepBlinking(delay, interval, strength, easeFunction)							// keep blinking
 //			.lookAt(delay, point, duration, easeFunction)									// rotate to look at a point (local screen space if ScreenTransform, world space if Transform) (overrides other rotation animations)
+//          .bounce(delay, duration, strength, easeFunctionIn, easeFunctionOut)             // do a short scale-bump
 //			.keepRotating(delay, speed, axis)												// keep rotating around an axis
 //			.keepBouncingRotation(delay, strength, interval, axis, easeFunction, smoothIn)	// keep bouncing a rotation around an axis
 //			.keepBouncingPosition(delay, distance, interval, axis, easeFunction, smoothIn)	// keep bouncing a position up and down along an axis
 //			.keepBouncingScale(delay, strength, interval, easeFunction, smoothIn)			// keep bouncing a scale
-// 			.stop(delay)																	// stop all active animations (overrides all other animations)
-//			.reset(delay, duration, easeFunction)											// stop and undo all animations, back to original (before animations were applied) (overrides all other animations)
-//			.loop	 																		// repeats all animations added so far (no animations can be added after this)
+// 			.stop(delay)																	// stop active animations
+//			.reset(delay, duration, easeFunction)											// stop and undo animations
+//			.loop	 																		// repeats all animations added so far (animations added chronologically after this loop's cutoff are not visible)
+//          .getSceneObject()                                                               // returns active SceneObject
+//          .initialize()                                                                   // re-initializes QuickFlow using current transforms as starting point
+//          .getTimeLeft()                                                                  // get total duration of all current animations (looping excluded)
 //		
 //
-//		Each animation returns the same QuickFlow object, so they can be easily chained into one-liners like so:
+//		Each animation returns this QuickFlow object, making them chainable into one-liners:
 //		
 //			- new QuickFlow(object).rotateAround(0, 1)														            // instantly do 1 clockwise rotation
 //			- new QuickFlow(object).fadeOut(0, .5).scaleOut(0, .5)											            // fade-out and scale-out, for 0.5 seconds
@@ -181,14 +189,19 @@
 //			- new QuickFlow(object).moveTo(0, new vec3(0,100,0), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)	    // move 1m up for 1s, after 1s reset (go back down) with a bouncing animation of 0.6s
 //			- new QuickFlow(object).moveTo(0, new vec2(0,1), false, 1).reset(1, .6, EaseFunctions.Bounce.Out)		    // same as above, but for a 2D ScreenTransform
 //			- new QuickFlow(object).keepBouncingPosition().keepBouncingScale().keepBouncingRotation()		            // continuous wiggly animation
+// 
+//      If an object's transforms has been modified by other scripts in the meantime, you can re-initialize quickflow easily:
+//
+//          const qf = new QuickFlow(visual)                                                // a QuickFlow object for 'visual'
+//          qf.initialize().scaleOut()                                                      // scale-out 'visual' using its current transforms as starting point
 //
 //
 //		Tips:
-//          - setting arguments to 'undefined' will make them pick their default values
-//			- the first argument of any animation is always 'delay', which has a default value of 0
-//			- after the last out-animation stops playing, the SceneObject will automatically be disabled (for example after a fadeOut of a scaleOut)
-//			- when chaining animations as a one-liner, it's best for readibility to chain them chronologically (so their delay values increase from left to right)
-//			- animations like 'reset' and 'stop' only stop the animations starting before them
+//          - setting arguments to 'undefined' will use default values
+//			- first argument of any animation is always 'delay' (s), which is 0 by default
+//			- after the last out-animation finishes playing, the SceneObject will automatically disable (e.g. fadeOut, scaleOut)
+//			- when chaining animations in a one-liner, it helps with readibility to chain them chronologically! (Increasing delay values left to right)
+//			- animations like 'reset' and 'stop' only apply to the animations that started before they did, animations with a greater delay will still play
 //
 //
 //
@@ -231,8 +244,13 @@
 //
 //
 //
-// planeRay(point [vec3], dir [vec3], planePos [vec3], planeFwd [vec3]) : vec3
-//	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise.
+// planeRay(    point [vec3],
+//              dir [vec3],
+//              planePos [vec3],
+//              planeFwd [vec3],
+//              anyDirection (optional) [bool]
+// ) : vec3
+//	Checks if a line ('point' with normalized direction 'dir') intersects a plane (position 'planePos' with normal 'planeFwd'). Returns world position (vec3) if it does, returns null otherwise. Allow backside of plane when 'anyDirection' is true.
 //
 //
 //
@@ -281,7 +299,9 @@
 //
 //
 //
-// DoDelay(function (optional) [function], arguments (optional) [Array] ) : DoDelay object
+// DoDelay( function (optional) [function],
+//          arguments (optional) [Array]
+// ) : DoDelay object
 //	An object that makes it easy to schedule a function to run in the future (by frames or by seconds).
 //
 //		Example, showing all properties
@@ -339,7 +359,11 @@
 //
 //
 //
-// InstSoundPooled(listOfAssets [List of Asset.AudioTrackAsset], poolSize [number], waitTime (optional) [number], volume (optional, default 1) [number]) : InstSoundPooled Object
+// InstSoundPooled( listOfAssets [List of Asset.AudioTrackAsset],
+//                  poolSize [number],
+//                  waitTime (optional, default .1) [number],
+//                  volume (optional, default 1) [number]
+// ) : InstSoundPooled Object
 // 	Create a pool of audio components, one component for each given asset, times the size of the pool (so the total size is listOfAssets.length * poolSize).
 //	This function does essentially the same as 'instSound', except in a much more performant way when playing lots of sounds (poolSize determines the amount of overlap allowed before looping back to the start of the pool).
 //	The 'waitTime', if given, makes sure the next sound instance can only be played after this many seconds, to prevent too many overlaps. This is useful when making a bouncing sound for physics objects.
@@ -363,7 +387,7 @@
 //
 //
 // clamp(value [number], low (optional, default 0) [number] ), high (optional, default 1) [number] ) : number
-// 	Returns the clamped value between the low and high values.
+// 	Returns the clamped value between the low and high values. NaN is 0.
 //
 //
 //
@@ -381,32 +405,33 @@
 //
 //
 //
-// randInt(min [int], max [int]) : number
+// randInt(min [int], max [int], seed [int] (optional)) : number
 // OR
-// randInt(range [array size 2]) : number
+// randInt(range [array size 2], seed [int] (optional)) : number
 // OR
-// randInt(range [vec2]) : number
+// randInt(range [vec2], seed [int] (optional)) : number
 //	Returns a random rounded integer between min (inclusive) and max (exclusive).
 //
 //
 //
-// randFloat(min [number], max [number]) : number
+// randFloat(min [number], max [number], seed [int] (optional)) : number
 // OR
-// randFloat(range [array size 2]) : number
+// randFloat(range [array size 2], seed [int] (optional)) : number
 // OR
-// randFloat(range [vec2]) : number
+// randFloat(range [vec2], seed [int] (optional)) : number
 //	Returns a random number within a range min (inclusive) and max (exclusive).
 //
 //
 //
-// randArray(array [Array]) : Object
+// randArray(array [Array], seed [int] (optional)) : Object
 //	Returns one random object from the given array
 //
 //
 //
-// pickRandomDistributed(objects [Object]) : Object
+// pickRandomDistributed(objects [Object], seed [number] (optional)) : Object
 // 	Picks one of the items in an object, based on the odds of a property called 'chance'!
 // 	The 'chance' values are automatically normalized, so they don't need to add up to 1 like in this example.
+//  Seed is optional, this ensures the same items are picked each time.
 //
 //		var list = {
 //			item1 : {name:'item1', chance:0.1}, // this item has a 10% chance of being chosen
@@ -418,23 +443,30 @@
 //
 //
 //
+// stringToInt(string [string]) : int
+//  Creates a unique int (non-negative, 32-bit) out of a string, using the DJB2 hash algorithm.
+//
+//
+//
 // -
 //
 //
 //
-// remap(
-//		value [number]
-//		low1 [number]
-//		high1 [number]
-//		low2 (optional, default 0) [number]
-//		high2 (optional, default 1) [number]
-//		clamped (optional, default false) [Bool]
+// remap(   value [number]
+//		    low1 [number]
+//		    high1 [number]
+//		    low2 (optional, default 0) [number]
+//		    high2 (optional, default 1) [number]
+//		    clamped (optional, default false) [Bool]
 // ) : number
 // 	Returns value remapped from range low1-high1 to range low2-high2.
 //
 //
 //
-// centerRemap(value [number], center (optional, default 0.5) [number], width (optional, default 0) [number]) : Object
+// centerRemap( value [number],
+//              center (optional, default 0.5) [number],
+//              width (optional, default 0) [number]
+// ) : Object
 //	Remaps the value (0-1) to 0-1-0, with a custom center and a width for the center.
 //	Returns an object containing 'remapped' [number] and 'passedCenter' [int] (0=not passed, 1=within center width, 2=after center).
 //
@@ -567,7 +599,10 @@
 //
 //
 //
-// measureWorldPos(screenPos [vec2], screenTrf [Component.ScreenTransform], cam [Component.Camera], dist [number]) : vec3
+// measureWorldPos( screenPos [vec2],
+//                  screenTrf [Component.ScreenTransform],
+//                  cam [Component.Camera], dist [number]
+// ) : vec3
 // 	Returns the world position of a [-1 - 1] screen space coordinate, within a screen transform component, at a distance from the camera.
 //	Useful, for example, to measure out where to place a 3D model in the Safe Region, so it won't overlap with Snapchat's UI.
 //
@@ -577,10 +612,10 @@
 //
 //
 //
-// getAllChildObjects(componentName (optional) [string]
-//					startObj (optional) [SceneObject]
-//					dontIncludeStartObj (optional) [bool]
-//					maxCount (optional) [number]
+// getAllChildObjects(  componentName (optional) [string]
+//					    startObj (optional) [SceneObject]
+//					    dontIncludeStartObj (optional) [bool]
+//					    maxCount (optional) [number]
 // ) : Array (Components)
 // 	Returns an array containing all components of type componentNames, also those on child objects.
 //	If no componentName is given, all SceneObjects and child SceneObjects are returned instead.
@@ -607,12 +642,17 @@
 //
 //
 //
-// pad(num [number], size [number]) : string
+// pad(int [number], size [number]) : string
 // 	Takes a number and a padding amount, and returns a padded string of the number.
 //
 //		Example
 //			var s = pad(30, 4)
 //				s == "0030"
+//
+//
+//
+// getOrdinalPlace(int [number]) : string
+//  Returns 'nd' for 2 (2nd), 'rd' for 3 (3rd), etc.
 //
 //
 //
@@ -731,12 +771,13 @@
 //			var v = new VisualizePoints(points)							// create instance ('points' argument is optional, this will invoke .show(points) right away)
 //			v.parent													// (optional) SceneObject to parent the points to (default is LSQuickScripts SceneObject)
 //			v.scale														// (optional) scale multiplier for the mesh when created (vec3)
+//          v.labelFontSize                                             // (optional) label font size (default is 48)
 //			v.material													// (optional) the material on the mesh (Asset.Material)
 //			v.mesh														// (optional) the mesh to show on each point (Asset.RenderMesh, default is a unit box)
 //			v.maxCount													// (optional) maximum amount of points to show, starts cutting off indices at 0 (default is null for unlimited)
 //			v.show(points)												// show points, returns the array of created SceneObjects
 //			v.add(points)												// append to points, returns the total array of SceneObjects
-//			v.getTransforms()											// get an array of transform components
+//			v.getSceneObjects()											// get all SceneObjects
 //			v.clear()													// destroy all objects
 //
 //
@@ -746,12 +787,13 @@
 //
 //
 // rankedAction(label [string], prio [number], func [function])
-//	Ranked Actions make it easy to compare a bunch of features coming from different scripts on the same frame, and only call the one with the highest priority at the end of the frame.
+//	Ranked Actions make it easy to compare a bunch of features coming from different scripts on the same frame, and only call the one with the highest priority at the end of the frame (LateUpdateEvent).
 //
 //	An example of when this would be useful:
-//		Imagine a scene containing a button and another tap event of some kind (like on-screen taps).
+//		Imagine a scene containing a button and another tap event of some kind.
 //		When the user taps on the button, the other event is also triggered.
 //		By having the actions of both interactables pass through rankedAction first, the highest-prio action at the end of each frame is triggered and the other is ignored.
+//      -> In lots of cases with screen taps, the issue can be resolved with Interaction Components!
 //
 //	All actions to be pooled together should have the same label. At the end of each frame, all pools are cleared.
 //
@@ -1322,6 +1364,13 @@ global.getAllAnimateProperty = function(){
 
 
 global.QuickFlow = function(obj){
+    // make sceneobject
+    try{
+        obj = obj.getSceneObject();
+    }catch(error){
+        // assume already sceneobject
+    }
+
 	// links
 	const trf = obj.getTransform();
     const screenTrf = obj.getComponent("Component.ScreenTransform"); // if it exists
@@ -1340,13 +1389,13 @@ global.QuickFlow = function(obj){
 	var startTextBaseColors;
 	updateStartingValues();
 
-	// true starting values (in case of reset)
-	const trueEnabled = obj.enabled;
-	const truePosition = startPosition;
-	const trueScale = startScale;
-	const trueRotation = startRotation;
-	const trueBaseColor = startBaseColor;
-	const trueTextBaseColors = {...startTextBaseColors};
+	// true starting values (in case of reset) - can still be changed, when .initilize() is called, but usually these don't change
+	var trueEnabled = obj.enabled;
+	var truePosition = startPosition;
+	var trueScale = startScale;
+	var trueRotation = startRotation;
+	var trueBaseColor = startBaseColor;
+	var trueTextBaseColors = {...startTextBaseColors};
 
 	// applying-transforms-event
 	var updateEvent = script.createEvent("LateUpdateEvent"); // after all animators are done
@@ -1719,10 +1768,10 @@ global.QuickFlow = function(obj){
 	 * @description (use undefined for any argument to pick its default value)
 	 * @param {number} delay delay - default: 0 seconds
 	 * @param {number} duration duration - default: .5 seconds
+     * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	 * @param {number} startAtTime startAtTime - default: 0 (0-1 ratio)
-	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	*/
-	this.scaleIn = function(delay = 0, duration = .5, startAtTime = 0, easeFunction = EaseFunctions.Cubic.Out){
+	this.scaleIn = function(delay = 0, duration = .5, easeFunction = EaseFunctions.Cubic.Out, startAtTime = 0){
 		// register
 		registerCommand(this.scaleIn, [...arguments]);
 
@@ -1753,10 +1802,10 @@ global.QuickFlow = function(obj){
 	 * @description (use undefined for any argument to pick its default value)
 	 * @param {number} delay delay - default: 0 seconds
 	 * @param {number} duration duration - default: .3 seconds
+     * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	 * @param {number} startAtTime startAtTime - default: 0 (0-1 ratio)
-	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.Out
 	*/
-	this.scaleOut = function(delay = 0, duration = .3, startAtTime = 0, easeFunction = EaseFunctions.Cubic.Out){
+	this.scaleOut = function(delay = 0, duration = .3, easeFunction = EaseFunctions.Cubic.Out, startAtTime = 0){
 		// register
 		registerCommand(this.scaleOut, [...arguments]);
 
@@ -2071,6 +2120,52 @@ global.QuickFlow = function(obj){
 		return self;
 	}
 
+    /**
+	 * @description do a short scale-bump
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} duration duration - default: .3 seconds
+	 * @param {(vec2|vec3)} strength toScale - default: 1.3x
+	 * @param {function} easeFunctionIn easeFunction - default: EaseFunctions.Cubic.Out
+	 * @param {function} easeFunctionOut easeFunction - default: EaseFunctions.Cubic.InOut
+	*/
+	this.bounce = function(delay = 0, duration = .3, strength = 1.3, easeFunctionIn = EaseFunctions.Cubic.Out, easeFunctionOut = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.bounce, [...arguments]);
+		
+		new CreateDelay(function(){
+			// animation
+			var bounceAnim = new AnimateProperty(function(v, vL){
+				doScale = true;
+
+				let r = centerRemap(vL, .35); // 0-1-0
+				r = interp(0, 1, r.remapped, r.passedCenter ? easeFunctionOut : easeFunctionIn); // easing
+	
+				// bounce amounts
+				let bounce = remap(r, 0, 1, 1, strength);
+	
+				// bounce transform
+				if(!!screenTrf){
+					let mult = new vec2(bounce, bounce);
+					newScale = newScale.mult(mult)
+				}else{
+					let mult = new vec3(bounce, bounce, bounce);
+					newScale = newScale.mult(mult)
+				}
+
+				doScale = true;
+			});
+			bounceAnim.duration = duration;
+			bounceAnim.start();
+			
+			// register this temp animation
+			animationStarted(bounceAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
 	/**
 	 * @description keep rotating around an axis
 	 * @description (use undefined for any argument to pick its default value)
@@ -2363,9 +2458,9 @@ global.QuickFlow = function(obj){
 
 	/**
 	 * @description repeats all animations added so far
-	 * (no animations can be added after this)
+	 * (animations added chronologically after this loop's cutoff are not visible)
 	 * @description (use undefined for any argument to pick its default value)
-	 * @param {number} cutoffAfter cutoffAfter - delay before starting the loop
+	 * @param {number} cutoffAfter cutoffAfter - delay before repeating from start
 	*/
 	this.loop = function(cutoffAfter = 1){
 		registerCommand(this.loop, [...arguments]);
@@ -2377,6 +2472,49 @@ global.QuickFlow = function(obj){
 
 		// return to allow chaining
 		return self;
+	}
+
+    /**
+	 * @description returns active SceneObject
+	*/
+	this.getSceneObject = function(){
+		return obj;
+	}
+
+    /**
+	 * @description re-initializes QuickFlow using current transforms as starting point
+	*/
+	this.initialize = function(){
+        // starting values
+        startPosition;
+        startScale;
+        startRotation;
+        startBaseColor;
+        startTextBaseColors;
+        updateStartingValues();
+
+        // true starting values
+        trueEnabled = obj.enabled;
+        truePosition = startPosition;
+        trueScale = startScale;
+        trueRotation = startRotation;
+        trueBaseColor = startBaseColor;
+        trueTextBaseColors = {...startTextBaseColors};
+
+        init();
+        
+        return self;
+	}
+
+    /**
+	 * @description get total duration of all current animations (looping excluded)
+	*/
+    this.getTimeLeft = function(){
+        var time = 0;
+		for(var i = 0; i < animators.length; i++){
+            if(animators[i].isPlaying()) time = Math.max(animators[i].duration, time);
+		}
+        return time;
 	}
 }
 
@@ -2454,11 +2592,12 @@ global.pointInBox = function(point, unitBoxTrf, getRelativePosition){
 
 
 
-global.planeRay = function(point, dir, planePos, planeFwd){
+global.planeRay = function(point, dir, planePos, planeFwd, anyDirection){
 	var denom = planeFwd.dot(dir);
 	if(Math.abs(denom) < 1e-6) return; // ray is parallel to plane
 
 	var t = (planePos.sub(point)).dot(planeFwd) / denom;
+    if(anyDirection) return point.add(dir.uniformScale(t));
 	if(t >= 0) return point.add(dir.uniformScale(t));
 }
 
@@ -2813,7 +2952,7 @@ global.getAllSoundInstances = function(){
 
 
 
-global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, volume = 1){
+global.InstSoundPooled = function(listOfAssets, poolSize, waitTime=.2, volume = 1){
 	var self = this;
 
 	var pool = [];
@@ -2873,6 +3012,7 @@ global.InstSoundPooled = function(listOfAssets, poolSize, waitTime, volume = 1){
 
 
 global.clamp = function(value, low, high){
+    if(isNaN(value)) return 0;
 	if(!low && low !== 0) low = 0; // assume low, high to be 0, 1 if not given
 	if(!high && high !== 0) high = 1;
 	return Math.max(Math.min(value, Math.max(low, high)), Math.min(low, high));
@@ -2914,7 +3054,7 @@ global.smoothNoise = function(seed){
 
 
 
-global.randInt = function(min, max){
+global.randInt = function(min, max, seed){
 	var _min;
 	var _max;
 	if(min.x != null){ // assume vec2
@@ -2927,13 +3067,14 @@ global.randInt = function(min, max){
 		_min = min;
 		_max = max;
 	}
-	return Math.floor(remap(Math.random(), 0, 1, _min, _max));
+    const r = seed != undefined ? randSeed(seed) : Math.random();
+	return Math.floor(remap(r, 0, 1, _min, _max));
 }
 
 
 
 
-global.randFloat = function(min, max){
+global.randFloat = function(min, max, seed){
 	var _min;
 	var _max;
 	if(min.x != null){ // assume vec2
@@ -2945,27 +3086,30 @@ global.randFloat = function(min, max){
 	}else{ // number
 		_min = min;
 		_max = max;
-	}
-	return remap(Math.random(), 0, 1, _min, _max);
+    }
+    const r = seed != undefined ? randSeed(seed) : Math.random();
+	return remap(r, 0, 1, _min, _max);
 }
 
 
 
 
-global.randArray = function(array){
-	return array[Math.floor(Math.random()*array.length)];
+global.randArray = function(array, seed){
+    const r = seed != undefined ? randSeed(seed) : Math.random();
+	return array[Math.floor(r*array.length)];
 }
 
 
 
 
-global.pickRandomDistributed = function(obj){
+global.pickRandomDistributed = function(obj, seed){
 	var totalChance = 0;
 	var keys = Object.keys(obj);
 	for(var i = 0; i < keys.length; i++) {
 		totalChance += obj[keys[i]].chance;
 	}
-	var rand = Math.random() * totalChance;
+    var rand;
+	rand = (seed != undefined ? randSeed(seed) : Math.random()) * totalChance;
 	
 	var sum = 0;
 	for(var key in obj) {
@@ -2973,6 +3117,17 @@ global.pickRandomDistributed = function(obj){
 		sum += item.chance;
 		if(rand < sum) return item;
 	}
+}
+
+
+
+
+global.stringToInt = function(str){
+    let hash = 5381;
+    for(let i = 0; i < str.length; i++){
+        hash = ((hash << 5) + hash) + str.charCodeAt(i); // hash * 33 + c
+    }
+    return hash >>> 0; // unsigned 32-bit integer
 }
 
 
@@ -3110,10 +3265,14 @@ global.shuffleArray = function(array){
 
 
 global.concatArrays = function(a, b){
-	var c = new (a.constructor)(a.length + b.length);
-	c.set(a, 0);
-	c.set(b, a.length);
-	return c;
+    var c = new (a.constructor)(a.length + b.length);
+    for(var i = 0; i < a.length; i++){
+        c[i] = a[i];
+    }
+    for(var j = 0; j < b.length; j++){
+        c[a.length + j] = b[j];
+    }
+    return c;
 }
 
 
@@ -3294,6 +3453,16 @@ global.pad = function(num, size){
 		paddedString = '0' + paddedString;
 	}
 	return paddedString;
+}
+
+
+
+
+global.getOrdinalPlace = function(n){
+    const suffixes = ["th", "st", "nd", "rd"];
+    const v = n % 100;
+    const suffix = suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0];
+    return `${n}${suffix}`;
 }
 
 
@@ -3544,6 +3713,12 @@ global.VisualizePoints = function(showPointsOnStart){
 	*/
 	this.scale;
 
+    /**
+	 * @type {Number}
+	 * @description (optional) label font size (default is 48)
+	*/
+	this.labelFontSize = 48;
+
 	/**
 	 * @type {Material}
 	 * @description (optional) the material on the mesh (Asset.Material)
@@ -3567,15 +3742,15 @@ global.VisualizePoints = function(showPointsOnStart){
 	/**
 	 * @description show points, returns the array of created SceneObjects
 	*/
-	this.show = function(allPoints){
+	this.show = function(points){
 		// make array
-		if(!Array.isArray(allPoints)) allPoints = Array.from(arguments);
+		if(!Array.isArray(points)) points = Array.from(arguments);
 
 		// remove existing
 		self.clear();
 
         // add new
-        return self.add(allPoints);
+        return self.add(points);
 	};
 
 
@@ -3583,17 +3758,30 @@ global.VisualizePoints = function(showPointsOnStart){
     /**
 	 * @description append to points, returns the total array of created SceneObjects
 	*/
-    this.add = function(allPoints){
+    this.add = function(points){
 		// make array
-		if(!Array.isArray(allPoints)) allPoints = Array.from(arguments);
+		if(!Array.isArray(points)) points = Array.from(arguments);
 
-		if(allPoints.length == 0) return;
-		var points = [...allPoints]; // make copy of list
-		if(self.maxCount != null){
-			if(allPoints.length > self.maxCount){
-				points = allPoints.slice(-self.maxCount);
-			}
-		}
+        const addingCount = points.length;
+		if(addingCount == 0) return;
+
+        // delete old if too many
+        if(self.maxCount != null){
+            // from add list
+            if(addingCount > self.maxCount){
+                const startIndex = Math.max(points.length - self.maxCount, 0);
+                points.splice(0, startIndex);
+            }
+
+            // from existing points
+            let totalPointsCount = points.length + allSceneObjects.length;
+            if(totalPointsCount > self.maxCount){
+                const toDelete = allSceneObjects.splice(0, addingCount);
+                for(var i = 0; i < toDelete.length; i++){
+                    if(!isNullPatch(toDelete)) toDelete[i].destroy();
+                }
+            }
+        }
 
 		const pointType = getPointType(points[0]); // get point type (string: vec3, object, mat4)
 
@@ -3631,7 +3819,6 @@ global.VisualizePoints = function(showPointsOnStart){
 
 			// register
 			allSceneObjects.push(obj);
-			allTransforms.push(trf);
         }
 
         return allSceneObjects;
@@ -3640,10 +3827,10 @@ global.VisualizePoints = function(showPointsOnStart){
 
 
 	/**
-	 * @description get all objects' transform components (<Transform> array)
+	 * @description get all SceneObjects
 	*/
-	this.getTransforms = function(){
-		return allTransforms;
+	this.getSceneObjects = function(){
+		return allSceneObjects;
 	}
 
 
@@ -3659,14 +3846,12 @@ global.VisualizePoints = function(showPointsOnStart){
 
 		// reset lists
 		allSceneObjects = [];
-		allTransforms = [];
 	}
 
 
 
 	// private
 	var allSceneObjects = [];
-	var allTransforms = [];
 	const cube = function(){ // generate cube mesh (once on start)
 		// simple cube with texture and normals
 		var builder = new MeshBuilder([
@@ -3728,16 +3913,13 @@ global.VisualizePoints = function(showPointsOnStart){
 		return builder.getMesh();
 	}();
 
-
-
     // creates label on top of rendered point
     function setLabel(point, obj){
         var txtComp = obj.createComponent("Component.Text");
+        txtComp.size = self.labelFontSize;
         txtComp.getMaterial(0).mainPass.twoSided = true;
         txtComp.text = point.label;
     }
-
-
 
 	// returns 'vec3', 'object' or 'mat4' depending on type
 	function getPointType(p){
@@ -3745,8 +3927,6 @@ global.VisualizePoints = function(showPointsOnStart){
 		if(p.position != null) return 'object';
 		return 'mat4';
 	}
-
-
 
 	// start right away if array given
 	if(showPointsOnStart) self.show(showPointsOnStart);

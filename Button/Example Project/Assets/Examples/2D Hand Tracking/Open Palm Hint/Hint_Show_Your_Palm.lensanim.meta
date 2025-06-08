@@ -6,17 +6,19 @@
   PrimaryAsset: !<reference> 161b07ac-1d16-455e-ba06-ba685413fb25
   PackageType: LegacyPackage
   PackagePolicy: CannotBeUnpackedTransparent
+  ExtraData:
+    {}
   AssetDataMap:
     AnimatedTexture: !<own> af5a57dc-6433-4c7e-b2cc-b8bb90ff51cb
   DependentFiles:
     - LPD-185_Show_Your_Palm_new.png
-  ImporterSettings: !<AssetImporterSettings/8d1d9934-9683-41c1-a77e-73c37a772fb1>
+  ImporterSettings: !<AssetImporterSettings>
     {}
-  CompressionSettings: !<SingleCompressionSettings/830779c0-1701-4102-aeba-7acce688a909>
+  CompressionSettings: !<SingleCompressionSettings>
     CompressorName: Atlas Compressor
-    CompressionSettings: !<AnimatedCompressionSettings/83c87592-973d-4ef8-a8ec-40a21046d08e>
+    CompressionSettings: !<AnimatedCompressionSettings>
       CompressorName: Size
-      CompressionSettings: !<TextureCompressionSettings/076fac2a-806c-46a6-b4c1-e840133e7901>
+      CompressionSettings: !<TextureCompressionSettings>
         Level: Medium
 - !<AnimatedTextureData/af5a57dc-6433-4c7e-b2cc-b8bb90ff51cb>
   AutoPlay: true

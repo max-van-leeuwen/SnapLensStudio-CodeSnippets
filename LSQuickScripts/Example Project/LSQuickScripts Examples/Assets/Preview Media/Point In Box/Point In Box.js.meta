@@ -5,21 +5,25 @@
   PrimaryAsset: !<reference> fe029ff1-adfe-40cb-a15a-5bb54b8c92a8
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     JavaScriptAsset: !<own> 6ac13e41-9d29-4711-9e45-c201d8177267
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/57d78cef-e30e-46bf-9f39-207b4a0795b1>
+  ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptAssetData/6ac13e41-9d29-4711-9e45-c201d8177267>
   SvgIcon: ""
+  SetupScript:
+    code: ""
   Description: ""
   InternalVersion: 0
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 07f6b60b-45f3-49cc-a38f-c41169f0a96d
   ExportUid: 00000000-0000-0000-0000-000000000000
   CurrentVisibility: Editable
   MaxVisibility: Editable
@@ -30,6 +34,8 @@
     point: false
   ScriptTypesHidden:
     {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
   DefaultScriptInputs:
     - point: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       box: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000

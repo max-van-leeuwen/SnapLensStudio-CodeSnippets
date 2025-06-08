@@ -42,11 +42,11 @@
   Near: 1.000000
   Far: 1000.000000
   Fov: 63.541019
-  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+  ClearColor: !<CameraClearColor>
     Mode: None
     Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+  ClearDepth: !<CameraClearDepth>
     Mode: Value
     Value: 1.000000
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -60,6 +60,7 @@
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
+  DevicePropertiesSource: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/0005641c-028d-459a-0000-000000014b4d>
   PrefabRemaps:
     []
@@ -111,8 +112,6 @@
   ShadowFrustumFarClipPlane: 1000.000000
   UseEnvMapFromCamera: false
   EnvMapFromCameraMode: Auto
-  UseEstimation: false
-  EstimationIntensity: 1.000000
   EstimationSharpness: 1.000000
   EnvMapExposure: 1.000000
   EnvMapRotation: 0.000000
@@ -161,8 +160,6 @@
   ShadowFrustumFarClipPlane: 1000.000000
   UseEnvMapFromCamera: false
   EnvMapFromCameraMode: Auto
-  UseEstimation: false
-  EstimationIntensity: 1.000000
   EstimationSharpness: 1.000000
   EnvMapExposure: 1.000000
   EnvMapRotation: 0.000000
@@ -1046,6 +1043,7 @@
     - !<reference> 0b9e85c7-a729-46a4-8ba3-f0452d6086ae
   FlipX: false
   FlipY: false
+  RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/2d4f8333-2940-4a94-95ad-5083c039816f>
@@ -1368,6 +1366,7 @@
     - !<reference> 9d583770-992e-4039-a8aa-990886cd830d
   FlipX: false
   FlipY: false
+  RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/406a909a-04ff-4812-9a67-c77bb4a6710c>
@@ -3332,9 +3331,9 @@
   Name: Device Tracking
   Enabled: true
   DeviceTrackingMode: Surface
-  RotationOptions: !<RotationOptions/00000000-0000-0000-0000-000000000000>
+  RotationOptions: !<RotationOptions>
     InvertRotation: false
-  SurfaceOptions: !<SurfaceOptions/00000000-0000-0000-0000-000000000000>
+  SurfaceOptions: !<SurfaceOptions>
     EnhanceWithNativeAR: true
 - !<ScriptComponent/854f1d6b-8292-47a0-9c1c-df2c9409cfef>
   PrefabRemaps:
@@ -3586,6 +3585,7 @@
     - !<reference> 70c56164-bb82-4075-b8e9-f1f29def1714
   FlipX: false
   FlipY: false
+  RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/92774770-7c51-4736-b701-4c168fd61bf0>
@@ -3737,25 +3737,27 @@
   Autoplay: true
   ClipRangeType: Frames
   AnimationClips:
-    - !<AnimationClip/00000000-0000-0000-0000-000000000000>
+    - !<AnimationClip>
       AnimationAsset: !<reference> a9d749a3-e081-4306-9246-6082f5a20ab7
       Name: IDLE
       Weight: 1.000000
       PlaybackSpeed: 1.000000
       Begin: 0.000000
       End: 102.000000
+      Offset: 0.000000
       Reversed: false
       Disabled: false
       BlendMode: Default
       ScaleMode: Multiply
       PlaybackMode: Loop
-    - !<AnimationClip/00000000-0000-0000-0000-000000000000>
+    - !<AnimationClip>
       AnimationAsset: !<reference> a9d749a3-e081-4306-9246-6082f5a20ab7
       Name: ACTION
       Weight: 0.000000
       PlaybackSpeed: 1.000000
       Begin: 102.000000
       End: 198.000000
+      Offset: 0.000000
       Reversed: false
       Disabled: true
       BlendMode: Default
@@ -4028,11 +4030,11 @@
   Near: -1.000000
   Far: 200.000000
   Fov: 63.541019
-  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+  ClearColor: !<CameraClearColor>
     Mode: None
     Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+  ClearDepth: !<CameraClearDepth>
     Mode: Value
     Value: 1.000000
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -4046,6 +4048,7 @@
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
+  DevicePropertiesSource: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/a5c93d45-465a-41d7-a028-bb34d79898a6>
   PrefabRemaps:
     []
@@ -4321,6 +4324,7 @@
     - !<reference> 4e00283e-c6fd-45e7-b86e-5bf0f0cc1f8f
   FlipX: false
   FlipY: false
+  RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/b96b681b-7848-4ce4-8ed2-27a0677624fa>
@@ -4454,6 +4458,7 @@
     - !<reference> f0c56a4c-b2bc-45e2-b820-c3969d312682
   FlipX: false
   FlipY: false
+  RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/bf188470-8b6c-4dd4-a1fd-b938efe62d7b>
@@ -4809,11 +4814,11 @@
   Near: -1.000000
   Far: 200.000000
   Fov: 63.541019
-  ClearColor: !<CameraClearColor/00000000-0000-0000-0000-000000000000>
+  ClearColor: !<CameraClearColor>
     Mode: None
     Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
-  ClearDepth: !<CameraClearDepth/00000000-0000-0000-0000-000000000000>
+  ClearDepth: !<CameraClearDepth>
     Mode: Value
     Value: 1.000000
     InputTexture: !<reference> 00000000-0000-0000-0000-000000000000
@@ -4827,6 +4832,7 @@
   DepthStencilRenderTarget: !<reference> 00000000-0000-0000-0000-000000000000
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
+  DevicePropertiesSource: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/d1ed2eb3-ce87-4bb3-8841-22d2f7b31212>
   PrefabRemaps:
     []
@@ -4888,6 +4894,7 @@
     - !<reference> 9d583770-992e-4039-a8aa-990886cd830d
   FlipX: false
   FlipY: false
+  RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/d421e681-f75d-4dd1-9b96-3567604ab9f4>

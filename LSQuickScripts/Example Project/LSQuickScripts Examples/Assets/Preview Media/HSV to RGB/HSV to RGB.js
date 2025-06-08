@@ -1,10 +1,14 @@
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
 // Set the color of a material using hue, saturation, value (instead of RGB)
-
 // Requires LSQuickScripts
+
+
+
+//@ui {"widget":"label"}
+//@ui {"widget":"label", "label":"Converts Hue, Saturation, Value to Red, Green, Blue"}
+//@ui {"widget":"label"}
 
 
 

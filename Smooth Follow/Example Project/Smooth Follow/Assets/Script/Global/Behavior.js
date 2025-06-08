@@ -501,7 +501,6 @@
 //@ui {"showIf": "responseType", "showIfValue": "setBlendshapes", "label": "Set Blendshapes (Legacy) is Deprecated.", "widget": "label"}
 //@ui {"showIf": "responseType", "showIfValue": "setBlendshapes", "label": "Please use Set Blendshapes instead.", "widget": "label"}
 
-//@input Component.BlendShapes setBlendshapesBlendshapes {"showIf": "responseType", "showIfValue": "setBlendshapes", "label": "Blendshapes"}
 //@input string setBlendshapesName {"showIf": "responseType", "showIfValue": "setBlendshapes", "label": "Name"}
 //@input float setBlendshapesWeight = 0 {"showIf": "responseType", "showIfValue": "setBlendshapes", "label": "Weight"}
 

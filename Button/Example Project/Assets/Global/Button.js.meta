@@ -5,21 +5,25 @@
   PrimaryAsset: !<reference> 5bd91604-4503-4498-84ed-f7af7c999e21
   PackageType: NotAPackage
   PackagePolicy: CannotBeUnpacked
+  ExtraData:
+    {}
   AssetDataMap:
     JavaScriptAsset: !<own> 3c998e94-12c2-4de2-b47b-5458bd10ade8
   DependentFiles:
     []
-  ImporterSettings: !<AssetImporterSettings/c49d9134-ee12-4884-b126-a8ad11c719ea>
+  ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
 - !<ScriptAssetData/3c998e94-12c2-4de2-b47b-5458bd10ade8>
   SvgIcon: ""
+  SetupScript:
+    code: ""
   Description: ""
   InternalVersion: 0
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 497d0f7c-6098-40d5-b11a-2f4a182adc11
   ExportUid: 00000000-0000-0000-0000-000000000000
   CurrentVisibility: Editable
   MaxVisibility: Editable
@@ -63,10 +67,11 @@
     worldCamera2: false
   ScriptTypesHidden:
     {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
   DefaultScriptInputs:
-    - disableButton: false
-      pressEval: ""
-      releaseEval: ""
+    - behaviorName: ""
+      disableButton: false
       continuous: false
       pressSound: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       rankedPriority: !<float> 100.000000
@@ -106,11 +111,6 @@
       highlightSound: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       doScaleOnHighlight: true
       highlightAnimScale: 1.400000
-      tester: false
-      behavior: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      behaviorTrigger: ""
-      customBehaviorName: ""
-      behaviorName: ""
   ScriptTypes:
     -
       {}

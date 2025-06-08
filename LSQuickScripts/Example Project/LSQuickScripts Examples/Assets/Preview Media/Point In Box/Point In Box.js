@@ -1,9 +1,7 @@
 // Max van Leeuwen
-//  @maksvanleeuwen
-//  links.maxvanleeuwen.com
+//  maxvanleeuwen.com
 
-// Checks if point is in box. Use a 'Unit Box' from the asset store!
-
+// Checks if point is in box.
 // Requires LSQuickScripts
 
 

@@ -3,7 +3,7 @@
 
 
 
-// Requires LSQuickScripts 2.31
+// Requires LSQuickScripts 2.35
 if(!global.lsqs) throw("LSQuickScripts is missing! Install it from the Asset Library (or from maxvanleeuwen.com/lsquickscripts)");
 
 
@@ -18,6 +18,8 @@ script.pressAnim = new Callback(); // args: number (animation value 0-1)
 script.counterValueAnim = new Callback(); // args: number (animation value 0-1)
 script.counterShowAnim = new Callback(); // args: number (animation value 0-1)
 script.highlightAnim = new Callback(); // args: number (animation value 0-1)
+script.getShowAnim = () => showAnim; // gets the AnimateProperty object for the show animation
+script.getPressAnim = () => pressAnim; // gets the AnimateProperty object for the press animation
 script.show = show;
 script.hide = hide;
 script.isShown; // if currently visible, bool (read-only)
@@ -90,6 +92,7 @@ script.highlightScale = 1; // live value of the current highlight scale multipli
 //@ui {"widget":"label", "label":"<b>Show/Hide Animation"}
 //@input vec2 showAnimDurations = {.3, .3} {"label":"Durations (in/out)"}
 //@ui {"widget":"label", "label":"<small>bind to <font color='#56b1fc'>script.showAnim</font><small> → value (number, 0-1)"}
+//@ui {"widget":"label", "label":"<small>or get the instance: <font color='#56b1fc'>script.getShowAnim</font><small> → AnimateProperty"}
 
 //@ui {"widget":"label"}
 //@ui {"widget":"label"}
@@ -99,6 +102,7 @@ script.highlightScale = 1; // live value of the current highlight scale multipli
 //@ui {"widget":"label"}
 //@input vec2 pressAnimDurations = {.15, .25} {"label":"Durations (in/out)"}
 //@ui {"widget":"label", "label":"<small>bind to <font color='#56b1fc'>script.pressAnim</font><small> → value (number, 0-1)"}
+//@ui {"widget":"label", "label":"<small>or get the instance: <font color='#56b1fc'>script.getPressAnim</font><small> → AnimateProperty"}
 //@ui {"widget":"label"}
 //@input bool doScaleOnPress = true {"label":"Scale"}
 //@input float pressAnimScale = .7 {"showIf":"doScaleOnPress"}
@@ -364,6 +368,7 @@ function show(instant){
 	if(instant){
 		showAnim.setReversed(false);
 		showAnim.pulse(1);
+        script.isShown = true;
 		return;
 	}
 	if(showAnim.getReversed()){
@@ -377,6 +382,7 @@ function hide(instant){
 	if(instant){
 		showAnim.setReversed(true);
 		showAnim.pulse(1);
+        script.isShown = false;
 		return;
 	}
 	if(!showAnim.getReversed()){
