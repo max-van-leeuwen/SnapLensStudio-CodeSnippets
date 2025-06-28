@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.35</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.36</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -2521,30 +2521,27 @@ global.QuickFlow = function(obj){
 
 
 
+const DEG_TO_RAD = 0.01745329251; // ~ pi/180
+const RAD_TO_DEG = 57.2957795131; // ~ 180/pi
+
 global.degToRad = function(degrees){
-	const div = Math.PI/180;
 	if(typeof degrees == 'number'){
-		return degrees * div;
+		return degrees * DEG_TO_RAD;
 	}else{ // assume vec3 if not number
-		const div = Math.PI/180;
-		var _x = degrees.x * div;
-		var _y = degrees.y * div;
-		var _z = degrees.z * div;
+		var _x = degrees.x * DEG_TO_RAD;
+		var _y = degrees.y * DEG_TO_RAD;
+		var _z = degrees.z * DEG_TO_RAD;
 		return new vec3(_x, _y, _z);
 	}
 }
 
-
-
-
 global.radToDeg = function(radians){
-	const div = 180/Math.PI;
 	if(typeof radians == 'number'){
-		return radians * div;
+		return radians * RAD_TO_DEG;
 	}else{ // assume vec3 if not number
-		var _x = radians.x * div;
-		var _y = radians.y * div;
-		var _z = radians.z * div;
+		var _x = radians.x * RAD_TO_DEG;
+		var _y = radians.y * RAD_TO_DEG;
+		var _z = radians.z * RAD_TO_DEG;
 		return new vec3(_x, _y, _z);
 	}
 }
