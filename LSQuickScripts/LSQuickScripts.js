@@ -1,6 +1,6 @@
 //@ui {"widget":"label"}
 //@ui {"widget":"separator"}
-//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.36</b> <small>by Max van Leeuwen"}
+//@ui {"widget":"label", "label":"<big><b>📜 LSQuickScripts 2.37</b> <small>by Max van Leeuwen"}
 //@ui {"widget":"label", "label":"See this script for more info!"}
 //@ui {"widget":"label"}
 //@ui {"widget":"label", "label":"<small><a href=\"https://www.maxvanleeuwen.com/lsquickscripts\">maxvanleeuwen.com/LSQuickScripts</a>"}
@@ -1945,7 +1945,7 @@ global.QuickFlow = function(obj){
 			nrScaleAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
 				if(!objStillExists()) return;
 
-				startScale = screenTrf?screenTrf.anchors.getSize():trf.getLocalScale();
+				// startScale = screenTrf?screenTrf.anchors.getSize():trf.getLocalScale();
 			}
 			nrScaleAnim.start();
 	
@@ -2001,7 +2001,7 @@ global.QuickFlow = function(obj){
 			nrPositionAnim.endFunction = function(){ // non-relative animation, so let's update startValues to allow smooth transitions on end
 				if(!objStillExists()) return;
 
-				startPosition = screenTrf?screenTrf.anchors.getCenter():trf.getLocalPosition();
+				// startPosition = screenTrf?screenTrf.anchors.getCenter():trf.getLocalPosition();
 			}
 			nrPositionAnim.start();
 	
@@ -2048,6 +2048,48 @@ global.QuickFlow = function(obj){
 			
 			// register this temp animation
 			animationStarted(blinkAnim);
+		}).byTime(delay);
+
+		// return to allow chaining
+		return self;
+	}
+
+    /**
+	 * @description color flash
+	 * @description (use undefined for any argument to pick its default value)
+	 * @param {number} delay delay - default: 0 seconds
+	 * @param {number} duration duration - default: .4 seconds
+	 * @param {vec4} color color - default: red (1, 0, 0, 1)
+	 * @param {function} easeFunction easeFunction - default: EaseFunctions.Cubic.InOut
+	*/
+	this.colorFlash = function(delay = 0, duration = .4, color = new vec4(1, 0, 0, 1), easeFunction = EaseFunctions.Cubic.InOut){
+		// register
+		registerCommand(this.colorFlash, [...arguments]);
+
+		if(!visual && !text) return self; // if no visual present, ignore
+		new CreateDelay(function(){
+			// animation
+            var originalColor = newBaseColor;
+			var flashAnim = new AnimateProperty(function(v){
+                v = 1-v;
+                if(newBaseColor) newBaseColor = vec4.lerp(newBaseColor, color, v);
+				// if(newTextBaseColors){ // looks better without in most cases
+				// 	newTextBaseColors.outline = vec4.lerp(newTextBaseColors.outline, color, v);
+				// 	newTextBaseColors.dropshadow = vec4.lerp(newTextBaseColors.dropshadow, color, v);
+				// 	newTextBaseColors.background = vec4.lerp(newTextBaseColors.background, color, v);
+				// }
+
+                doBaseColor = true;
+			});
+            flashAnim.easeFunction = easeFunction;
+			flashAnim.duration = duration;
+            flashAnim.endFunction = function(){
+                newBaseColor = originalColor; // reset on end
+            }
+			flashAnim.start();
+			
+			// register this temp animation
+			animationStarted(flashAnim);
 		}).byTime(delay);
 
 		// return to allow chaining
@@ -2847,6 +2889,7 @@ global.DoDelay = function(func, args){
 	*/
 	this.now = function(){
         paused = null;
+        stopWaitEvent();
 		const keepAlive = {
 			exec: function(){
 				var _args = self.args;
